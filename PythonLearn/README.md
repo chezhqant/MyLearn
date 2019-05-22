@@ -19,4 +19,5 @@
 
 > > ## 2. Functions
 
-> > > ### 2.1 [重构](https://blog.csdn.net/liuwei_q/article/details/83032297) 
+> > > ### 2.1 [重构](https://blog.csdn.net/liuwei_q/article/details/83032297)  
+> > > ### 2.2 [lambda/filter/reduce/map](https://www.cnblogs.com/kaituorensheng/p/5300340.html)  
