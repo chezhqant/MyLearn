@@ -11,7 +11,6 @@
 * [<p align="center"> Contents </p>](#p-aligncenter-contents-p)
     * [!alt github命令总结图</br>](#alt-github命令总结图br)
     * [git命令参考网站</br>](#git命令参考网站br)
-    * [菜鸟教程</br>](#菜鸟教程br)
     * [1. git push](#1-git-push)
     * [2. git remote](#2-git-remote)
         * [2.1 git remote set-url](#21-git-remote-set-url)
@@ -37,7 +36,7 @@
 
 ## ![alt github命令总结图](./pictures/git命令.jpg)</br> 
 ## git命令参考网站</br> 
-## [菜鸟教程](https://www.runoob.com/git/git-tutorial.html)</br>
+    + [菜鸟教程](https://www.runoob.com/git/git-tutorial.html) </br>
 
 
 ## 1. [git push](https://blog.csdn.net/hobhunter/article/details/79463168)
