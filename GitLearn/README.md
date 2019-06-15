@@ -36,8 +36,9 @@
 
 ## ![alt github命令总结图](./pictures/git命令.jpg)</br> 
 ## git命令参考网站</br> 
-[菜鸟教程](https://www.runoob.com/git/git-tutorial.html)
-
++ [菜鸟教程](https://www.runoob.com/git/git-tutorial.html)</br>
++ [参考网站1](https://www.jianshu.com/p/93318220cdce)</br>
++ [参考网站2](https://www.imooc.com/article/2733)</br>
 
 ## 1. [git push](https://blog.csdn.net/hobhunter/article/details/79463168)
 
