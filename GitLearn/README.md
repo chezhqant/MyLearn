@@ -17,7 +17,7 @@
     * [3. git删除本地仓库](#3-git删除本地仓库)
     * [4. git commit](#4-git-commit)
     * [5. git fetch](#5-git-fetch)
-    * [6. markdown](#6-markdown)
+    * [6. markdown(先看这个)](#6-markdown先看这个)
         * [6.1 markdown画各种图](#61-markdown画各种图)
         * [6.2 What i found](#62-what-i-found)
             * [6.2.1 center/right/left](#621-centerrightleft)
@@ -52,8 +52,7 @@
 
 ## 5. [git fetch](https://www.cnblogs.com/chenlogin/p/6592228.html)
 
-## 6. [markdown](https://www.runoob.com/markdown/md-tutorial.html)
-
+## 6. [markdown](https://www.runoob.com/markdown/md-tutorial.html)([先看这个](https://www.runoob.com/markdown/md-tutorial.html))
 ### 6.1 [markdown画各种图](https://blog.csdn.net/lis_12/article/details/80693975)
 ### 6.2 What i found
 #### 6.2.1 center/right/left
@@ -63,7 +62,7 @@
 <p align="left"> chezhai </p>
 ```
 #### 6.2.2 换行
-结尾用两个空格或者使用`<\br>` 
+结尾用两个空格或者使用`</br>` 
 ### 6.3 [锚点](https://my.oschina.net/antsky/blog/1475173?utm_medium=referral)
 
 ### 6.2 [github中markdown中使用lex公式](https://www.jianshu.com/p/25f0139637b7)\/[补充](https://www.zybuluo.com/codeep/note/163962#1%E5%A6%82%E4%BD%95%E8%BE%93%E5%85%A5%E4%B8%80%E4%B8%AA%E6%96%B9%E7%A8%8B%E5%BC%8F%E5%BA%8F%E5%88%97)
