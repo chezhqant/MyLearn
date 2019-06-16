@@ -12,6 +12,6 @@ ___this dir is just for learning algorithms and data structures___
 ![google编码风格](./picturee/google风格.png)
 
 # 1. [DFS](./DFS)</br>
-    + [Same Tree](./DFS/SameTree.cpp)</br>
+    + [Same Tree](./DFS/SameTree.cpp) 
 # 2. [Array](./Array)</br>
-    + [Two Sum](./Array/Two\_Sum.cpp)</br>
+    + [Two Sum](./Array/Two\_Sum.cpp) 
