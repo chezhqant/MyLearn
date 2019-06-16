@@ -1,0 +1,137 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class Solution {
+public:
+
+    //第一种方法，LeetCode效果不佳
+/*{{{
+ *     void merge(vector<int> &nums, int left_begin, int left_end, int right_begin, int right_end)
+ *     {
+ *         int left_begin_copy = left_begin; 
+ * 
+ *         int size = (left_end-left_begin+1) + (right_end-right_begin+1);
+ *         vector<int> temp;
+ * 
+ *         while ((left_begin<=left_end) && (right_begin<=right_end))
+ *         {
+ *             if (nums[left_begin] < nums[right_begin])
+ *             {
+ *                 temp.push_back(nums[left_begin++]);
+ *             }
+ *             else
+ *             {
+ *                 temp.push_back(nums[right_begin++]);
+ *             }
+ *         }
+ * 
+ *         while (left_begin <= left_end)
+ *         {
+ *             temp.push_back(nums[left_begin++]);
+ *         }
+ *         while (right_begin <= right_end)
+ *         {
+ *             temp.push_back(nums[right_begin++]);
+ *         }
+ * 
+ *         for (int i=0; i< size; ++i)
+ *         {
+ *             nums[left_begin_copy+i] = temp[i];
+ *         }
+ *     }
+ *     void split(vector<int> &nums, int left, int right)
+ *     {
+ *         if (left < right) 
+ *         {
+ *             int mid = (left+right) >> 1;
+ *             split(nums, left, mid);
+ *             split(nums, mid+1, right);
+ * 
+ *             merge(nums, left, mid, mid+1, right);
+ *         }
+ *     }
+ *     double FindMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) 
+ *     {
+ *         nums1.insert(nums1.begin(), nums2.begin(), nums2.end());
+ *         
+ *         int left = 0;
+ *         int right = nums1.size() - 1;
+ *         cout << "right=" << right << endl;
+ * 
+ *         split(nums1, left, right);
+ * 
+ *         if ((right+1)%2 == 0)
+ *         {
+ *             return double(nums1[right/2]+nums1[right/2+1])/2;
+ *         }
+ *         else
+ *         {
+ *             return double(nums1[right/2]);
+ *         }
+ *     }
+ *//*}}}*/
+
+
+    //第二种方法
+    double FindMedianSortedArrays(vector<int>::iterator nums1, int nums1_size, vector<int>::iterator nums2, int nums2_size, int k)
+    {
+        if (nums1_size>nums2_size)
+        {
+            FindMedianSortedArrays(nums2, nums2_size, nums1, nums1_size, k);
+        }
+
+        if (nums1_size == 0)
+        {
+            return nums1[k-1];
+        }
+        if (k == 1)
+        {
+            return min(nums1[0], nums2[0]);
+        }
+
+        int nums1_median = min(k / 2, nums1_size);
+        int nums2_median = k - nums1_median;
+
+        if (nums1[nums1_median] > nums2[nums2_median])
+        {
+            return FindMedianSortedArrays(nums1, nums1_size, nums2+nums2_median, nums2_size-nums2_median, nums1_median);
+        }
+        else
+        {
+            return FindMedianSortedArrays(nums1+nums1_median, nums1_size-nums1_median, nums2, nums2_size, nums2_median);
+        }
+    }
+    double FindMedianSortedArrays(vector<int> &nums1, vector<int> &nums2)
+    {
+        int nums1_size = nums1.size();
+        int nums2_size = nums2.size();
+
+        if ((nums1_size+nums2_size) & 0x1)
+        {
+            return FindMedianSortedArrays(nums1.begin(), nums1_size, nums2.begin(), nums2_size, (nums1_size+nums2_size)/2+1);
+        }
+        else
+        {
+            return (FindMedianSortedArrays(nums1.begin(), nums1_size, nums2.begin(), nums2_size, (nums1_size+nums2_size)/2) + FindMedianSortedArrays(nums1.begin(), nums1_size, nums2.begin(), nums2_size, (nums1_size+nums2_size)/2+1))/2;
+
+        }
+    }
+};
+
+int main()
+{
+    vector<int> nums1 = {23,7823,490};
+    vector<int> nums2 = {128,67, 273};
+
+    class Solution a_class;
+    cout << a_class.FindMedianSortedArrays(nums1, nums2) << endl;
+
+    for (int i=0; i<nums1.size(); ++i)
+    {
+        cout << nums1[i] << endl;
+    }
+    return 0;
+}
+
