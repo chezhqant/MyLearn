@@ -6,6 +6,7 @@
 # C++基础知识 </br>
 ## C++/C和Python相互调用</br>
 1.1.1 [资料一](https://cloud.tencent.com/developer/article/1174629)</br>
+## [LeetCode刷题](../LeetcodeLearn)
 
 
 # C++网络编程</br>

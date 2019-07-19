@@ -1,5 +1,6 @@
 ***this file is my learnd python3, and is addtion to [python3教程](https://www.runoob.com/python3/python3-tutorial.html)***
 
+***[谷歌编写规格指南](https://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/python\_language\_rules/)***
 > # Contents
 
 > > ## 1. Class
@@ -27,7 +28,7 @@
 
 > > ## 3. Packages
 > > > ### 3.1 [csv](https://www.cnblogs.com/wuxunyan/p/10442444.html)</br>
-> > > ### 3.2 [sys.module](sys.modules: https://www.cnblogs.com/zhaojingyu/p/9069076.html)</br>
+> > > ### 3.2 [sys.module](https://www.cnblogs.com/zhaojingyu/p/9069076.html)</br>
 > > > ### 3.3 [xml解释器](https://blog.csdn.net/guangmingsky/article/details/77601225)</br>
 > > > ### 3.4 [pika](https://pypi.org/project/pika/)</br>
 
