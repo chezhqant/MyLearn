@@ -27,7 +27,7 @@ eh, there are some cpps(two or three?) is wrong in the directory of Array, becau
 + [Grumpy\_Bookstore\_Owner](./Array/Grumpy\_Bookstore\_Owner.cpp) </br>
 + [Height\_Checker](./Array/Height\_Checker.cpp) </br>
 + [IntToRoman](./Array/IntToRoman.cpp) </br>
-+ [MaxWidthRamp](./Array/MaxWidthRamp.cpp) <./br>
++ [MaxWidthRamp](./Array/MaxWidthRamp.cpp) </br>
 + [Median of Two Sorted Arrays](./Array/Median\_of\_Two\_Sorted\_Arrays.cpp) </br>
 + [PancakeSort](./Array/PancakeSort.cpp) </br>
 + [Previous\_Permutation\_With\_one\_Swap](./Array/Previous\_Permutation\_With\_one\_Swap.cpp) </br>
