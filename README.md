@@ -6,7 +6,7 @@
 
 > > ## 2. [LeetcodeLearn](./LeetcodeLearn)
 
-> > ## 3. [PthonLearn](./PythonLearn)
+> > ## 3. [PythonLearn](./PythonLearn)
 
 > > ## 4. [PytorchLearn](./PytorchLearn)
 
