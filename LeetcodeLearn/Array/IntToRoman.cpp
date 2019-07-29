@@ -10,6 +10,12 @@ public:
     {
 
     }
+
+private:
+    enum ROMAN_NUMBER 
+    {
+        I, V, X, L, C, D, M
+    };   
 };
 
 int main()
