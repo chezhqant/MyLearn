@@ -20,6 +20,6 @@ ___when coding, i find to understand basic computer knowledge vaguelly, so i rea
 \text{haha} & 1 & 2
 \end{array}
 
-\begin{array}{|c|c|c|}
+\begin{array}{|c|c|c|}\hline
 1 & 2 & 3 \\
 \end{array}
