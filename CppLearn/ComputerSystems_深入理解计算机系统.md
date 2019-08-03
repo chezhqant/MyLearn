@@ -29,10 +29,13 @@ ___when coding, i find to understand basic computer knowledge vaguelly, so i rea
 \hline
 \text{long long int}    & 8               & 8               \\\\
 \hline
-\text{char$^{\ast}$}    & 1               & 2               \\\\
+\text{char$^{\ast}$}    & 4               & 8               \\\\
 \hline
-\text{float}            & 1               & 2               \\\\
+\text{float}            & 4               & 4               \\\\
 \hline
-\text{double}           & 1               & 2               \\\\
+\text{double}           & 8               & 8               \\\\
 \hline
 \end{array}
+
+3. swap函数
+> 对于任一个维向量$\overrightarrow{a}$, 有$\overrightarrow{a}{\cdot}\overrightarrow{a}$
