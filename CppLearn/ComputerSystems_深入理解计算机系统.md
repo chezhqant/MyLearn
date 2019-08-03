@@ -79,5 +79,11 @@ uval 0x00FEDCBA
 > 对于$\vec{x}=[x\_{\omega-1}, x\_{\omega-2}, \cdots, x\_{0}]$，$\vec{x}$的无符号表示为：
 \begin{equation}
 B2U\_{\omega}{\vec{x}}=\sum\_{i=0}^{\omega-1}{x\_{i}2^{i}}
-\label{eq:B2W}
+\label{eq:B2U}
 \end{equation}   
+举个例子：  
+$$
+B2U\_{4}([0001]) = 0$\cdot$2^{3}+0$\cdot$2^{2}+0$\cdot$2^{1}+1$\cdot$2^{0} = 0+0+0+1 = 1
+B2U\_{4}([0101]) = 0$\cdot$2^{3}+1$\cdot$2^{2}+0$\cdot$2^{1}+1$\cdot$2^{0} = 0+4+0+1 = 5
+\label={eq:B2U例子}
+$$
