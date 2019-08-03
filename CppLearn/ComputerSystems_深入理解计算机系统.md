@@ -55,10 +55,4 @@ void InplaceSwap(int *x, int *y)
 \hline
 \text{操作}             & \text{值} \\\\
 \hline
-\text{参数x}            & \text{[00110000] [01010000]} \\\\
-\hline
-\text{x >> 4(逻辑右移)} & [\text{*0000*}0110] [\text{*0000*}1001] \\\\
-\hline
-\text{x << 4(算术右移)} & [\text{*0000*}0110] [\text{*1111*}1001] \\\\
-\hline
 \end{array}
