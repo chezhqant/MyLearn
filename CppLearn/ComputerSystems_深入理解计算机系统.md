@@ -68,4 +68,10 @@ int lval = 0xFEDCBA98 << 32;
 int aval = 0xFEDCBA98 << 36;
 unsigned uval = 0xFEDCBA98u >> 40;
 ```
-在许多机器上，当移动一个$\omega$位的值时，移位指令只考虑位移量的低$\log\_{2}{\omega}$位，因此实际上位移量就是通过计算k mod $\omega$得到的。
+在许多机器上，当移动一个$\omega$位的值时，移位指令只考虑位移量的低$\log\_{2}{\omega}$位，因此实际上位移量就是通过计算k mod $\omega$得到的。在一台采用这个规则的32位机器上，上面三个移位运算分别是移动0、4、8位，得到的结果是：
+```
+lval 0xFEDCBA98
+aval 0xFFEDCBA9
+uval 0x00FEDCBA
+```
+不过这种行为对于C程序来说是没有保证的，所以移位数量应该保持小于字长。   
