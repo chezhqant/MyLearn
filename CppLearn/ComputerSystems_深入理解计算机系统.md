@@ -57,6 +57,6 @@ void InplaceSwap(int *x, int *y)
 \hline
 \text{参数x}            & \text{[00110000] [01010000]} \\\\
 \hline
-\text{x >> 4(逻辑右移)} & [*0000*0110] [00001001] \\\\
+\text{x >> 4(逻辑右移)} & [\color{#A00}{0000}0110] [\color{#A00}{0000}1001] \\\\
 \hline
 \end{array}
