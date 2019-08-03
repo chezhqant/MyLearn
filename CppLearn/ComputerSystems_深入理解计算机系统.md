@@ -21,5 +21,5 @@ ___when coding, i find to understand basic computer knowledge vaguelly, so i rea
 \end{array}
 
 \begin{array}{|c|c|c|}\hline
-1 & 2 & 3 \hline
+1 & 2 & 3 \\ \hline
 \end{array}
