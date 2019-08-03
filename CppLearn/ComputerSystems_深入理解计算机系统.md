@@ -61,4 +61,11 @@ void InplaceSwap(int *x, int *y)
 \hline
 \text{x >> 4(算术右移)} & [\color{#A00}{0000}0110] [\color{#A00}{1111}1001] \\\\
 \hline
-\end{array}
+\end{array}   
+6. 移位运算，移动k位，这里k很大
+```
+int lval = 0xFEDCBA98 << 32;
+int aval = 0xFEDCBA98 << 36;
+unsigned uval = 0xFEDCBA98u >> 40;
+```
+在许多机器上，当移动一个$\omega$位的值时，移位指令只考虑位移量的低$\log\_{2}{\omega}$位，因此实际上位移量就是通过计算k mod $\omega$得到的。
