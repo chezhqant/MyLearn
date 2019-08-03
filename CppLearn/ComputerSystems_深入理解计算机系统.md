@@ -38,4 +38,4 @@ ___when coding, i find to understand basic computer knowledge vaguelly, so i rea
 \end{array}
 
 3. swap函数
-> 对于任一个维向量$\overrightarrow{a}$, 有$\overrightarrow{a}{\cdot}\overrightarrow{a}$
+> 对于任一个维向量$\vec{a}$, 有$\vec{a} \cdot \vec{a}=0$
