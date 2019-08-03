@@ -94,3 +94,10 @@ $$
 
 
 在公式\eqref{eq:B2U}中，在公式\eqref{eq:B2Uexample}中.
+
+$$
+x^n+y^n=z^n \tag{3.3}
+$$
+
+在公式$(3.3)$中，在公式\eqref{eq:B2U}中.
+
