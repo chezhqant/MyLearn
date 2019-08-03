@@ -22,6 +22,7 @@ ___when coding, i find to understand basic computer knowledge vaguelly, so i rea
 
 \begin{array}{|c|c|c|}\hline
 \text{C声明}            & \text{32位机器} & \text{64位机器} \\
+\hline
 \text{char}             & 1               & 2               \\
 \text{short int}        & 2               & 2               \\
 \text{int}              & 4               & 4               \\ 
