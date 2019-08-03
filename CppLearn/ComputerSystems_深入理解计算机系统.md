@@ -59,6 +59,6 @@ void InplaceSwap(int *x, int *y)
 \hline
 \text{x >> 4(逻辑右移)} & \text{[*0000*0110] [*0000*1001]} \\\\
 \hline
-\text{x << 4(算术右移)} & \text{[*0000*0110] [*1111*1001]} \\\\
+\text{x << 4(算术右移)} & \text{[{*0000*}0110] [{*1111*}1001]} \\\\
 \hline
 \end{array}
