@@ -16,7 +16,7 @@ ___when coding, i find to understand basic computer knowledge vaguelly, so i rea
 
 2. C语言中数字数据类型的字节数   
 
-\begin{array}{c|cc}\hline
+\begin{array}{|c|c|c|}\hline
 \text{haha} & 1 & 2 \\
 \end{array}
 
