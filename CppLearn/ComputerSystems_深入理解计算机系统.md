@@ -38,4 +38,16 @@ ___when coding, i find to understand basic computer knowledge vaguelly, so i rea
 \end{array}
 
 3. swap函数
-> 对于任一个维向量$\vec{a}$, 有$\vec{a} \cdot \vec{a}=0$
+> 对于任一个维向量$\vec{a}$, 有$\vec{a} \cdot \vec{a}=0$。应用这一属性，使用这一性质完成swap函数。
+```
+void InplaceSwap(int *x, int *y)
+{
+    *y = *x ^ *y;
+    *x = *x ^ *y;
+    *y = *x ^ *y;
+}
+```
+4. 逻辑运算和位级运算的区别   
+> 逻辑运算符&&和||与他们对应的位级运算&和|之间第二个重要的区别是，如果对第一个参数求职就能确定表达式的结果，那么逻辑运算符就不会对第二个参数求值。  
+5. 计算机支持两种形式的右移：逻辑右移和算术右移。
+逻辑右移在左端补k个0，得到的结果是$[0, \cdots, 0, x\_{n-1}, x\_{n-1}, \cdots, x\_{k}]$。
