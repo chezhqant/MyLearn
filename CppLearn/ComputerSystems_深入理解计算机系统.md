@@ -14,7 +14,7 @@ ___when coding, i find to understand basic computer knowledge vaguelly, so i rea
 2. C语言中数字数据类型的字节数
 \begin{array}{|c|c|c|}
 \hline
-\text{C声明} & \text{32位机器} & 64位机器 \\
+\text{C声明} & \text{32位机器} & \text{64位机器} \\
 \hline
 \text{char} & 1             & 2 \\
 \hline
