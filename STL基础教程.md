@@ -26,10 +26,10 @@ Template Library)标准模板库,在我们 c++标准程序库中隶属于 STL �
 
 STL提供了六大组件，彼此之间可以组合套用，这六大组件分别是:容器、算法、迭代器、仿函数、适配器（配接器）、空间配置器。
 
-**容器：**各种数据结构，如vector、list、deque、set、map等,用来存放数据，从实现角度来看，STL容器是一种class
+**容器**各种数据结构，如vector、list、deque、set、map等,用来存放数据，从实现角度来看，STL容器是一种class
 template。
 
-**算法：**各种常用的算法，如sort、find、copy、for_each。从实现的角度来看，STL算法是一种function
+**算法**各种常用的算法，如sort、find、copy、for_each。从实现的角度来看，STL算法是一种function
 tempalte.
 
 **迭代器：**扮演了容器与算法之间的胶合剂，共有五种类型，从实现角度来看，迭代器是一种将operator\*
