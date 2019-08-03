@@ -90,6 +90,9 @@
 > \begin{split}
 > E=mc^2 \text{自动编号公式示例} \\\\ 
 > E=mc^2 \text{自动编号公式示例} \\\\
+> E=mc^2 \text{自动编号公式示例} \\\\
+> E=mc^2 \text{自动编号公式示例} \\\\
+> E=mc^2 \text{自动编号公式示例} \\\\
 > E=mc^2 \text{自动编号公式示例}
 > \end{split}\tag{3.3}\label{3.3}
 > $$
