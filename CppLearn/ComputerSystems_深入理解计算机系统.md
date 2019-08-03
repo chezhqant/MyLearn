@@ -55,4 +55,6 @@ void InplaceSwap(int *x, int *y)
 \hline
 \text{操作}             & \text{值} \\\\
 \hline
+\text{参数x}            & \text{[00110000] [01010000]} \\\\
+\hline
 \end{array}
