@@ -18,6 +18,6 @@ ___when coding, i find to understand basic computer knowledge vaguelly, so i rea
 \hline
 \text{char} & 1             & 2 \\
 \hline
-\text{short int} & 2        & 2
+\text{short int} & 2        & 2 \\
 \hline
 \end{array}
