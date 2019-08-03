@@ -26,6 +26,9 @@
         * [6.3 锚点](#63-锚点)
         * [6.4 github中markdown中使用lex公式\/补充</br>](#64-github中markdown中使用lex公式补充br)
         * [6.5 GitHub中给公式加编号，加完编号后引用</br>](#65-github中给公式加编号加完编号后引用br)
+            * [6.5.1 第一种</br>](#651-第一种br)
+            * [6.5.2 第二种</br>](#652-第二种br)
+            * [6.5.2 第二种</br>](#652-第二种br-1)
     * [7. git diff](#7-git-diff)
     * [8. git rm](#8-git-rm)
         * [8.1 删除远程仓库中的文件或者文件夹](#81-删除远程仓库中的文件或者文件夹)
@@ -69,6 +72,30 @@
 
 ### 6.4 [github中markdown中使用lex公式](https://www.jianshu.com/p/25f0139637b7)\/[补充](https://www.zybuluo.com/codeep/note/163962#1%E5%A6%82%E4%BD%95%E8%BE%93%E5%85%A5%E4%B8%80%E4%B8%AA%E6%96%B9%E7%A8%8B%E5%BC%8F%E5%BA%8F%E5%88%97)</br>
 ### 6.5 [GitHub中给公式加编号，加完编号后引用](https://blog.csdn.net/Mage_EE/article/details/75331889)</br>
+####6.5.1 第一种</br>
+> \begin{equation}
+> E=mc^2 \text{，自动编号公式示例}
+> \label{eq:Sample}
+> \end{equation}
+> 在公式 \eqref{eq:Sample} 中，我们看到了这个被自动编号的公式。
+
+####6.5.2 第二种</br>
+$$
+> E=mc^2 \text{，自动编号公式示例} \tag{3.2}\label{3.2}
+$$
+> 在公式 \eqref{3.2} 中，我们看到了这个被自动编号的公式。</br>
+
+####6.5.2 第二种</br>
+$$
+\begin{split}
+> E=mc^2 \text{，自动编号公式示例} \\\\ 
+> E=mc^2 \text{，自动编号公式示例} \\\\
+> E=mc^2 \text{，自动编号公式示例}
+\end{split}\tag{3.3}\label{3.3}
+$$
+> 在公式 \eqref{3.3} 中，我们看到了这个被自动编号的公式。</br>
+
+
 
 
 ## 7. [git diff](https://www.cnblogs.com/qianqiannian/p/6010219.html)
