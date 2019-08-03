@@ -21,6 +21,4 @@ ___when coding, i find to understand basic computer knowledge vaguelly, so i rea
 \end{array}
 
 \begin{array}{|c|c|c|}
-\text{C声明}    & \text{32位机器} & \text{64位机器} \\
-\hline
 \end{array}
