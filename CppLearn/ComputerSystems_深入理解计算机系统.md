@@ -59,6 +59,6 @@ void InplaceSwap(int *x, int *y)
 \hline
 \text{x >> 4(逻辑右移)} & [\color{#A00}{0000}0110] [\color{#A00}{0000}1001] \\\\
 \hline
-\text{x << 4(算术右移)} & [<u>0000</u>0110] [<u>1111</u>1001] \\\\
+\text{x << 4(算术右移)} & [\color{#A00}{0000}0110] [\color{#A00}{1111}1001] \\\\
 \hline>>}
 \end{array}
