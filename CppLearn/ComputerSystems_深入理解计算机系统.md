@@ -26,11 +26,10 @@ ___when coding, i find to understand basic computer knowledge vaguelly, so i rea
 \hline
 \text{long long int}& 8               & 8               \\
 \hline
-\text{char *}       & 1               & 2               \\
+\text{char \ast}    & 1               & 2               \\
 \hline
 \text{float}        & 1               & 2               \\
 \hline
 \text{double}       & 1               & 2               \\
 \hline
 \end{array}
-\*
