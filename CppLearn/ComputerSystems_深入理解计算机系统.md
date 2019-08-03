@@ -75,3 +75,9 @@ aval 0xFFEDCBA9
 uval 0x00FEDCBA
 ```
 不过这种行为对于C程序来说是没有保证的，所以移位数量应该保持小于字长。   
+7. 无符号数的编码   
+> 对于$\vec{x}=[x\_{\omega-1}, x\_{\omega-2}, \cdots, x\_{0}]$，$\vec{x}$的无符号表示为：
+\begin{equation}
+B2U\_{\emoga}{\vec{x}}=\sum\_{i=0}^{\emoga-1}{x\_{i}2^{i}}
+\label{eq:B2W}
+\end{equation}   
