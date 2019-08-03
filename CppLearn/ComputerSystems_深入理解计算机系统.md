@@ -16,6 +16,10 @@ ___when coding, i find to understand basic computer knowledge vaguelly, so i rea
 
 2. C语言中数字数据类型的字节数   
 
+\begin{array}{c|cc}
+\text{haha} & 1 & 2
+\end{array}
+
 \begin{array}{|c|c|c|}
 \hline
 \text{C声明}        & \text{32位机器} & \text{64位机器} \\
