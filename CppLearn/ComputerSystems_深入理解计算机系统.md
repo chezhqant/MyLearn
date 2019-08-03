@@ -18,6 +18,5 @@ ___when coding, i find to understand basic computer knowledge vaguelly, so i rea
 
 \begin{array}{c|cc}\hline
 \text{haha} & 1 & 2 \\
-\hline
 \end{array}
 
