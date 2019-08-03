@@ -89,4 +89,4 @@ B2U\_{4}([0101]) = 0\cdot2^{3}+1\cdot2^{2}+0\cdot2^{1}+1\cdot2^{0} = 0+4+0+1 = 5
 \label{eq:B2U例子}
 \end{split}\tag{2}
 $$
-
+在公式\eqref{eq:B2U}中，
