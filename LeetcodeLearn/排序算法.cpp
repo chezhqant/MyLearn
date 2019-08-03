@@ -139,7 +139,7 @@ void heap(vector<int> &array)
 	}
 }/*}}}*/
 
-void merge(vector<int> &array, int left_begin, int left_end, int right_begin, int right_end)
+void merge(vector<int> &array, int left_begin, int left_end, int right_begin, int right_end)/*{{{*/
 {
 	int left_begin_copy = left_begin;
 	int size = (left_end - left_begin + 1) + (right_end - right_begin + 1);
@@ -183,9 +183,9 @@ void split(vector<int> &array, int left, int right)
 
 		merge(array, left, mid, mid + 1, right);
 	}	
-}
+}/*}}}*/
 
-void sort(vector<int> &array, enum SORT_MODE &mode)
+void sort(vector<int> &array, enum SORT_MODE &mode)/*{{{*/
 {
 	switch (mode)
 	{
@@ -231,7 +231,7 @@ void sort(vector<int> &array, enum SORT_MODE &mode)
 			break;
 		}
 	}
-}
+}/*}}}*/
 
 int main()
 {
