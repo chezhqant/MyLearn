@@ -191,4 +191,14 @@ B2U\_{\omega}([x\_{\omega-1}, x\_{\omega-2}, \ldots, x\_{0}]) mod 2^{k} \\\\
 & = B2U\_{k}([x\_{k-1}, x\_{k-2}, \ldots, x\_{0}])
 \end{split}\tag{11}\label{eg:11}
 $$
-在这段推导中，我们利用的属性就是：对于任何i$\ge$k,$2^{i}$mod$2^{k}$=0和$\sum\_{i=0}^{k-1} {x\_{i}2^{i}}\le\sum\_{i=0}^{k-1} {2^{i}}=2^{k}-1\lt2^{k}$。   
+在这段推导中，我们利用的属性就是：对于任何i$\ge$k,$2^{i}$mod$2^{k}$=0和$\sum\_{i=0}^{k-1} {x\_{i}2^{i}}\le\sum\_{i=0}^{k-1} {2^{i}}=2^{k}-1\lt2^{k}$。x mod $2^{k}$，能够被一个位级表示为$[x\_{k-1}, \ldots, x\_{0}]$的无符号表示。不过，我们将被截断的数字视为有符号的。这将得到数值U2T\_{k}(x mod 2^{k}})。  
+总而言之，无符号数的截断结果是：   
+$$
+\begin{split}
+B2U\_{k}([x\_{k-1}, x\_{k-2}, \ldots, x\_{0}])=B2U\_{\omega}([x\_{\omega-1}, x\_{\omega-2}, \ldots, x\_{0}]) mod 2^{k}
+\end{split}\tag{12}\label{eg:12}
+\begin{split}
+B2T\_{k}([x\_{k-1}, x\_{k-2}, \ldots, x\_{0}])=U2T\_{\omega}([x\_{\omega-1}, x\_{\omega-2}, \ldots, x\_{0}]) mod 2^{k}
+\end{split}\tag{13}\label{eg:13}
+$$
+
