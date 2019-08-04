@@ -83,20 +83,10 @@ B2U\_{\omega}{\vec{x}}=\sum\_{i=0}^{\omega-1}{x\_{i}2^{i}}
 \end{equation}   
 举个例子：  
 $$
-\begin{equation}{cases}
+\begin{split}
 B2U\_{4}([0001]) = 0\cdot2^{3}+0\cdot2^{2}+0\cdot2^{1}+1\cdot2^{0} = 0+0+0+1 = 1   \\\\
 B2U\_{4}([0101]) = 0\cdot2^{3}+1\cdot2^{2}+0\cdot2^{1}+1\cdot2^{0} = 0+4+0+1 = 5   \\\\
 B2U\_{4}([0101]) = 0\cdot2^{3}+1\cdot2^{2}+0\cdot2^{1}+1\cdot2^{0} = 0+4+0+1 = 5    \\\\
-B2U\_{4}([0101]) = 0\cdot2^{3}+1\cdot2^{2}+0\cdot2^{1}+1\cdot2^{0} = 0+4+0+1 = 5    \\\\
-\label{eq:B2Uexample}
-\end{equation}{cases}
+B2U\_{4}([0101]) = 0\cdot2^{3}+1\cdot2^{2}+0\cdot2^{1}+1\cdot2^{0} = 0+4+0+1 = 5
+\end{split}\tag{2}\label{eg:2}
 $$
-
-$$
-\begin{split}
-a := x^2-y^3 \\\\
-a := x^2-y^3
-\end{split}\tag{444}\label{444}
-$$
-
-yinyong \eqref{444} haha
