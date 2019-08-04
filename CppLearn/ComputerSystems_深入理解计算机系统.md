@@ -111,3 +111,25 @@ $$
 & TMax\_{4}=B2T\_{4}([0111])= 2^{2}+2^{1}+2^{0}=4+2+1=7
 \end{split}\tag{5}\label{eg:5}
 $$
+9. 有符号和无符号数之间的转换
+> 举个例子：
+```
+short int v = =-12345;
+unsigned short uv = (unsigned short)v;
+print("v=%d, uv=%u\n", v, uv);
+```
+在一台采用补码的机器上，上述代码会产生如下输出：</br>
+v=-12345, uv=53191</br>
+我们看到，强制类型转换的结果保持位值不变，只是改变了解释这些位的方式。比如-12345的16位补码表示与53191的16位无符号表示是完全一样的。讲short int强制类型转换位unsigned short 改变数值，但是不改变位表示。</br>
+类似的：
+```
+unsigned u = 4294957295u;
+int tu = (int)u;
+printf("u=%u, ti=%d\n", u, tu);
+```
+在一台采用补码的机器上，上述代码会产生如下输出：</br>
+u=4294967295, tu=-1</br>
+
+10. 有符号数字x和与之对应的无符号数$T2U\_{\omega}(x)$之间的关系  
+我们计算$B2U\_{\omega}{\vec{x}}-B2T\_{\omega}{\vec{x}}$之差，从0到$\omega-2$的位的加权和讲相互抵消掉，剩下一个值：$B2U\_{\omega}(\vec{x})-B2T\_{\omega}(\vec{x})=x\_{\omega-1}(2^{\omega-1}-(-2^{\omega-1}))=x\_{\omega-1}2^{\omega}$。这就得到一个关系：$B2U\_{\omega}(\vec{x})=x\_{\omega-1}2^{\omega}+B2T\_{\omega}(\vec{x})$。如果令$\vec{x}=T2B\_{\omega}{x}$，我们就得到以下的公式：   
+
