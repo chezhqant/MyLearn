@@ -131,5 +131,5 @@ printf("u=%u, ti=%d\n", u, tu);
 u=4294967295, tu=-1</br>
 
 10. 有符号数字x和与之对应的无符号数$T2U\_{\omega}(x)$之间的关系  
-我们计算$B2U\_{\omega}{\vec{x}}-B2T\_{\omega}{\vec{x}}$之差，从0到$\omega-2$的位的加权和讲相互抵消掉，剩下一个值：$B2U\_{\omega}(\vec{x})-B2T\_{\omega}(\vec{x})=x\_{\omega-1}(2^{\omega-1}-(-2^{\omega-1}))=x\_{\omega-1}2^{\omega}$。这就得到一个关系：$B2U\_{\omega}(\vec{x})=x\_{\omega-1}2^{\omega}+B2T\_{\omega}(\vec{x})$。如果令$\vec{x}=T2B\_{\omega}{x}$，我们就得到以下的公式：   
+我们计算$B2U\_{\omega}(\vec{x})-B2T\_{\omega}(\vec{x})$之差，从0到$\omega-2$的位的加权和讲相互抵消掉，剩下一个值：$B2U\_{\omega}(\vec{x})-B2T\_{\omega}(\vec{x})=x\_{\omega-1}(2^{\omega-1}-(-2^{\omega-1}))=x\_{\omega-1}2^{\omega}$。这就得到一个关系：$B2U\_{\omega}(\vec{x})=x\_{\omega-1}2^{\omega}+B2T\_{\omega}(\vec{x})$。如果令$\vec{x}=T2B\_{\omega}{x}$，我们就得到以下的公式：   
 
