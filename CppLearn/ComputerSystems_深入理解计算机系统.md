@@ -132,4 +132,15 @@ u=4294967295, tu=-1</br>
 
 10. 有符号数字x和与之对应的无符号数$T2U\_{\omega}(x)$之间的关系  
 我们计算$B2U\_{\omega}(\vec{x})-B2T\_{\omega}(\vec{x})$之差，从0到$\omega-2$的位的加权和讲相互抵消掉，剩下一个值：$B2U\_{\omega}(\vec{x})-B2T\_{\omega}(\vec{x})=x\_{\omega-1}(2^{\omega-1}-(-2^{\omega-1}))=x\_{\omega-1}2^{\omega}$。这就得到一个关系：$B2U\_{\omega}(\vec{x})=x\_{\omega-1}2^{\omega}+B2T\_{\omega}(\vec{x})$。如果令$\vec{x}=T2B\_{\omega}{x}$，我们就得到以下的公式：   
-
+$$
+B2U\_{\omega}(T2B\_{\omega}(x))=T2U\_{\omega}(x)=x\_{\omega-1}2^{\omega}+x \tag{6}\label{eg:6}
+$$
+这个关系对于证明无符号和补码运算之间的关系是很有用的。在x的补码表示中，位$x\_{\omega-1}$决定了x是否为负，得到：   
+$$
+T2U\_{\omega}(x) = 
+\begin{cases}
+& x+2^{\omega}, & \text{x$\lt$0} \\\\
+& x, & \text{x$\ge$0}
+\tag{7}\label{eg:7}
+\end{cases}
+$$
