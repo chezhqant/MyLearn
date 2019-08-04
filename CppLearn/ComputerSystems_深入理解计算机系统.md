@@ -201,7 +201,6 @@ $$
 有符号数的截断结果是：   
 $$
 \begin{split}
-B2T\_{k}([x\_{k-1}, x\_{k-2}, \ldots, x\_{0}])=U2T\_{\omega}([x\_{\omega-1}, x\_{\omega-2}, \ldots, x\_{0}]) mod 2^{k}
+B2T\_{k}([x\_{k-1}, x\_{k-2}, \ldots, x\_{0}])=U2T\_{k}(B2U\_{\omega}([x\_{\omega-1}, x\_{\omega-2}, \ldots, x\_{0}]) mod 2^{k})
 \end{split}\tag{13}\label{eg:13}
 $$
-
