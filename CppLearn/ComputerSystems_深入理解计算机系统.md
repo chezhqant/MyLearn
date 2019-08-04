@@ -163,7 +163,7 @@ B2T\_{\omega+\kappa}([x\_{\omega-1},x\_{\omega-1}, x\_{\omega-2}, \ldots, x\_{0}
 \end{split}\tag{9}\label{eg:9}
 $$
 用等式\eqref{eg:3}展开左边的表达式，得到：   
-<center>
+<left>
 $$
 \begin{split}
 B2T\_{\omega+\kappa}([x\_{\omega-1},x\_{\omega-1}, x\_{\omega-2}, \ldots, x\_{0}])= \\\\
@@ -174,4 +174,4 @@ B2T\_{\omega+\kappa}([x\_{\omega-1},x\_{\omega-1}, x\_{\omega-2}, \ldots, x\_{0}
 & =B2T\_{\omega}([x\_{\omega-1}, x\_{\omega-2}, \ldots, x\_{0}])
 \end{split}\tag{10}\label{eg:10}
 $$
-</center>
+</left>
