@@ -144,3 +144,4 @@ T2U\_{\omega}(x) =
 \tag{7}\label{eg:7}
 \end{cases}
 $$
+在公式\eqref{eg:7}中，
