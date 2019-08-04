@@ -148,4 +148,11 @@ T2U\_{\omega}(x) =
 \tag{7}\label{eg:7}
 \end{cases}
 $$
-在公式\eqref{eg:7}中，
+在公式\eqref{eg:7}中。  
+11. 扩展一个数字的位表示   
+讲一个无符号数转换为一个更大的数据类型，我们需要简单的在表示的开头添加0， 这种运算称为零扩展。讲一个补码数字转换为一个更大的数据类型可以执行符号扩展，规则是在表示中添加最高有效位的值得副本。如果我们原始值得位表示为$[x\_{\omega-1},x\_{\omega-2},\ldots,x\_{0}]$。那么扩展后$[x\_{\omega-1},\ldots,x\_{\omega-1}, x\_{\omega-2}, \ldots, x\_{0}]$。   
+证明：   
+$$
+B2T\_{\omega+\kappa}([\underbrace{x\_{\omega-1},\ldots,x\_{\omega-1}}\_{k次},x\_{\omega-1}, x\_{\omega-2}, \ldots, x\_{0}])=B2T\_{\omega}([x\_{\omega-1},x\_{\omega-2},\ldots,x\_{0}])
+\tag{8}\label{eg:8}
+$$
