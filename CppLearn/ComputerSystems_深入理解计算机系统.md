@@ -106,8 +106,8 @@ B2T\_{4}([1111]) = -1\cdot2^{3}+1\cdot2^{2}+1\cdot2^{1}+1\cdot2^{0} = 0+0+0+1 = 
 $$
 在公式\eqref{eg:4}中。让我们考虑一下$\omega$补码所能表示的值的范围。它能表示的最小值是位向量$[10\ldots0]$，最小值为$TMin\_{m}=-2^{\omega-1}$，而最大值是位向量$[01\ldots1]$(清楚具有负权的位，而设置其他的所有位),其整数值为$TMax\_{\omega}=sum\_{\omega-2}^{i=0} {2^{\omega-1}-1}$。以长度4为例子：
 $$
-\begin{split}{eqnarray}
+\begin{eqnarray}
 & TMin\_{4} = B2T\_{4}([1000])=-2^{3}=-8 \\\\
 & TMax\_{4}=B2T\_{4}([0111])= 2^{2}+2^{1}+2^{0}=4+2+1=7
-\end{split}{eqnarray}\tag{5}\label{eg:5}
+\end{eqnarray}\tag{5}\label{eg:5}
 $$
