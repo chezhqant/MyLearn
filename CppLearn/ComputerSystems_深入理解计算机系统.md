@@ -151,8 +151,23 @@ $$
 在公式\eqref{eg:7}中。  
 11. 扩展一个数字的位表示   
 讲一个无符号数转换为一个更大的数据类型，我们需要简单的在表示的开头添加0， 这种运算称为零扩展。讲一个补码数字转换为一个更大的数据类型可以执行符号扩展，规则是在表示中添加最高有效位的值得副本。如果我们原始值得位表示为$[x\_{\omega-1},x\_{\omega-2},\ldots,x\_{0}]$。那么扩展后$[x\_{\omega-1},\ldots,x\_{\omega-1}, x\_{\omega-2}, \ldots, x\_{0}]$。   
-证明：   
+要证明该式：   
 $$
 B2T\_{\omega+\kappa}([\underbrace{x\_{\omega-1},\ldots,x\_{\omega-1}}\_{k次},x\_{\omega-1}, x\_{\omega-2}, \ldots, x\_{0}])=B2T\_{\omega}([x\_{\omega-1},x\_{\omega-2},\ldots,x\_{0}])
 \tag{8}\label{eg:8}
+$$
+证明：   
+$$
+\begin{split}
+B2T\_{\omega+\kappa}([x\_{\omega-1},x\_{\omega-1}, x\_{\omega-2}, \ldots, x\_{0}])=B2T\_{\omega}([x\_{\omega-1},x\_{\omega-2},\ldots,x\_{0}])
+$$
+用等式\eqref{eg:3}展开左边的表达式，得到：   
+B2T\_{\omega+\kappa}([x\_{\omega-1},x\_{\omega-1}, x\_{\omega-2}, \ldots, x\_{0}])= \\\\
+& -x\_{\omega-1}2^{\omega}+sum\_{i=0}^{\omega-1} {x\_{i}2^{i}}= \\\\
+& -x\_{\omega-1}2^{\omega}+x\_{\omega-1}2^{\omega-1}+sum\_{i=0}^{\omega-2} {x\_{i}2^{i}}= \\\\
+& -x\_{\omega-1}(2^{\omega}-2^{\omega-1})+sum\_{i=0}^{\omega-2} {x\_{i}2^{i}}= \\\\
+& -x\_{\omega-1}2^{\omega-1}+sum\_{i=0}^{\omega-2} {x\_{i}2^{i}}= \\\\
+& B2T\_{\omega}([x\_{\omega-1}, x\_{\omega-2}, \ldots, x\_{0}])
+\tag{9}\label{eg:9}
+\end{split}
 $$
