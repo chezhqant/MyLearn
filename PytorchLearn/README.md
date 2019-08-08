@@ -13,6 +13,7 @@
     * [4.3 In - place 语义](#43-in-place-语义)
     * [4.4 向后兼容性](#44-向后兼容性)
 * [5. nn.ModuleList](#5-nnmodulelist)
+* [6. pytorch源代码理解一</br>](#6-pytorch源代码理解一br)
 
 <!-- vim-markdown-toc -->
 ---
@@ -148,3 +149,5 @@ Changing behavior in a backwards incompatible manner to broadcasting rather than
 
 ```
 ## 5. [nn.ModuleList](https://blog.csdn.net/byron123456sfsfsfa/article/details/89930990) 
+
+## 6. [pytorch源代码理解一](https://www.52coding.com.cn/2019/05/05/PyTorch1/)</br>

@@ -8,7 +8,9 @@
 > > > > #### 1.1.1 [\_\_call\_\_](https://www.cnblogs.com/superxuezhazha/p/5793536.html) </br>
 > > > > #### 1.1.2 [\_\_getattr\_\_\/\_\_setattr\_\_\/\_\_getitem\_\_\/\_\_setitem\_\_](https://blog.csdn.net/chituozha5528/article/details/78355216) </br>
 > > > > #### 1.1.3 [python类的专有方法](https://segmentfault.com/a/1190000007256392) </br>
-> > > > #### 1.1.4 [\_\_file\_\_](https://www.cnblogs.com/ajaxa/p/9016475.html)
+> > > > #### 1.1.4 [\_\_file\_\_](https://www.cnblogs.com/ajaxa/p/9016475.html)</br>
+> > > > #### 1.1.5 [\_\_dict\_\_](https://www.cnblogs.com/alvin2010/p/9102344.html)</br>
+> > > > #### 1.1.6 [\_\_getattr\_\_](https://www.jianshu.com/p/dec562715df6)</br>
 > > > ### 1.2 [MRO](https://www.cnblogs.com/ssyfj/p/9017280.html) </br>
 > > > ### 1.3 [super函数](https://www.imooc.com/article/50836) </br>
 > > > ### 1.4 [@property\/@staticmethod\/@classmethod](https://www.cnblogs.com/wangyongsong/p/6750454.html) </br>
@@ -37,15 +39,25 @@
 > > > ### 3.8 [Python的常用模块](https://www.cnblogs.com/brf-test/p/11241161.html) </br>
 > > > ### 3.9 [os模块](https://www.cnblogs.com/kaituorensheng/archive/2013/03/18/2965766.html) </br>
 > > > ### 3.10 [pydicm](https://blog.csdn.net/linhai1028/article/details/79551488) </br>
-> > > ### 3.11 [pymysql](https://www.runoob.com/python3/python3-mysql.html) </br>
+> > > ### 3.11 [PySimpleGUI](https://linux.cn/article-10027-1.html)</br>
+> > > ### 3.12 [collections](https://www.cnblogs.com/zhizhan/p/5692668.html) </br>
+> > > ### 3.13 [pymysql](https://www.runoob.com/python3/python3-mysql.html) </br>
+> > > ### 3.14 [multiprocessing](https://www.osgeo.cn/cpython/library/multiprocessing.html) </br>
+> > > ### 3.15 [python json模块](https://www.runoob.com/python/python-json.html)</br>
+
+
 
 > > ## 4. Common Functions
 > > > ### 4.1.1 [time的相关函数](https://blog.csdn.net/brucewong0516/article/details/79044905)</br>
 > > > ### 4.1.2 [copy && copy.deepcopy](https://blog.csdn.net/u010712012/article/details/79754132) </br>
 > > > ### 4.1.3 [\_\_import\_\_和import比较](https://blog.csdn.net/weixin_42670402/article/details/83472429) </br>
 
+
 > > ## 5. 异常</br>
 > > > ### 5.1. [基本理解](https://www.jianshu.com/p/66e2e4104e7c)
 
+
 > > ##6. 杂项 </br>
 > > > ### 6.1 [环境变量](https://blog.csdn.net/v_xchen_v/article/details/80393967) </br>
+> > > ### 6.2 [Python字符串前面加u,r,b的含义](https://www.cnblogs.com/liangmingshen/p/9274021.html)
+> > > ### 6.3 [python的\*](https://www.cnblogs.com/jony7/p/8035376.html)
