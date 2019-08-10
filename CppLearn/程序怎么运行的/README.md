@@ -5,14 +5,6 @@
 </p>
 
 
-<html>
-<body style="background-color:yellow">
-<h2 style="background-color:red">This is a heading</h2>
-<p style="background-color:green">This is a paragraph.</p>
-</body>
-</html>
-
-
 <!-- vim-markdown-toc Marked -->
 
 * [预处理、编译、汇编、链接](#预处理、编译、汇编、链接)
