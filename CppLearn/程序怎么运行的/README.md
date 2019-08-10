@@ -4,18 +4,27 @@
     </font>
 </p>
 
-<!-- vim-markdown-toc GFM -->
 
-* [预处理、编译、汇编、链接](#预处理编译汇编链接)
+<html>
+<body style="background-color:yellow">
+<h2 style="background-color:red">This is a heading</h2>
+<p style="background-color:green">This is a paragraph.</p>
+</body>
+</html>
+
+
+<!-- vim-markdown-toc Marked -->
+
+* [预处理、编译、汇编、链接](#预处理、编译、汇编、链接)
     * [预处理](#预处理)
             * [预处理器](#预处理器)
                 * [define处理器](#define处理器)
-* [define 处理指令用来创建符号常量。这个符号常量被称为宏。指令的一般形式是：](#define-处理指令用来创建符号常量这个符号常量被称为宏指令的一般形式是)
+* [define 处理指令用来创建符号常量。这个符号常量被称为宏。指令的一般形式是：](#define-处理指令用来创建符号常量。这个符号常量被称为宏。指令的一般形式是：)
                 * [函数宏](#函数宏)
                 * [条件编译](#条件编译)
-                * [#和##操作符](#和操作符)
-    * [操作符是用来连接两个符号的。](#操作符是用来连接两个符号的)
-                * [C++ 预定义的宏](#c-预定义的宏)
+                * [#和##操作符](##和##操作符)
+    * [操作符是用来连接两个符号的。](#操作符是用来连接两个符号的。)
+                * [C++ 预定义的宏](#c++-预定义的宏)
                 * [include会替换哪些文件](#include会替换哪些文件)
 
 <!-- vim-markdown-toc -->
