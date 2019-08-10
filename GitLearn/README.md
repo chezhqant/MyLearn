@@ -7,35 +7,6 @@
 # <p align="center"> Catalogs </p> 
 
 
-<!-- vim-markdown-toc GFM -->
-
-* [<p align="center"> Contents </p>](#p-aligncenter-contents-p)
-    * [!alt github命令总结图</br>](#alt-github命令总结图br)
-    * [git命令参考网站</br>](#git命令参考网站br)
-    * [1. git push](#1-git-push)
-    * [2. git remote](#2-git-remote)
-        * [2.1 git remote set-url](#21-git-remote-set-url)
-    * [3. git删除本地仓库](#3-git删除本地仓库)
-    * [4. git commit](#4-git-commit)
-    * [5. git fetch](#5-git-fetch)
-    * [6. markdown(先看这个)](#6-markdown先看这个)
-        * [6.1 markdown画各种图](#61-markdown画各种图)
-        * [6.2 What i found](#62-what-i-found)
-            * [6.2.1 center/right/left](#621-centerrightleft)
-            * [6.2.2 换行](#622-换行)
-        * [6.3 锚点](#63-锚点)
-        * [6.4 github中markdown中使用lex公式\/补充</br>](#64-github中markdown中使用lex公式补充br)
-        * [6.5 GitHub中给公式加编号，加完编号后引用</br>](#65-github中给公式加编号加完编号后引用br)
-            * [6.5.1 第一种</br>](#651-第一种br)
-            * [6.5.2 第二种</br>](#652-第二种br)
-            * [6.5.3 第三种</br>](#653-第三种br)
-    * [7. git diff](#7-git-diff)
-    * [8. git rm](#8-git-rm)
-        * [8.1 删除远程仓库中的文件或者文件夹](#81-删除远程仓库中的文件或者文件夹)
-    * [9. 分支](#9-分支)
-    * [10. git reset](#10-git-reset)
-
-<!-- vim-markdown-toc -->
 
 # <p align="center"> Contents </p>
 
@@ -69,6 +40,11 @@
 #### 6.2.2 换行
 结尾用两个空格或者使用`</br>` 
 ### 6.3 [锚点](https://my.oschina.net/antsky/blog/1475173?utm_medium=referral)
+### 6.3.1 自主添加锚点
+> 先定义一个锚点(id),并显示"Hello World"
+>    <span id="jump">Hello World</span>
+> 然后使用markdown的语法
+> [XXXX](#jump)
 
 ### 6.4 [github中markdown中使用lex公式](https://www.jianshu.com/p/25f0139637b7)\/[补充](https://www.zybuluo.com/codeep/note/163962#1%E5%A6%82%E4%BD%95%E8%BE%93%E5%85%A5%E4%B8%80%E4%B8%AA%E6%96%B9%E7%A8%8B%E5%BC%8F%E5%BA%8F%E5%88%97)</br>
 ### 6.5 [GitHub中给公式加编号，加完编号后引用](https://blog.csdn.net/Mage_EE/article/details/75331889)</br>
