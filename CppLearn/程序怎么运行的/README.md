@@ -231,6 +231,6 @@ C++ 提供了许多预定义的宏，如下所示：
     Value of __TIME__ : 18:52:48
 ```
 ##### include会替换哪些文件</br>
-[源文件](./test.cpp)</br>
+[源文件](./test.c)</br>
 [预处理后的文件](./test.i)</br>
 [stdio.h](./stdio.h)</br>
