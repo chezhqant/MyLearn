@@ -1,7 +1,5 @@
 <p align="center"> 
-    <font color=#0099ff size=7 face="黑体">
         Content 
-    </font>
 </p>
 
 
