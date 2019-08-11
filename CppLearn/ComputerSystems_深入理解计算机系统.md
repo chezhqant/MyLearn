@@ -38,6 +38,9 @@ gcc -m64 prog.c
 </div>
 
 
+</head>
+<body>
+
 <table border="1">
   <caption>Monthly savings</caption>
   <tr>
@@ -53,6 +56,9 @@ gcc -m64 prog.c
     <td>$50</td>
   </tr>
 </table>
+
+</body>
+</html>
 
 
 2. C语言中数字数据类型的字节数   
