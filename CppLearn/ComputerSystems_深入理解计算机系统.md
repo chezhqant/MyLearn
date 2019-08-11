@@ -37,6 +37,7 @@ gcc -m64 prog.c
     <img src="./深入理解计算机系统/字节表示.jpg" alt="字节表示"/>
 </div>
 <table border="1">
+<tbody>
 <tr>
   <th>Name</th>
   <th colspan="2">Telephone</th>
@@ -46,6 +47,7 @@ gcc -m64 prog.c
   <td>555 77 854</td>
   <td>555 77 855</td>
 </tr>
+</tbody>
 </table>
 2. C语言中数字数据类型的字节数   
 \begin{array}{|c|c|c|}
