@@ -36,29 +36,7 @@ gcc -m64 prog.c
 <div align=center>
     <img src="./深入理解计算机系统/字节表示.jpg" alt="字节表示"/>
 </div>
-<!DOCTYPE html>
-<html>
-<head> 
-<meta charset="utf-8"> 
-<title>菜鸟教程(runoob.com)</title> 
-</head>
-<body>
-
-<h4>单元格跨两格:</h4>
-<table border="1">
-<tr>
-  <th>Name</th>
-  <th colspan="2">Telephone</th>
-</tr>
-<tr>
-  <td>Bill Gates</td>
-  <td>555 77 854</td>
-  <td>555 77 855</td>
-</tr>
-</table>
-
-<h4>单元格跨两列:</h4>
-<table border="1">
+<table>
 <tr>
   <th>First Name:</th>
   <td>Bill Gates</td>
@@ -71,9 +49,6 @@ gcc -m64 prog.c
   <td>555 77 855</td>
 </tr>
 </table>
-
-</body>
-</html>
 2. C语言中数字数据类型的字节数   
 \begin{array}{|c|c|c|}
 \hline
