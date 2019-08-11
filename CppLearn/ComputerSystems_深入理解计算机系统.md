@@ -30,33 +30,8 @@ gcc -m64 prog.c
 > 2. 在内存中如何排列这些字节
 在所有的机器上，多字节对象都被存储为连续的字节序列，对象的地址为所使用字节的最小地址。例如，假设一个类型为int的变量x的地址为0x100，也就是说地址表达式&x的值是0x100。那么(假设数据类型int为32位表示)x的4字节将被存储在内存的0x100、0x101、0x102和0x103的位置。   
 6. 考虑一个$\omega$,其位表示为$[x\_{\omega-1}, x\_{\omega-2}, \cdots, x\_1, x\_0]$, 其中$x\_{\omega-1}$是最高有效位，而x\_0是最低有效位。最低有效字节在最前面的方式成为小端法；最高有效字节在最前面的方式成为大端法。   
-假设变量x的类型为int，位于地址0x100处，它的十六进制为0x01234567，地址范围0x100~0x103的字节顺序依赖于机器的类型：
+假设变量x的类型为int，位于地址0x100处，它的十六进制为0x01234567，地址范围0x100~0x103的字节顺序依赖于机器的类型：  
 [大端小段表示](./深入理解计算机系统/大小端.jpg)
-
-
-
-<table>
-  <tr>
-    <th width=10%, bgcolor=yellow >参数</th>
-    <th width=40%, bgcolor=yellow>详细解释</th>
-    <th width="50%", bgcolor=yellow>备注</th>
-  </tr>
-  <tr>
-    <td bgcolor=#eeeeee> -l </td>
-    <td> use a long listing format  </td>
-    <td> 以长列表方式显示（显示出文件/文件夹详细信息）  </td>
-  </tr>
-  <tr>
-    <td bgcolor=#00FF00>-t </td>
-    <td> sort by modification time </td>
-    <td> 按照修改时间排序（默认最近被修改的文件/文件夹排在最前面） </td>
-  <tr>
-    <td bgcolor=rgb(0,10,0)>-r </td>
-    <td> reverse order while sorting </td>
-    <td>  逆序排列 </td>
-  </tr>
-</table>
-
 
 
 \begin{array}
