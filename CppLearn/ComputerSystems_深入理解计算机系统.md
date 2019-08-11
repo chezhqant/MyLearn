@@ -38,27 +38,17 @@ gcc -m64 prog.c
 </div>
 
 
-</head>
-<body>
-
 <table border="1">
-  <caption>Monthly savings</caption>
-  <tr>
-    <th>Month</th>
-    <th>Savings</th>
-  </tr>
-  <tr>
-    <td>January</td>
-    <td>$100</td>
-  </tr>
-  <tr>
-    <td>February</td>
-    <td>$50</td>
-  </tr>
+<tr>
+  <th>Name</th>
+  <th colspan="2">Telephone</th>
+</tr>
+<tr>
+  <td>Bill Gates</td>
+  <td>555 77 854</td>
+  <td>555 77 855</td>
+</tr>
 </table>
-
-</body>
-</html>
 
 
 2. C语言中数字数据类型的字节数   
