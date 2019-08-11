@@ -37,7 +37,23 @@ gcc -m64 prog.c
     <img src="./深入理解计算机系统/字节表示.jpg" alt="字节表示"/>
 </div>
 
-![不同数值的字节表示](./深入理解计算机系统/字节表示.jpg)
+
+<table border="1">
+  <caption>Monthly savings</caption>
+  <tr>
+    <th>Month</th>
+    <th>Savings</th>
+  </tr>
+  <tr>
+    <td>January</td>
+    <td>$100</td>
+  </tr>
+  <tr>
+    <td>February</td>
+    <td>$50</td>
+  </tr>
+</table>
+
 
 2. C语言中数字数据类型的字节数   
 \begin{array}{|c|c|c|}
