@@ -14,6 +14,7 @@
     * [4.4 向后兼容性](#44-向后兼容性)
 * [5. nn.ModuleList](#5-nnmodulelist)
 * [6. pytorch源代码理解一</br>](#6-pytorch源代码理解一br)
+* [7. model.train() model.eval()](#7-modeltrain-modeleval)
 
 <!-- vim-markdown-toc -->
 ---
@@ -151,3 +152,10 @@ Changing behavior in a backwards incompatible manner to broadcasting rather than
 ## 5. [nn.ModuleList](https://blog.csdn.net/byron123456sfsfsfa/article/details/89930990) 
 
 ## 6. [pytorch源代码理解一](https://www.52coding.com.cn/2019/05/05/PyTorch1/)</br>
+
+## 7. model.train() model.eval()
+```
+int& x = 666;       // Error
+const int& x = 666; // OK
+第一个操作是错误的，它是一个使用int类型的右值来初始化non-const的int&类型的非法操作。第二个操作正确，当然，x是一个常量，你不能改变他。（译者按：注意，常量引用只是规定无法通过该引用改变引用的对象，如果该对象有其他非常量引用或者指针，通过这些改变该对象仍然是合法的）
+```
