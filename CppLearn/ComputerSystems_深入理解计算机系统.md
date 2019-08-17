@@ -36,36 +36,6 @@ gcc -m64 prog.c
 <div align=center>
     <img src="./深入理解计算机系统/字节表示.jpg" alt="字节表示"/>
 </div>
-<table border="1">
-<tr>
-  <td>
-   + <p>这是一个段落</p>
-   + <p>这是另一个段落</p>
-  </td>
-  <td>这个单元格包含一个表格:
-   <table border="1">
-   <tr>
-     <td>A</td>
-     <td>B</td>
-   </tr>
-   <tr>
-     <td>C</td>
-     <td>D</td>
-   </tr>
-   </table>
-  </td>
-</tr>
-<tr>
-  <td>这个单元格包含一个列表
-   <ul>
-    <li>apples</li>
-    <li>bananas</li>
-    <li>pineapples</li>
-   </ul>
-  </td>
-  <td>HELLO</td>
-</tr>
-</table>
 2. C语言中数字数据类型的字节数   
 \begin{array}{|c|c|c|}
 \hline
