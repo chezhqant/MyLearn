@@ -98,3 +98,4 @@ const int& x = 666; // OK
 ## [两种汇编格式](https://www.ibm.com/developerworks/cn/linux/l-assembly/index.html)   
 ## [rsp和rbp](https://zhuanlan.zhihu.com/p/27339191)   
 ## [寄存器](https://www.jianshu.com/p/57128e477efb)   
+## [寻址方式](https://www.hadoop1024.com/2018/12/16/assembly-language-chapter03/)   
