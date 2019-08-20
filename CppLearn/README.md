@@ -9,6 +9,7 @@
     * [二维数组指针](#二维数组指针)
     * [float存储方式](#float存储方式)
     * [小数表示](#小数表示)
+    * [VLA](#vla)
 * [C++基础知识](#c基础知识)
     * [參考這個](#參考這個)
     * [C++/C和Python相互调用](#cc和python相互调用)
@@ -18,6 +19,7 @@
     * [弱引用的理解](#弱引用的理解)
     * [强引用与弱引用的比较](#强引用与弱引用的比较)
     * [左值引用和右值引用](#左值引用和右值引用)
+    * [内联函数(不一定非得跟类有关系)](#内联函数不一定非得跟类有关系)
     * [类](#类)
         * [this指针](#this指针)
         * [重载、覆盖、隐藏](#重载覆盖隐藏)
@@ -27,8 +29,14 @@
             * [理解一](#理解一)
             * [理解二](#理解二)
             * [理解三](#理解三)
-            * [final关键字](#final关键字)
-            * [=delete和noncopyble](#delete和noncopyble)
+        * [final关键字](#final关键字)
+        * [=delete和noncopyble](#delete和noncopyble)
+        * [#if defined](#if-defined)
+        * [[\_\_declspec](https://blog.csdn.net/zhaoyin214/article/details/83541613)](#__declspechttpsblogcsdnnetzhaoyin214articledetails83541613)
+        * [[\_\_attribute\_\_](https://www.jianshu.com/p/e2dfccc32c80)](#__attribute__httpswwwjianshucompe2dfccc32c80)
+        * [[\_\_attribute\_\_(visibility)](https://www.jianshu.com/p/e2dfccc32c80)](#__attribute__visibilityhttpswwwjianshucompe2dfccc32c80)
+        * [[\_\_builtin\_expect — 分支预测优化](__builtin_expect — 分支预测优化:https://www.cnblogs.com/LubinLew/p/GCC-__builtin_expect.html)](#__builtin_expect--分支预测优化__builtin_expect--分支预测优化httpswwwcnblogscomlubinlewpgcc-__builtin_expecthtml)
+        * [#pragma once](#pragma-once)
     * [stl](#stl)
         * [仿函数和适配器](#仿函数和适配器)
         * [匿名函数](#匿名函数)
@@ -55,6 +63,9 @@
     * [预处理](#预处理)
     * [ELF文件格式](#elf文件格式)
     * [ELF格式解析](#elf格式解析)
+    * [[动态链接]](#动态链接)
+        * [理解一](#理解一-3)
+        * [理解二](#理解二-3)
 * [gdb](#gdb)
     * [100个gdb技巧](#100个gdb技巧)
 * [汇编](#汇编)
@@ -71,6 +82,7 @@
 ## [二维数组指针](https://blog.csdn.net/nice__xixi/article/details/82081595)   
 ## [float存储方式](http://blog.sina.com.cn/s/blog_973657a00102x2do.html)    
 ## [小数表示](https://blog.csdn.net/github_33873969/article/details/78040129)   
+## [VLA](https://www.cnblogs.com/Suzzz/p/4117431.html)   
 
 
 # [C++基础知识](https://www.runoob.com/cplusplus/cpp-tutorial.html)  
@@ -93,6 +105,7 @@ int& x = 666;       // Error
 const int& x = 666; // OK
 第一个操作是错误的，它是一个使用int类型的右值来初始化non-const的int&类型的非法操作。第二个操作正确，当然，x是一个常量，你不能改变他。（译者按：注意，常量引用只是规定无法通过该引用改变引用的对象，如果该对象有其他非常量引用或者指针，通过这些改变该对象仍然是合法的）
 ```
+## [内联函数(不一定非得跟类有关系)](https://www.cnblogs.com/zsq1993/p/5978743.html)   
 
 ## 类   
 ### [this指针](https://www.cnblogs.com/Star-Lit/p/8623050.html)    
@@ -103,8 +116,14 @@ const int& x = 666; // OK
 #### [理解一]( https://www.cnblogs.com/fushi/p/7792257.html)    
 #### [理解二](https://blog.csdn.net/u012453032/article/details/79485251)    
 #### [理解三](https://www.jianshu.com/p/a809eae05ad8)    
-#### [final关键字](https://blog.csdn.net/u012333003/article/details/28696521)   
-#### [=delete和noncopyble](https://blog.csdn.net/tm8426/article/details/73472496)    
+### [final关键字](https://blog.csdn.net/u012333003/article/details/28696521)   
+### [=delete和noncopyble](https://blog.csdn.net/tm8426/article/details/73472496)    
+### [#if defined](https://blog.csdn.net/wangkeyen/article/details/50971469)   
+### [\_\_declspec](https://blog.csdn.net/zhaoyin214/article/details/83541613)    
+### [\_\_attribute\_\_](https://www.jianshu.com/p/e2dfccc32c80)     
+### [\_\_attribute\_\_(visibility)](https://www.jianshu.com/p/e2dfccc32c80)    
+### [\_\_builtin\_expect — 分支预测优化](__builtin_expect — 分支预测优化:https://www.cnblogs.com/LubinLew/p/GCC-__builtin_expect.html)    
+### [#pragma once](https://blog.csdn.net/cv_jason/article/details/81842710)    
 
 
 
@@ -156,6 +175,9 @@ const int& x = 666; // OK
 ## [预处理](./程序怎么运行的/README.md)    
 ## [ELF文件格式](https://luomuxiaoxiao.com/?p=139)   
 ## [ELF格式解析](https://paper.seebug.org/papers/Archive/refs/elf/Understanding_ELF.pdf)    
+## [动态链接]
+### [理解一](https://www.jianshu.com/p/5deed1bf82b4)   
+### [理解二](https://github.com/tinyclub/open-c-book/blob/master/zh/chapters/02-chapter4.markdown)     
 
 
 # gdb    
