@@ -35,7 +35,7 @@
         * [[\_\_declspec](https://blog.csdn.net/zhaoyin214/article/details/83541613)](#__declspechttpsblogcsdnnetzhaoyin214articledetails83541613)
         * [[\_\_attribute\_\_](https://www.jianshu.com/p/e2dfccc32c80)](#__attribute__httpswwwjianshucompe2dfccc32c80)
         * [[\_\_attribute\_\_(visibility)](https://www.jianshu.com/p/e2dfccc32c80)](#__attribute__visibilityhttpswwwjianshucompe2dfccc32c80)
-        * [[\_\_builtin\_expect — 分支预测优化](__builtin_expect — 分支预测优化:https://www.cnblogs.com/LubinLew/p/GCC-__builtin_expect.html)](#__builtin_expect--分支预测优化__builtin_expect--分支预测优化httpswwwcnblogscomlubinlewpgcc-__builtin_expecthtml)
+        * [[\_\_builtin\_expect — 分支预测优化](https://www.cnblogs.com/LubinLew/p/GCC-__builtin_expect.html)](#__builtin_expect--分支预测优化httpswwwcnblogscomlubinlewpgcc-__builtin_expecthtml)
         * [#pragma once](#pragma-once)
     * [stl](#stl)
         * [仿函数和适配器](#仿函数和适配器)
@@ -122,7 +122,7 @@ const int& x = 666; // OK
 ### [\_\_declspec](https://blog.csdn.net/zhaoyin214/article/details/83541613)    
 ### [\_\_attribute\_\_](https://www.jianshu.com/p/e2dfccc32c80)     
 ### [\_\_attribute\_\_(visibility)](https://www.jianshu.com/p/e2dfccc32c80)    
-### [\_\_builtin\_expect — 分支预测优化](__builtin_expect — 分支预测优化:https://www.cnblogs.com/LubinLew/p/GCC-__builtin_expect.html)    
+### [\_\_builtin\_expect — 分支预测优化](https://www.cnblogs.com/LubinLew/p/GCC-__builtin_expect.html)    
 ### [#pragma once](https://blog.csdn.net/cv_jason/article/details/81842710)    
 
 
