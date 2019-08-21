@@ -20,10 +20,13 @@
     * [强引用与弱引用的比较](#强引用与弱引用的比较)
     * [左值引用和右值引用](#左值引用和右值引用)
     * [内联函数(不一定非得跟类有关系)](#内联函数不一定非得跟类有关系)
+    * [使用Valgrind检测C++内存泄露](#使用valgrind检测c内存泄露)
     * [类](#类)
         * [this指针](#this指针)
         * [重载、覆盖、隐藏](#重载覆盖隐藏)
+        * [const成员函数](#const成员函数)
     * [关键字](#关键字)
+        * [decltype](#decltype)
         * [override](#override)
         * [constexptr](#constexptr)
             * [理解一](#理解一)
@@ -37,6 +40,9 @@
         * [[\_\_attribute\_\_(visibility)](https://www.jianshu.com/p/e2dfccc32c80)](#__attribute__visibilityhttpswwwjianshucompe2dfccc32c80)
         * [[\_\_builtin\_expect — 分支预测优化](https://www.cnblogs.com/LubinLew/p/GCC-__builtin_expect.html)](#__builtin_expect--分支预测优化httpswwwcnblogscomlubinlewpgcc-__builtin_expecthtml)
         * [#pragma once](#pragma-once)
+        * [=default和=deleted](#default和deleted)
+        * [typename](#typename)
+        * [使用using代替typedef](#使用using代替typedef)
     * [stl](#stl)
         * [仿函数和适配器](#仿函数和适配器)
         * [匿名函数](#匿名函数)
@@ -63,6 +69,8 @@
     * [预处理](#预处理)
     * [ELF文件格式](#elf文件格式)
     * [ELF格式解析](#elf格式解析)
+    * [可从定位文件](#可从定位文件)
+    * [[动态库](./001_4 Linux下的动态连接库及其实现机制(修订版).rtf)](#动态库001_4-linux下的动态连接库及其实现机制修订版rtf)
     * [[动态链接]](#动态链接)
         * [理解一](#理解一-3)
         * [理解二](#理解二-3)
@@ -106,11 +114,14 @@ const int& x = 666; // OK
 第一个操作是错误的，它是一个使用int类型的右值来初始化non-const的int&类型的非法操作。第二个操作正确，当然，x是一个常量，你不能改变他。（译者按：注意，常量引用只是规定无法通过该引用改变引用的对象，如果该对象有其他非常量引用或者指针，通过这些改变该对象仍然是合法的）
 ```
 ## [内联函数(不一定非得跟类有关系)](https://www.cnblogs.com/zsq1993/p/5978743.html)   
+## [使用Valgrind检测C++内存泄露](http://senlinzhan.github.io/page/3/)    
 
 ## 类   
 ### [this指针](https://www.cnblogs.com/Star-Lit/p/8623050.html)    
 ### [重载、覆盖、隐藏](https://www.cnblogs.com/ZY-Dream/p/10068993.html)    
+### [const成员函数](https://blog.csdn.net/u011197534/article/details/78385550)    
 ## 关键字   
+### [decltype](https://www.cnblogs.com/QG-whz/p/4952980.html)    
 ### [override](https://blog.csdn.net/jolin678/article/details/63695023)    
 ### constexptr
 #### [理解一]( https://www.cnblogs.com/fushi/p/7792257.html)    
@@ -124,6 +135,9 @@ const int& x = 666; // OK
 ### [\_\_attribute\_\_(visibility)](https://www.jianshu.com/p/e2dfccc32c80)    
 ### [\_\_builtin\_expect — 分支预测优化](https://www.cnblogs.com/LubinLew/p/GCC-__builtin_expect.html)    
 ### [#pragma once](https://blog.csdn.net/cv_jason/article/details/81842710)    
+### [=default和=deleted](https://www.ibm.com/developerworks/cn/aix/library/1212_lufang_c11new/index.html)    
+### [typename](http://feihu.me/blog/2014/the-origin-and-usage-of-typename/)    
+### [使用using代替typedef]( https://blog.csdn.net/big_yellow_duck/article/details/52224068)   
 
 
 
@@ -141,6 +155,8 @@ const int& x = 666; // OK
 1. OSI七层模型    
     1.1. [解析一](https://blog.csdn.net/qq\_16093323/article/details/79582554)   
     1.2. [解析二](https://blog.csdn.net/taotongning/article/details/81352985)    
+2. [计算机网络编程](https://www.cnblogs.com/5iedu/category/937714.html)     
+3. [计算机网络原理](https://www.cnblogs.com/5iedu/category/994985.html)    
 
 
 # 数据库    
@@ -161,6 +177,7 @@ const int& x = 666; // OK
 # 设计模式    
 1. [观察者模式](https://www.jianshu.com/p/4b0aee15cdb8)   
 2. [代理模式](https://blog.csdn.net/a369189453/article/details/81275740)    
+3. [设计模式](https://www.cnblogs.com/5iedu/category/825371.html)    
 
 
 # 异常   
@@ -175,6 +192,8 @@ const int& x = 666; // OK
 ## [预处理](./程序怎么运行的/README.md)    
 ## [ELF文件格式](https://luomuxiaoxiao.com/?p=139)   
 ## [ELF格式解析](https://paper.seebug.org/papers/Archive/refs/elf/Understanding_ELF.pdf)    
+## [可从定位文件](http://liujunming.top/2016/07/19/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E9%93%BE%E6%8E%A5%EF%BC%88%E4%B8%80%EF%BC%89/)   
+## [动态库](./001_4 Linux下的动态连接库及其实现机制(修订版).rtf)    
 ## [动态链接]
 ### [理解一](https://www.jianshu.com/p/5deed1bf82b4)   
 ### [理解二](https://github.com/tinyclub/open-c-book/blob/master/zh/chapters/02-chapter4.markdown)     
