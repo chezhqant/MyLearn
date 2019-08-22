@@ -69,7 +69,9 @@
     * [预处理](#预处理)
     * [ELF文件格式](#elf文件格式)
     * [ELF格式解析](#elf格式解析)
-    * [可从定位文件](#可从定位文件)
+    * [可重定位文件](#可重定位文件)
+    * [fPIC](#fpic)
+    * [通过GDB调试理解GOT/PLT](#通过gdb调试理解gotplt)
     * [动态库](#动态库)
     * [[动态链接]](#动态链接)
         * [理解一](#理解一-3)
@@ -192,9 +194,11 @@ const int& x = 666; // OK
 ## [预处理](./程序怎么运行的/README.md)    
 ## [ELF文件格式](https://luomuxiaoxiao.com/?p=139)   
 ## [ELF格式解析](https://paper.seebug.org/papers/Archive/refs/elf/Understanding_ELF.pdf)    
-## [可从定位文件](http://liujunming.top/2016/07/19/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E9%93%BE%E6%8E%A5%EF%BC%88%E4%B8%80%EF%BC%89/)   
+## [可重定位文件](http://liujunming.top/2016/07/19/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E9%93%BE%E6%8E%A5%EF%BC%88%E4%B8%80%EF%BC%89/)   
+## [fPIC](https://www.cnblogs.com/cswuyg/p/3830703.html)    
+## [通过GDB调试理解GOT/PLT](http://rickgray.me/2015/08/07/use-gdb-to-study-got-and-plt/)    
 ## [动态库](./Linux下的动态连接库及其实现机制修订版.rtf)    
-## [动态链接]
+## [动态链接]   
 ### [理解一](https://www.jianshu.com/p/5deed1bf82b4)   
 ### [理解二](https://github.com/tinyclub/open-c-book/blob/master/zh/chapters/02-chapter4.markdown)     
 
