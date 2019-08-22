@@ -77,6 +77,7 @@
         * [理解一](#理解一-3)
         * [理解二](#理解二-3)
 * [gdb](#gdb)
+    * [gdb调试基础](#gdb调试基础)
     * [100个gdb技巧](#100个gdb技巧)
 * [汇编](#汇编)
     * [两种汇编格式](#两种汇编格式)
@@ -204,6 +205,7 @@ const int& x = 666; // OK
 
 
 # gdb    
+## [gdb调试基础](https://wiki.ubuntu.org.cn/%E7%94%A8GDB%E8%B0%83%E8%AF%95%E7%A8%8B%E5%BA%8F)   
 ## [100个gdb技巧](https://www.kancloud.cn/itfanr/i-100-gdb-tips/81888)   
 
 
