@@ -43,6 +43,7 @@
         * [=default和=deleted](#default和deleted)
         * [typename](#typename)
         * [使用using代替typedef](#使用using代替typedef)
+        * [mutable](#mutable)
     * [stl](#stl)
         * [仿函数和适配器](#仿函数和适配器)
         * [匿名函数](#匿名函数)
@@ -86,6 +87,13 @@
     * [寻址方式](#寻址方式)
 * [优化](#优化)
     * [simd](#simd)
+* [C++11](#c11)
+    * [深入理解C++11](#深入理解c11)
+    * [Effective Modern C++](#effective-modern-c)
+* [泛型编程和元编程](#泛型编程和元编程)
+    * [C++ Templates: The Complete Guide (2nd Edition)](#c-templates-the-complete-guide-2nd-edition)
+    * [C++ Template Metaprogramming: Concepts, Tools, and Techniques from Boost and Beyond](#c-template-metaprogramming-concepts-tools-and-techniques-from-boost-and-beyond)
+    * [C++ Concurrency in Action: Practical Multithreading](#c-concurrency-in-action-practical-multithreading)
 
 <!-- vim-markdown-toc -->
 
@@ -141,6 +149,7 @@ const int& x = 666; // OK
 ### [=default和=deleted](https://www.ibm.com/developerworks/cn/aix/library/1212_lufang_c11new/index.html)    
 ### [typename](http://feihu.me/blog/2014/the-origin-and-usage-of-typename/)    
 ### [使用using代替typedef]( https://blog.csdn.net/big_yellow_duck/article/details/52224068)   
+### [mutable](https://blog.csdn.net/aaa123524457/article/details/80967330)    
 
 
 
@@ -218,3 +227,14 @@ const int& x = 666; // OK
 
 # 优化
 ## [simd](https://zhuanlan.zhihu.com/p/55327037)   
+
+
+# C++11
+## 深入理解C++11   
+## Effective Modern C++   
+
+
+# 泛型编程和元编程
+## C++ Templates: The Complete Guide (2nd Edition)   
+## C++ Template Metaprogramming: Concepts, Tools, and Techniques from Boost and Beyond    
+## C++ Concurrency in Action: Practical Multithreading   
