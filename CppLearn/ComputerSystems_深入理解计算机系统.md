@@ -7,7 +7,11 @@ ___when coding, i find to understand basic computer knowledge vaguelly, so i rea
 
 
 <p align="center"> Content </p> </br>
-
+## 第一章 计算机系统漫游   
+1. 计算机系统是由硬件和系统软件组成    
+2. 源程序实际上就是一个由值0和1组成的位（又称为比特）序列，8个为被组织成一组，成为字节。每个字节表示程序中的某些文本字符。   
+3. 编译系统如下图所示：     
+![编译系统](./深入理解计算机系统/编译系统.png)
 ## 第二章 信息的表示和处理
 
 
