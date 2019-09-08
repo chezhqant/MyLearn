@@ -14,17 +14,17 @@ ___when coding, i find to understand basic computer knowledge vaguelly, so i rea
 3. 编译系统如下图所示：     
 ![编译系统](./深入理解计算机系统/编译系统.PNG "编译系统")   
 4. 解释上面一条    
-'''C源代码
+```C源代码
 #include <stdio.h>
 int main()
 {
     print("hello, world\n");
     return 0;
 }
-'''
+```
     - __预处理阶段__。预处理器根据以字符#开头的命令，修改原始的C程序。比如hello.c中的第一行的#include<stdio.h>tdio.h的内容，并把它直接插入程序文本中。结果就得到了另一个C程序，通常以.i作为文件扩展名。   
     - ___编译阶段___。编译器(ccl)将文本文件hello.i翻译成文本文件hello.s，它包括一个__汇编程序__。改程序包括函数main的定义，如下图所示：    
-'''汇编程序
+```汇编程序
 main:
     subq $8, %rsp
     movl $.LC0, %edi
@@ -32,7 +32,7 @@ main:
     movl $0, %eax
     addq $8, %rsp
     ret
-'''
+```
     - __汇编阶段__。接下来，汇编器(as)将hello.s翻译成机器语言指令，把这些指令打包成一种叫做__可重定位目标程序__的格式，并将结果保存在目标文件hello.o中。hello.o文件是一个二进制文件，它包括17个字节是函数main的指令编码。如果我们在文本编辑器中打开hello.o文件，将看到一堆乱码。     
     - __链接阶段__。hello程序调用了printf函数，它是每个C编辑器都提供的标准C库中的一个函数。printf函数存在于一个名为printf.o的单独的预编译好了的目标文件中，而这个文件必须以某种方式合并到我们的hello.o程序中。连接器(ld)就负责处理这种合并。结果就得到hello文件，它是一个可执行目标文件，可以被夹在到内存中，有系统执行。    
 ## 第二章 信息的表示和处理   
