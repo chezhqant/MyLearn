@@ -89,7 +89,8 @@
     * [simd](#simd)
 * [C++11](#c11)
     * [深入理解C++11](#深入理解c11)
-    * [Effective Modern C++](#effective-modern-c)
+    * [Effective Modern C++(部分翻译)](#effective-modern-c部分翻译)
+    * [Effective Modern C++(英文书)](#effective-modern-c英文书)
 * [泛型编程和元编程](#泛型编程和元编程)
     * [C++ Templates: The Complete Guide (2nd Edition)](#c-templates-the-complete-guide-2nd-edition)
     * [C++ Template Metaprogramming: Concepts, Tools, and Techniques from Boost and Beyond](#c-template-metaprogramming-concepts-tools-and-techniques-from-boost-and-beyond)
@@ -231,7 +232,8 @@ const int& x = 666; // OK
 
 # C++11
 ## 深入理解C++11   
-## Effective Modern C++   
+## [Effective Modern C++(部分翻译)](https://github.com/kelthuzadx/EffectiveModernCppChinese)     
+## [Effective Modern C++(英文书)](./)
 
 
 # 泛型编程和元编程
