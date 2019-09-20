@@ -16,6 +16,7 @@ eh, there are some cpps(two or three?) is wrong in the directory of Array, becau
 + [二分查找](./二分查找.docx) </br>
 + [哈希表](./哈希表.docx) </br>
 + [排序算法](./排序算法.docx) </br>
++ [AVL](https://zhuanlan.zhihu.com/p/34899732)      
 
 # 1. [DFS](./DFS)</br>
 + [Same Tree](./DFS/SameTree.cpp) 
