@@ -20,6 +20,7 @@
     * [强引用与弱引用的比较](#强引用与弱引用的比较)
     * [左值引用和右值引用](#左值引用和右值引用)
     * [内联函数(不一定非得跟类有关系)](#内联函数不一定非得跟类有关系)
+    * [内联函数追根究底](#内联函数追根究底)
     * [使用Valgrind检测C++内存泄露](#使用valgrind检测c内存泄露)
     * [类](#类)
         * [this指针](#this指针)
@@ -95,6 +96,8 @@
     * [C++ Templates: The Complete Guide (2nd Edition)](#c-templates-the-complete-guide-2nd-edition)
     * [C++ Template Metaprogramming: Concepts, Tools, and Techniques from Boost and Beyond](#c-template-metaprogramming-concepts-tools-and-techniques-from-boost-and-beyond)
     * [C++ Concurrency in Action: Practical Multithreading](#c-concurrency-in-action-practical-multithreading)
+* [内核](#内核)
+    * [CPU解释](#cpu解释)
 
 <!-- vim-markdown-toc -->
 
@@ -126,6 +129,7 @@ const int& x = 666; // OK
 第一个操作是错误的，它是一个使用int类型的右值来初始化non-const的int&类型的非法操作。第二个操作正确，当然，x是一个常量，你不能改变他。（译者按：注意，常量引用只是规定无法通过该引用改变引用的对象，如果该对象有其他非常量引用或者指针，通过这些改变该对象仍然是合法的）
 ```
 ## [内联函数(不一定非得跟类有关系)](https://www.cnblogs.com/zsq1993/p/5978743.html)   
+## [内联函数追根究底](https://zhuanlan.zhihu.com/p/50812510)        
 ## [使用Valgrind检测C++内存泄露](http://senlinzhan.github.io/page/3/)    
 
 ## 类   
@@ -240,3 +244,6 @@ const int& x = 666; // OK
 ## C++ Templates: The Complete Guide (2nd Edition)   
 ## C++ Template Metaprogramming: Concepts, Tools, and Techniques from Boost and Beyond    
 ## C++ Concurrency in Action: Practical Multithreading   
+
+# 内核      
+## [CPU解释](https://www.cnblogs.com/kimsimple/p/7787018.html)      
