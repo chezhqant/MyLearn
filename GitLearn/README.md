@@ -49,7 +49,6 @@
 > \label{eq:Sample}
 > \end{equation}
 > 在公式 \eqref{eq:Sample} 中，我们看到了这个被自动编号的公式。  
-
         2. 第二种   
 > $$
 > E=mc^2 \tag{3.2}\label{3.2}
