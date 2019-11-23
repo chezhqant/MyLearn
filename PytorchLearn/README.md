@@ -15,6 +15,7 @@
 * [5. nn.ModuleList](#5-nnmodulelist)
 * [6. pytorch源代码理解一</br>](#6-pytorch源代码理解一br)
 * [7. model.train() model.eval()](#7-modeltrain-modeleval)
+* [8. focal loss](#8-focal-loss)
 
 <!-- vim-markdown-toc -->
 ---
@@ -159,3 +160,6 @@ int& x = 666;       // Error
 const int& x = 666; // OK
 第一个操作是错误的，它是一个使用int类型的右值来初始化non-const的int&类型的非法操作。第二个操作正确，当然，x是一个常量，你不能改变他。（译者按：注意，常量引用只是规定无法通过该引用改变引用的对象，如果该对象有其他非常量引用或者指针，通过这些改变该对象仍然是合法的）
 ```
+
+## 8. [focal loss](https://www.cnblogs.com/king-lps/p/9497836.html)   
+    + [验证`gamma`和`alpha`对focal loss的影响](./scripts/plot\_focal\_loss.py)    
