@@ -162,4 +162,4 @@ const int& x = 666; // OK
 ```
 
 ## 8. [focal loss](https://www.cnblogs.com/king-lps/p/9497836.html)   
-    + [验证`gamma`和`alpha`对focal loss的影响](./scripts/plot\_focal\_loss.py)    
+    + [验证gamma和alpha对focal loss的影响](./scripts/plot\_focal\_loss.py)    
