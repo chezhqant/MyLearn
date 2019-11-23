@@ -6,37 +6,37 @@
 > > ## 1. Class</br>
 > > > ### 1.1 专有方法 </br>
 > > > > #### 1.1.0 \_\_call\_\_再次理解
-```
-#coding:utf-8
+        ```
+        #coding:utf-8
 
-import os
+        import os
 
-class A:
-    def __init__(self, value):
-        self.num = value
+        class A:
+            def __init__(self, value):
+                self.num = value
 
-    def f1(self):
-        print("excute f1")
-        self.result = [1] #虽然没有在__init__中定义，但它仍然是实例变量，只不过这个函数一定得被执行，才能创建这个实例变量，在这个程序中，因为"a()"触发了"__call__"，"__call__"又触发了f1(),所以在"a.f3()"中，能够使用self.result
-    
-    def f2(self):
-        print("excute f2")
-        self.result = [2]
+            def f1(self):
+                print("excute f1")
+                self.result = [1] #虽然没有在__init__中定义，但它仍然是实例变量，只不过这个函数一定得被执行，才能创建这个实例变量，在这个程序中，因为"a()"触发了"__call__"，"__call__"又触发了f1(),所以在"a.f3()"中，能够使用self.result
+            
+            def f2(self):
+                print("excute f2")
+                self.result = [2]
 
-    def f3(self):
-        self()#这句话在pycharm中有解释为：covert method to attribute, 它调用了__call__；功能与"a()"是一样的
-        return self.result
+            def f3(self):
+                self()#这句话在pycharm中有解释为：covert method to attribute, 它调用了__call__；功能与"a()"是一样的
+                return self.result
 
-    def __call__(self):
-        print(r"__call is called")
-        self.f1()
+            def __call__(self):
+                print(r"__call is called")
+                self.f1()
 
-if __name__ == "__main__":
-    a = A(3)
-    #a()
-    a.f3()
-    #print(a.result)
-```
+        if __name__ == "__main__":
+            a = A(3)
+            #a()
+            a.f3()
+            #print(a.result)
+        ```
 > > > > #### 1.1.1. [\_\_call\_\_](https://www.cnblogs.com/superxuezhazha/p/5793536.html) </br>
 > > > > #### 1.1.2. [\_\_getattr\_\_\/\_\_setattr\_\_\/\_\_getitem\_\_\/\_\_setitem\_\_](https://blog.csdn.net/chituozha5528/article/details/78355216) </br>
 > > > > #### 1.1.3. [python类的专有方法](https://segmentfault.com/a/1190000007256392) </br>
