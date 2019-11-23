@@ -4,59 +4,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def plot_func(alpha):
-    x = np.linspace(0, 1, 50, endpoint=False)
-    y_pos_025_0 = -alpha * (1-x)**0 * np.log2(x)
-    y_pos_025_05 = -alpha * (1-x)**0.5 * np.log2(x)
-    y_pos_025_1 = -alpha * (1-x)**1 * np.log2(x)
-    y_pos_025_2 = -alpha * (1-x)**2 * np.log2(x)
-    y_pos_025_5 = -alpha * (1-x)**5 * np.log2(x)
-
-    # print("x is {0}, y is {1}".format(x, y_pos))
-    y_neg_025_2 = (alpha-1) * x**2 * np.log2((1-x))
-
-    # print("x's type is {0}, y's type is {1}".format(type(x), type(y_pos)))
-
-    plt.plot(
-        x,
-        y_pos_025_0,
-        linestyle='-',
-        marker='|',
-        color='r',
-        label='pos_alpha0.25_gamma0')
-    plt.plot(
-        x,
-        y_pos_025_05,
-        linestyle='-',
-        marker=',',
-        color='goldenrod',
-        label='pos_alpha0.25_gamma05')
-    plt.plot(
-        x,
-        y_pos_025_1,
-        linestyle='-',
-        marker='o',
-        color='coral',
-        label='pos_alpha0.25_gamma1')
-    plt.plot(
-        x,
-        y_pos_025_2,
-        linestyle='-',
-        marker='v',
-        color='azure',
-        label='pos_alpha0.25_gamma2')
-    plt.plot(
-        x,
-        y_pos_025_5,
-        linestyle='-',
-        marker='o',
-        color='brown',
-        label='pos_alpha0.25_gamma5')
-    plt.plot(x, y_neg_025_2, '--', color='b', label='neg_alpha0.25_gamma2')
-    plt.legend(loc='best')
-    plt.show()
-    # plt.savefig("pos.jpg")
-
 def plot_func(x, alpha, gamma):
     pos = -alpha * (1-x)**gamma * np.log2(x)
     neg = (alpha-1) * x**gamma * np.log2((1-x))
@@ -64,8 +11,6 @@ def plot_func(x, alpha, gamma):
     return [pos, neg]
 
 if __name__ == "__main__":
-    # plot_func(0.25)
-
 
     x = np.linspace(0, 1, 50, endpoint=False)
     # y_pos/neg_alpha_gamma
