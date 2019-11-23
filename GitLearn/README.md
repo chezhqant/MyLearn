@@ -32,7 +32,7 @@
 <p align="left"> chezhai </p>
 ```     
 
-        1. 换行   
+        2. 换行   
 结尾用两个空格或者使用`</br>`   
     8. [锚点](https://my.oschina.net/antsky/blog/1475173?utm_medium=referral)   
         1. 自主添加锚点  
