@@ -18,8 +18,8 @@
 
 2. git的一些命令详解   
 2.1. [git push](https://blog.csdn.net/hobhunter/article/details/79463168)   
-2.2. [git remote](https://www.cnblogs.com/irocker/p/git-remote.html)  
-    2.2.1. [git remote set-url](https://blog.csdn.net/lamp_yang_3533/article/details/80379246)   
+    2.2. [git remote](https://www.cnblogs.com/irocker/p/git-remote.html)  
+        2.2.1. [git remote set-url](https://blog.csdn.net/lamp_yang_3533/article/details/80379246)   
 2.3. [git删除本地仓库](https://www.cnblogs.com/zgcr654321/p/9655543.html)   
 2.4. [git commit](https://www.cnblogs.com/qianqiannian/p/6005628.html)   
 2.5. [git fetch](https://www.cnblogs.com/chenlogin/p/6592228.html)   
