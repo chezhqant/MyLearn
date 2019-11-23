@@ -31,7 +31,6 @@
 <p align="right"> chezhai </p>
 <p align="left"> chezhai </p>
 ```     
-
         2. 换行   
 结尾用两个空格或者使用`</br>`   
     8. [锚点](https://my.oschina.net/antsky/blog/1475173?utm_medium=referral)   
