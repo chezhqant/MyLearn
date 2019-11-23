@@ -112,4 +112,4 @@ if __name__ == "__main__":
 > > > ### 6.3 [python的\*](https://www.cnblogs.com/jony7/p/8035376.html)
 > > > ### 6.4 [基本类型]   
 > > > > #### 6.4.1. [list]
-> > > > ##### 6.4.1.1. [[list::]](https://blog.csdn.net/qq\_41940950/article/details/80765674)
+> > > > > ##### 6.4.1.1. [\[list::\]](https://blog.csdn.net/qq\_41940950/article/details/80765674)
