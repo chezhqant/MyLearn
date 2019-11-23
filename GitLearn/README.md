@@ -52,23 +52,23 @@ E=mc^2 \text{，自动编号公式示例}
 $$
 在公式 \eqref{eq:Sample} 中，我们看到了这个被自动编号的公式。  
         2. 第二种   
-> $$
-> E=mc^2 \tag{3.2}\label{3.2}
-> $$
-> 在公式 \eqref{3.2} 中，我们看到了这个被自动编号的公式。</br>
+$$
+E=mc^2 \tag{3.2}\label{3.2}
+$$
+在公式 \eqref{3.2} 中，我们看到了这个被自动编号的公式。</br>
 
         3. 第三种   
-> $$
-> \begin{split}
-> E=mc^2 \text{自动编号公式示例} \\\\ 
-> E=mc^2 \text{自动编号公式示例} \\\\
-> E=mc^2 \text{自动编号公式示例} \\\\
-> E=mc^2 \text{自动编号公式示例} \\\\
-> E=mc^2 \text{自动编号公式示例} \\\\
-> E=mc^2 \text{自动编号公式示例}
-> \end{split}\tag{3.3}\label{3.3}
-> $$
-> 在公式 \eqref{3.3} 中，我们看到了这个被自动编号的公式。</br>
+ $$
+ \begin{split}
+ E=mc^2 \text{自动编号公式示例} \\\\ 
+ E=mc^2 \text{自动编号公式示例} \\\\
+ E=mc^2 \text{自动编号公式示例} \\\\
+ E=mc^2 \text{自动编号公式示例} \\\\
+ E=mc^2 \text{自动编号公式示例} \\\\
+ E=mc^2 \text{自动编号公式示例}
+ \end{split}\tag{3.3}\label{3.3}
+ $$
+在公式 \eqref{3.3} 中，我们看到了这个被自动编号的公式。</br>
 
     11. [git diff](https://www.cnblogs.com/qianqiannian/p/6010219.html)   
     12. [git rm](https://www.cnblogs.com/everfight/p/git_rm_usage.html)   
