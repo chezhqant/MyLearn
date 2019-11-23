@@ -106,10 +106,10 @@ if __name__ == "__main__":
 > > > ### 5.1. [基本理解](https://www.jianshu.com/p/66e2e4104e7c)
 
 
-> > ##6. 杂项 </br>
+> > ## 6. 杂项 </br>
 > > > ### 6.1 [环境变量](https://blog.csdn.net/v_xchen_v/article/details/80393967) </br>
 > > > ### 6.2 [Python字符串前面加u,r,b的含义](https://www.cnblogs.com/liangmingshen/p/9274021.html)
 > > > ### 6.3 [python的\*](https://www.cnblogs.com/jony7/p/8035376.html)
 > > > ### 6.4 [基本类型]   
-> > > > #### 6.4.1. [list]
-> > > > > ##### 6.4.1.1. [\[list::\]](https://blog.csdn.net/qq\_41940950/article/details/80765674)
+> > > > #### 6.4.1. [list]   
+> > > > > ##### 6.4.1.1. [\[list::\]](https://blog.csdn.net/qq\_41940950/article/details/80765674)   
