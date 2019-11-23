@@ -43,6 +43,7 @@ if __name__ == "__main__":
 > > > > #### 1.1.4 [\_\_file\_\_](https://www.cnblogs.com/ajaxa/p/9016475.html)</br>
 > > > > #### 1.1.5 [\_\_dict\_\_](https://www.cnblogs.com/alvin2010/p/9102344.html)</br>
 > > > > #### 1.1.6 [\_\_getattr\_\_](https://www.jianshu.com/p/dec562715df6)</br>
+> > > > #### 1.1.7 __[\_\_enter\_\_, \_\_exit\_\_](https://www.cnblogs.com/lipijin/p/4460487.html)    
 > > > ### 1.2 [MRO](https://www.cnblogs.com/ssyfj/p/9017280.html) </br>
 > > > ### 1.3 [super函数](https://www.imooc.com/article/50836) </br>
 > > > ### 1.4 [@property\/@staticmethod\/@classmethod](https://www.cnblogs.com/wangyongsong/p/6750454.html) </br>
@@ -61,29 +62,38 @@ if __name__ == "__main__":
 > > > ### [yield](https://www.ibm.com/developerworks/cn/opensource/os-cn-python-yield/index.html) </br>
 
 > > ## 3. Packages
-> > > ### 3.1 [csv](https://www.cnblogs.com/wuxunyan/p/10442444.html)</br>
-> > > ### 3.2 [sys.module](https://www.cnblogs.com/zhaojingyu/p/9069076.html)</br>
-> > > ### 3.3 [xml解释器](https://blog.csdn.net/guangmingsky/article/details/77601225)</br>
-> > > ### 3.4 [pika](https://pypi.org/project/pika/)</br>
-> > > ### 3.5 [python导入包](https://blog.csdn.net/chinesepython/article/details/82113575) </br>
-> > > ### 3.6 [logging](https://www.cnblogs.com/Nicholas0707/p/9021672.html) </br>
-> > > ### 3.7 [shutil](https://www.jb51.net/article/145522.htm) </br>
-> > > ### 3.8 [Python的常用模块](https://www.cnblogs.com/brf-test/p/11241161.html) </br>
-> > > ### 3.9 [os模块](https://www.cnblogs.com/kaituorensheng/archive/2013/03/18/2965766.html) </br>
-> > > ### 3.10 [pydicm](https://blog.csdn.net/linhai1028/article/details/79551488) </br>
-> > > ### 3.11 [PySimpleGUI](https://linux.cn/article-10027-1.html)</br>
-> > > ### 3.12 [collections](https://www.cnblogs.com/zhizhan/p/5692668.html) </br>
-> > > ### 3.13 [pymysql](https://www.runoob.com/python3/python3-mysql.html) </br>
-> > > ### 3.14 [multiprocessing](https://www.osgeo.cn/cpython/library/multiprocessing.html) </br>
-> > > ### 3.15 [python json模块](https://www.runoob.com/python/python-json.html)</br>
+> > > ### 3.1. [csv](https://www.cnblogs.com/wuxunyan/p/10442444.html)</br>
+> > > ### 3.2. [sys.module](https://www.cnblogs.com/zhaojingyu/p/9069076.html)</br>
+> > > ### 3.3. [xml解释器](https://blog.csdn.net/guangmingsky/article/details/77601225)</br>
+> > > ### 3.4. [pika](https://pypi.org/project/pika/)</br>
+> > > ### 3.5. [python导入包](https://blog.csdn.net/chinesepython/article/details/82113575) </br>
+> > > ### 3.6. [logging](https://www.cnblogs.com/Nicholas0707/p/9021672.html) </br>
+> > > ### 3.7. [shutil](https://www.jb51.net/article/145522.htm) </br>
+> > > ### 3.8. [Python的常用模块](https://www.cnblogs.com/brf-test/p/11241161.html) </br>
+> > > ### 3.9. [os模块](https://www.cnblogs.com/kaituorensheng/archive/2013/03/18/2965766.html) </br>
+> > > ### 3.10. [pydicm](https://blog.csdn.net/linhai1028/article/details/79551488) </br>
+> > > ### 3.11. [PySimpleGUI](https://linux.cn/article-10027-1.html)</br>
+> > > ### 3.12. [collections](https://www.cnblogs.com/zhizhan/p/5692668.html) </br>
+> > > ### 3.13. [pymysql](https://www.runoob.com/python3/python3-mysql.html) </br>
+> > > ### 3.14. [multiprocessing](https://www.osgeo.cn/cpython/library/multiprocessing.html) </br>
+> > > ### 3.15. [python json模块](https://www.runoob.com/python/python-json.html)</br>
+> > > ### 3.16. [subprocess](https://zhuanlan.zhihu.com/p/72829009)   
 
 
 
 > > ## 4. Common Functions
-> > > ### 4.1.1 [time的相关函数](https://blog.csdn.net/brucewong0516/article/details/79044905)</br>
-> > > ### 4.1.2 [copy && copy.deepcopy](https://blog.csdn.net/u010712012/article/details/79754132) </br>
-> > > ### 4.1.3 [\_\_import\_\_和import比较](https://blog.csdn.net/weixin_42670402/article/details/83472429) </br>
-
+> > > ### 4.1.1. [time的相关函数](https://blog.csdn.net/brucewong0516/article/details/79044905)</br>
+> > > ### 4.1.2. [copy && copy.deepcopy](https://blog.csdn.net/u010712012/article/details/79754132) </br>
+> > > ### 4.1.3. [\_\_import\_\_和import比较](https://blog.csdn.net/weixin_42670402/article/details/83472429) </br>
+> > > ### 4.1.4. import  
+> > > > #### 4.1.4.1 [第一个理解](http://sinhub.cn/2019/05/python-import-machinery-part-one/)    
+> > > > #### 4.1.4.2 [第二个理解](https://blog.csdn.net/weixin_38256474/article/details/81228492)   
+> > > > 我得出的结果：  
+> > > > import A.B.C：此时只会在当前文件的命名空间中导入A的module，其他的不会导入    
+> > > > 但是import A.B.C as D:此时只有D这么一个module，连A也没有   
+> > > > from A.B import C:此时命名空间只有Cimport A.B.C：此时只会在当前文件的命名空间中导入A的module，其他的不会导入   
+> > > > 但是import A.B.C as D:此时只有D这么一个module，连A也没有   
+> > > > from A.B import C:此时命名空间只有C   
 
 > > ## 5. 异常</br>
 > > > ### 5.1. [基本理解](https://www.jianshu.com/p/66e2e4104e7c)
