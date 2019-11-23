@@ -37,13 +37,15 @@ if __name__ == "__main__":
     a.f3()
     #print(a.result)
 ```
-> > > > #### 1.1.1 [\_\_call\_\_](https://www.cnblogs.com/superxuezhazha/p/5793536.html) </br>
-> > > > #### 1.1.2 [\_\_getattr\_\_\/\_\_setattr\_\_\/\_\_getitem\_\_\/\_\_setitem\_\_](https://blog.csdn.net/chituozha5528/article/details/78355216) </br>
-> > > > #### 1.1.3 [python类的专有方法](https://segmentfault.com/a/1190000007256392) </br>
-> > > > #### 1.1.4 [\_\_file\_\_](https://www.cnblogs.com/ajaxa/p/9016475.html)</br>
-> > > > #### 1.1.5 [\_\_dict\_\_](https://www.cnblogs.com/alvin2010/p/9102344.html)</br>
-> > > > #### 1.1.6 [\_\_getattr\_\_](https://www.jianshu.com/p/dec562715df6)</br>
-> > > > #### 1.1.7 [\_\_enter\_\_\/\_exit\_\_](https://www.cnblogs.com/lipijin/p/4460487.html)
+> > > > #### 1.1.1. [\_\_call\_\_](https://www.cnblogs.com/superxuezhazha/p/5793536.html) </br>
+> > > > #### 1.1.2. [\_\_getattr\_\_\/\_\_setattr\_\_\/\_\_getitem\_\_\/\_\_setitem\_\_](https://blog.csdn.net/chituozha5528/article/details/78355216) </br>
+> > > > #### 1.1.3. [python类的专有方法](https://segmentfault.com/a/1190000007256392) </br>
+> > > > #### 1.1.4. [\_\_file\_\_](https://www.cnblogs.com/ajaxa/p/9016475.html)</br>
+> > > > #### 1.1.5. [\_\_dict\_\_](https://www.cnblogs.com/alvin2010/p/9102344.html)</br>
+> > > > #### 1.1.6. [\_\_getattr\_\_](https://www.jianshu.com/p/dec562715df6)</br>
+> > > > #### 1.1.7. [\_\_enter\_\_\/\_\_exit\_\_](https://www.cnblogs.com/lipijin/p/4460487.html)   
+> > > > #### 1.1.8. [\_\_dict\_\_](https://www.cnblogs.com/alvin2010/p/9102344.html)     
+> > > > #### 1.1.9. [\_\_name\_\_](https://www.cnblogs.com/1204guo/p/7966461.html)    
 
 > > > ### 1.2 [MRO](https://www.cnblogs.com/ssyfj/p/9017280.html) </br>
 > > > ### 1.3 [super函数](https://www.imooc.com/article/50836) </br>
@@ -79,6 +81,10 @@ if __name__ == "__main__":
 > > > ### 3.14. [multiprocessing](https://www.osgeo.cn/cpython/library/multiprocessing.html) </br>
 > > > ### 3.15. [python json模块](https://www.runoob.com/python/python-json.html)</br>
 > > > ### 3.16. [subprocess](https://zhuanlan.zhihu.com/p/72829009)   
+> > > ### 3.17. [configparser](https://www.jianshu.com/p/2f0636e27477)    
+> > > ### 3.18. [glob](https://www.jianshu.com/p/32e3364b22ee)   
+> > > ### 3.19. [io.ByteIO](https://www.cnblogs.com/yqpy/p/8556090.html)   
+> > > ### 3.20. [re](https://docs.python.org/zh-cn/3/library/re.html)    
 
 
 
@@ -104,3 +110,6 @@ if __name__ == "__main__":
 > > > ### 6.1 [环境变量](https://blog.csdn.net/v_xchen_v/article/details/80393967) </br>
 > > > ### 6.2 [Python字符串前面加u,r,b的含义](https://www.cnblogs.com/liangmingshen/p/9274021.html)
 > > > ### 6.3 [python的\*](https://www.cnblogs.com/jony7/p/8035376.html)
+> > > ### 6.4 [基本类型]   
+> > > > #### 6.4.1. [list]
+> > > > ##### 6.4.1.1. [[list::]](https://blog.csdn.net/qq\_41940950/article/details/80765674)
