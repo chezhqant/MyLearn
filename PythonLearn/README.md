@@ -113,3 +113,5 @@
 > > > ### 6.4 [基本类型]   
 > > > > #### 6.4.1. [list]   
 > > > > > ##### 6.4.1.1. [\[list::\]](https://blog.csdn.net/qq\_41940950/article/details/80765674)   
+> > > ### 6.5 [一些包的特殊用法]
+> > > > #### 6.5.1 [matplotlib.plot画多张图，在一张图上画多个函数](https://blog.csdn.net/haikuotiankong7/article/details/90551841)    
