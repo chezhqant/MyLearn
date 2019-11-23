@@ -24,9 +24,9 @@
 2.4. [git commit](https://www.cnblogs.com/qianqiannian/p/6005628.html)   
 2.5. [git fetch](https://www.cnblogs.com/chenlogin/p/6592228.html)   
 2.6. [markdown](https://www.runoob.com/markdown/md-tutorial.html)([先看这个](https://www.runoob.com/markdown/md-tutorial.html))   
-    2.6.1. [markdown画各种图](https://blog.csdn.net/lis_12/article/details/80693975)
-2.7. What i found  
-        2.7.1. center/right/left  
+    2.6.1. [markdown画各种图](https://blog.csdn.net/lis_12/article/details/80693975)   
+2.7. What i found   
+2.7.1. center/right/left  
         ```
         <p align="center"> chezhai </p>
         <p align="right"> chezhai </p>
