@@ -26,11 +26,11 @@
         1. [markdown画各种图](https://blog.csdn.net/lis_12/article/details/80693975)   
     7. What i found   
         1. center/right/left  
-```   
-<p align="center"> chezhai </p>
-<p align="right"> chezhai </p>
-<p align="left"> chezhai </p>
-```     
+        ```
+        <p align="center"> chezhai </p>
+        <p align="right"> chezhai </p>
+        <p align="left"> chezhai </p>
+        ```     
         2. 换行   
 结尾用两个空格或者使用`</br>`   
     8. [锚点](https://my.oschina.net/antsky/blog/1475173?utm_medium=referral)   
