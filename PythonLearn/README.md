@@ -115,3 +115,4 @@
 > > > > > ##### 6.4.1.1. [\[list::\]](https://blog.csdn.net/qq\_41940950/article/details/80765674)   
 > > > ### 6.5 [一些包的特殊用法]
 > > > > #### 6.5.1 [matplotlib.plot画多张图，在一张图上画多个函数](https://blog.csdn.net/haikuotiankong7/article/details/90551841)    
+> > > > #### 6.5.2 [matplotlib.plot的颜色和线条、线条的形状](https://www.cnblogs.com/zoe-chang/p/11269780.html)    

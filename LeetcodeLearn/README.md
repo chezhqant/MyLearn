@@ -7,6 +7,7 @@ eh, there are some cpps(two or three?) is wrong in the directory of Array, becau
 * [1. DFS</br>](#1-dfsbr)
 * [2. Array</br>](#2-arraybr)
 * [3. Dynamic Programming</br>](#3-dynamic-programmingbr)
+* [4. AVL](#4-avl)
 
 <!-- vim-markdown-toc -->
 
@@ -53,3 +54,5 @@ eh, there are some cpps(two or three?) is wrong in the directory of Array, becau
 + [Maximum Subarray](./Dynamic\_Programing/Maximum\_Subarray.cpp)
 + [Min Cost Climbing Stairs](./Dynamic\_Programming/Min\_Cost\_Climbing\_Stairs.cpp)
 + [Range\_Sum\_Query\_Immutable](./Dynamic\_Programming/Range\_Sum\_Query\_Immutable.cpp)
+
+# 4. [AVL](./AVL)   

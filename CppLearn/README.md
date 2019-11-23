@@ -10,8 +10,8 @@
     * [float存储方式](#float存储方式)
     * [小数表示](#小数表示)
     * [VLA](#vla)
+    * [结构体初始化](#结构体初始化)
 * [C++基础知识](#c基础知识)
-    * [參考這個](#參考這個)
     * [C++/C和Python相互调用](#cc和python相互调用)
     * [C++内存对齐](#c内存对齐)
     * [RVO和NRVO](#rvo和nrvo)
@@ -74,13 +74,17 @@
     * [可重定位文件](#可重定位文件)
     * [fPIC](#fpic)
     * [通过GDB调试理解GOT/PLT](#通过gdb调试理解gotplt)
+    * [某些section的作用](#某些section的作用)
     * [动态库](#动态库)
     * [[动态链接]](#动态链接)
         * [理解一](#理解一-3)
         * [理解二](#理解二-3)
+    * [C++编译器优化](#c编译器优化)
 * [gdb](#gdb)
+    * [一个程序的整体流程](#一个程序的整体流程)
     * [gdb调试基础](#gdb调试基础)
     * [100个gdb技巧](#100个gdb技巧)
+    * [gprof](#gprof)
 * [汇编](#汇编)
     * [两种汇编格式](#两种汇编格式)
     * [rsp和rbp](#rsp和rbp)
@@ -91,6 +95,7 @@
 * [C++11](#c11)
     * [深入理解C++11](#深入理解c11)
     * [Effective Modern C++(部分翻译)](#effective-modern-c部分翻译)
+    * [另一个完整版本的Effective Modern C++的翻译](#另一个完整版本的effective-modern-c的翻译)
     * [Effective Modern C++(英文书)](#effective-modern-c英文书)
 * [泛型编程和元编程](#泛型编程和元编程)
     * [C++ Templates: The Complete Guide (2nd Edition)](#c-templates-the-complete-guide-2nd-edition)
@@ -98,6 +103,10 @@
     * [C++ Concurrency in Action: Practical Multithreading](#c-concurrency-in-action-practical-multithreading)
 * [内核](#内核)
     * [CPU解释](#cpu解释)
+    * [CPU执行指令](#cpu执行指令)
+    * [操作系统的重点](#操作系统的重点)
+    * [PCB的解释](#pcb的解释)
+* [cuda编程](#cuda编程)
 
 <!-- vim-markdown-toc -->
 
@@ -106,13 +115,15 @@
 ## [float存储方式](http://blog.sina.com.cn/s/blog_973657a00102x2do.html)    
 ## [小数表示](https://blog.csdn.net/github_33873969/article/details/78040129)   
 ## [VLA](https://www.cnblogs.com/Suzzz/p/4117431.html)   
+## [结构体初始化](https://www.cnblogs.com/clover-toeic/p/3737189.html)   
 
 
 # [C++基础知识](https://www.runoob.com/cplusplus/cpp-tutorial.html)  
-## [參考這個](https://github.com/huihut/interview#-cc)   
++ [參考這個](https://github.com/huihut/interview#-cc)   
++ [protected](https://www.bookstack.cn/read/open-c-book/zh-cha)   
 ## C++/C和Python相互调用  
-1.1.1 [资料一](https://cloud.tencent.com/developer/article/1174629)   
-1.1.2 [LeetCode刷题](../LeetcodeLearn)   
++ [资料一](https://cloud.tencent.com/developer/article/1174629)   
++ [LeetCode刷题](../LeetcodeLearn)   
 
 ## [C++内存对齐](https://www.cnblogs.com/zhao-zongsheng/p/9099603.html)   
 ## [RVO和NRVO](https://www.cnblogs.com/xkfz007/articles/2506022.html)   
@@ -212,15 +223,19 @@ const int& x = 666; // OK
 ## [可重定位文件](http://liujunming.top/2016/07/19/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E9%93%BE%E6%8E%A5%EF%BC%88%E4%B8%80%EF%BC%89/)   
 ## [fPIC](https://www.cnblogs.com/cswuyg/p/3830703.html)    
 ## [通过GDB调试理解GOT/PLT](http://rickgray.me/2015/08/07/use-gdb-to-study-got-and-plt/)    
+## [某些section的作用](https://www.cnblogs.com/arnoldlu/p/7136701.html)  
 ## [动态库](./Linux下的动态连接库及其实现机制修订版.rtf)    
 ## [动态链接]   
 ### [理解一](https://www.jianshu.com/p/5deed1bf82b4)   
 ### [理解二](https://github.com/tinyclub/open-c-book/blob/master/zh/chapters/02-chapter4.markdown)     
+## [C++编译器优化](https://www.agner.org/optimize/#manuals)   
 
 
 # gdb    
+## [一个程序的整体流程](https://www.nosuchfield.com/2018/11/23/Program-compilation-linking-loading-and-running/)   
 ## [gdb调试基础](https://wiki.ubuntu.org.cn/%E7%94%A8GDB%E8%B0%83%E8%AF%95%E7%A8%8B%E5%BA%8F)   
 ## [100个gdb技巧](https://www.kancloud.cn/itfanr/i-100-gdb-tips/81888)   
+## [gprof](https://www.cnblogs.com/feisky/archive/2010/03/09/1681997.html)   
 
 
 # 汇编   
@@ -237,6 +252,7 @@ const int& x = 666; // OK
 # C++11
 ## 深入理解C++11   
 ## [Effective Modern C++(部分翻译)](https://github.com/kelthuzadx/EffectiveModernCppChinese)     
+## [另一个完整版本的Effective Modern C++的翻译](https://www.bookstack.cn/read/open-c-book/zh-cha)    
 ## [Effective Modern C++(英文书)](./)
 
 
@@ -247,3 +263,10 @@ const int& x = 666; // OK
 
 # 内核      
 ## [CPU解释](https://www.cnblogs.com/kimsimple/p/7787018.html)      
+## [CPU执行指令](https://www.cnblogs.com/dream-to-pku/p/11601264.html)   
+## [操作系统的重点](https://www.ahaknow.com/pkucs-operating-system-overview/#jin_cheng_xian_cheng_mo_xing)  
+## [PCB的解释](https://zhuanlan.zhihu.com/p/32341542)  
+
+# cuda编程
++ [cuda C++ best practices guide](https://s0docs0nvidia0com.icopy.site/cuda/cuda-c-best-practices-guide/index.html#what-is-this-document)   
++ [threadIdx/blockIdx/blockDim/gridDim](https://www.cnblogs.com/rainbow70626/p/6498738.html)    
