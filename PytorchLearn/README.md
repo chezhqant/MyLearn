@@ -16,6 +16,7 @@
 * [6. pytorch源代码理解一</br>](#6-pytorch源代码理解一br)
 * [7. model.train() model.eval()](#7-modeltrain-modeleval)
 * [8. focal loss](#8-focal-loss)
+* [9. torch教程](#9-torch教程)
 
 <!-- vim-markdown-toc -->
 ---
@@ -163,3 +164,6 @@ const int& x = 666; // OK
 
 ## 8. [focal loss](https://www.cnblogs.com/king-lps/p/9497836.html)   
 + [验证gamma和alpha对focal loss的影响](./scripts/plot\_focal\_loss.py)    
+## 9. torch教程    
++ [torch中文网](https://www.pytorchtutorial.com/)   
++ [torch手册](https://pytorch-cn.readthedocs.io/zh/latest/package\_references/Tensor/#contiguous-tensor)    
