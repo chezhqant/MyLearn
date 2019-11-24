@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)https://www.cnblogs.com/5iedu/p/5573318.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin">
+    <meta property="og:description" content="1. 职责链模式（Chain Of Responsibility）的定义 （1）定义 使多个对象都有机会处理请求，从而避免请求的发送者和接收者之间的耦合关系。将这些对象连成一条链，并沿着这条链传递该请">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>第15章 行为型模式—职责链模式 - 浅墨浓香 - 博客园</title>
+    
+    <link rel="stylesheet" href="./第15章 行为型模式—职责链模式 - 浅墨浓香 - 博客园_files/blog-common.min.css">
+    <link id="MainCss" rel="stylesheet" href="./第15章 行为型模式—职责链模式 - 浅墨浓香 - 博客园_files/bundle-habahaba.min.css">
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./第15章 行为型模式—职责链模式 - 浅墨浓香 - 博客园_files/bundle-habahaba-mobile.min.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/5iedu/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/5iedu/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/5iedu/wlwmanifest.xml">
+    <script src="./第15章 行为型模式—职责链模式 - 浅墨浓香 - 博客园_files/pubads_impl_rendering_2019111801.js.下载"></script><script async="" src="./第15章 行为型模式—职责链模式 - 浅墨浓香 - 博客园_files/analytics.js.下载"></script><script type="text/javascript" src="./第15章 行为型模式—职责链模式 - 浅墨浓香 - 博客园_files/encoder.js.下载"></script><script src="./第15章 行为型模式—职责链模式 - 浅墨浓香 - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+    <script src="./第15章 行为型模式—职责链模式 - 浅墨浓香 - 博客园_files/blog-common.min.js.下载"></script>
+    <script>
+        var currentBlogId = 231128;
+        var currentBlogApp = '5iedu';
+        var cb_enable_mathjax = true;
+        var isLogined = false;
+    </script>
+    <script type="text/x-mathjax-config;executed=true">
+        MathJax.Hub.Config({
+        tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']], processClass: 'math', processEscapes: true },
+        TeX: {
+        equationNumbers: { autoNumber: ['AMS'], useLabelIds: true },
+        extensions: ['extpfeil.js', 'mediawiki-texvc.js'],
+        Macros: {bm: "\\boldsymbol"}
+        },
+        'HTML-CSS': { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+        });
+    </script>
+    <script src="./第15章 行为型模式—职责链模式 - 浅墨浓香 - 博客园_files/MathJax.js.下载"></script>
+    
+<link rel="preload" href="./第15章 行为型模式—职责链模式 - 浅墨浓香 - 博客园_files/f.txt" as="script"><script type="text/javascript" src="./第15章 行为型模式—职责链模式 - 浅墨浓香 - 博客园_files/f.txt"></script><script src="./第15章 行为型模式—职责链模式 - 浅墨浓香 - 博客园_files/pubads_impl_2019111801.js.下载" async=""></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover, .MJXp-munder {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > *, .MJXp-munder > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><link rel="prefetch" href="https://tpc.googlesyndication.com/safeframe/1-0-36/html/container.html"></head>
+<body><div id="MathJax_Message" style="display: none;"></div>
+    <a name="top"></a>
+    
+    <table width="100%" class="Framework" cellspacing="0" cellpadding="0">
+	<tbody><tr>
+		<td colspan="2">
+			
+<div id="top">
+<table width="100%" cellpadding="8" cellspacing="0">
+	<tbody><tr>
+		<td nowrap="">
+			<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/5iedu/">浅墨浓香</a>
+</h1>
+			
+想要天亮进城，就得天黑赶路。
+
+		</td>
+	</tr>
+</tbody></table>
+</div>
+<div id="sub"><div class="BlogStats">posts - 
+690, comments - 
+52, trackbacks - 
+0, articles - 
+16</div>
+
+</div>
+
+
+
+</td>
+	</tr>
+	<tr>
+		<td class="LeftCell">
+            <div id="leftmenu">
+                
+<h3>导航</h3>
+<ul>
+	<li>
+		<a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+	<li>
+		
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/5iedu/">
+首页</a>
+</li>
+	<li>
+		
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+	<li>
+		
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E6%B5%85%E5%A2%A8%E6%B5%93%E9%A6%99">
+联系</a></li>
+	<li>
+		
+<a id="blog_nav_rss" class="menu" href="https://www.cnblogs.com/5iedu/rss/">
+订阅</a></li>
+	<li>
+		
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+                
+<div id="sidebar_news" class="newsItem"><h3>公告</h3>
+<div id="news">
+	
+<div id="blog-news">
+    
+    <div id="profile_block">
+        昵称：
+        <a href="https://home.cnblogs.com/u/5iedu/">
+            浅墨浓香
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/5iedu/" title="入园时间：2015-06-10">
+            4年5个月
+        </a>
+        <br>
+        粉丝：
+        <a href="https://home.cnblogs.com/u/5iedu/followers/">
+            149
+        </a>
+        <br>
+        关注：
+        <a href="https://home.cnblogs.com/u/5iedu/followees/">
+            0
+        </a>
+        <div id="p_b_follow">
+<a href="javascript:void(0)" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;)">+加关注</a></div>
+        <script>getFollowStatus('41562de4-020f-e511-b908-9dcfd8948a71');</script>
+    </div>
+</div>
+</div>
+
+</div>
+
+                <div id="blog-calendar" style="">
+
+<table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar" border="0">
+    <tbody>
+        <tr>
+            <td colspan="7">
+                <table class="CalTitle" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/10/24&#39;); return false;">&lt;</a>
+                            </td>
+                            <td align="center">2019年11月</td>
+                            <td align="right" class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/12/24&#39;); return false;">&gt;</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+                    <th class="CalDayHeader" align="center" abbr="日" scope="col">日</th>
+                    <th class="CalDayHeader" align="center" abbr="一" scope="col">一</th>
+                    <th class="CalDayHeader" align="center" abbr="二" scope="col">二</th>
+                    <th class="CalDayHeader" align="center" abbr="三" scope="col">三</th>
+                    <th class="CalDayHeader" align="center" abbr="四" scope="col">四</th>
+                    <th class="CalDayHeader" align="center" abbr="五" scope="col">五</th>
+                    <th class="CalDayHeader" align="center" abbr="六" scope="col">六</th>
+        </tr>
+            <tr>
+                            <td class="CalOtherMonthDay" align="center">27</td>
+                            <td class="CalOtherMonthDay" align="center">28</td>
+                            <td class="CalOtherMonthDay" align="center">29</td>
+                            <td class="CalOtherMonthDay" align="center">30</td>
+                            <td class="CalOtherMonthDay" align="center">31</td>
+                        <td class="" align="center">
+                            1
+                        </td>
+                    <td class="CalWeekendDay" align="center">
+                        2
+                    </td>
+            </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            3
+                        </td>
+                            <td class="" align="center">
+                                4
+                            </td>
+                            <td class="" align="center">
+                                5
+                            </td>
+                            <td class="" align="center">
+                                6
+                            </td>
+                            <td class="" align="center">
+                                <a href="https://www.cnblogs.com/5iedu/archive/2019/11/07.html"><u>7</u></a>
+                            </td>
+                            <td class="" align="center">
+                                8
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            9
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            10
+                        </td>
+                            <td class="" align="center">
+                                11
+                            </td>
+                            <td class="" align="center">
+                                12
+                            </td>
+                            <td class="" align="center">
+                                13
+                            </td>
+                            <td class="" align="center">
+                                14
+                            </td>
+                            <td class="" align="center">
+                                15
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            16
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            <a href="https://www.cnblogs.com/5iedu/archive/2019/11/17.html"><u>17</u></a>
+                        </td>
+                            <td class="" align="center">
+                                18
+                            </td>
+                            <td class="" align="center">
+                                19
+                            </td>
+                            <td class="" align="center">
+                                <a href="https://www.cnblogs.com/5iedu/archive/2019/11/20.html"><u>20</u></a>
+                            </td>
+                            <td class="" align="center">
+                                21
+                            </td>
+                            <td class="" align="center">
+                                22
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            23
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalTodayDay" align="center">
+                            24
+                        </td>
+                            <td class="" align="center">
+                                25
+                            </td>
+                            <td class="" align="center">
+                                26
+                            </td>
+                            <td class="" align="center">
+                                27
+                            </td>
+                            <td class="" align="center">
+                                28
+                            </td>
+                            <td class="" align="center">
+                                29
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            30
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalOtherMonthDay" align="center">
+                            1
+                        </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                2
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                3
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                4
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                5
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                6
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            7
+                        </td>
+                </tr>
+    </tbody>
+</table></div>
+                <script>loadBlogDefaultCalendar();</script>
+                <div id="blog-sidecolumn">
+<!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    <div id="sidebar_search" class="mySearch">
+        <h3 class="catListTitle">搜索</h3>
+        <div id="sidebar_search_box">
+            <div id="widget_my_zzk" class="div_my_zzk">
+                <input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk">
+            </div>
+            <div id="widget_my_google" class="div_my_zzk">
+                <input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 常用链接 -->
+<div id="sidebar_shortcut" class="sidebar-block">
+    
+<h3 class="catListTitle">
+常用链接
+</h3>
+<ul>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/p/" title="我的博客的随笔列表">我的随笔</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/MyComments.html" title="我的发表过的评论列表">我的评论</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/OtherPosts.html" title="我评论过的随笔列表">我的参与</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/RecentComments.html" title="我的博客的评论列表">最新评论</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/tag/" title="我的博客的标签列表">我的标签</a>
+</li>
+</ul>
+
+<!-- TODO: 检查是否有使用这一部分的控件，如果没有则应该删除。 -->
+<div id="itemListLin_con" style="display:none">
+    <ul>
+
+    </ul>
+</div>
+
+</div>
+
+<!-- 最新随笔 -->
+
+
+
+<!-- 我的标签 -->
+<div id="sidebar_toptags" class="sidebar-block">
+    
+</div>
+
+<!-- 积分与排名 -->
+
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+    
+		<h3>
+
+随笔分类
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/811805.html" rel="" target="">
+    C++深度解析(73)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/804081.html" rel="" target="">
+    C语言进阶剖析(48)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/911906.html" rel="" target="">
+    Linux基础与系统管理(35)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/937714.html" rel="" target="">
+    Linux应用与网络编程(64)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1005833.html" rel="" target="">
+    lua(3)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1005832.html" rel="" target="">
+    makefile(10)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1503320.html" rel="" target="">
+    Modern C++ 11/14(30)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/819307.html" rel="" target="">
+    QT实验分析教程(85)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/699743.html" rel="" target="">
+    Windows程序设计(58)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/699744.html" rel="" target="">
+    Windows核心编程(57)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/994985.html" rel="" target="">
+    计算机网络原理(54)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/825371.html" rel="" target="">
+    设计模式(41)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1007185.html" rel="" target="">
+    深入应用C++11(27)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/911523.html" rel="" target="">
+    数据结构实战分析(79)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/888633.html" rel="" target="">
+    重构(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/963515.html" rel="" target="">
+    专业嵌入式软件开发(15)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+随笔档案
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/11.html" rel="" target="">
+    2019年11月(3)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/10.html" rel="" target="">
+    2019年10月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/09.html" rel="" target="">
+    2019年9月(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/08.html" rel="" target="">
+    2019年8月(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/07.html" rel="" target="">
+    2019年7月(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/12.html" rel="" target="">
+    2017年12月(13)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/11.html" rel="" target="">
+    2017年11月(23)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/10.html" rel="" target="">
+    2017年10月(21)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/09.html" rel="" target="">
+    2017年9月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/08.html" rel="" target="">
+    2017年8月(22)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/07.html" rel="" target="">
+    2017年7月(27)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/06.html" rel="" target="">
+    2017年6月(21)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/05.html" rel="" target="">
+    2017年5月(35)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/04.html" rel="" target="">
+    2017年4月(19)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/03.html" rel="" target="">
+    2017年3月(28)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/02.html" rel="" target="">
+    2017年2月(15)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/01.html" rel="" target="">
+    2017年1月(51)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/12.html" rel="" target="">
+    2016年12月(26)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/11.html" rel="" target="">
+    2016年11月(20)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/10.html" rel="" target="">
+    2016年10月(13)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/09.html" rel="" target="">
+    2016年9月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/08.html" rel="" target="">
+    2016年8月(11)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/07.html" rel="" target="">
+    2016年7月(24)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/06.html" rel="" target="">
+    2016年6月(26)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/05.html" rel="" target="">
+    2016年5月(34)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/04.html" rel="" target="">
+    2016年4月(73)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/03.html" rel="" target="">
+    2016年3月(33)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/02.html" rel="" target="">
+    2016年2月(7)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/12.html" rel="" target="">
+    2015年12月(2)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/11.html" rel="" target="">
+    2015年11月(4)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/10.html" rel="" target="">
+    2015年10月(7)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/09.html" rel="" target="">
+    2015年9月(6)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/08.html" rel="" target="">
+    2015年8月(54)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/07.html" rel="" target="">
+    2015年7月(25)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/06.html" rel="" target="">
+    2015年6月(4)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+文章分类
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/715136.html" rel="" target="">
+    Windows内核(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/729402.html" rel="" target="">
+    编程经验(12)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/812154.html" rel="" target="">
+    常用代码(2)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/954364.html" rel="" target="">
+    综合案例(1)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+相册
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/gallery/718135.html" rel="nofollow noopener noreferrer" target="">
+    笔记插图
+</a>
+
+</li>
+			
+				</ul>
+
+
+</div>
+
+<!-- 最新评论 -->
+<div id="sidebar_recentcomments" class="sidebar-block">
+    <div id="recent_comments_wrap" class="RecentComment">
+    <h3 class="catListTitle">最新评论</h3>
+    <div class="RecentCommentBlock">
+        <ul>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/11390495.html#4344239">1. Re:第18课 捕获机制及陷阱</a></li>
+                    <li class="recent_comment_body">博主不仅高产，而且文章质量都挺好</li>
+                    <li class="recent_comment_author">--YaphetS嘟嘟</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4315939">2. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">博主你好，觉得你的博客特别受用，可以告知一下其他博客的密码吗</li>
+                    <li class="recent_comment_author">--cp2018</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/7040429.html#4294675">3. Re:第5章 IP地址和子网划分（2）_IP地址分类和NAT技术</a></li>
+                    <li class="recent_comment_body">像icmp这种没有端口的不知道是如何实现NAT转换的？</li>
+                    <li class="recent_comment_author">--Eagle-jie</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4280947">4. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">同问</li>
+                    <li class="recent_comment_author">--tiger_wangsir</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4237914">5. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">博主你好，觉得你的博客特别受用，可以告知一下其他博客的密码吗</li>
+                    <li class="recent_comment_author">--胡瑶co</li>
+        </ul>
+    </div>
+</div>
+</div>
+
+
+
+<!-- 阅读排行榜 -->
+<div id="sidebar_topviewedposts" class="sidebar-block">
+    
+<div id="topview_posts_wrap">
+    <h3 class="catListTitle">阅读排行榜</h3>
+    <div id="TopViewPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5595153.html">
+                            1. 第17章 行为型模式—解释器模式(6762)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7376543.html">
+                            2. 第11章 拾遗1：网络地址转换(NAT)和端口映射(4936)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7095041.html">
+                            3. 第6章 静态路由和动态路由（4）_OSPF动态路由协议(3791)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/4899791.html">
+                            4. 第17章 内存映射文件（1）_内存映射文件简介(3741)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7742589.html">
+                            5. 第16课 右值引用（3）_std::forward与完美转发(3730)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- 评论排行榜 -->
+<div id="sidebar_topcommentedposts" class="sidebar-block">
+    
+<div id="topfeedback_posts_wrap">
+    <h3 class="catListTitle">评论排行榜</h3>
+    <div id="TopFeedbackPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/6498326.html">
+                            1. 第83课 另一种创建线程的方式(9)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5325466.html">
+                            2. 第20课 链接过程简介(5)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5429059.html">
+                            3. 第7课 Qt中的坐标系统(4)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5835715.html">
+                            4. 第37课 深度解析QMap与QHash(3)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5617055.html">
+                            5. 第56课 函数模板的概念和意义(2)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- 推荐排行榜 -->
+<div id="sidebar_topdiggedposts" class="sidebar-block">
+    
+<div id="topdigg_posts_wrap">
+    <div class="catListView">
+        <h3 class="catListTitle">推荐排行榜</h3>
+        <div id="TopDiggPostsBlock">
+            <ul style="word-break: break-all">
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/4812259.html">
+                                1. 第11章 Windows线程池（2）_Win2008及以上的新线程池(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/5363054.html">
+                                2. 第1课 学习 C++ 的意义(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/5367317.html">
+                                3. 第5课 引用的本质分析(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/6800234.html">
+                                4. 第1章 计算机网络和协议（1）_网络的概念(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/6829593.html">
+                                5. 第1章 计算机网络和协议（3）_TCP/IP协议(1)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div></div>
+                <script>loadBlogSideColumn();</script>
+            </div>
+		</td>
+		<td class="MainCell" width="100%">
+			<div id="main">
+				<div id="post_detail">
+	<div class="post">
+		<div class="posthead">
+			<h2>
+				
+<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/5iedu/p/5573318.html">第15章 行为型模式—职责链模式</a>
+
+			</h2>
+ 			Posted on 
+<span id="post-date">2016-06-10 10:17</span>&nbsp;<a href="https://www.cnblogs.com/5iedu/">浅墨浓香</a> 阅读(<span id="post_view_count">256</span>) 评论(<span id="post_comment_count">0</span>) <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5573318" rel="nofollow"> 编辑</a> <a href="javascript:void(0)" onclick="AddToWz(5573318); return false;">收藏</a>
+
+			
+			
+		</div>
+		<div class="postbody">
+<div id="cnblogs_post_body" class="blogpost-body ">
+    <p style="text-align: left;" align="center"><strong style="line-height: 1.5;">1. </strong><strong style="line-height: 1.5;">职责链模式（Chain Of Responsibility）的定义</strong></p>
+<p><strong>（1）定义</strong></p>
+<p>　　使多个对象都有机会处理请求，从而避免请求的<span style="color: #ff0000;"><strong>发送者</strong></span>和<span style="color: #ff0000;"><strong>接收者</strong></span>之间的<span style="color: #0000ff;"><strong>耦合关系</strong></span>。将这些对象连成一条链，并沿着这条链传递该请求，直到有一个对象处理它为止。</p>
+<p>　　①标准的职责链模式中，<span style="color: #ff0000;"><strong>只要有对象处理了请求，这个请求就到此为至</strong></span>，不再被传递和处理了。</p>
+<p>　　②但也可以<span style="color: #0000ff;"><strong>变形</strong></span>使用职责链，就是让这个<span style="color: #0000ff;"><strong>请求继续传递</strong></span>，每个职责对象对这个请求进行一定的功能处理，从而形成一个处理请求的功能链。</p>
+<p>　　③当客户端发出请求，它并不知道谁会真正处理他的请求。在职责链模式中，<span style="color: #ff0000;"><strong>请求不一定会被处理</strong></span>，因为可能没有合适的处理者，这里可以在职责链的末端加一个默认处理的职责对象。</p>
+<p>　　④职责链可以是<span style="color: #ff0000;"><strong>一条直线、一个环或者一个树形结构</strong></span>，最常见的职责链是<span style="color: #ff0000;"><strong>直线型</strong></span>，即沿着<strong>一条单向的链</strong>来传递请求。</p>
+<p><strong>（2）职责链模式的结构和说明</strong></p>
+<p style="text-align: center;"><img src="./第15章 行为型模式—职责链模式 - 浅墨浓香 - 博客园_files/772759-20160610221231386-969978058.png" alt=""></p>
+<p>　　①Handler：定义职责的接口，通常在这里定义处理请求的方法，可以在这里实现<span style="color: #ff0000;"><strong>后继链（successor）</strong></span>。</p>
+<p>　　②ConcreteHandler：实现职责的类，在这个类中，实现对它职责范围内请求的处理，如果不处理，就继续转发请求给后继者。</p>
+<p>　　③Client：职责链的客户端，向链上的具体处理对象提交请求，让职责链负责处理。</p>
+<p>【编程实验】HR系统中的请假审批流程</p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="./第15章 行为型模式—职责链模式 - 浅墨浓香 - 博客园_files/772759-20160610115620480-1715205746.png" alt=""></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第15章 行为型模式—职责链模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">行为型模式：职责链模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">场景：请假条审批流程案例
+</span><span style="color: #008000;">//</span><span style="color: #008000;">如果请假天数小于3天，主任审批
+</span><span style="color: #008000;">//</span><span style="color: #008000;">如果请假天数大于等于3天，小于10天，经理审批
+</span><span style="color: #008000;">//</span><span style="color: #008000;">如果大于等于10天，小天30天，总经理审批
+</span><span style="color: #008000;">//</span><span style="color: #008000;">如果大于等于30天，提示拒绝</span>
+#include &lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">***************************辅助类*****************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">请假条</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> LeaveRequest
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span> empName; <span style="color: #008000;">//</span><span style="color: #008000;">姓名</span>
+    <span style="color: #0000ff;">int</span> leaveDay;   <span style="color: #008000;">//</span><span style="color: #008000;">请假天数</span>
+    <span style="color: #0000ff;">string</span> reason;  <span style="color: #008000;">//</span><span style="color: #008000;">请假原因</span>
+
+<span style="color: #0000ff;">public</span><span style="color: #000000;">:
+
+    LeaveRequest(</span><span style="color: #0000ff;">string</span> name,<span style="color: #0000ff;">int</span> leaveDay,<span style="color: #0000ff;">string</span><span style="color: #000000;"> reason)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;empName =<span style="color: #000000;"> name;
+        </span><span style="color: #0000ff;">this</span>-&gt;leaveDay =<span style="color: #000000;"> leaveDay;
+        </span><span style="color: #0000ff;">this</span>-&gt;reason =<span style="color: #000000;"> reason;
+    }
+
+    </span><span style="color: #0000ff;">string</span>&amp; getEmpName(){<span style="color: #0000ff;">return</span> <span style="color: #0000ff;">this</span>-&gt;<span style="color: #000000;">empName;}
+    </span><span style="color: #0000ff;">void</span> setEmpName(<span style="color: #0000ff;">string</span> name){<span style="color: #0000ff;">this</span>-&gt;empName =<span style="color: #000000;"> name;}
+
+    </span><span style="color: #0000ff;">int</span> getLeaveDay(){<span style="color: #0000ff;">return</span> <span style="color: #0000ff;">this</span>-&gt;<span style="color: #000000;">leaveDay;}
+    </span><span style="color: #0000ff;">void</span> setLeavDay(<span style="color: #0000ff;">int</span> day){<span style="color: #0000ff;">this</span>-&gt;leaveDay =<span style="color: #000000;"> day;}
+
+    </span><span style="color: #0000ff;">string</span>&amp; getReason(){<span style="color: #0000ff;">return</span> <span style="color: #0000ff;">this</span>-&gt;<span style="color: #000000;">reason;}
+    </span><span style="color: #0000ff;">void</span> setReason(<span style="color: #0000ff;">string</span> reason){<span style="color: #0000ff;">this</span>-&gt;reason =<span style="color: #000000;"> reason;}
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">***************************抽象职责类*************</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Leader
+{
+</span><span style="color: #0000ff;">protected</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> name;
+    Leader</span>* nextLeader; <span style="color: #008000;">//</span><span style="color: #008000;">职责链上的后继对象</span>
+<span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    Leader(</span><span style="color: #0000ff;">string</span><span style="color: #000000;"> name)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;name =<span style="color: #000000;"> name;
+        nextLeader </span>=<span style="color: #000000;"> NULL;
+    }
+
+    </span><span style="color: #0000ff;">void</span> setNextLeader(Leader* leader){<span style="color: #0000ff;">this</span>-&gt;nextLeader =<span style="color: #000000;"> leader;}
+
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> handleRequest(LeaveRequest* req) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">***********************具体职责实现类**************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">主任</span>
+<span style="color: #0000ff;">class</span> Director : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Leader
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    Director(</span><span style="color: #0000ff;">string</span><span style="color: #000000;"> name):Leader(name){}
+
+    </span><span style="color: #0000ff;">void</span> handleRequest(LeaveRequest*<span style="color: #000000;"> req)
+    {
+        </span><span style="color: #0000ff;">if</span>(req-&gt;getLeaveDay() &lt; <span style="color: #800080;">3</span><span style="color: #000000;">)
+        {
+            cout </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">Name: </span><span style="color: #800000;">"</span> &lt;&lt; req-&gt;getEmpName() &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">, LeaveDay: </span><span style="color: #800000;">"</span> &lt;&lt; req-&gt;getLeaveDay() &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">, </span><span style="color: #800000;">"</span>
+                 &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">Reason: </span><span style="color: #800000;">"</span> &lt;&lt; req-&gt;<span style="color: #000000;">getReason()
+                 </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">-----&gt;</span><span style="color: #800000;">"</span> &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">Director: </span><span style="color: #800000;">"</span> &lt;&lt; name &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;"> Approval!</span><span style="color: #800000;">"</span>&lt;&lt;<span style="color: #000000;">endl;
+        }
+        </span><span style="color: #0000ff;">else</span><span style="color: #000000;">
+        {
+            </span><span style="color: #0000ff;">if</span> (nextLeader !=<span style="color: #000000;"> NULL)
+                nextLeader</span>-&gt;<span style="color: #000000;">handleRequest(req);
+        }
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">经理</span>
+<span style="color: #0000ff;">class</span> Manger : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Leader
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    Manger(</span><span style="color: #0000ff;">string</span><span style="color: #000000;"> name):Leader(name){}
+
+    </span><span style="color: #0000ff;">void</span> handleRequest(LeaveRequest*<span style="color: #000000;"> req)
+    {
+        </span><span style="color: #0000ff;">if</span>(<span style="color: #800080;">3</span> &lt;= req-&gt;getLeaveDay() &amp;&amp; req-&gt;getLeaveDay() &lt; <span style="color: #800080;">10</span><span style="color: #000000;">)
+        {
+            cout </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">Name: </span><span style="color: #800000;">"</span> &lt;&lt; req-&gt;getEmpName() &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">, LeaveDay: </span><span style="color: #800000;">"</span> &lt;&lt; req-&gt;getLeaveDay() &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">, </span><span style="color: #800000;">"</span>
+                 &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">Reason: </span><span style="color: #800000;">"</span> &lt;&lt; req-&gt;<span style="color: #000000;">getReason()
+                 </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">-----&gt;</span><span style="color: #800000;">"</span> &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">Manger: </span><span style="color: #800000;">"</span> &lt;&lt; name &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;"> Approval!</span><span style="color: #800000;">"</span>&lt;&lt;<span style="color: #000000;">endl;
+        }
+        </span><span style="color: #0000ff;">else</span><span style="color: #000000;">
+        {
+            </span><span style="color: #0000ff;">if</span> (nextLeader !=<span style="color: #000000;"> NULL)
+                nextLeader</span>-&gt;<span style="color: #000000;">handleRequest(req);
+        }
+    }
+};
+<br><span style="color: #339966;">//总经理
+</span></span><span style="color: #0000ff;">class</span> GeneralManger : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Leader
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    GeneralManger(</span><span style="color: #0000ff;">string</span><span style="color: #000000;"> name):Leader(name){}
+
+    </span><span style="color: #0000ff;">void</span> handleRequest(LeaveRequest*<span style="color: #000000;"> req)
+    {
+        </span><span style="color: #0000ff;">if</span>(<span style="color: #800080;">10</span> &lt;= req-&gt;getLeaveDay() &amp;&amp; req-&gt;getLeaveDay() &lt; <span style="color: #800080;">30</span><span style="color: #000000;">)
+        {
+            cout </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">Name: </span><span style="color: #800000;">"</span> &lt;&lt; req-&gt;getEmpName() &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">, LeaveDay: </span><span style="color: #800000;">"</span> &lt;&lt; req-&gt;getLeaveDay() &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">, </span><span style="color: #800000;">"</span>
+                 &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">Reason: </span><span style="color: #800000;">"</span> &lt;&lt; req-&gt;<span style="color: #000000;">getReason()
+                 </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">-----&gt;</span><span style="color: #800000;">"</span> &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">GeneralManger: </span><span style="color: #800000;">"</span> &lt;&lt; name &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;"> Approval!</span><span style="color: #800000;">"</span>&lt;&lt;<span style="color: #000000;">endl;
+        }
+        </span><span style="color: #0000ff;">else</span><span style="color: #000000;">
+        {
+            cout </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">Name: </span><span style="color: #800000;">"</span> &lt;&lt; req-&gt;getEmpName() &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">, LeaveDay: </span><span style="color: #800000;">"</span> &lt;&lt; req-&gt;getLeaveDay() &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;"> Are Refused!</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+        }
+    }
+};
+
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    Leader</span>* director= <span style="color: #0000ff;">new</span>  Director(<span style="color: #800000;">"</span><span style="color: #800000;">ZhangSan</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    Leader</span>* manager = <span style="color: #0000ff;">new</span>  Manger(<span style="color: #800000;">"</span><span style="color: #800000;">LiSi</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    Leader</span>*  generalManage = <span style="color: #0000ff;">new</span> GeneralManger(<span style="color: #800000;">"</span><span style="color: #800000;">WangWu</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">组织职责链对象的关系</span>
+    director-&gt;<span style="color: #000000;">setNextLeader(manager);
+    manager</span>-&gt;<span style="color: #000000;">setNextLeader(generalManage);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">开始请假操作</span>
+    LeaveRequest req(<span style="color: #800000;">"</span><span style="color: #800000;">Tom</span><span style="color: #800000;">"</span>, <span style="color: #800080;">30</span>, <span style="color: #800000;">"</span><span style="color: #800000;">go home!</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    director</span>-&gt;handleRequest(&amp;<span style="color: #000000;">req);
+
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> director;
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> manager;
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> generalManage;
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第15章 行为型模式—职责链模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><strong>（3）思考职责链模式</strong></p>
+<p>　　①职责链的<span style="color: #ff0000;"><strong>本质</strong></span>：<span style="color: #0000ff;"><strong>分离职责，动态组合</strong></span>。分离职责是前提，动态组合才是职责链模式的精华所在，因为这意味着可以很方便地修改和添加新的处理对象，从而让系统更加灵活和具有更好的扩展性。</p>
+<p>　　②职责链的<span style="color: #ff0000;"><strong>动机</strong></span>：在软件构建过程中，一个请求可能被多个对象处理，但是每个请求在运行时需要有接受者，如果显式指定，将必不可少地带来请求发送者与接受者之间的紧耦合。而职责链模式可以将这两者<span style="color: #0000ff;"><strong>解耦，使得发送者不必知道具体的接受者（处理者）</strong></span></p>
+<p><strong>2. </strong><strong>功能链（如过滤器）</strong></p>
+<p><strong>（1）概念</strong>：实际开发中，经常将一个请求在职责链中传递，每个职责对象负责处理请求的某一方面的功能，<span style="color: #ff0000;"><strong>处理完后不是停止，而是继续向下传递请求</strong></span>，当请求通过很多职责对象处理后，功能也就完成了，把这样的职责链称为功能链。</p>
+<p><strong>（2）应用举例</strong></p>
+<p>　　①实际开发中，在业务处理之前，通常需要进行权限检查、数据校验、逻辑检查等，然后才开始真正的业务逻辑。可以把这些功能分散到一个功能链中。</p>
+<p>　　②过滤器：<span style="color: #ff0000;"><strong>每个过滤器负责自己的处理，然后转交给下一个过滤器</strong></span>，直到把所有的过滤器都走完（如权限检查、字符转换等）。</p>
+<p>【编程实验】字符过滤器（模拟JavaWeb的双向过滤器，<span style="color: #ff0000;"><strong>变式的职责链模式</strong></span>）</p>
+<p style="text-align: center;"><img src="./第15章 行为型模式—职责链模式 - 浅墨浓香 - 博客园_files/772759-20160610220732746-1836161287.png" alt=""></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第15章 行为型模式—职责链模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">行为型模式：职责链模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">场景：字符过滤（模拟JavaWeb的双向过滤器）
+</span><span style="color: #008000;">//</span><span style="color: #008000;">当客户端发送给服务器时，request字符串被各个过滤器按顺序处理，
+</span><span style="color: #008000;">//</span><span style="color: #008000;">而返回的response是逆着过滤器被调用顺序被处理的。（可参考下面的技巧）
+</span><span style="color: #008000;">//</span><span style="color: #008000;">思路细节技巧：
+</span><span style="color: #008000;">//</span><span style="color: #008000;">(1)Filter的doFilter方法改为doFilter(Request*,Resopnse*,FilterChain*),有
+</span><span style="color: #008000;">//</span><span style="color: #008000;">FilterChain指针，为利用FilterChain调用下一个Filter做准备
+</span><span style="color: #008000;">//</span><span style="color: #008000;">(2)FilterChain继承Filter,这样，FilterChain既是FilterChain又是Filter,那么
+</span><span style="color: #008000;">//</span><span style="color: #008000;">FilterChain就可以调用Filter的方法doFilter(Request*,Resopnse*,FilterChain*)
+</span><span style="color: #008000;">//</span><span style="color: #008000;">(3)FilterChain的doFilter(Request*,Resopnse*,FilterChain*)中，有index标记了执
+</span><span style="color: #008000;">//</span><span style="color: #008000;">行到第几个Filter,当所有Filter执行完后request处理后，就会return,以倒序继续执
+</span><span style="color: #008000;">//</span><span style="color: #008000;">行response处理</span>
+<span style="color: #000000;">
+#include </span>&lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;">
+#include </span>&lt;vector&gt;
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">*************************************************字符串替换函数*********************************</span>
+<span style="color: #0000ff;">void</span> Replace(std::basic_string&lt;<span style="color: #0000ff;">char</span>&gt;&amp; s, <span style="color: #0000ff;">const</span> std::basic_string&lt;<span style="color: #0000ff;">char</span>&gt;&amp; src, <span style="color: #0000ff;">const</span> std::basic_string&lt;<span style="color: #0000ff;">char</span>&gt;&amp;<span style="color: #000000;"> dest)
+{
+    std::basic_string</span>&lt;<span style="color: #0000ff;">char</span>&gt;::size_type pos = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">while</span> (<span style="color: #0000ff;">true</span><span style="color: #000000;">)
+    {
+        pos </span>=<span style="color: #000000;"> s.find(src, pos);
+        </span><span style="color: #0000ff;">if</span> (std::basic_string&lt;<span style="color: #0000ff;">char</span>&gt;::npos ==<span style="color: #000000;"> pos)
+            </span><span style="color: #0000ff;">break</span><span style="color: #000000;">;
+
+        s.replace(pos, src.size(), dest);
+        pos </span>+=<span style="color: #000000;"> src.size();
+    }
+}
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">***************************辅助类*****************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">请求类</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Request
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span> context; <span style="color: #008000;">//</span><span style="color: #008000;">请求的内容</span>
+<span style="color: #0000ff;">public</span><span style="color: #000000;">:
+
+    Request(</span><span style="color: #0000ff;">string</span><span style="color: #000000;"> context)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;context =<span style="color: #000000;"> context;
+    }
+
+    </span><span style="color: #0000ff;">string</span>&amp; getContext(){<span style="color: #0000ff;">return</span> <span style="color: #0000ff;">this</span>-&gt;<span style="color: #000000;">context;}
+    </span><span style="color: #0000ff;">void</span> setContext(<span style="color: #0000ff;">string</span> context){<span style="color: #0000ff;">this</span>-&gt;context =<span style="color: #000000;"> context;}
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">响应类</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Response
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span> context; <span style="color: #008000;">//</span><span style="color: #008000;">请求的内容</span>
+<span style="color: #0000ff;">public</span><span style="color: #000000;">:
+
+    Response(</span><span style="color: #0000ff;">string</span><span style="color: #000000;"> context)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;context =<span style="color: #000000;"> context;
+    }
+
+    </span><span style="color: #0000ff;">string</span>&amp; getContext(){<span style="color: #0000ff;">return</span> <span style="color: #0000ff;">this</span>-&gt;<span style="color: #000000;">context;}
+    </span><span style="color: #0000ff;">void</span> setContext(<span style="color: #0000ff;">string</span> context){<span style="color: #0000ff;">this</span>-&gt;context =<span style="color: #000000;"> context;}
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">***************************抽象职责类*************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">职责链</span>
+<span style="color: #0000ff;">class</span> FilterChain; <span style="color: #008000;">//</span><span style="color: #008000;">前向声明
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">Filter（抽象过滤器）</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Filter
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+   </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> doFilter(Request* request,Response* response, FilterChain* chain) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">FilterChain（过滤器链）
+</span><span style="color: #008000;">//</span><span style="color: #008000;">注意，FilterChain继承自Filter，是为了这个链可以像其他过滤器(如HTMLFilter)一样地被加入到其他链中
+</span><span style="color: #008000;">//</span><span style="color: #008000;">从而，可以将两条FilterChain连接成一条。</span>
+<span style="color: #0000ff;">class</span> FilterChain : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Filter
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    vector</span>&lt;Filter*&gt;<span style="color: #000000;"> filters;
+    </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> index;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    FilterChain(){index </span>= <span style="color: #800080;">0</span><span style="color: #000000;">;}
+
+    FilterChain</span>&amp; addFilter(Filter*<span style="color: #000000;"> f)
+    {
+        filters.push_back(f);
+        </span><span style="color: #0000ff;">return</span> *<span style="color: #0000ff;">this</span><span style="color: #000000;">;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">将链本身作为一个过滤器，也实现了doFilter功能，但这里只是简单地调用链中各个
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">过滤器并记录下一个过滤器的索引</span>
+    <span style="color: #0000ff;">void</span> doFilter(Request* request,Response* response, FilterChain*<span style="color: #000000;"> chain)
+    {
+        </span><span style="color: #0000ff;">if</span>(index ==<span style="color: #000000;"> filters.size())
+            </span><span style="color: #0000ff;">return</span><span style="color: #000000;">;
+
+        Filter</span>* f = filters[index++<span style="color: #000000;">];
+        f</span>-&gt;<span style="color: #000000;">doFilter(request,response,chain);
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">HtmlFilter</span>
+<span style="color: #0000ff;">class</span> HTMLFilter : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Filter
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">当客户端发送给服务器时，request字符串被各个过滤器后按顺序处理，
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">而返回的response逆着过滤器被调用顺序被处理。（可参考下面的技巧）</span>
+    <span style="color: #0000ff;">void</span> doFilter(Request* request,Response* response, FilterChain*<span style="color: #000000;"> chain)
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">1、处理html标签</span>
+        Replace(request-&gt;getContext(), <span style="color: #800000;">"</span><span style="color: #800000;">&lt;</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">[</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+        Replace(request</span>-&gt;getContext(), <span style="color: #800000;">"</span><span style="color: #800000;">&gt;</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">]</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+        request</span>-&gt;getContext() +=<span style="color: #800000;">"</span><span style="color: #800000;">--&gt;HTMLFilter()</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">2、调用下一个过滤器（注意里面可能会递归）</span>
+        chain-&gt;<span style="color: #000000;">doFilter(request, response, chain);
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">3、在前2步之后，再处理response，可以达到栈式（逆序）处理response字符串--&gt;技巧！</span>
+        response-&gt;getContext() += <span style="color: #800000;">"</span><span style="color: #800000;">--&gt;HTMLFilter()</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">SensitiveFilter（敏感关键字过滤器）</span>
+<span style="color: #0000ff;">class</span> SensitiveFilter : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Filter
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+
+    </span><span style="color: #0000ff;">void</span> doFilter(Request* request,Response* response, FilterChain*<span style="color: #000000;"> chain)
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">1、处理敏感关键词</span>
+        Replace(request-&gt;getContext(), <span style="color: #800000;">"</span><span style="color: #800000;">敏感</span><span style="color: #800000;">"</span>, <span style="color: #800000;">""</span><span style="color: #000000;">);
+        Replace(request</span>-&gt;getContext(), <span style="color: #800000;">"</span><span style="color: #800000;">被就业</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">就业</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+        request</span>-&gt;getContext() +=<span style="color: #800000;">"</span><span style="color: #800000;">--&gt;SensitiveFilter()</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">2、调用下一个过滤器（注意里面可能会递归）</span>
+        chain-&gt;<span style="color: #000000;">doFilter(request, response, chain);
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">3、在前2步之后，再处理response，可以达到栈式（逆序）处理response字符串--&gt;技巧！</span>
+        response-&gt;getContext() += <span style="color: #800000;">"</span><span style="color: #800000;">--&gt;SensitiveFilter()</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">FaceFilter（表情过滤器）</span>
+<span style="color: #0000ff;">class</span> FaceFilter : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Filter
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span> doFilter(Request* request,Response* response, FilterChain*<span style="color: #000000;"> chain)
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">1、处理敏感关键词</span>
+        Replace(request-&gt;getContext(), <span style="color: #800000;">"</span><span style="color: #800000;">:)</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">^V^</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+        request</span>-&gt;getContext() +=<span style="color: #800000;">"</span><span style="color: #800000;">--&gt;FaceFilter()</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">2、调用下一个过滤器（注意里面可能会递归）</span>
+        chain-&gt;<span style="color: #000000;">doFilter(request, response, chain);
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">3、在前2步之后，再处理response，可以达到栈式（逆序）处理response字符串--&gt;技巧！</span>
+        response-&gt;getContext() += <span style="color: #800000;">"</span><span style="color: #800000;">--&gt;FaceFilter()</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+    }
+};
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    </span><span style="color: #0000ff;">string</span> msg = <span style="color: #800000;">"</span><span style="color: #800000;">大家好:),&lt;script&gt;,敏感,被就业,网络授课没感觉,因为看不见大家伙儿</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+    Request request(</span><span style="color: #800000;">"</span><span style="color: #800000;">Request:</span><span style="color: #800000;">"</span> +<span style="color: #000000;"> msg);
+    Response response(</span><span style="color: #800000;">"</span><span style="color: #800000;">Response: </span><span style="color: #800000;">"</span><span style="color: #000000;">);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">创建3个过滤器</span>
+    Filter* htmlFilter = <span style="color: #0000ff;">new</span> HTMLFilter(); <span style="color: #008000;">//</span><span style="color: #008000;">HTML标签过滤</span>
+    Filter* sensitiveFilter = <span style="color: #0000ff;">new</span> SensitiveFilter(); <span style="color: #008000;">//</span><span style="color: #008000;">敏感关键词过滤</span>
+    Filter* faceFilter = <span style="color: #0000ff;">new</span> FaceFilter();  <span style="color: #008000;">//</span><span style="color: #008000;">表情过滤
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">第1条过滤链（有两个过滤器）</span>
+<span style="color: #000000;">    FilterChain fc;
+    fc.addFilter(htmlFilter);
+    fc.addFilter(sensitiveFilter);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">第2条过滤链（只有一个过滤器）</span>
+<span style="color: #000000;">    FilterChain fc2;
+    fc2.addFilter(faceFilter);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">交两条过滤链合成一条过滤链（共有3个过滤器）</span>
+    fc.addFilter(&amp;<span style="color: #000000;">fc2);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">开始过滤</span>
+    fc.doFilter(&amp;request, &amp;response, &amp;<span style="color: #000000;">fc);
+
+    cout </span>&lt;&lt; request.getContext() &lt;&lt;<span style="color: #000000;"> endl;
+    cout </span>&lt;&lt; response.getContext() &lt;&lt;<span style="color: #000000;"> endl;
+
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> htmlFilter;
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> sensitiveFilter;
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> faceFilter;
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}
+</span><span style="color: #008000;">/*</span><span style="color: #008000;">
+输出结果：（注意request和response中过滤器被调用的顺序是相反的）
+Request:大家好^V^,[script],,就业,网络授课没感觉,因为看不见大家伙儿--&gt;HTMLFilter()--&gt;SensitiveFilter()--&gt;FaceFilter()
+Response: --&gt;FaceFilter()--&gt;SensitiveFilter()--&gt;HTMLFilter()
+</span><span style="color: #008000;">*/</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第15章 行为型模式—职责链模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p style="text-align: left;"><strong style="line-height: 1.5;">3. </strong><strong style="line-height: 1.5;">职责链的优缺点</strong></p>
+<p><strong>（1）优点</strong></p>
+<p>　　①<strong>请求者和接收者的松散耦合</strong></p>
+<p>　　②<span style="color: #ff0000;"><strong>动态组合职责</strong></span>：职责链模式把功能处理分散到单独的职责对象中，然后在使用的时候可以动态组合职责形成职责链，从而可以灵活地给对象分配职责，也可以灵活地实现和改变对象的职责。</p>
+<p><strong>（2）缺点</strong></p>
+<p>　　①产生很多细粒度对象</p>
+<p>　　②<span style="color: #ff0000;"><strong>不一定能处理</strong></span>：职责链模式的每个职责对象只负责自己处理的那一部分，因此可能会出现某个请求在整个链中找到不处理的合适对象。这就需要在使用职责链模式的时候，提供默认的处理，并且注意构建的链的有效性。</p>
+<p>　　③<span style="color: #ff0000;"><strong>性能问题</strong></span>：每个请求都是从链头遍历到链尾，特别是在链比较长的时候，性能是一个非常大的问题。</p>
+<p>　　④<span style="color: #ff0000;"><strong>调试不方便</strong></span>，特别是链条比较长时，环节比较多的时候，由于采用了类似递归的方式，调试的时候逻辑可能比较复杂。</p>
+<p><strong>4. </strong><strong>职责链的应用场景</strong></p>
+<p>（1）UI中<span style="color: #ff0000;"><strong>处理用户事件</strong></span>，当用户点击鼠标或按键盘，一个事件产生并沿链传播。</p>
+<p>（2）过滤器</p>
+<p>（3）人事管理系统中的请求、审批流程管理</p>
+<p>（4）有多个对象可以处理同一个请求，具体哪个对象处理该请求由运行时刻自动确定。</p>
+<p>（5）如果不想明确指定接收者，向多个对象中的其中一个提交请求。</p>
+<p>（6）动态指定一个请求的处理对象集合，在运行时动态地决定到底由哪些对象参与到处理请求中来。</p>
+<p><strong>5. </strong><strong>相关模式</strong></p>
+<p><strong>（1）职责链模式和组合模式</strong></p>
+<p>　　①两个模式可以组合使用，可以把<span style="color: #ff0000;"><strong>职责对象通过组合模式来组合</strong></span>，这样可以通过组合对象自动递归地向上调用，由父组件作为子组件的后继，从而形成链。</p>
+<p>　　②这时，客户端使用时就不再需要构造链了（但需要构造组合对象树）。</p>
+<p><strong>（2）职责链模式和装饰模式</strong></p>
+<p>　　①这两个模式相似，从某个角度讲，可以相互模式实现对象的功能。</p>
+<p>　　②<span style="color: #0000ff;"><strong>装饰模式</strong></span>能够动态地给被装饰的对象添加功能，<span style="color: #ff0000;"><strong>要求装饰器对象和被装饰器对象实现相同的接口</strong></span>。而<span style="color: #0000ff;"><strong>职责链模式</strong></span>可以<span style="color: #ff0000;"><strong>实现动态的职责组合</strong>，<strong>标准处理是有一个对象处理就结束</strong></span>，但如果处理完本职责不急于结束，而是继续向下一个后继传递请求，那就和装饰器模式的功能差不多了，每个职责对象就类似于装饰器。</p>
+<p>　　③主要区别：装饰模式是无限递归调用，可以有任意多个对象来装饰功能，但职责链模式是有一个处理就结束。</p>
+</div>
+<div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block"><div id="BlogPostCategory">
+    分类: 
+            <a href="https://www.cnblogs.com/5iedu/category/825371.html" target="_blank">设计模式</a></div>
+
+
+    <div id="blog_post_info">
+<div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(5573318,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+        <a id="green_channel_follow" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./第15章 行为型模式—职责链模式 - 浅墨浓香 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./第15章 行为型模式—职责链模式 - 浅墨浓香 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/5iedu/" target="_blank"><img src="./第15章 行为型模式—职责链模式 - 浅墨浓香 - 博客园_files/20150610151331.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/5iedu/">浅墨浓香</a><br>
+            <a href="https://home.cnblogs.com/u/5iedu/followees/">关注 - 0</a><br>
+            <a href="https://home.cnblogs.com/u/5iedu/followers/">粉丝 - 149</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(5573318,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(5573318,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+    <div class="clear"></div>
+    <div id="post_next_prev">
+
+    <a href="https://www.cnblogs.com/5iedu/p/5572571.html" class="p_n_p_prefix">« </a> 上一篇：    <a href="https://www.cnblogs.com/5iedu/p/5572571.html" title="发布于 2016-06-09 17:55">第48课 同名覆盖引发的问题</a>
+    <br>
+    <a href="https://www.cnblogs.com/5iedu/p/5578970.html" class="p_n_p_prefix">» </a> 下一篇：    <a href="https://www.cnblogs.com/5iedu/p/5578970.html" title="发布于 2016-06-12 22:15">第16章 行为型模式—命令模式</a>
+
+</div>
+</div></div>
+	</div>
+<script src="./第15章 行为型模式—职责链模式 - 浅墨浓香 - 博客园_files/highlight.min.js.下载"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 231128, cb_blogApp = '5iedu', cb_blogUserGuid = '41562de4-020f-e511-b908-9dcfd8948a71';
+    var cb_entryId = 5573318, cb_entryCreatedDate = '2016-06-10 10:17', cb_postType = 1; 
+    loadViewCount(cb_entryId);
+</script><a name="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<script>
+    var commentManager = new blogCommentManager();
+    commentManager.renderComments(0);
+</script>
+
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/5iedu/p/5573318.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/5iedu/p/5573318.html#top">返回顶部</a></div>
+    <div id="comment_form_container"><div class="login_tips">
+    注册用户登录后才能发表评论，请 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a>
+     或 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，
+    <a href="https://www.cnblogs.com/">访问</a> 网站首页。
+</div></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"><a href="https://cloud.tencent.com/act/pro/overseas?fromSource=gwzcw.3090393.3090393.3090393&amp;utm_medium=cpc&amp;utm_id=gwzcw.3090393.3090393.3090393" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-腾讯云&#39;)">【推荐】腾讯云海外1核2G云服务器低至2折，半价续费券限量免费领取！</a><br><a href="http://click.aliyun.com/m/1000081987/" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-阿里云&#39;)">【推荐】阿里云双11返场来袭，热门产品低至一折等你来抢！</a><br><a href="http://www.ucancode.com/index.htm" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-工控&#39;)">【推荐】超50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://group.cnblogs.com/topic/90800.html?800019197" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-马士兵&#39;)">【提升】这个价值 50W 年薪的问题，终于被马老师说明白啦...</a><br><a href="https://www.ctyun.cn/activity/20191111?hmsr=%E7%9C%8B%E7%9C%8B-%E5%8D%9A%E5%AE%A2%E5%9B%AD-%E5%8F%8C11-1106&amp;hmpl=&amp;hmcu=&amp;hmkw=&amp;hmci=" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-天翼云&#39;)">【推荐】天翼云双十一翼降到底，云主机11.11元起，抽奖送大礼</a><br><a href="https://www.cnblogs.com/enjoyedu/p/11905399.html?800019191" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-享学&#39;)">【提升】Java程序员年薪40W，他1年走了别人5年的学习之路</a><br><a href="https://www.uibot.com.cn/sem/bky.html" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-uibot_T2&#39;)">【推荐】流程自动化专家UiBot，体系化教程成就高薪RPA工程师</a><br></div>
+    <div id="opt_under_post"></div>
+    <script async="async" src="./第15章 行为型模式—职责链模式 - 浅墨浓香 - 博客园_files/gpt.js.下载"></script>
+    <script>
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+    </script>
+    <script>
+        googletag.cmd.push(function () {
+            googletag.defineSlot("/1090369/C1", [300, 250], "div-gpt-ad-1546353474406-0").addService(googletag.pubads());
+            googletag.defineSlot("/1090369/C2", [468, 60], "div-gpt-ad-1539008685004-0").addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    </script>
+    <div id="cnblogs_c1" class="c_ad_block" style="">
+        <div id="div-gpt-ad-1546353474406-0" style="height: 250px; width: 300px;"><div id="google_ads_iframe_/1090369/C1_0__container__" style="border: 0pt none; width: 300px; height: 250px;"></div></div>
+    </div>
+    <div id="under_post_news"><div class="recomm-block"><b>相关博文：</b><br>·  <a title="15、设计模式-行为型模式-职责链模式" href="https://www.cnblogs.com/Mrchengs/p/10897964.html" target="_blank" onclick="clickRecomItmem(10897964)">15、设计模式-行为型模式-职责链模式</a><br>·  <a title="设计模式（二十一）—职责链模式（行为型）" href="https://www.cnblogs.com/javawebsoa/archive/2013/04/27/3047753.html" target="_blank" onclick="clickRecomItmem(3047753)">设计模式（二十一）—职责链模式（行为型）</a><br>·  <a title="行为型设计模式之职责链模式(Chain of Responsibility)" href="https://www.cnblogs.com/ziranquliu/p/4666221.html" target="_blank" onclick="clickRecomItmem(4666221)">行为型设计模式之职责链模式(Chain of Responsibility)</a><br>·  <a title="职责链模式——行为型模式（1）" href="https://www.cnblogs.com/JackyTecblog/archive/2012/11/03/2752875.html" target="_blank" onclick="clickRecomItmem(2752875)">职责链模式——行为型模式（1）</a><br>·  <a title="职责链模式(Chain of Responsibility)（对象行为型）" href="https://www.cnblogs.com/barrywxx/p/4398945.html" target="_blank" onclick="clickRecomItmem(4398945)">职责链模式(Chain of Responsibility)（对象行为型）</a><br>»  <a target="_blank" href="https://recomm.cnblogs.com/blogpost/5573318">更多推荐...</a></div></div>
+    <div id="cnblogs_c2" class="c_ad_block" style="">
+        <div id="div-gpt-ad-1539008685004-0" style="height: 60px; width: 468px;">
+            <script>
+                if (new Date() >= new Date(2018, 9, 13)) {
+                    googletag.cmd.push(function () { googletag.display("div-gpt-ad-1539008685004-0"); });
+                }
+            </script>
+        <div id="google_ads_iframe_/1090369/C2_0__container__" style="border: 0pt none; width: 468px; height: 60px;"></div></div>
+    </div>
+    <div id="under_post_kb">
+<div class="itnews c_ad_block">
+    <b>最新 IT 新闻</b>:
+    <br>
+ ·              <a href="https://news.cnblogs.com/n/649969/" target="_blank">改变销售人员的CRM交互方式，Salesforce推出AI语音助手及开发套件</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649968/" target="_blank">“基因剪刀”治疗地中海贫血效果初现</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649967/" target="_blank">14nm 5GHz或成CPU绝唱 7/5nm多核容易高频难</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649966/" target="_blank">HTTPZ，将 HTTP 链接转到 HTTPS 的 Firefox 插件</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649965/" target="_blank">4个在2020年持续发展的数据中心冷却趋势</a>
+            <br>
+    » <a href="https://news.cnblogs.com/" title="IT 新闻" target="_blank">更多新闻...</a>
+</div></div>
+    <div id="HistoryToday" class="c_ad_block"></div>
+    <script type="text/javascript">
+        fixPostBody();
+        setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+        deliverAdT2();
+        deliverAdC1();
+        deliverAdC2();
+        loadNewsAndKb();
+        loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+        loadOptUnderPost();
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div></div>
+
+
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="FooterCell">
+			<p id="footer">
+	Powered by: 
+	<br>
+	
+	
+<a href="https://www.cnblogs.com/" id="Footer1_Hyperlink3" style="font-size: 12px; font-family: Verdana">博客园</a>
+	<br>
+	Copyright © 2019 浅墨浓香
+<br><span id="poweredby">Powered by .NET Core 3.0.0 on Linux</span>
+
+</p>
+
+
+		</td>
+	</tr>
+</tbody></table>
+
+
+
+    
+
+
+</body></html>

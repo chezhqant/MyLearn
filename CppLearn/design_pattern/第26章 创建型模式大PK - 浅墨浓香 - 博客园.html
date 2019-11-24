@@ -1,0 +1,1923 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)https://www.cnblogs.com/5iedu/p/5655196.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin">
+    <meta property="og:description" content="26.1 工厂方法模式 VS 建造者模式 26.1.1 按工厂方法建造超人 （1）产品：两类超人，成年超人和未成年超人。 （2）工厂：这里选择简单工厂 【编程实验】工厂方法建造超人 26.1.2 按建">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>第26章 创建型模式大PK - 浅墨浓香 - 博客园</title>
+    
+    <link rel="stylesheet" href="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/blog-common.min.css">
+    <link id="MainCss" rel="stylesheet" href="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/bundle-habahaba.min.css">
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/bundle-habahaba-mobile.min.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/5iedu/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/5iedu/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/5iedu/wlwmanifest.xml">
+    <script src="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/pubads_impl_rendering_2019111801.js.下载"></script><script async="" src="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/analytics.js.下载"></script><script type="text/javascript" src="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/encoder.js.下载"></script><script src="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+    <script src="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/blog-common.min.js.下载"></script>
+    <script>
+        var currentBlogId = 231128;
+        var currentBlogApp = '5iedu';
+        var cb_enable_mathjax = true;
+        var isLogined = false;
+    </script>
+    <script type="text/x-mathjax-config;executed=true">
+        MathJax.Hub.Config({
+        tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']], processClass: 'math', processEscapes: true },
+        TeX: {
+        equationNumbers: { autoNumber: ['AMS'], useLabelIds: true },
+        extensions: ['extpfeil.js', 'mediawiki-texvc.js'],
+        Macros: {bm: "\\boldsymbol"}
+        },
+        'HTML-CSS': { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+        });
+    </script>
+    <script src="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/MathJax.js.下载"></script>
+    
+<style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover, .MJXp-munder {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > *, .MJXp-munder > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><link rel="preload" href="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/f.txt" as="script"><script type="text/javascript" src="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/f.txt"></script><script src="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/pubads_impl_2019111801.js.下载" async=""></script><link rel="prefetch" href="https://tpc.googlesyndication.com/safeframe/1-0-36/html/container.html"></head>
+<body><div id="MathJax_Message" style="display: none;"></div>
+    <a name="top"></a>
+    
+    <table width="100%" class="Framework" cellspacing="0" cellpadding="0">
+	<tbody><tr>
+		<td colspan="2">
+			
+<div id="top">
+<table width="100%" cellpadding="8" cellspacing="0">
+	<tbody><tr>
+		<td nowrap="">
+			<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/5iedu/">浅墨浓香</a>
+</h1>
+			
+想要天亮进城，就得天黑赶路。
+
+		</td>
+	</tr>
+</tbody></table>
+</div>
+<div id="sub"><div class="BlogStats">posts - 
+690, comments - 
+52, trackbacks - 
+0, articles - 
+16</div>
+
+</div>
+
+
+
+</td>
+	</tr>
+	<tr>
+		<td class="LeftCell">
+            <div id="leftmenu">
+                
+<h3>导航</h3>
+<ul>
+	<li>
+		<a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+	<li>
+		
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/5iedu/">
+首页</a>
+</li>
+	<li>
+		
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+	<li>
+		
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E6%B5%85%E5%A2%A8%E6%B5%93%E9%A6%99">
+联系</a></li>
+	<li>
+		
+<a id="blog_nav_rss" class="menu" href="https://www.cnblogs.com/5iedu/rss/">
+订阅</a></li>
+	<li>
+		
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+                
+<div id="sidebar_news" class="newsItem"><h3>公告</h3>
+<div id="news">
+	
+<div id="blog-news">
+    
+    <div id="profile_block">
+        昵称：
+        <a href="https://home.cnblogs.com/u/5iedu/">
+            浅墨浓香
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/5iedu/" title="入园时间：2015-06-10">
+            4年5个月
+        </a>
+        <br>
+        粉丝：
+        <a href="https://home.cnblogs.com/u/5iedu/followers/">
+            149
+        </a>
+        <br>
+        关注：
+        <a href="https://home.cnblogs.com/u/5iedu/followees/">
+            0
+        </a>
+        <div id="p_b_follow">
+<a href="javascript:void(0)" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;)">+加关注</a></div>
+        <script>getFollowStatus('41562de4-020f-e511-b908-9dcfd8948a71');</script>
+    </div>
+</div>
+</div>
+
+</div>
+
+                <div id="blog-calendar" style="">
+
+<table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar" border="0">
+    <tbody>
+        <tr>
+            <td colspan="7">
+                <table class="CalTitle" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/10/24&#39;); return false;">&lt;</a>
+                            </td>
+                            <td align="center">2019年11月</td>
+                            <td align="right" class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/12/24&#39;); return false;">&gt;</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+                    <th class="CalDayHeader" align="center" abbr="日" scope="col">日</th>
+                    <th class="CalDayHeader" align="center" abbr="一" scope="col">一</th>
+                    <th class="CalDayHeader" align="center" abbr="二" scope="col">二</th>
+                    <th class="CalDayHeader" align="center" abbr="三" scope="col">三</th>
+                    <th class="CalDayHeader" align="center" abbr="四" scope="col">四</th>
+                    <th class="CalDayHeader" align="center" abbr="五" scope="col">五</th>
+                    <th class="CalDayHeader" align="center" abbr="六" scope="col">六</th>
+        </tr>
+            <tr>
+                            <td class="CalOtherMonthDay" align="center">27</td>
+                            <td class="CalOtherMonthDay" align="center">28</td>
+                            <td class="CalOtherMonthDay" align="center">29</td>
+                            <td class="CalOtherMonthDay" align="center">30</td>
+                            <td class="CalOtherMonthDay" align="center">31</td>
+                        <td class="" align="center">
+                            1
+                        </td>
+                    <td class="CalWeekendDay" align="center">
+                        2
+                    </td>
+            </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            3
+                        </td>
+                            <td class="" align="center">
+                                4
+                            </td>
+                            <td class="" align="center">
+                                5
+                            </td>
+                            <td class="" align="center">
+                                6
+                            </td>
+                            <td class="" align="center">
+                                <a href="https://www.cnblogs.com/5iedu/archive/2019/11/07.html"><u>7</u></a>
+                            </td>
+                            <td class="" align="center">
+                                8
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            9
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            10
+                        </td>
+                            <td class="" align="center">
+                                11
+                            </td>
+                            <td class="" align="center">
+                                12
+                            </td>
+                            <td class="" align="center">
+                                13
+                            </td>
+                            <td class="" align="center">
+                                14
+                            </td>
+                            <td class="" align="center">
+                                15
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            16
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            <a href="https://www.cnblogs.com/5iedu/archive/2019/11/17.html"><u>17</u></a>
+                        </td>
+                            <td class="" align="center">
+                                18
+                            </td>
+                            <td class="" align="center">
+                                19
+                            </td>
+                            <td class="" align="center">
+                                <a href="https://www.cnblogs.com/5iedu/archive/2019/11/20.html"><u>20</u></a>
+                            </td>
+                            <td class="" align="center">
+                                21
+                            </td>
+                            <td class="" align="center">
+                                22
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            23
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalTodayDay" align="center">
+                            24
+                        </td>
+                            <td class="" align="center">
+                                25
+                            </td>
+                            <td class="" align="center">
+                                26
+                            </td>
+                            <td class="" align="center">
+                                27
+                            </td>
+                            <td class="" align="center">
+                                28
+                            </td>
+                            <td class="" align="center">
+                                29
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            30
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalOtherMonthDay" align="center">
+                            1
+                        </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                2
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                3
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                4
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                5
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                6
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            7
+                        </td>
+                </tr>
+    </tbody>
+</table></div>
+                <script>loadBlogDefaultCalendar();</script>
+                <div id="blog-sidecolumn">
+<!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    <div id="sidebar_search" class="mySearch">
+        <h3 class="catListTitle">搜索</h3>
+        <div id="sidebar_search_box">
+            <div id="widget_my_zzk" class="div_my_zzk">
+                <input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk">
+            </div>
+            <div id="widget_my_google" class="div_my_zzk">
+                <input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 常用链接 -->
+<div id="sidebar_shortcut" class="sidebar-block">
+    
+<h3 class="catListTitle">
+常用链接
+</h3>
+<ul>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/p/" title="我的博客的随笔列表">我的随笔</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/MyComments.html" title="我的发表过的评论列表">我的评论</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/OtherPosts.html" title="我评论过的随笔列表">我的参与</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/RecentComments.html" title="我的博客的评论列表">最新评论</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/tag/" title="我的博客的标签列表">我的标签</a>
+</li>
+</ul>
+
+<!-- TODO: 检查是否有使用这一部分的控件，如果没有则应该删除。 -->
+<div id="itemListLin_con" style="display:none">
+    <ul>
+
+    </ul>
+</div>
+
+</div>
+
+<!-- 最新随笔 -->
+
+
+
+<!-- 我的标签 -->
+<div id="sidebar_toptags" class="sidebar-block">
+    
+</div>
+
+<!-- 积分与排名 -->
+
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+    
+		<h3>
+
+随笔分类
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/811805.html" rel="" target="">
+    C++深度解析(73)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/804081.html" rel="" target="">
+    C语言进阶剖析(48)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/911906.html" rel="" target="">
+    Linux基础与系统管理(35)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/937714.html" rel="" target="">
+    Linux应用与网络编程(64)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1005833.html" rel="" target="">
+    lua(3)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1005832.html" rel="" target="">
+    makefile(10)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1503320.html" rel="" target="">
+    Modern C++ 11/14(30)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/819307.html" rel="" target="">
+    QT实验分析教程(85)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/699743.html" rel="" target="">
+    Windows程序设计(58)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/699744.html" rel="" target="">
+    Windows核心编程(57)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/994985.html" rel="" target="">
+    计算机网络原理(54)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/825371.html" rel="" target="">
+    设计模式(41)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1007185.html" rel="" target="">
+    深入应用C++11(27)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/911523.html" rel="" target="">
+    数据结构实战分析(79)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/888633.html" rel="" target="">
+    重构(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/963515.html" rel="" target="">
+    专业嵌入式软件开发(15)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+随笔档案
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/11.html" rel="" target="">
+    2019年11月(3)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/10.html" rel="" target="">
+    2019年10月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/09.html" rel="" target="">
+    2019年9月(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/08.html" rel="" target="">
+    2019年8月(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/07.html" rel="" target="">
+    2019年7月(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/12.html" rel="" target="">
+    2017年12月(13)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/11.html" rel="" target="">
+    2017年11月(23)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/10.html" rel="" target="">
+    2017年10月(21)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/09.html" rel="" target="">
+    2017年9月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/08.html" rel="" target="">
+    2017年8月(22)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/07.html" rel="" target="">
+    2017年7月(27)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/06.html" rel="" target="">
+    2017年6月(21)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/05.html" rel="" target="">
+    2017年5月(35)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/04.html" rel="" target="">
+    2017年4月(19)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/03.html" rel="" target="">
+    2017年3月(28)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/02.html" rel="" target="">
+    2017年2月(15)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/01.html" rel="" target="">
+    2017年1月(51)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/12.html" rel="" target="">
+    2016年12月(26)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/11.html" rel="" target="">
+    2016年11月(20)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/10.html" rel="" target="">
+    2016年10月(13)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/09.html" rel="" target="">
+    2016年9月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/08.html" rel="" target="">
+    2016年8月(11)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/07.html" rel="" target="">
+    2016年7月(24)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/06.html" rel="" target="">
+    2016年6月(26)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/05.html" rel="" target="">
+    2016年5月(34)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/04.html" rel="" target="">
+    2016年4月(73)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/03.html" rel="" target="">
+    2016年3月(33)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/02.html" rel="" target="">
+    2016年2月(7)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/12.html" rel="" target="">
+    2015年12月(2)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/11.html" rel="" target="">
+    2015年11月(4)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/10.html" rel="" target="">
+    2015年10月(7)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/09.html" rel="" target="">
+    2015年9月(6)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/08.html" rel="" target="">
+    2015年8月(54)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/07.html" rel="" target="">
+    2015年7月(25)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/06.html" rel="" target="">
+    2015年6月(4)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+文章分类
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/715136.html" rel="" target="">
+    Windows内核(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/729402.html" rel="" target="">
+    编程经验(12)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/812154.html" rel="" target="">
+    常用代码(2)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/954364.html" rel="" target="">
+    综合案例(1)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+相册
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/gallery/718135.html" rel="nofollow noopener noreferrer" target="">
+    笔记插图
+</a>
+
+</li>
+			
+				</ul>
+
+
+</div>
+
+<!-- 最新评论 -->
+<div id="sidebar_recentcomments" class="sidebar-block">
+    <div id="recent_comments_wrap" class="RecentComment">
+    <h3 class="catListTitle">最新评论</h3>
+    <div class="RecentCommentBlock">
+        <ul>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/11390495.html#4344239">1. Re:第18课 捕获机制及陷阱</a></li>
+                    <li class="recent_comment_body">博主不仅高产，而且文章质量都挺好</li>
+                    <li class="recent_comment_author">--YaphetS嘟嘟</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4315939">2. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">博主你好，觉得你的博客特别受用，可以告知一下其他博客的密码吗</li>
+                    <li class="recent_comment_author">--cp2018</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/7040429.html#4294675">3. Re:第5章 IP地址和子网划分（2）_IP地址分类和NAT技术</a></li>
+                    <li class="recent_comment_body">像icmp这种没有端口的不知道是如何实现NAT转换的？</li>
+                    <li class="recent_comment_author">--Eagle-jie</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4280947">4. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">同问</li>
+                    <li class="recent_comment_author">--tiger_wangsir</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4237914">5. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">博主你好，觉得你的博客特别受用，可以告知一下其他博客的密码吗</li>
+                    <li class="recent_comment_author">--胡瑶co</li>
+        </ul>
+    </div>
+</div>
+</div>
+
+
+
+<!-- 阅读排行榜 -->
+<div id="sidebar_topviewedposts" class="sidebar-block">
+    
+<div id="topview_posts_wrap">
+    <h3 class="catListTitle">阅读排行榜</h3>
+    <div id="TopViewPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5595153.html">
+                            1. 第17章 行为型模式—解释器模式(6762)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7376543.html">
+                            2. 第11章 拾遗1：网络地址转换(NAT)和端口映射(4936)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7095041.html">
+                            3. 第6章 静态路由和动态路由（4）_OSPF动态路由协议(3791)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/4899791.html">
+                            4. 第17章 内存映射文件（1）_内存映射文件简介(3741)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7742589.html">
+                            5. 第16课 右值引用（3）_std::forward与完美转发(3730)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- 评论排行榜 -->
+<div id="sidebar_topcommentedposts" class="sidebar-block">
+    
+<div id="topfeedback_posts_wrap">
+    <h3 class="catListTitle">评论排行榜</h3>
+    <div id="TopFeedbackPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/6498326.html">
+                            1. 第83课 另一种创建线程的方式(9)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5325466.html">
+                            2. 第20课 链接过程简介(5)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5429059.html">
+                            3. 第7课 Qt中的坐标系统(4)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5835715.html">
+                            4. 第37课 深度解析QMap与QHash(3)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5617055.html">
+                            5. 第56课 函数模板的概念和意义(2)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- 推荐排行榜 -->
+<div id="sidebar_topdiggedposts" class="sidebar-block">
+    
+<div id="topdigg_posts_wrap">
+    <div class="catListView">
+        <h3 class="catListTitle">推荐排行榜</h3>
+        <div id="TopDiggPostsBlock">
+            <ul style="word-break: break-all">
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/4812259.html">
+                                1. 第11章 Windows线程池（2）_Win2008及以上的新线程池(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/5363054.html">
+                                2. 第1课 学习 C++ 的意义(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/5367317.html">
+                                3. 第5课 引用的本质分析(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/6800234.html">
+                                4. 第1章 计算机网络和协议（1）_网络的概念(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/6829593.html">
+                                5. 第1章 计算机网络和协议（3）_TCP/IP协议(1)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div></div>
+                <script>loadBlogSideColumn();</script>
+            </div>
+		</td>
+		<td class="MainCell" width="100%">
+			<div id="main">
+				<div id="post_detail">
+	<div class="post">
+		<div class="posthead">
+			<h2>
+				
+<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/5iedu/p/5655196.html">第26章 创建型模式大PK</a>
+
+			</h2>
+ 			Posted on 
+<span id="post-date">2016-07-09 09:22</span>&nbsp;<a href="https://www.cnblogs.com/5iedu/">浅墨浓香</a> 阅读(<span id="post_view_count">179</span>) 评论(<span id="post_comment_count">1</span>) <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5655196" rel="nofollow"> 编辑</a> <a href="javascript:void(0)" onclick="AddToWz(5655196); return false;">收藏</a>
+
+			
+			
+		</div>
+		<div class="postbody">
+<div id="cnblogs_post_body" class="blogpost-body ">
+    <p style="text-align: left;" align="center"><strong style="line-height: 1.5;">26.1 </strong><strong style="line-height: 1.5;">工厂方法模式 VS 建造者模式</strong></p>
+<p><strong>26.1.1 </strong><strong>按工厂方法建造超人</strong></p>
+<p>（1）产品：两类超人，成年超人和未成年超人。</p>
+<p>（2）工厂：这里选择<span style="color: #0000ff;"><strong>简单工厂</strong></span></p>
+<p>【编程实验】工厂方法建造超人</p>
+<p style="text-align: center;"><img src="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/772759-20160709095130546-2135319031.png" alt=""></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">创建型模式大PK——工厂方法和建造者模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">实例：利用简单工厂创建的超人</span>
+#include &lt;iostream&gt;
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">***************************抽象产品接口*********************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">超人接口</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> ISuperMan
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">每个超人都有特殊的技能</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> specialTalent() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+    </span><span style="color: #0000ff;">virtual</span> ~<span style="color: #000000;">ISuperMan(){}
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">*************************具体产品***********************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">成年超人</span>
+<span style="color: #0000ff;">class</span> AdultSuperMan : <span style="color: #0000ff;">public</span><span style="color: #000000;"> ISuperMan
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> specialTalent()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">超人力大无穷</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;">endl;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">未成年人超人</span>
+<span style="color: #0000ff;">class</span> ChildSuperMan : <span style="color: #0000ff;">public</span><span style="color: #000000;"> ISuperMan
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> specialTalent()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">小超人的能力是刀枪不入、快速移动</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;">endl;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">***********************简单工厂****************************</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> SuperManFactory
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">static</span> ISuperMan* createSuperMan(<span style="color: #0000ff;">string</span><span style="color: #000000;"> type)
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">根据输入参数产生不同的超人</span>
+        <span style="color: #0000ff;">if</span>(type == <span style="color: #800000;">"</span><span style="color: #800000;">adult</span><span style="color: #800000;">"</span><span style="color: #000000;">)
+        {
+            </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">new</span><span style="color: #000000;"> AdultSuperMan();
+        }
+        </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> (type == <span style="color: #800000;">"</span><span style="color: #800000;">child</span><span style="color: #800000;">"</span><span style="color: #000000;">)
+        {
+            </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">new</span><span style="color: #000000;"> ChildSuperMan();
+        }
+        </span><span style="color: #0000ff;">else</span>
+            <span style="color: #0000ff;">return</span><span style="color: #000000;"> NULL;
+    }
+};
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">模拟生产超人(注意从生产工厂里出来的产品(如adult)都是一个模
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">样的，没有特殊的地方，这与后面的建造者模式有很大的不同）</span>
+    ISuperMan* sm = SuperManFactory::createSuperMan(<span style="color: #800000;">"</span><span style="color: #800000;">child</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">展示一下超人的技能</span>
+    sm-&gt;<span style="color: #000000;">specialTalent();
+
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> sm;
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+};</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><strong>26.1.2 </strong><strong>按建造者模式建造超人</strong></p>
+<p>（1）产品的三大组成部分：躯体、特殊技能、身份标记</p>
+<p>（2）建造者：Builder。注意，<span style="color: #0000ff;"><strong>与标准的建造者模式不同</strong></span>，这里的部件如何<span style="color: #0000ff;"><strong>组装的过程由各个具体的建造者负责</strong></span>，而<strong><span style="color: #ff0000;">标准的作法是放到Director角色</span></strong>中去完成的。</p>
+<p style="text-align: center;"><img src="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/772759-20160709095152842-962996733.png" alt=""></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">创建型模式大PK——工厂方法和建造者模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">实例：利用建造者模式创建的超人</span>
+#include &lt;iostream&gt;
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">***************************辅助类*********************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">超人的身驱</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Body
+{
+    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> body;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span>&amp; getBody(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> body;}
+    </span><span style="color: #0000ff;">void</span> setBody(<span style="color: #0000ff;">string</span><span style="color: #000000;"> value)
+    {
+        body </span>=<span style="color: #000000;"> value;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">特殊技能</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> SpecialTalent
+{
+    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> specialTalent;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span>&amp; getSpecialTalent(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> specialTalent;}
+    </span><span style="color: #0000ff;">void</span> setSpecialTalent(<span style="color: #0000ff;">string</span><span style="color: #000000;"> value)
+    {
+        specialTalent </span>=<span style="color: #000000;"> value;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">超人的标志</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> SpecialSymbol
+{
+    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> symbol;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span>&amp; getSymbol(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> symbol;}
+    </span><span style="color: #0000ff;">void</span> setSymbol(<span style="color: #0000ff;">string</span><span style="color: #000000;"> value)
+    {
+        symbol </span>=<span style="color: #000000;"> value;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">超人</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> SuperMan
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    Body body;
+    SpecialSymbol specialSymbol;
+    SpecialTalent specialTalent;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span>&amp; getBody(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> body.getBody();}
+    </span><span style="color: #0000ff;">void</span> setBody(<span style="color: #0000ff;">string</span><span style="color: #000000;"> value)
+    {
+        body.setBody(value);
+    }
+
+    </span><span style="color: #0000ff;">string</span>&amp; getSpecialTalent(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> specialTalent.getSpecialTalent();}
+    </span><span style="color: #0000ff;">void</span> setSepcialTalent(<span style="color: #0000ff;">string</span><span style="color: #000000;"> value)
+    {
+        specialTalent.setSpecialTalent(value);
+    }
+
+    </span><span style="color: #0000ff;">string</span>&amp; getSpecialSymbol(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> specialSymbol.getSymbol();}
+    </span><span style="color: #0000ff;">void</span> setSpecialSymbol(<span style="color: #0000ff;">string</span><span style="color: #000000;"> value)
+    {
+        specialSymbol.setSymbol(value);
+    }
+
+    </span><span style="color: #0000ff;">virtual</span> ~<span style="color: #000000;">SuperMan(){}
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">*************************Builder角色***********************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">抽象建造者</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Builder
+{
+</span><span style="color: #0000ff;">protected</span><span style="color: #000000;">:
+    SuperMan</span>*<span style="color: #000000;"> superMan;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    Builder()
+    {
+        superMan </span>= <span style="color: #0000ff;">new</span><span style="color: #000000;"> SuperMan();
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">构建出超人的躯体</span>
+    <span style="color: #0000ff;">void</span> setBody(<span style="color: #0000ff;">string</span><span style="color: #000000;"> value)
+    {
+        superMan</span>-&gt;<span style="color: #000000;">setBody(value);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">构建出超人的特殊技能</span>
+    <span style="color: #0000ff;">void</span> setSpecialTalent(<span style="color: #0000ff;">string</span><span style="color: #000000;"> value)
+    {
+        superMan</span>-&gt;<span style="color: #000000;">setSepcialTalent(value);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">构建出超人的特殊标记</span>
+    <span style="color: #0000ff;">void</span> setSpecialSymbol(<span style="color: #0000ff;">string</span><span style="color: #000000;"> value)
+    {
+        superMan</span>-&gt;<span style="color: #000000;">setSpecialSymbol(value);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">构建出一个完整的超人
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">超人的各个部件都准备好了，具体怎么组装由实现类来决定，
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">体现建造者模式将复杂对象的构建和表示分离的意图</span>
+    <span style="color: #0000ff;">virtual</span> SuperMan* getSuperMan() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+    </span><span style="color: #0000ff;">virtual</span> ~<span style="color: #000000;">Builder()
+    {
+        </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> superMan;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">成年超人建造者</span>
+<span style="color: #0000ff;">class</span> AdultSuperManBuilder :<span style="color: #0000ff;">public</span><span style="color: #000000;"> Builder
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    SuperMan</span>*<span style="color: #000000;"> getSuperMan()
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">1.标准的建造者模式，建造过程是放在Director中进行装配的。
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">2.建造者模式关注产品的各个部分，甚至构建顺序，
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">  即相同的部件，装配顺序不同，产生的结果也可能不同，
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">  这正是建造者模式的意图)</span>
+        superMan-&gt;setBody(<span style="color: #800000;">"</span><span style="color: #800000;">强壮的躯体</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+        superMan</span>-&gt;setSepcialTalent(<span style="color: #800000;">"</span><span style="color: #800000;">会飞行</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+        superMan</span>-&gt;setSpecialSymbol(<span style="color: #800000;">"</span><span style="color: #800000;">胸前带S标记</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> superMan;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">未成年超人建造者</span>
+<span style="color: #0000ff;">class</span> ChildSuperManBuilder :<span style="color: #0000ff;">public</span><span style="color: #000000;"> Builder
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    SuperMan</span>*<span style="color: #000000;"> getSuperMan()
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">建造过程</span>
+        superMan-&gt;setBody(<span style="color: #800000;">"</span><span style="color: #800000;">强壮的躯体</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+        superMan</span>-&gt;setSepcialTalent(<span style="color: #800000;">"</span><span style="color: #800000;">刀枪不入</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+        superMan</span>-&gt;setSpecialSymbol(<span style="color: #800000;">"</span><span style="color: #800000;">胸前带小S标记</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> superMan;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">导演类</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Director
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">static</span> Builder*<span style="color: #000000;"> adultBuilder;
+    </span><span style="color: #0000ff;">static</span> Builder*<span style="color: #000000;"> childBuilder;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">本例中，以下函数只是一个空壳，而标准的建造者模式
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">其部件的组装过程是在以下两部函数中完成的！
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">建造一个成人超人</span>
+    <span style="color: #0000ff;">static</span> SuperMan*<span style="color: #000000;"> getAdultSuperMan()
+    {
+
+        </span><span style="color: #0000ff;">return</span> adultBuilder-&gt;<span style="color: #000000;">getSuperMan();
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">建造一个未成年人超人</span>
+    <span style="color: #0000ff;">static</span> SuperMan*<span style="color: #000000;"> getChildSuperMan()
+    {
+        </span><span style="color: #0000ff;">return</span> childBuilder-&gt;<span style="color: #000000;">getSuperMan();
+    }
+};
+Builder</span>* Director::adultBuilder = <span style="color: #0000ff;">new</span><span style="color: #000000;"> AdultSuperManBuilder();
+Builder</span>* Director::childBuilder = <span style="color: #0000ff;">new</span><span style="color: #000000;"> ChildSuperManBuilder();
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">建造一个超人</span>
+    SuperMan* sm =<span style="color: #000000;"> Director::getAdultSuperMan();
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">SuperMan* sm = Director::getChildSuperMan();
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">展示一个超人的能力</span>
+    cout &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">超人的身体：</span><span style="color: #800000;">"</span> &lt;&lt; sm-&gt;getBody() &lt;&lt;<span style="color: #000000;"> endl;
+    cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">超人的特殊能力：</span><span style="color: #800000;">"</span> &lt;&lt; sm-&gt;getSpecialTalent() &lt;&lt;<span style="color: #000000;"> endl;
+    cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">超人带的标志：</span><span style="color: #800000;">"</span> &lt;&lt; sm-&gt;getSpecialSymbol() &lt;&lt;<span style="color: #000000;"> endl;
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+</span><span style="color: #008000;">/*</span><span style="color: #008000;">输出结果
+超人的身体：强壮的躯体
+超人的特殊能力：会飞行
+超人带的标志：胸前带S标记
+</span><span style="color: #008000;">*/</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><strong>26.1.3 </strong><strong>最佳实践</strong></p>
+<p><strong>（1）意图不同</strong></p>
+<p>　　①<span style="color: #ff0000;"><strong>工厂方法</strong></span>模式，关注的是一个<span style="color: #ff0000;"><strong>产品整体</strong>，<strong>无须关心产品各部分</strong></span>是如何创建出来的。</p>
+<p>　　②<span style="color: #ff0000;"><strong>建造者模式</strong></span>，一个具体产品的产生是依赖各个部件的产生以及装配顺序，它关注的是<span style="color: #ff0000;">“<strong>由零件一步一步地组装出产品对象</strong></span>”</p>
+<p>　　③简单理解，工厂模式是一个对象创建的粗线条应用，建造者模式则是通过细线程勾勒出一个复杂对象，关注的是产品组成部分的创建过程。</p>
+<p><strong>（2）产品的复杂度不同</strong></p>
+<p>　　①<span style="color: #ff0000;"><strong>工厂方法模式</strong></span>创建的<strong>产品</strong>一般都是单一性质产品，<span style="color: #0000ff;"><strong>都是一个模样</strong></span>。</p>
+<p>　　②<span style="color: #ff0000;"><strong>建造者模式</strong></span>创建的则是<span style="color: #0000ff;"><strong>一个复合产品</strong></span>，它则各个部件复合而成，部件不同，产品对象当然不同。</p>
+<p>　　③一般来说工厂方法模式创建的产品的粒度比较粗，而建造者模式的产品对象粒度比较细。</p>
+<p><strong>（3）方法的选择：</strong>如果<span style="color: #0000ff;"><strong>关注一个产品部件的生产、安装步骤</strong></span>，则选择<span style="color: #0000ff;"><strong>建造者</strong></span>，<span style="color: #ff0000;"><strong>否则选择工厂方法模式</strong></span>。</p>
+<p><strong>26.2 </strong><strong>抽象工厂模式 VS 建造者模式</strong></p>
+<p><strong>26.2.1 </strong><strong>抽象工厂模式</strong></p>
+<p>（1）产品等级：宝马(BWM)、奔驰(Benz)</p>
+<p>（2）产品族：即车型（如商务车型Van、运动型SUV），即每个工厂要生产两种车型</p>
+<p>【编程实验】按抽象工厂模式生产车辆</p>
+<p align="center"><img src="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/772759-20160709130818999-940798789.png" alt="">&nbsp;</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">创建型模式大PK——抽象工厂方法和建造者模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">实例：利用抽象工厂方法生产汽车</span>
+#include &lt;iostream&gt;
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">抽象产品</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;">  ICar
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">获取汽车生产商，即品牌</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">string</span> getBand() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">获取汽车的型号</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">string</span> getModel() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">抽象宝马车</span>
+<span style="color: #0000ff;">class</span> AbsBMW : <span style="color: #0000ff;">public</span><span style="color: #000000;"> ICar
+{
+   </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> BMW_BNAD;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    AbsBMW()
+    {
+        BMW_BNAD </span>= <span style="color: #800000;">"</span><span style="color: #800000;">宝马汽车</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+    }
+
+    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> getBand()
+    {
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> BMW_BNAD;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">宝马商务车</span>
+<span style="color: #0000ff;">class</span> BMWVan :<span style="color: #0000ff;">public</span><span style="color: #000000;"> AbsBMW
+{
+    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> SEVENT_SEARIES;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    BMWVan():AbsBMW()
+    {
+        SEVENT_SEARIES </span>= <span style="color: #800000;">"</span><span style="color: #800000;">7系列商务车</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+    }
+    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> getModel()
+    {
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> SEVENT_SEARIES;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">宝马Suv</span>
+<span style="color: #0000ff;">class</span> BMWSuv :<span style="color: #0000ff;">public</span><span style="color: #000000;"> AbsBMW
+{
+    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> X_SEARIES;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    BMWSuv():AbsBMW()
+    {
+        X_SEARIES </span>= <span style="color: #800000;">"</span><span style="color: #800000;">x系列Suv</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+    }
+    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> getModel()
+    {
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> X_SEARIES;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">抽象奔驰车</span>
+<span style="color: #0000ff;">class</span> AbsBenz : <span style="color: #0000ff;">public</span><span style="color: #000000;"> ICar
+{
+   </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> BENZ_BNAD;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    AbsBenz()
+    {
+        BENZ_BNAD </span>= <span style="color: #800000;">"</span><span style="color: #800000;">奔驰汽车</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+    }
+
+    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> getBand()
+    {
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> BENZ_BNAD;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">奔驰商务车</span>
+<span style="color: #0000ff;">class</span> BenzVan :<span style="color: #0000ff;">public</span><span style="color: #000000;"> AbsBenz
+{
+    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> R_SEARIES;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    BenzVan():AbsBenz()
+    {
+        R_SEARIES </span>= <span style="color: #800000;">"</span><span style="color: #800000;">R系列商务车</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+    }
+    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> getModel()
+    {
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> R_SEARIES;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">奔驰Suv</span>
+<span style="color: #0000ff;">class</span> BenzSuv :<span style="color: #0000ff;">public</span><span style="color: #000000;"> AbsBenz
+{
+    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> G_SEARIES;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    BenzSuv():AbsBenz()
+    {
+        G_SEARIES </span>= <span style="color: #800000;">"</span><span style="color: #800000;">G系列Suv</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+    }
+    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> getModel()
+    {
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> G_SEARIES;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">抽象工厂</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> CarFactory
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">生产SUV型</span>
+    <span style="color: #0000ff;">virtual</span> ICar* createSuv() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">生产商务车型</span>
+    <span style="color: #0000ff;">virtual</span> ICar* createVan() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">宝马车工厂</span>
+<span style="color: #0000ff;">class</span> BMWFactory : <span style="color: #0000ff;">public</span><span style="color: #000000;"> CarFactory
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    ICar</span>*<span style="color: #000000;"> createSuv()
+    {
+        </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">new</span><span style="color: #000000;"> BMWSuv();
+    }
+
+    ICar</span>*<span style="color: #000000;"> createVan()
+    {
+        </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">new</span><span style="color: #000000;"> BMWVan();
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">奔驰车工厂</span>
+<span style="color: #0000ff;">class</span> BenzFactory : <span style="color: #0000ff;">public</span><span style="color: #000000;"> CarFactory
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    ICar</span>*<span style="color: #000000;"> createSuv()
+    {
+        </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">new</span><span style="color: #000000;"> BenzSuv;
+    }
+
+    ICar</span>*<span style="color: #000000;"> createVan()
+    {
+        </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">new</span><span style="color: #000000;"> BenzVan();
+    }
+};
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">要求生产一辆奔驰车</span>
+    cout &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">===要求生产一辆奔驰车SUV===</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">首先找奔驰车的工厂</span>
+    CarFactory* carFactory = <span style="color: #0000ff;">new</span><span style="color: #000000;"> BenzFactory();
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">开始生产</span>
+    ICar* car = carFactory-&gt;<span style="color: #000000;">createSuv();
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">生产完毕，展示一下车辆信息</span>
+    cout &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">===车辆生产完毕，详细信息如下===</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">汽车品牌:</span><span style="color: #800000;">"</span> &lt;&lt; car-&gt;getBand() &lt;&lt;<span style="color: #000000;">endl;
+    cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">汽车型号:</span><span style="color: #800000;">"</span> &lt;&lt; car-&gt;getModel() &lt;&lt;<span style="color: #000000;">endl;
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+</span><span style="color: #008000;">/*</span><span style="color: #008000;">输出结果
+ ===要求生产一辆奔驰车SUV===
+===车辆生产完毕，详细信息如下===
+汽车品牌:奔驰汽车
+汽车型号:G系列Suv
+</span><span style="color: #008000;">*/</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><strong>26.2.2 </strong><strong>建造者模式</strong></p>
+<p>（1）整体：汽车。部分：引擎和车轮</p>
+<p>（2）Builder：BenzBuilder和BMWBuilder</p>
+<p>【编程实验】按建造者模式生产车辆</p>
+<p align="center"><img src="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/772759-20160709130834608-1358329981.png" alt="">&nbsp;</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">创建型模式大PK——抽象工厂方法和建造者模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">实例：利用建造者模式生产汽车</span>
+#include &lt;iostream&gt;
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">**********************辅助类*******************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">生产蓝图（这个蓝图会交给Director，让他这个要求去生产汽车）</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Blueprint
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span> wheel;   <span style="color: #008000;">//</span><span style="color: #008000;">车轮的要求</span>
+    <span style="color: #0000ff;">string</span> engine;  <span style="color: #008000;">//</span><span style="color: #008000;">引擎的要求</span>
+<span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span> getWheel(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> wheel;}
+    </span><span style="color: #0000ff;">void</span> setWheel(<span style="color: #0000ff;">string</span><span style="color: #000000;"> value)
+    {
+        wheel </span>=<span style="color: #000000;"> value;
+    }
+
+    </span><span style="color: #0000ff;">string</span> getEngine(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> engine;}
+    </span><span style="color: #0000ff;">void</span> setEngine(<span style="color: #0000ff;">string</span><span style="color: #000000;"> value)
+    {
+        engine </span>=<span style="color: #000000;"> value;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">车辆产品</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> ICar
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">汽车车轮</span>
+   <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">string</span> getWheel() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+   </span><span style="color: #008000;">//</span><span style="color: #008000;">汽车引擎</span>
+   <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">string</span> getEngine() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+   </span><span style="color: #008000;">//</span><span style="color: #008000;">显示信号</span>
+   <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">string</span> toString() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+   </span><span style="color: #0000ff;">virtual</span> ~<span style="color: #000000;">ICar (){}
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">具体车辆</span>
+<span style="color: #0000ff;">class</span> Car : <span style="color: #0000ff;">public</span><span style="color: #000000;"> ICar
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span> engine;  <span style="color: #008000;">//</span><span style="color: #008000;">引擎</span>
+    <span style="color: #0000ff;">string</span> wheel;   <span style="color: #008000;">//</span><span style="color: #008000;">车轮</span>
+<span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    Car(</span><span style="color: #0000ff;">string</span> engine, <span style="color: #0000ff;">string</span><span style="color: #000000;"> wheel)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;engine =<span style="color: #000000;"> engine;
+        </span><span style="color: #0000ff;">this</span>-&gt;wheel =<span style="color: #000000;"> wheel;
+    }
+
+    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> getEngine()
+    {
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> engine;
+    }
+    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> getWheel()
+    {
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> wheel;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">演示车辆信息</span>
+    <span style="color: #0000ff;">string</span><span style="color: #000000;"> toString()
+    {
+        </span><span style="color: #0000ff;">return</span> <span style="color: #800000;">"</span><span style="color: #800000;">车的轮子是:</span><span style="color: #800000;">"</span> + wheel + <span style="color: #800000;">"</span><span style="color: #800000;">\n车的引擎是:</span><span style="color: #800000;">"</span> +<span style="color: #000000;"> engine;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">抽象建造者</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> CarBuilder
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">ICar* car; </span><span style="color: #008000;">//</span><span style="color: #008000;">等建造的汽车</span>
+    Blueprint* bp; <span style="color: #008000;">//</span><span style="color: #008000;">设计蓝图</span>
+<span style="color: #0000ff;">protected</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">只有具体的建造者才可以查看蓝图</span>
+    Blueprint* getBlueprint(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> bp;}
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">接收一份设计蓝图</span>
+    <span style="color: #0000ff;">void</span> setBlueprint(Blueprint*<span style="color: #000000;"> value)
+    {
+        bp </span>=<span style="color: #000000;"> value;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">部件的构建</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">string</span> buildWheel() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">string</span> buildEngine() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">按照顺序生产一辆车</span>
+    Car*<span style="color: #000000;"> buildCar()
+    {
+        </span><span style="color: #0000ff;">return</span>  <span style="color: #0000ff;">new</span><span style="color: #000000;"> Car(buildEngine(),buildWheel());
+    }
+    </span><span style="color: #0000ff;">virtual</span> ~<span style="color: #000000;">CarBuilder(){}
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">宝马车建造车间</span>
+<span style="color: #0000ff;">class</span> BMWBuilder : <span style="color: #0000ff;">public</span><span style="color: #000000;"> CarBuilder
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> buildEngine()
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">按车间主任(Director)手里的蓝图进行设计</span>
+        <span style="color: #0000ff;">return</span> getBlueprint()-&gt;<span style="color: #000000;">getEngine();
+    }
+
+    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> buildWheel()
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">按车间主任(Director)手里的蓝图进行设计</span>
+        <span style="color: #0000ff;">return</span> getBlueprint()-&gt;<span style="color: #000000;">getWheel();
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">奔驰车建造车间</span>
+<span style="color: #0000ff;">class</span> BenzBuilder : <span style="color: #0000ff;">public</span><span style="color: #000000;"> CarBuilder
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> buildEngine()
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">按车间主任(Director)手里的蓝图进行设计</span>
+        <span style="color: #0000ff;">return</span> getBlueprint()-&gt;<span style="color: #000000;">getEngine();
+    }
+
+    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> buildWheel()
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">按车间主任(Director)手里的蓝图进行设计</span>
+        <span style="color: #0000ff;">return</span> getBlueprint()-&gt;<span style="color: #000000;">getWheel();
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">导演类:Director</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Director
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">持有建造者的引用</span>
+    CarBuilder*<span style="color: #000000;"> bmwBuilder;
+    CarBuilder</span>*<span style="color: #000000;"> benzBuilder;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    Director()
+    {
+        bmwBuilder </span>= <span style="color: #0000ff;">new</span><span style="color: #000000;"> BMWBuilder();
+        benzBuilder </span>= <span style="color: #0000ff;">new</span><span style="color: #000000;"> BMWBuilder();
+    }
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">生产车辆</span>
+    ICar* createCar(CarBuilder* carBuilder, <span style="color: #0000ff;">string</span> engine, <span style="color: #0000ff;">string</span><span style="color: #000000;"> wheel)
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">导演手中的蓝图</span>
+<span style="color: #000000;">        Blueprint bp;
+        bp.setEngine(engine);
+        bp.setWheel(wheel);
+        carBuilder</span>-&gt;setBlueprint(&amp;<span style="color: #000000;">bp);
+        </span><span style="color: #0000ff;">return</span> carBuilder-&gt;<span style="color: #000000;">buildCar();
+    }
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">生产奔驰SUV</span>
+    ICar*<span style="color: #000000;"> createBenzSuv()
+    {
+        </span><span style="color: #0000ff;">return</span> createCar(benzBuilder, <span style="color: #800000;">"</span><span style="color: #800000;">benz的引擎</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">benz的轮胎</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">生产宝马商务</span>
+    ICar*<span style="color: #000000;"> createBMWVan()
+    {
+        </span><span style="color: #0000ff;">return</span> createCar(bmwBuilder, <span style="color: #800000;">"</span><span style="color: #800000;">BMW的引擎</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">BMW的轮胎</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">生产混合车型</span>
+     ICar*<span style="color: #000000;"> createComplexCar()
+    {
+        </span><span style="color: #0000ff;">return</span> createCar(bmwBuilder, <span style="color: #800000;">"</span><span style="color: #800000;">BMW的引擎</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">benz的轮胎</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    }
+
+    </span>~<span style="color: #000000;">Director()
+    {
+        </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> benzBuilder;
+        </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> bmwBuilder;
+    }
+};
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">定义一个导演类</span>
+<span style="color: #000000;">    Director director;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">生成一辆奔驰车SUV</span>
+    cout &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">===制造一辆奔驰SUV===</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    ICar</span>* benzSuv =<span style="color: #000000;"> director.createBenzSuv();
+    cout </span>&lt;&lt; benzSuv-&gt;toString() &lt;&lt;<span style="color: #000000;"> endl;
+
+    cout </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">===制造一辆宝马商务车===</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    ICar</span>* bmwVan =<span style="color: #000000;"> director.createBMWVan();
+    cout </span>&lt;&lt; bmwVan-&gt;toString() &lt;&lt;<span style="color: #000000;"> endl;
+
+    cout </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">===制造一辆混合车===</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    ICar</span>* complexCar =<span style="color: #000000;"> director.createComplexCar();
+    cout </span>&lt;&lt; complexCar-&gt;toString() &lt;&lt;<span style="color: #000000;"> endl;
+
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> benzSuv;
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> bmwVan;
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> complexCar;
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+</span><span style="color: #008000;">/*</span><span style="color: #008000;">输出结果
+===制造一辆奔驰SUV===
+车的轮子是:benz的轮胎
+车的引擎是:benz的引擎
+===制造一辆宝马商务车===
+车的轮子是:BMW的轮胎
+车的引擎是:BMW的引擎
+===制造一辆混合车===
+车的轮子是:benz的轮胎
+车的引擎是:BMW的引擎
+</span><span style="color: #008000;">*/</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><strong>26.2.3 </strong><strong>最佳实践</strong></p>
+<p>（1）<span style="color: #ff0000;"><strong>抽象工厂模式</strong></span>只关心<span style="color: #0000ff;"><strong>一个工厂到底生产了哪些产品</strong></span>，不关心具体怎么生产的。</p>
+<p>（2）<span style="color: #ff0000;"><strong>建造者模式</strong></span>要求按照指定的蓝图建造产品，它的<span style="color: #0000ff;"><strong>主要目的是通过组装零配件而产生一个新的产品</strong></span>。</p>
+<p>（3）<span style="color: #ff0000;"><strong>抽象工厂</strong></span>中<span style="color: #0000ff;"><strong>使用“工厂”</strong></span>来描述产品的构建，它是一种更高层次看对象的构建，而<strong><span style="color: #ff0000;">建造者</span><span style="color: #0000ff;">使用“车间”</span></strong>来描述，不同的车间完成不同的创建和装配任务，一个完整的汽车生产过程<span style="color: #ff0000;"><strong>需要引擎制造车间、引擎装配车间的配合</strong></span>才能完成，它们<span style="color: #0000ff;"><strong>配合的基础是设计蓝图</strong></span>，而<span style="color: #ff0000;"><strong>这个蓝图掌握在车间主任（Director）手中</strong></span>，它给建造者车间什么蓝图就能生产什么产品，它更关心建造过程。</p>
+<p>（4）相对来说，<span style="color: #0000ff;"><strong>抽象工厂模式</strong></span>比建造者模式的尺度更大，它<span style="color: #ff0000;"><strong>关注产品整体</strong></span>，而<span style="color: #0000ff;"><strong>建造者模式</strong></span>关注的是<span style="color: #ff0000;"><strong>构建过程</strong></span>。</p>
+<p>（5）如果希望屏蔽对象的创建过程，只提供一个良好的封装，可以选择抽象工厂模式。如果在构件时通过不同的装配产生出新的对象，可以使用建造者模式。</p>
+</div>
+<div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block"><div id="BlogPostCategory">
+    分类: 
+            <a href="https://www.cnblogs.com/5iedu/category/825371.html" target="_blank">设计模式</a></div>
+
+
+    <div id="blog_post_info">
+<div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(5655196,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+        <a id="green_channel_follow" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/5iedu/" target="_blank"><img src="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/20150610151331.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/5iedu/">浅墨浓香</a><br>
+            <a href="https://home.cnblogs.com/u/5iedu/followees/">关注 - 0</a><br>
+            <a href="https://home.cnblogs.com/u/5iedu/followers/">粉丝 - 149</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(5655196,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">1</span>
+    </div>
+    <div class="buryit" onclick="votePost(5655196,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+    <div class="clear"></div>
+    <div id="post_next_prev">
+
+    <a href="https://www.cnblogs.com/5iedu/p/5654806.html" class="p_n_p_prefix">« </a> 上一篇：    <a href="https://www.cnblogs.com/5iedu/p/5654806.html" title="发布于 2016-07-08 22:50">第65课 C++中的异常处理（下）</a>
+    <br>
+    <a href="https://www.cnblogs.com/5iedu/p/5655921.html" class="p_n_p_prefix">» </a> 下一篇：    <a href="https://www.cnblogs.com/5iedu/p/5655921.html" title="发布于 2016-07-09 15:08">第27章 结构型模式大PK</a>
+
+</div>
+</div></div>
+	</div>
+<script src="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/highlight.min.js.下载"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 231128, cb_blogApp = '5iedu', cb_blogUserGuid = '41562de4-020f-e511-b908-9dcfd8948a71';
+    var cb_entryId = 5655196, cb_entryCreatedDate = '2016-07-09 09:22', cb_postType = 1; 
+    loadViewCount(cb_entryId);
+</script><a name="!comments"></a>
+<div id="blog-comments-placeholder">
+
+<div id="comment_pager_top">
+    
+</div>
+
+<h3>Feedback</h3>
+			<div class="post">
+				<div class="posthead">
+					<h2>
+						
+<a href="https://www.cnblogs.com/5iedu/p/5655196.html#3813656" class="layer">#1楼</a>
+<a name="3813656" id="comment_anchor_3813656"></a>
+
+        <span id="comment-maxId" style="display:none">3813656</span>
+        <span id="comment-maxDate" style="display:none">2017/10/17 下午9:26:19</span>
+
+						&nbsp;&nbsp;
+
+<span class="comment_actions">
+    
+    
+    
+    
+</span>
+
+
+					</h2>
+					
+<span class="comment_date">2017-10-17 21:26</span>
+
+ by 
+
+            <a id="a_comment_author_3813656" href="https://www.cnblogs.com/yu112233/" target="_blank">宇宙112233</a>
+
+				</div>
+				<div class="postbody">
+<div id="comment_body_3813656" class="blog_comment_body">
+    都是好文章，博主大牛
+</div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3813656, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(3813656, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        
+</div>
+			</div>
+
+<div id="comment_pager_bottom">
+    
+</div>
+
+
+</div>
+<script>
+    var commentManager = new blogCommentManager();
+    commentManager.renderComments(0);
+</script>
+
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/5iedu/p/5655196.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/5iedu/p/5655196.html#top">返回顶部</a></div>
+    <div id="comment_form_container"><div class="login_tips">
+    注册用户登录后才能发表评论，请 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a>
+     或 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，
+    <a href="https://www.cnblogs.com/">访问</a> 网站首页。
+</div></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"><a href="https://cloud.tencent.com/act/pro/overseas?fromSource=gwzcw.3090393.3090393.3090393&amp;utm_medium=cpc&amp;utm_id=gwzcw.3090393.3090393.3090393" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-腾讯云&#39;)">【推荐】腾讯云海外1核2G云服务器低至2折，半价续费券限量免费领取！</a><br><a href="http://click.aliyun.com/m/1000081987/" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-阿里云&#39;)">【推荐】阿里云双11返场来袭，热门产品低至一折等你来抢！</a><br><a href="http://www.ucancode.com/index.htm" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-工控&#39;)">【推荐】超50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://group.cnblogs.com/topic/90800.html?800019197" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-马士兵&#39;)">【提升】这个价值 50W 年薪的问题，终于被马老师说明白啦...</a><br><a href="https://www.ctyun.cn/activity/20191111?hmsr=%E7%9C%8B%E7%9C%8B-%E5%8D%9A%E5%AE%A2%E5%9B%AD-%E5%8F%8C11-1106&amp;hmpl=&amp;hmcu=&amp;hmkw=&amp;hmci=" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-天翼云&#39;)">【推荐】天翼云双十一翼降到底，云主机11.11元起，抽奖送大礼</a><br><a href="https://www.cnblogs.com/enjoyedu/p/11905399.html?800019191" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-享学&#39;)">【提升】Java程序员年薪40W，他1年走了别人5年的学习之路</a><br><a href="https://www.uibot.com.cn/sem/bky.html" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-uibot_T2&#39;)">【推荐】流程自动化专家UiBot，体系化教程成就高薪RPA工程师</a><br></div>
+    <div id="opt_under_post"></div>
+    <script async="async" src="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/gpt.js.下载"></script>
+    <script>
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+    </script>
+    <script>
+        googletag.cmd.push(function () {
+            googletag.defineSlot("/1090369/C1", [300, 250], "div-gpt-ad-1546353474406-0").addService(googletag.pubads());
+            googletag.defineSlot("/1090369/C2", [468, 60], "div-gpt-ad-1539008685004-0").addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    </script>
+    <div id="cnblogs_c1" class="c_ad_block" style="">
+        <div id="div-gpt-ad-1546353474406-0" style="height: 250px; width: 300px;"><div id="google_ads_iframe_/1090369/C1_0__container__" style="border: 0pt none; width: 300px; height: 250px;"></div></div>
+    </div>
+    <div id="under_post_news"><div class="recomm-block"><b>相关博文：</b><br>·  <a title="创建类模式大PK(总结)" href="https://www.cnblogs.com/tlnshuju/p/7077555.html" target="_blank" onclick="clickRecomItmem(7077555)">创建类模式大PK(总结)</a><br>·  <a title="设计模式之创建类模式大PK" href="https://www.cnblogs.com/zhanglei93/p/6138445.html" target="_blank" onclick="clickRecomItmem(6138445)">设计模式之创建类模式大PK</a><br>·  <a title="设计模式之创建类模式PK" href="https://www.cnblogs.com/hujingnb/p/10171616.html" target="_blank" onclick="clickRecomItmem(10171616)">设计模式之创建类模式PK</a><br>·  <a title="【设计模式】 模式PK：工厂模式VS建造者模式" href="https://www.cnblogs.com/ChinaHook/p/7471470.html" target="_blank" onclick="clickRecomItmem(7471470)">【设计模式】 模式PK：工厂模式VS建造者模式</a><br>·  <a title="设计模式之建造者模式20170802" href="https://www.cnblogs.com/yuweifeng/p/7275632.html" target="_blank" onclick="clickRecomItmem(7275632)">设计模式之建造者模式20170802</a><br>»  <a target="_blank" href="https://recomm.cnblogs.com/blogpost/5655196">更多推荐...</a></div></div>
+    <div id="cnblogs_c2" class="c_ad_block" style="">
+        <div id="div-gpt-ad-1539008685004-0" style="height: 60px; width: 468px;">
+            <script>
+                if (new Date() >= new Date(2018, 9, 13)) {
+                    googletag.cmd.push(function () { googletag.display("div-gpt-ad-1539008685004-0"); });
+                }
+            </script>
+        <div id="google_ads_iframe_/1090369/C2_0__container__" style="border: 0pt none; width: 468px; height: 60px;"></div></div>
+    </div>
+    <div id="under_post_kb">
+<div class="itnews c_ad_block">
+    <b>最新 IT 新闻</b>:
+    <br>
+ ·              <a href="https://news.cnblogs.com/n/649969/" target="_blank">改变销售人员的CRM交互方式，Salesforce推出AI语音助手及开发套件</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649968/" target="_blank">“基因剪刀”治疗地中海贫血效果初现</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649967/" target="_blank">14nm 5GHz或成CPU绝唱 7/5nm多核容易高频难</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649966/" target="_blank">HTTPZ，将 HTTP 链接转到 HTTPS 的 Firefox 插件</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649965/" target="_blank">4个在2020年持续发展的数据中心冷却趋势</a>
+            <br>
+    » <a href="https://news.cnblogs.com/" title="IT 新闻" target="_blank">更多新闻...</a>
+</div></div>
+    <div id="HistoryToday" class="c_ad_block"></div>
+    <script type="text/javascript">
+        fixPostBody();
+        setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+        deliverAdT2();
+        deliverAdC1();
+        deliverAdC2();
+        loadNewsAndKb();
+        loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+        loadOptUnderPost();
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div></div>
+
+
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="FooterCell">
+			<p id="footer">
+	Powered by: 
+	<br>
+	
+	
+<a href="https://www.cnblogs.com/" id="Footer1_Hyperlink3" style="font-size: 12px; font-family: Verdana">博客园</a>
+	<br>
+	Copyright © 2019 浅墨浓香
+<br><span id="poweredby">Powered by .NET Core 3.0.0 on Linux</span>
+
+</p>
+
+
+		</td>
+	</tr>
+</tbody></table>
+
+
+
+    
+
+
+</body><iframe name="gpt_fetch_frame" src="./第26章 创建型模式大PK - 浅墨浓香 - 博客园_files/fetch_frame_2019111801.html" data-ready="true" style="display: none;"></iframe></html>

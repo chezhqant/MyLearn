@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)https://www.cnblogs.com/5iedu/p/5521590.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin">
+    <meta property="og:description" content="1. 桥接模式（Bridge Pattern）的定义 （1）将抽象部分与它的实现部分分离，使它们都可以独立地变化 ①一般的“抽象”与“实现”是指父子类的继承关系。但这里，GoF所谓的“抽象”是如果引起">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园</title>
+    
+    <link rel="stylesheet" href="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/blog-common.min.css">
+    <link id="MainCss" rel="stylesheet" href="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/bundle-habahaba.min.css">
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/bundle-habahaba-mobile.min.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/5iedu/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/5iedu/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/5iedu/wlwmanifest.xml">
+    <script src="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/pubads_impl_rendering_2019111801.js.下载"></script><script async="" src="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/analytics.js.下载"></script><script type="text/javascript" src="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/encoder.js.下载"></script><script src="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+    <script src="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/blog-common.min.js.下载"></script>
+    <script>
+        var currentBlogId = 231128;
+        var currentBlogApp = '5iedu';
+        var cb_enable_mathjax = true;
+        var isLogined = false;
+    </script>
+    <script type="text/x-mathjax-config;executed=true">
+        MathJax.Hub.Config({
+        tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']], processClass: 'math', processEscapes: true },
+        TeX: {
+        equationNumbers: { autoNumber: ['AMS'], useLabelIds: true },
+        extensions: ['extpfeil.js', 'mediawiki-texvc.js'],
+        Macros: {bm: "\\boldsymbol"}
+        },
+        'HTML-CSS': { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+        });
+    </script>
+    <script src="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/MathJax.js.下载"></script>
+    
+<style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover, .MJXp-munder {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > *, .MJXp-munder > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><link rel="preload" href="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/f.txt" as="script"><script type="text/javascript" src="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/f.txt"></script><script src="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/pubads_impl_2019111801.js.下载" async=""></script><link rel="prefetch" href="https://tpc.googlesyndication.com/safeframe/1-0-36/html/container.html"></head>
+<body><div id="MathJax_Message" style="display: none;"></div>
+    <a name="top"></a>
+    
+    <table width="100%" class="Framework" cellspacing="0" cellpadding="0">
+	<tbody><tr>
+		<td colspan="2">
+			
+<div id="top">
+<table width="100%" cellpadding="8" cellspacing="0">
+	<tbody><tr>
+		<td nowrap="">
+			<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/5iedu/">浅墨浓香</a>
+</h1>
+			
+想要天亮进城，就得天黑赶路。
+
+		</td>
+	</tr>
+</tbody></table>
+</div>
+<div id="sub"><div class="BlogStats">posts - 
+690, comments - 
+52, trackbacks - 
+0, articles - 
+16</div>
+
+</div>
+
+
+
+</td>
+	</tr>
+	<tr>
+		<td class="LeftCell">
+            <div id="leftmenu">
+                
+<h3>导航</h3>
+<ul>
+	<li>
+		<a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+	<li>
+		
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/5iedu/">
+首页</a>
+</li>
+	<li>
+		
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+	<li>
+		
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E6%B5%85%E5%A2%A8%E6%B5%93%E9%A6%99">
+联系</a></li>
+	<li>
+		
+<a id="blog_nav_rss" class="menu" href="https://www.cnblogs.com/5iedu/rss/">
+订阅</a></li>
+	<li>
+		
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+                
+<div id="sidebar_news" class="newsItem"><h3>公告</h3>
+<div id="news">
+	
+<div id="blog-news">
+    
+    <div id="profile_block">
+        昵称：
+        <a href="https://home.cnblogs.com/u/5iedu/">
+            浅墨浓香
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/5iedu/" title="入园时间：2015-06-10">
+            4年5个月
+        </a>
+        <br>
+        粉丝：
+        <a href="https://home.cnblogs.com/u/5iedu/followers/">
+            149
+        </a>
+        <br>
+        关注：
+        <a href="https://home.cnblogs.com/u/5iedu/followees/">
+            0
+        </a>
+        <div id="p_b_follow">
+<a href="javascript:void(0)" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;)">+加关注</a></div>
+        <script>getFollowStatus('41562de4-020f-e511-b908-9dcfd8948a71');</script>
+    </div>
+</div>
+</div>
+
+</div>
+
+                <div id="blog-calendar" style="">
+
+<table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar" border="0">
+    <tbody>
+        <tr>
+            <td colspan="7">
+                <table class="CalTitle" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/10/24&#39;); return false;">&lt;</a>
+                            </td>
+                            <td align="center">2019年11月</td>
+                            <td align="right" class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/12/24&#39;); return false;">&gt;</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+                    <th class="CalDayHeader" align="center" abbr="日" scope="col">日</th>
+                    <th class="CalDayHeader" align="center" abbr="一" scope="col">一</th>
+                    <th class="CalDayHeader" align="center" abbr="二" scope="col">二</th>
+                    <th class="CalDayHeader" align="center" abbr="三" scope="col">三</th>
+                    <th class="CalDayHeader" align="center" abbr="四" scope="col">四</th>
+                    <th class="CalDayHeader" align="center" abbr="五" scope="col">五</th>
+                    <th class="CalDayHeader" align="center" abbr="六" scope="col">六</th>
+        </tr>
+            <tr>
+                            <td class="CalOtherMonthDay" align="center">27</td>
+                            <td class="CalOtherMonthDay" align="center">28</td>
+                            <td class="CalOtherMonthDay" align="center">29</td>
+                            <td class="CalOtherMonthDay" align="center">30</td>
+                            <td class="CalOtherMonthDay" align="center">31</td>
+                        <td class="" align="center">
+                            1
+                        </td>
+                    <td class="CalWeekendDay" align="center">
+                        2
+                    </td>
+            </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            3
+                        </td>
+                            <td class="" align="center">
+                                4
+                            </td>
+                            <td class="" align="center">
+                                5
+                            </td>
+                            <td class="" align="center">
+                                6
+                            </td>
+                            <td class="" align="center">
+                                <a href="https://www.cnblogs.com/5iedu/archive/2019/11/07.html"><u>7</u></a>
+                            </td>
+                            <td class="" align="center">
+                                8
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            9
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            10
+                        </td>
+                            <td class="" align="center">
+                                11
+                            </td>
+                            <td class="" align="center">
+                                12
+                            </td>
+                            <td class="" align="center">
+                                13
+                            </td>
+                            <td class="" align="center">
+                                14
+                            </td>
+                            <td class="" align="center">
+                                15
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            16
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            <a href="https://www.cnblogs.com/5iedu/archive/2019/11/17.html"><u>17</u></a>
+                        </td>
+                            <td class="" align="center">
+                                18
+                            </td>
+                            <td class="" align="center">
+                                19
+                            </td>
+                            <td class="" align="center">
+                                <a href="https://www.cnblogs.com/5iedu/archive/2019/11/20.html"><u>20</u></a>
+                            </td>
+                            <td class="" align="center">
+                                21
+                            </td>
+                            <td class="" align="center">
+                                22
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            23
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalTodayDay" align="center">
+                            24
+                        </td>
+                            <td class="" align="center">
+                                25
+                            </td>
+                            <td class="" align="center">
+                                26
+                            </td>
+                            <td class="" align="center">
+                                27
+                            </td>
+                            <td class="" align="center">
+                                28
+                            </td>
+                            <td class="" align="center">
+                                29
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            30
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalOtherMonthDay" align="center">
+                            1
+                        </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                2
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                3
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                4
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                5
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                6
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            7
+                        </td>
+                </tr>
+    </tbody>
+</table></div>
+                <script>loadBlogDefaultCalendar();</script>
+                <div id="blog-sidecolumn">
+<!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    <div id="sidebar_search" class="mySearch">
+        <h3 class="catListTitle">搜索</h3>
+        <div id="sidebar_search_box">
+            <div id="widget_my_zzk" class="div_my_zzk">
+                <input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk">
+            </div>
+            <div id="widget_my_google" class="div_my_zzk">
+                <input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 常用链接 -->
+<div id="sidebar_shortcut" class="sidebar-block">
+    
+<h3 class="catListTitle">
+常用链接
+</h3>
+<ul>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/p/" title="我的博客的随笔列表">我的随笔</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/MyComments.html" title="我的发表过的评论列表">我的评论</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/OtherPosts.html" title="我评论过的随笔列表">我的参与</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/RecentComments.html" title="我的博客的评论列表">最新评论</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/tag/" title="我的博客的标签列表">我的标签</a>
+</li>
+</ul>
+
+<!-- TODO: 检查是否有使用这一部分的控件，如果没有则应该删除。 -->
+<div id="itemListLin_con" style="display:none">
+    <ul>
+
+    </ul>
+</div>
+
+</div>
+
+<!-- 最新随笔 -->
+
+
+
+<!-- 我的标签 -->
+<div id="sidebar_toptags" class="sidebar-block">
+    
+</div>
+
+<!-- 积分与排名 -->
+
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+    
+		<h3>
+
+随笔分类
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/811805.html" rel="" target="">
+    C++深度解析(73)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/804081.html" rel="" target="">
+    C语言进阶剖析(48)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/911906.html" rel="" target="">
+    Linux基础与系统管理(35)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/937714.html" rel="" target="">
+    Linux应用与网络编程(64)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1005833.html" rel="" target="">
+    lua(3)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1005832.html" rel="" target="">
+    makefile(10)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1503320.html" rel="" target="">
+    Modern C++ 11/14(30)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/819307.html" rel="" target="">
+    QT实验分析教程(85)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/699743.html" rel="" target="">
+    Windows程序设计(58)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/699744.html" rel="" target="">
+    Windows核心编程(57)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/994985.html" rel="" target="">
+    计算机网络原理(54)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/825371.html" rel="" target="">
+    设计模式(41)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1007185.html" rel="" target="">
+    深入应用C++11(27)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/911523.html" rel="" target="">
+    数据结构实战分析(79)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/888633.html" rel="" target="">
+    重构(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/963515.html" rel="" target="">
+    专业嵌入式软件开发(15)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+随笔档案
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/11.html" rel="" target="">
+    2019年11月(3)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/10.html" rel="" target="">
+    2019年10月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/09.html" rel="" target="">
+    2019年9月(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/08.html" rel="" target="">
+    2019年8月(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/07.html" rel="" target="">
+    2019年7月(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/12.html" rel="" target="">
+    2017年12月(13)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/11.html" rel="" target="">
+    2017年11月(23)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/10.html" rel="" target="">
+    2017年10月(21)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/09.html" rel="" target="">
+    2017年9月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/08.html" rel="" target="">
+    2017年8月(22)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/07.html" rel="" target="">
+    2017年7月(27)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/06.html" rel="" target="">
+    2017年6月(21)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/05.html" rel="" target="">
+    2017年5月(35)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/04.html" rel="" target="">
+    2017年4月(19)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/03.html" rel="" target="">
+    2017年3月(28)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/02.html" rel="" target="">
+    2017年2月(15)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/01.html" rel="" target="">
+    2017年1月(51)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/12.html" rel="" target="">
+    2016年12月(26)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/11.html" rel="" target="">
+    2016年11月(20)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/10.html" rel="" target="">
+    2016年10月(13)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/09.html" rel="" target="">
+    2016年9月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/08.html" rel="" target="">
+    2016年8月(11)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/07.html" rel="" target="">
+    2016年7月(24)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/06.html" rel="" target="">
+    2016年6月(26)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/05.html" rel="" target="">
+    2016年5月(34)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/04.html" rel="" target="">
+    2016年4月(73)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/03.html" rel="" target="">
+    2016年3月(33)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/02.html" rel="" target="">
+    2016年2月(7)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/12.html" rel="" target="">
+    2015年12月(2)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/11.html" rel="" target="">
+    2015年11月(4)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/10.html" rel="" target="">
+    2015年10月(7)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/09.html" rel="" target="">
+    2015年9月(6)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/08.html" rel="" target="">
+    2015年8月(54)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/07.html" rel="" target="">
+    2015年7月(25)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/06.html" rel="" target="">
+    2015年6月(4)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+文章分类
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/715136.html" rel="" target="">
+    Windows内核(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/729402.html" rel="" target="">
+    编程经验(12)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/812154.html" rel="" target="">
+    常用代码(2)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/954364.html" rel="" target="">
+    综合案例(1)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+相册
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/gallery/718135.html" rel="nofollow noopener noreferrer" target="">
+    笔记插图
+</a>
+
+</li>
+			
+				</ul>
+
+
+</div>
+
+<!-- 最新评论 -->
+<div id="sidebar_recentcomments" class="sidebar-block">
+    <div id="recent_comments_wrap" class="RecentComment">
+    <h3 class="catListTitle">最新评论</h3>
+    <div class="RecentCommentBlock">
+        <ul>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/11390495.html#4344239">1. Re:第18课 捕获机制及陷阱</a></li>
+                    <li class="recent_comment_body">博主不仅高产，而且文章质量都挺好</li>
+                    <li class="recent_comment_author">--YaphetS嘟嘟</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4315939">2. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">博主你好，觉得你的博客特别受用，可以告知一下其他博客的密码吗</li>
+                    <li class="recent_comment_author">--cp2018</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/7040429.html#4294675">3. Re:第5章 IP地址和子网划分（2）_IP地址分类和NAT技术</a></li>
+                    <li class="recent_comment_body">像icmp这种没有端口的不知道是如何实现NAT转换的？</li>
+                    <li class="recent_comment_author">--Eagle-jie</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4280947">4. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">同问</li>
+                    <li class="recent_comment_author">--tiger_wangsir</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4237914">5. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">博主你好，觉得你的博客特别受用，可以告知一下其他博客的密码吗</li>
+                    <li class="recent_comment_author">--胡瑶co</li>
+        </ul>
+    </div>
+</div>
+</div>
+
+
+
+<!-- 阅读排行榜 -->
+<div id="sidebar_topviewedposts" class="sidebar-block">
+    
+<div id="topview_posts_wrap">
+    <h3 class="catListTitle">阅读排行榜</h3>
+    <div id="TopViewPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5595153.html">
+                            1. 第17章 行为型模式—解释器模式(6762)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7376543.html">
+                            2. 第11章 拾遗1：网络地址转换(NAT)和端口映射(4936)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7095041.html">
+                            3. 第6章 静态路由和动态路由（4）_OSPF动态路由协议(3791)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/4899791.html">
+                            4. 第17章 内存映射文件（1）_内存映射文件简介(3741)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7742589.html">
+                            5. 第16课 右值引用（3）_std::forward与完美转发(3730)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- 评论排行榜 -->
+<div id="sidebar_topcommentedposts" class="sidebar-block">
+    
+<div id="topfeedback_posts_wrap">
+    <h3 class="catListTitle">评论排行榜</h3>
+    <div id="TopFeedbackPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/6498326.html">
+                            1. 第83课 另一种创建线程的方式(9)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5325466.html">
+                            2. 第20课 链接过程简介(5)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5429059.html">
+                            3. 第7课 Qt中的坐标系统(4)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5835715.html">
+                            4. 第37课 深度解析QMap与QHash(3)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5617055.html">
+                            5. 第56课 函数模板的概念和意义(2)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- 推荐排行榜 -->
+<div id="sidebar_topdiggedposts" class="sidebar-block">
+    
+<div id="topdigg_posts_wrap">
+    <div class="catListView">
+        <h3 class="catListTitle">推荐排行榜</h3>
+        <div id="TopDiggPostsBlock">
+            <ul style="word-break: break-all">
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/4812259.html">
+                                1. 第11章 Windows线程池（2）_Win2008及以上的新线程池(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/5363054.html">
+                                2. 第1课 学习 C++ 的意义(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/5367317.html">
+                                3. 第5课 引用的本质分析(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/6800234.html">
+                                4. 第1章 计算机网络和协议（1）_网络的概念(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/6829593.html">
+                                5. 第1章 计算机网络和协议（3）_TCP/IP协议(1)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div></div>
+                <script>loadBlogSideColumn();</script>
+            </div>
+		</td>
+		<td class="MainCell" width="100%">
+			<div id="main">
+				<div id="post_detail">
+	<div class="post">
+		<div class="posthead">
+			<h2>
+				
+<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/5iedu/p/5521590.html">第9章 结构型模式—桥接模式</a>
+
+			</h2>
+ 			Posted on 
+<span id="post-date">2016-05-23 22:00</span>&nbsp;<a href="https://www.cnblogs.com/5iedu/">浅墨浓香</a> 阅读(<span id="post_view_count">245</span>) 评论(<span id="post_comment_count">0</span>) <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5521590" rel="nofollow"> 编辑</a> <a href="javascript:void(0)" onclick="AddToWz(5521590); return false;">收藏</a>
+
+			
+			
+		</div>
+		<div class="postbody">
+<div id="cnblogs_post_body" class="blogpost-body ">
+    <p style="text-align: left;" align="center"><strong style="line-height: 1.5;">1. </strong><strong style="line-height: 1.5;">桥接模式（Bridge Pattern）的定义</strong></p>
+<p>（1）将<span style="color: #ff0000;"><strong>抽象部分</strong></span>与它的<span style="color: #ff0000;"><strong>实现部分</strong></span>分离，使它们都可以<span style="color: #0000ff;"><strong>独立地变化</strong></span></p>
+<p>　　①一般的“抽象”与“实现”是指父子类的继承关系。但这里，GoF所谓的<strong><span style="color: #ff0000;">“抽象”</span></strong>是如果引起一个类变化是多维度的因素（设为2维），就<span style="color: #0000ff;"><strong>将其他变化因素抽象成一个接口</strong></span>，在“Abstraction类”中只留这个接口，然后通过对象<strong><span style="color: #0000ff;">组合</span></strong>（而不是继承）的方式去依赖这个接口。而<span style="color: #ff0000;"><strong>“实现”</strong></span>是指在让<span style="color: #0000ff;"><strong>另一个“Implementor类”的子类去实现接口</strong></span>（第2维度的变化）。</p>
+<p>　　② “Abstraction类”和“Implementor类”分别代表了引起类变化的两个维度（前者是个抽象类、后者是接口），正因为这种分离，所以他们都可以独立的变化。</p>
+<p>　　③简单的理解就是，在类中<span style="color: #0000ff;"><strong>抽离“方法”形成另一个“类”</strong></span>。如动物狗，在设计时，把狗设计成一个类，里面的“行走”方法从狗中分离出来，形成“行走”接口，并在“狗”类中使用这个“行走”对象。这样“狗”和“行走”类都可以独立变化。</p>
+<p><strong>（2）桥接模式的结构和说明</strong></p>
+<p align="center"><img src="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/772759-20160523220337553-741099296.png" alt="">&nbsp;</p>
+<p>　<span style="color: #0000ff;">　①Abstraction：抽象部分的接口。通常在这个对象中，要维护一个实现部分的对象的引用，抽象对象里面的方法，需要调用实现部分的对象来完成。这个对象中的方法，通常都是和具体的业务相关的方法。</span></p>
+<p><span style="color: #0000ff;">　　②RefinedAbstraction：扩展抽象部分的接口。通常在这些对象中，定义跟实际业务相关的方法，这些方法的实现通常会使用Abstraction中定义的方法，也可能需要调用实现部分的对象来完成。<span style="color: #ff0000;"><strong>如上图中的operation方法中，一般调用impl-&gt;operationImpl();</strong></span></span></p>
+<p><span style="color: #0000ff;">　　③Implementor：定义实现部分的接口。这个接口不用和Abstraction中的方法一致。</span></p>
+<p>　　④ConcreteImplementor：真正实现Implementor接口的对象。</p>
+<p><strong>（3）不使用桥接模式的案例</strong></p>
+<p>　　①蜡笔和毛笔：这两者的关键区别在于<span style="color: #ff0000;"><strong>笔和颜色是否能够分离</strong></span>。</p>
+<p align="center"><img src="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/772759-20160523220516084-299326474.png" alt="">&nbsp;</p>
+<p>　　②跨平台的图像浏览系统</p>
+<p align="center"><img src="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/772759-20160523220533569-1934101187.png" alt="">&nbsp;</p>
+<p>　　A、使用多层继承结构，导致系统中类的个数急剧增加（共17个）。</p>
+<p>　　B、系统扩展麻烦，由于每个具体类（*Image）既包含图像文件格式信息，又包含操作系统信息。因此无论是增加新的图像文件格式还是增加新的操作系统，都需要增加大量的具体类。（如增加TIF，则需要增加3个具体类以便在3种不同的操作系统中显示。如果增加一个新的操作系统，则需要在每个*Image下增加具体的类。</p>
+<p>　　C、从图中可以看出，<span style="color: #ff0000;"><strong>该系统存在两个独立变化的维度</strong></span>：<span style="color: #0000ff;"><strong>图像文件格式和操作系统</strong></span>。</p>
+<p align="center"><img src="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/772759-20160523220601928-1155260616.png" alt="" width="541" height="301">&nbsp;</p>
+<p><strong>（4）思考Bridge模式</strong></p>
+<p>　　①Bridge模式的<span style="color: #ff0000;"><strong>本质</strong></span>：<span style="color: #0000ff;"><strong>分离抽象和实现</strong></span>。它是<span style="color: #0000ff;"><strong>解决多继承</strong></span>的一套方案，把使用<span style="color: #ff0000;"><strong>继承改成使用对象组合</strong></span>，解耦了抽象和实现之间固有的绑定关系，从而使“抽象”和“实现”可以沿着各自的纬度独立的变化。</p>
+<p>　　②Bridge模式的<span style="color: #ff0000;"><strong>动机</strong></span>：Bridge模式就是为了<span style="color: #ff0000;"><strong>处理类的多维度变化</strong></span>，其目的是<span style="color: #ff0000;"><strong>解耦</strong></span>。</p>
+<p>　　③由于抽象部分和实现部分是完全分离的。所以可以在运行时动态组合具体的真实实现，从而动态变换功能。此外，同一个真实实现可以被不同抽象对象使用；反过来，同一个抽象也不能有多个不同的实现。</p>
+<p>　　④桥接模式是一种很实用的结构型设计模式，如果某个类存在多个独立变化的维度，通过该模式可以将这多个维度分离出来，使它们可以独立扩展。让系统更符合“单一职责原则”。</p>
+<p>【编程实验】发送提示消息</p>
+<p style="text-align: center;"><img src="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/772759-20160523220934459-2136770951.png" alt="" width="320" height="197">&nbsp;&nbsp;<img src="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/772759-20160523222418553-1950059027.png" alt="" width="565" height="278"></p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;b1b975a4-3348-4168-97a6-2f6d123ae516&#39;)"><img id="code_img_closed_b1b975a4-3348-4168-97a6-2f6d123ae516" class="code_img_closed" src="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/ContractedBlock.gif" alt=""><img id="code_img_opened_b1b975a4-3348-4168-97a6-2f6d123ae516" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide(&#39;b1b975a4-3348-4168-97a6-2f6d123ae516&#39;,event)" src="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_b1b975a4-3348-4168-97a6-2f6d123ae516" class="cnblogs_code_hide">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">结构型模式：桥接模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">场景：发送提示消息
+</span><span style="color: #008000;">//</span><span style="color: #008000;">消息：普通消息、加急消息和特急消息
+</span><span style="color: #008000;">//</span><span style="color: #008000;">发送方式：站内消息、手机短信、E-mail</span>
+#include &lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">实现发送消息的统一接口</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> MessageImplementor
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">发送消息：
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">@param message 要发送的消息内容
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">@param toUser  消息发送的目的人员</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> send(<span style="color: #0000ff;">string</span> message,<span style="color: #0000ff;">string</span> toUser) = <span style="color: #800080;">0</span><span style="color: #000000;">; 
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">抽象的消息对象</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> AbstractMessage
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">持有一个实现部分的对象</span>
+    MessageImplementor&amp;<span style="color: #000000;"> impl;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">构造函数，传入实现部分的对象</span>
+    AbstractMessage(MessageImplementor&amp;<span style="color: #000000;"> mi):impl(mi){}
+    
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">发送消息，转调实现部分的方法</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> sendMessage(<span style="color: #0000ff;">string</span> message,<span style="color: #0000ff;">string</span><span style="color: #000000;"> toUser)
+    {
+        impl.send(message, toUser);
+    }
+};
+</span><span style="color: #008000;">//</span><span style="color: #008000;">************************具体的消息发送方式*******************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">站内消息的实现</span>
+<span style="color: #0000ff;">class</span> MessageSMS : <span style="color: #0000ff;">public</span><span style="color: #000000;"> MessageImplementor
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span> send(<span style="color: #0000ff;">string</span> message, <span style="color: #0000ff;">string</span><span style="color: #000000;"> toUser)
+    {
+        cout </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">SMS:\"</span><span style="color: #800000;">"</span>&lt;&lt; message &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">\" to:</span><span style="color: #800000;">"</span> &lt;&lt; toUser &lt;&lt;<span style="color: #000000;"> endl;
+    }    
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">E-mail方式的发送消息</span>
+<span style="color: #0000ff;">class</span> MessageEmail : <span style="color: #0000ff;">public</span><span style="color: #000000;"> MessageImplementor
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span> send(<span style="color: #0000ff;">string</span> message, <span style="color: #0000ff;">string</span><span style="color: #000000;"> toUser)
+    {
+        cout </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">Email:\"</span><span style="color: #800000;">"</span>&lt;&lt; message &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">\" to:</span><span style="color: #800000;">"</span> &lt;&lt; toUser &lt;&lt;<span style="color: #000000;"> endl;
+    }    
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">Mobile方式的发送消息</span>
+<span style="color: #0000ff;">class</span> MessageMobile : <span style="color: #0000ff;">public</span><span style="color: #000000;"> MessageImplementor
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span> send(<span style="color: #0000ff;">string</span> message, <span style="color: #0000ff;">string</span><span style="color: #000000;"> toUser)
+    {
+        cout </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">Mobile:\"</span><span style="color: #800000;">"</span>&lt;&lt; message &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">\" to:</span><span style="color: #800000;">"</span> &lt;&lt; toUser &lt;&lt;<span style="color: #000000;"> endl;
+    }    
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">*********************具体的消息类型************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">普通消息</span>
+<span style="color: #0000ff;">class</span> CommonMessage : <span style="color: #0000ff;">public</span><span style="color: #000000;"> AbstractMessage
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    CommonMessage(MessageImplementor</span>&amp;<span style="color: #000000;"> im):AbstractMessage(im){} 
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">加急消息</span>
+<span style="color: #0000ff;">class</span> UrgencyMessage : <span style="color: #0000ff;">public</span><span style="color: #000000;"> AbstractMessage
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    UrgencyMessage(MessageImplementor</span>&amp;<span style="color: #000000;"> im):AbstractMessage(im){} 
+    </span><span style="color: #0000ff;">void</span> sendMessage(<span style="color: #0000ff;">string</span> message,<span style="color: #0000ff;">string</span><span style="color: #000000;"> toUser)
+    {
+        message </span>=<span style="color: #800000;">"</span><span style="color: #800000;">Urgency:</span><span style="color: #800000;">"</span> +<span style="color: #000000;"> message;
+        AbstractMessage::sendMessage(message, toUser);
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">特急消息</span>
+<span style="color: #0000ff;">class</span> SpecialUrgencyMessage : <span style="color: #0000ff;">public</span><span style="color: #000000;"> AbstractMessage
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    SpecialUrgencyMessage(MessageImplementor</span>&amp;<span style="color: #000000;"> im):AbstractMessage(im){} 
+    </span><span style="color: #0000ff;">void</span> sendMessage(<span style="color: #0000ff;">string</span> message,<span style="color: #0000ff;">string</span><span style="color: #000000;"> toUser)
+    {
+        message </span>=<span style="color: #800000;">"</span><span style="color: #800000;">SpecialUrgency:</span><span style="color: #800000;">"</span> +<span style="color: #000000;"> message;
+        AbstractMessage::sendMessage(message, toUser);
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">还需要加一条待催促的信息</span>
+        hurry(<span style="color: #800080;">100</span><span style="color: #000000;">);
+    }
+    
+    </span><span style="color: #0000ff;">void</span> hurry(<span style="color: #0000ff;">int</span><span style="color: #000000;"> messageId)
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">执行摧促的业务，发出催足的信息，这里简单示意一下</span>
+        cout &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">hurry: messageId=</span><span style="color: #800000;">"</span> &lt;&lt; messageId &lt;&lt;<span style="color: #000000;"> endl; 
+    }
+};
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{ 
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">1、使用站内短息发送消息（普通、加急、特急等）
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">创建具体的实现对象</span>
+    MessageImplementor* impl = <span style="color: #0000ff;">new</span> MessageSMS();<span style="color: #008000;">//</span><span style="color: #008000;">选择站内短息的方式来发送
+    
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">创建一个普通消息对象</span>
+    AbstractMessage* m = <span style="color: #0000ff;">new</span> CommonMessage(*impl);    <span style="color: #008000;">//</span><span style="color: #008000;">发送普通消息</span>
+    m-&gt;sendMessage(<span style="color: #800000;">"</span><span style="color: #800000;">Cup of Tee please</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">SantaClaus</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> m;
+    
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">创建一个加急消息对象</span>
+    m = <span style="color: #0000ff;">new</span> UrgencyMessage(*impl);  <span style="color: #008000;">//</span><span style="color: #008000;">发送加急消息</span>
+    m-&gt;sendMessage(<span style="color: #800000;">"</span><span style="color: #800000;">Cup of Tee please</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">SantaClaus</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> m;  
+    
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">创建一个特急消息对象    </span>
+    m = <span style="color: #0000ff;">new</span> SpecialUrgencyMessage(*impl); <span style="color: #008000;">//</span><span style="color: #008000;">发送特急消息</span>
+    m-&gt;sendMessage(<span style="color: #800000;">"</span><span style="color: #800000;">Cup of Tee please</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">SantaClaus</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> m; 
+
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> impl;
+    cout </span>&lt;&lt;<span style="color: #000000;">endl;
+    
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">2、把实现切换成手机短信，然后再实现一遍    
+     </span><span style="color: #008000;">//</span><span style="color: #008000;">创建具体的实现对象</span>
+    impl = <span style="color: #0000ff;">new</span><span style="color: #000000;"> MessageMobile();
+    
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">创建一个普通消息对象</span>
+    m = <span style="color: #0000ff;">new</span> CommonMessage(*<span style="color: #000000;">impl);
+    m</span>-&gt;sendMessage(<span style="color: #800000;">"</span><span style="color: #800000;">Cup of Tee please</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">SantaClaus</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> m;
+    
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">创建一个加急消息对象</span>
+    m = <span style="color: #0000ff;">new</span> UrgencyMessage(*<span style="color: #000000;">impl);
+    m</span>-&gt;sendMessage(<span style="color: #800000;">"</span><span style="color: #800000;">Cup of Tee please</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">SantaClaus</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> m;  
+    
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">创建一个特急消息对象    </span>
+    m = <span style="color: #0000ff;">new</span> SpecialUrgencyMessage(*<span style="color: #000000;">impl);
+    m</span>-&gt;sendMessage(<span style="color: #800000;">"</span><span style="color: #800000;">Cup of Tee please</span><span style="color: #800000;">"</span>,<span style="color: #800000;">"</span><span style="color: #800000;">SantaClaus</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> m; 
+       
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p><strong>2. </strong><strong>谁来桥接：谁也创建Implementor对象？</strong></p>
+<p>（1）方式1：由<span style="color: #ff0000;"><strong>客户端创建Implementor对象</strong></span>，并设置到抽象部分的对象中去。</p>
+<p>（2）方式2：可以在抽象部分对象构建的时候，<span style="color: #0000ff;"><strong>由抽象部分的对象自己来创建</strong></span>。当然也可以给这个抽象部分的对象传递一些参数，让它可以根据参数来创建具体的Implementor对象。</p>
+<p>（3）方式3：可以在Abstraction中选择并<span style="color: #ff0000;"><strong>创建一个默认的Implementor对象</strong></span>，然后子类可以根据需要改变这个实现。</p>
+<p>（4）方式4：可以<span style="color: #0000ff;"><strong>使用抽象工厂或简单工厂</strong></span>来选择并创建具体的Implementor对象。抽象部分的类可以通过调用工厂的方法来获取Implementor对象。</p>
+<p><strong>3. </strong><strong>桥接模式的优点</strong></p>
+<p>（1）分离抽象和实现部分。让抽象和实现部分可以独立变化。对于系统的高层部分，只需要知道抽象部分和实现部分的接口就可以，将依赖实现改为依赖接口编程。</p>
+<p>（2）更好的扩展性：抽象和实现部分可以别分独立的扩展，而不会互相影响</p>
+<p>（3）可以动态切换实现：因为一个实现不再是固定绑定到一个抽象接口上，所以可以实现在运行期间动态地切换。</p>
+<p>（4）可减少子类的个数：如果采用继承的实现方式，大约需要两个纬度上可变化数量的乘积的子类个数；而采用桥接模式只需要两个纬度可变化数量的子类的和个子类。</p>
+<p><strong>4. </strong><strong>桥接模式的使用场景</strong></p>
+<p>（1）需要跨越多个平台的图形和窗口中系统上。</p>
+<p>（2）一个类存在两个独立变化维度，且两个维度都需要扩展。</p>
+<p>（3）<span style="color: #ff0000;"><strong>三层架构</strong></span>中通过桥接模式将<span style="color: #0000ff;"><strong>业务逻辑层</strong></span>（BLL）与<span style="color: #0000ff;"><strong>数据操作层</strong></span>（DAL）<span style="color: #ff0000;"><strong>解耦</strong></span>。</p>
+<p><strong>5. </strong><strong>三层架构及层间的解耦</strong></p>
+<p><strong>（1）三层划分</strong>：用户界面层(UI)、业务逻辑层(BLL)和数据访问层(DAL)</p>
+<p align="center"><img src="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/772759-20160524211358772-1120308641.jpg" alt="">&nbsp;</p>
+<p><strong>（2）各层的作用</strong></p>
+<p>　　①用户界面层：只负责显示和采集用户操作。</p>
+<p>　　②业务逻辑层：负责UI和DAL层之间的数据交换，是系统架构中体现核心价值的部分。它关注点主要集中在业务规则的制定、业务流程的实现和业务需求的有关系统设计。它与系统所对应的领域（Domain）有关。也可以做一些如用户权限合法性和数据据式是否正确等验证检查。</p>
+<p>　　③数据访问层：与数据库直接打交道，如<span style="color: #ff0000;"><strong>数据库进行增、删、改、查</strong></span>等操作。常用的技术如ADO+SQL语句。这里可能还会有DBUtility类（负责建立数据库连接）、与工厂方法模式相关的DALFactory抽象类（用于创建如OracleDAL、SQLServerDAL对象之类的工厂）、DataAccess产品类（真正操作数据库的类）</p>
+<p><strong>（3）各层的交互</strong></p>
+<p>　　①UI和BLL：UI层引用BLL和实体类(Entity)。</p>
+<p>　　②<strong>BLL和DAL</strong>：<span style="color: #ff0000;"><strong>桥接模式</strong></span>，在<span style="color: #0000ff;"><strong>BLL中持有一个DAL接口的引用</strong></span>。</p>
+<p>　　③<span style="color: #0000ff;"><strong>DAL与数据库</strong></span>：工厂模式或抽象工厂模式。DAL与数据库间的解耦可参考《<strong><span style="color: #ff0000;">抽象工厂模式</span></strong>》部分的内容</p>
+<p>【编程实验】利用桥接模式实现三层架构中的业务逻辑层(BLL)与数据访问层(DAL)的解耦。</p>
+<p align="center"><img src="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/772759-20160524211518241-622181029.png" alt="">&nbsp;</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">结构型模式：桥接模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">场景：三层架构业务逻辑层（BLL）与数据操作层（DAL）的解耦</span>
+<span style="color: #000000;">
+#include </span>&lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;">
+#include </span>&lt;list&gt;
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">************************Implementor类******************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">三层架构中的数据访问层（DAL）</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> IDataAccess
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> addRecord(<span style="color: #0000ff;">string</span> name) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> deleteRecord(<span style="color: #0000ff;">string</span> name) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> updateRecord(<span style="color: #0000ff;">string</span> name) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">string</span> getRecord(<span style="color: #0000ff;">int</span> index) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> queryAllRecords() = <span style="color: #800080;">0</span><span style="color: #000000;">;   
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">具体的DAL层</span>
+<span style="color: #0000ff;">class</span> CustomerDataAccess: <span style="color: #0000ff;">public</span><span style="color: #000000;"> IDataAccess
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    list</span>&lt;<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;"> customers;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    CustomerDataAccess()
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">实际工程中从数据库中读取数据再填充列表</span>
+        customers.push_back(<span style="color: #800000;">"</span><span style="color: #800000;">learning Hard</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+        customers.push_back(</span><span style="color: #800000;">"</span><span style="color: #800000;">zhang san</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+        customers.push_back(</span><span style="color: #800000;">"</span><span style="color: #800000;">Li si</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+        customers.push_back(</span><span style="color: #800000;">"</span><span style="color: #800000;">Wang wu</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    }   
+    
+    </span><span style="color: #0000ff;">void</span> addRecord(<span style="color: #0000ff;">string</span><span style="color: #000000;"> name)
+    {
+        customers.push_back(name);
+    }
+    </span><span style="color: #0000ff;">void</span> deleteRecord(<span style="color: #0000ff;">string</span><span style="color: #000000;"> name)
+    {
+        customers.remove(name);
+    }
+    </span><span style="color: #0000ff;">void</span> updateRecord(<span style="color: #0000ff;">string</span><span style="color: #000000;"> name)
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">演示目的</span>
+         customers.front() =<span style="color: #000000;"> name;
+    }
+    </span><span style="color: #0000ff;">string</span> getRecord(<span style="color: #0000ff;">int</span><span style="color: #000000;"> index)
+    {
+        list</span>&lt;<span style="color: #0000ff;">string</span>&gt;::iterator iter =<span style="color: #000000;"> customers.begin();
+        advance(iter,index);</span><span style="color: #008000;">//</span><span style="color: #008000;">取出索引号为index的元素</span>
+        
+        <span style="color: #0000ff;">return</span> *<span style="color: #000000;">iter;
+    }
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> queryAllRecords()
+    {
+        </span><span style="color: #0000ff;">for</span>(list&lt;<span style="color: #0000ff;">string</span>&gt;::iterator iter=customers.begin();iter != customers.end();++<span style="color: #000000;">iter)
+        {
+            cout </span>&lt;&lt; *iter &lt;&lt;<span style="color: #000000;"> endl;
+        }
+    }    
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">BLL层的接口</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> AbstractBusiness
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    IDataAccess</span>*<span style="color: #000000;"> dataAccess;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    AbstractBusiness(IDataAccess</span>*<span style="color: #000000;"> dataAccess)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;dataAccess =<span style="color: #000000;"> dataAccess;
+    }
+    
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> add(<span style="color: #0000ff;">string</span><span style="color: #000000;"> name)
+    {
+        dataAccess</span>-&gt;<span style="color: #000000;">addRecord(name);   
+    }
+    
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> del(<span style="color: #0000ff;">string</span><span style="color: #000000;"> name)
+    {
+        dataAccess</span>-&gt;<span style="color: #000000;">deleteRecord(name);
+    }
+    
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> update(<span style="color: #0000ff;">string</span><span style="color: #000000;"> name)
+    {
+        dataAccess</span>-&gt;<span style="color: #000000;">updateRecord(name);
+    }
+    
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">string</span> <span style="color: #0000ff;">get</span>(<span style="color: #0000ff;">int</span><span style="color: #000000;"> index)
+    {
+        </span><span style="color: #0000ff;">return</span> dataAccess-&gt;<span style="color: #000000;">getRecord(index);
+    }
+    
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> showAll()
+    {
+       dataAccess</span>-&gt;<span style="color: #000000;">queryAllRecords();       
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">具体的业务逻辑类</span>
+<span style="color: #0000ff;">class</span> CustomersBusiness: <span style="color: #0000ff;">public</span><span style="color: #000000;"> AbstractBusiness
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    CustomersBusiness(IDataAccess</span>*<span style="color: #000000;"> dataAccess):AbstractBusiness(dataAccess){}
+    
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> showAll()
+    {
+        cout </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">-----------------------</span><span style="color: #800000;">"</span>&lt;&lt;<span style="color: #000000;">endl;
+        AbstractBusiness::showAll();
+        cout </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">-----------------------</span><span style="color: #800000;">"</span>&lt;&lt;<span style="color: #000000;">endl;
+    }    
+};
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{ 
+    IDataAccess</span>* dataAccess = <span style="color: #0000ff;">new</span><span style="color: #000000;"> CustomerDataAccess();
+    AbstractBusiness</span>* customers = <span style="color: #0000ff;">new</span><span style="color: #000000;"> CustomersBusiness(dataAccess);
+    
+    customers</span>-&gt;add(<span style="color: #800000;">"</span><span style="color: #800000;">SantaClaus</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    cout</span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">add a member:</span><span style="color: #800000;">"</span>&lt;&lt;<span style="color: #000000;">endl;
+    customers</span>-&gt;<span style="color: #000000;">showAll();
+    
+    cout </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">delete a member:</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    customers</span>-&gt;del(<span style="color: #800000;">"</span><span style="color: #800000;">Wang wu</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    customers</span>-&gt;<span style="color: #000000;">showAll();
+    
+    cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">update a member:</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl; 
+    customers</span>-&gt;update(<span style="color: #800000;">"</span><span style="color: #800000;">Learning Hard</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    customers</span>-&gt;<span style="color: #000000;">showAll();
+   
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+</div>
+<div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block"><div id="BlogPostCategory">
+    分类: 
+            <a href="https://www.cnblogs.com/5iedu/category/825371.html" target="_blank">设计模式</a></div>
+
+
+    <div id="blog_post_info">
+<div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(5521590,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+        <a id="green_channel_follow" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/5iedu/" target="_blank"><img src="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/20150610151331.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/5iedu/">浅墨浓香</a><br>
+            <a href="https://home.cnblogs.com/u/5iedu/followees/">关注 - 0</a><br>
+            <a href="https://home.cnblogs.com/u/5iedu/followers/">粉丝 - 149</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(5521590,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(5521590,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+    <div class="clear"></div>
+    <div id="post_next_prev">
+
+    <a href="https://www.cnblogs.com/5iedu/p/5514428.html" class="p_n_p_prefix">« </a> 上一篇：    <a href="https://www.cnblogs.com/5iedu/p/5514428.html" title="发布于 2016-05-21 12:13">第8章 结构型模式—适配器模式</a>
+    <br>
+    <a href="https://www.cnblogs.com/5iedu/p/5526625.html" class="p_n_p_prefix">» </a> 下一篇：    <a href="https://www.cnblogs.com/5iedu/p/5526625.html" title="发布于 2016-05-25 13:00">第10章 结构型模式—组合模式</a>
+
+</div>
+</div></div>
+	</div>
+<script src="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/highlight.min.js.下载"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 231128, cb_blogApp = '5iedu', cb_blogUserGuid = '41562de4-020f-e511-b908-9dcfd8948a71';
+    var cb_entryId = 5521590, cb_entryCreatedDate = '2016-05-23 22:00', cb_postType = 1; 
+    loadViewCount(cb_entryId);
+</script><a name="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<script>
+    var commentManager = new blogCommentManager();
+    commentManager.renderComments(0);
+</script>
+
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/5iedu/p/5521590.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/5iedu/p/5521590.html#top">返回顶部</a></div>
+    <div id="comment_form_container"><div class="login_tips">
+    注册用户登录后才能发表评论，请 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a>
+     或 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，
+    <a href="https://www.cnblogs.com/">访问</a> 网站首页。
+</div></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"><a href="https://cloud.tencent.com/act/pro/overseas?fromSource=gwzcw.3090393.3090393.3090393&amp;utm_medium=cpc&amp;utm_id=gwzcw.3090393.3090393.3090393" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-腾讯云&#39;)">【推荐】腾讯云海外1核2G云服务器低至2折，半价续费券限量免费领取！</a><br><a href="http://click.aliyun.com/m/1000081987/" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-阿里云&#39;)">【推荐】阿里云双11返场来袭，热门产品低至一折等你来抢！</a><br><a href="http://www.ucancode.com/index.htm" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-工控&#39;)">【推荐】超50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://group.cnblogs.com/topic/90800.html?800019197" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-马士兵&#39;)">【提升】这个价值 50W 年薪的问题，终于被马老师说明白啦...</a><br><a href="https://www.ctyun.cn/activity/20191111?hmsr=%E7%9C%8B%E7%9C%8B-%E5%8D%9A%E5%AE%A2%E5%9B%AD-%E5%8F%8C11-1106&amp;hmpl=&amp;hmcu=&amp;hmkw=&amp;hmci=" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-天翼云&#39;)">【推荐】天翼云双十一翼降到底，云主机11.11元起，抽奖送大礼</a><br><a href="https://www.cnblogs.com/enjoyedu/p/11905399.html?800019191" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-享学&#39;)">【提升】Java程序员年薪40W，他1年走了别人5年的学习之路</a><br><a href="https://www.uibot.com.cn/sem/bky.html" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-uibot_T2&#39;)">【推荐】流程自动化专家UiBot，体系化教程成就高薪RPA工程师</a><br></div>
+    <div id="opt_under_post"></div>
+    <script async="async" src="./第9章 结构型模式—桥接模式 - 浅墨浓香 - 博客园_files/gpt.js.下载"></script>
+    <script>
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+    </script>
+    <script>
+        googletag.cmd.push(function () {
+            googletag.defineSlot("/1090369/C1", [300, 250], "div-gpt-ad-1546353474406-0").addService(googletag.pubads());
+            googletag.defineSlot("/1090369/C2", [468, 60], "div-gpt-ad-1539008685004-0").addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    </script>
+    <div id="cnblogs_c1" class="c_ad_block" style="">
+        <div id="div-gpt-ad-1546353474406-0" style="height: 250px; width: 300px;"><div id="google_ads_iframe_/1090369/C1_0__container__" style="border: 0pt none; width: 300px; height: 250px;"></div></div>
+    </div>
+    <div id="under_post_news"><div class="recomm-block"><b>相关博文：</b><br>·  <a title="第 9 章 —— 原型模式" href="https://www.cnblogs.com/zhangchaoran/p/8547598.html" target="_blank" onclick="clickRecomItmem(8547598)">第 9 章 —— 原型模式</a><br>·  <a title="第 9 章 原型模式" href="https://www.cnblogs.com/wzq806341010/p/4016411.html" target="_blank" onclick="clickRecomItmem(4016411)">第 9 章 原型模式</a><br>·  <a title="设计模式之第9章-原型模式(Java实现)" href="https://www.cnblogs.com/voidy/p/4240285.html" target="_blank" onclick="clickRecomItmem(4240285)">设计模式之第9章-原型模式(Java实现)</a><br>·  <a title="第9章 组合模式（Composite Pattern）" href="https://www.cnblogs.com/lonelyxmas/p/3720825.html" target="_blank" onclick="clickRecomItmem(3720825)">第9章 组合模式（Composite Pattern）</a><br>·  <a title="企业应用架构模式--领域逻辑模式（第9章）" href="https://www.cnblogs.com/Langzi127/archive/2013/01/08/2852005.html" target="_blank" onclick="clickRecomItmem(2852005)">企业应用架构模式--领域逻辑模式（第9章）</a><br>»  <a target="_blank" href="https://recomm.cnblogs.com/blogpost/5521590">更多推荐...</a></div></div>
+    <div id="cnblogs_c2" class="c_ad_block" style="">
+        <div id="div-gpt-ad-1539008685004-0" style="height: 60px; width: 468px;">
+            <script>
+                if (new Date() >= new Date(2018, 9, 13)) {
+                    googletag.cmd.push(function () { googletag.display("div-gpt-ad-1539008685004-0"); });
+                }
+            </script>
+        <div id="google_ads_iframe_/1090369/C2_0__container__" style="border: 0pt none; width: 468px; height: 60px;"></div></div>
+    </div>
+    <div id="under_post_kb">
+<div class="itnews c_ad_block">
+    <b>最新 IT 新闻</b>:
+    <br>
+ ·              <a href="https://news.cnblogs.com/n/649969/" target="_blank">改变销售人员的CRM交互方式，Salesforce推出AI语音助手及开发套件</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649968/" target="_blank">“基因剪刀”治疗地中海贫血效果初现</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649967/" target="_blank">14nm 5GHz或成CPU绝唱 7/5nm多核容易高频难</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649966/" target="_blank">HTTPZ，将 HTTP 链接转到 HTTPS 的 Firefox 插件</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649965/" target="_blank">4个在2020年持续发展的数据中心冷却趋势</a>
+            <br>
+    » <a href="https://news.cnblogs.com/" title="IT 新闻" target="_blank">更多新闻...</a>
+</div></div>
+    <div id="HistoryToday" class="c_ad_block"></div>
+    <script type="text/javascript">
+        fixPostBody();
+        setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+        deliverAdT2();
+        deliverAdC1();
+        deliverAdC2();
+        loadNewsAndKb();
+        loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+        loadOptUnderPost();
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div></div>
+
+
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="FooterCell">
+			<p id="footer">
+	Powered by: 
+	<br>
+	
+	
+<a href="https://www.cnblogs.com/" id="Footer1_Hyperlink3" style="font-size: 12px; font-family: Verdana">博客园</a>
+	<br>
+	Copyright © 2019 浅墨浓香
+<br><span id="poweredby">Powered by .NET Core 3.0.0 on Linux</span>
+
+</p>
+
+
+		</td>
+	</tr>
+</tbody></table>
+
+
+
+    
+
+
+</body></html>

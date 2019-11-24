@@ -1,0 +1,2202 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)https://www.cnblogs.com/5iedu/p/5657316.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin">
+    <meta property="og:description" content="27.1 策略模式 VS 命令模式 27.1.1 策略模式实现压缩算法 //行为型模式大PK——策略模式和命令模式 //实例：用策略模式实现压缩算法 #include &amp;lt;iostream&amp;gt;">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>第28章 行为型模式大PK - 浅墨浓香 - 博客园</title>
+    
+    <link rel="stylesheet" href="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/blog-common.min.css">
+    <link id="MainCss" rel="stylesheet" href="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/bundle-habahaba.min.css">
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/bundle-habahaba-mobile.min.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/5iedu/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/5iedu/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/5iedu/wlwmanifest.xml">
+    <script src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/pubads_impl_rendering_2019111801.js.下载"></script><script async="" src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/analytics.js.下载"></script><script type="text/javascript" src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/encoder.js.下载"></script><script src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+    <script src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/blog-common.min.js.下载"></script>
+    <script>
+        var currentBlogId = 231128;
+        var currentBlogApp = '5iedu';
+        var cb_enable_mathjax = true;
+        var isLogined = false;
+    </script>
+    <script type="text/x-mathjax-config;executed=true">
+        MathJax.Hub.Config({
+        tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']], processClass: 'math', processEscapes: true },
+        TeX: {
+        equationNumbers: { autoNumber: ['AMS'], useLabelIds: true },
+        extensions: ['extpfeil.js', 'mediawiki-texvc.js'],
+        Macros: {bm: "\\boldsymbol"}
+        },
+        'HTML-CSS': { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+        });
+    </script>
+    <script src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/MathJax.js.下载"></script>
+    
+<style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover, .MJXp-munder {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > *, .MJXp-munder > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><link rel="preload" href="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/f.txt" as="script"><script type="text/javascript" src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/f.txt"></script><script src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/pubads_impl_2019111801.js.下载" async=""></script><link rel="prefetch" href="https://tpc.googlesyndication.com/safeframe/1-0-36/html/container.html"></head>
+<body><div id="MathJax_Message" style="display: none;"></div>
+    <a name="top"></a>
+    
+    <table width="100%" class="Framework" cellspacing="0" cellpadding="0">
+	<tbody><tr>
+		<td colspan="2">
+			
+<div id="top">
+<table width="100%" cellpadding="8" cellspacing="0">
+	<tbody><tr>
+		<td nowrap="">
+			<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/5iedu/">浅墨浓香</a>
+</h1>
+			
+想要天亮进城，就得天黑赶路。
+
+		</td>
+	</tr>
+</tbody></table>
+</div>
+<div id="sub"><div class="BlogStats">posts - 
+690, comments - 
+52, trackbacks - 
+0, articles - 
+16</div>
+
+</div>
+
+
+
+</td>
+	</tr>
+	<tr>
+		<td class="LeftCell">
+            <div id="leftmenu">
+                
+<h3>导航</h3>
+<ul>
+	<li>
+		<a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+	<li>
+		
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/5iedu/">
+首页</a>
+</li>
+	<li>
+		
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+	<li>
+		
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E6%B5%85%E5%A2%A8%E6%B5%93%E9%A6%99">
+联系</a></li>
+	<li>
+		
+<a id="blog_nav_rss" class="menu" href="https://www.cnblogs.com/5iedu/rss/">
+订阅</a></li>
+	<li>
+		
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+                
+<div id="sidebar_news" class="newsItem"><h3>公告</h3>
+<div id="news">
+	
+<div id="blog-news">
+    
+    <div id="profile_block">
+        昵称：
+        <a href="https://home.cnblogs.com/u/5iedu/">
+            浅墨浓香
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/5iedu/" title="入园时间：2015-06-10">
+            4年5个月
+        </a>
+        <br>
+        粉丝：
+        <a href="https://home.cnblogs.com/u/5iedu/followers/">
+            149
+        </a>
+        <br>
+        关注：
+        <a href="https://home.cnblogs.com/u/5iedu/followees/">
+            0
+        </a>
+        <div id="p_b_follow">
+<a href="javascript:void(0)" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;)">+加关注</a></div>
+        <script>getFollowStatus('41562de4-020f-e511-b908-9dcfd8948a71');</script>
+    </div>
+</div>
+</div>
+
+</div>
+
+                <div id="blog-calendar" style="">
+
+<table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar" border="0">
+    <tbody>
+        <tr>
+            <td colspan="7">
+                <table class="CalTitle" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/10/24&#39;); return false;">&lt;</a>
+                            </td>
+                            <td align="center">2019年11月</td>
+                            <td align="right" class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/12/24&#39;); return false;">&gt;</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+                    <th class="CalDayHeader" align="center" abbr="日" scope="col">日</th>
+                    <th class="CalDayHeader" align="center" abbr="一" scope="col">一</th>
+                    <th class="CalDayHeader" align="center" abbr="二" scope="col">二</th>
+                    <th class="CalDayHeader" align="center" abbr="三" scope="col">三</th>
+                    <th class="CalDayHeader" align="center" abbr="四" scope="col">四</th>
+                    <th class="CalDayHeader" align="center" abbr="五" scope="col">五</th>
+                    <th class="CalDayHeader" align="center" abbr="六" scope="col">六</th>
+        </tr>
+            <tr>
+                            <td class="CalOtherMonthDay" align="center">27</td>
+                            <td class="CalOtherMonthDay" align="center">28</td>
+                            <td class="CalOtherMonthDay" align="center">29</td>
+                            <td class="CalOtherMonthDay" align="center">30</td>
+                            <td class="CalOtherMonthDay" align="center">31</td>
+                        <td class="" align="center">
+                            1
+                        </td>
+                    <td class="CalWeekendDay" align="center">
+                        2
+                    </td>
+            </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            3
+                        </td>
+                            <td class="" align="center">
+                                4
+                            </td>
+                            <td class="" align="center">
+                                5
+                            </td>
+                            <td class="" align="center">
+                                6
+                            </td>
+                            <td class="" align="center">
+                                <a href="https://www.cnblogs.com/5iedu/archive/2019/11/07.html"><u>7</u></a>
+                            </td>
+                            <td class="" align="center">
+                                8
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            9
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            10
+                        </td>
+                            <td class="" align="center">
+                                11
+                            </td>
+                            <td class="" align="center">
+                                12
+                            </td>
+                            <td class="" align="center">
+                                13
+                            </td>
+                            <td class="" align="center">
+                                14
+                            </td>
+                            <td class="" align="center">
+                                15
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            16
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            <a href="https://www.cnblogs.com/5iedu/archive/2019/11/17.html"><u>17</u></a>
+                        </td>
+                            <td class="" align="center">
+                                18
+                            </td>
+                            <td class="" align="center">
+                                19
+                            </td>
+                            <td class="" align="center">
+                                <a href="https://www.cnblogs.com/5iedu/archive/2019/11/20.html"><u>20</u></a>
+                            </td>
+                            <td class="" align="center">
+                                21
+                            </td>
+                            <td class="" align="center">
+                                22
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            23
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalTodayDay" align="center">
+                            24
+                        </td>
+                            <td class="" align="center">
+                                25
+                            </td>
+                            <td class="" align="center">
+                                26
+                            </td>
+                            <td class="" align="center">
+                                27
+                            </td>
+                            <td class="" align="center">
+                                28
+                            </td>
+                            <td class="" align="center">
+                                29
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            30
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalOtherMonthDay" align="center">
+                            1
+                        </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                2
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                3
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                4
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                5
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                6
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            7
+                        </td>
+                </tr>
+    </tbody>
+</table></div>
+                <script>loadBlogDefaultCalendar();</script>
+                <div id="blog-sidecolumn">
+<!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    <div id="sidebar_search" class="mySearch">
+        <h3 class="catListTitle">搜索</h3>
+        <div id="sidebar_search_box">
+            <div id="widget_my_zzk" class="div_my_zzk">
+                <input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk">
+            </div>
+            <div id="widget_my_google" class="div_my_zzk">
+                <input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 常用链接 -->
+<div id="sidebar_shortcut" class="sidebar-block">
+    
+<h3 class="catListTitle">
+常用链接
+</h3>
+<ul>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/p/" title="我的博客的随笔列表">我的随笔</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/MyComments.html" title="我的发表过的评论列表">我的评论</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/OtherPosts.html" title="我评论过的随笔列表">我的参与</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/RecentComments.html" title="我的博客的评论列表">最新评论</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/tag/" title="我的博客的标签列表">我的标签</a>
+</li>
+</ul>
+
+<!-- TODO: 检查是否有使用这一部分的控件，如果没有则应该删除。 -->
+<div id="itemListLin_con" style="display:none">
+    <ul>
+
+    </ul>
+</div>
+
+</div>
+
+<!-- 最新随笔 -->
+
+
+
+<!-- 我的标签 -->
+<div id="sidebar_toptags" class="sidebar-block">
+    
+</div>
+
+<!-- 积分与排名 -->
+
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+    
+		<h3>
+
+随笔分类
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/811805.html" rel="" target="">
+    C++深度解析(73)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/804081.html" rel="" target="">
+    C语言进阶剖析(48)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/911906.html" rel="" target="">
+    Linux基础与系统管理(35)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/937714.html" rel="" target="">
+    Linux应用与网络编程(64)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1005833.html" rel="" target="">
+    lua(3)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1005832.html" rel="" target="">
+    makefile(10)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1503320.html" rel="" target="">
+    Modern C++ 11/14(30)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/819307.html" rel="" target="">
+    QT实验分析教程(85)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/699743.html" rel="" target="">
+    Windows程序设计(58)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/699744.html" rel="" target="">
+    Windows核心编程(57)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/994985.html" rel="" target="">
+    计算机网络原理(54)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/825371.html" rel="" target="">
+    设计模式(41)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1007185.html" rel="" target="">
+    深入应用C++11(27)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/911523.html" rel="" target="">
+    数据结构实战分析(79)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/888633.html" rel="" target="">
+    重构(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/963515.html" rel="" target="">
+    专业嵌入式软件开发(15)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+随笔档案
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/11.html" rel="" target="">
+    2019年11月(3)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/10.html" rel="" target="">
+    2019年10月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/09.html" rel="" target="">
+    2019年9月(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/08.html" rel="" target="">
+    2019年8月(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/07.html" rel="" target="">
+    2019年7月(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/12.html" rel="" target="">
+    2017年12月(13)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/11.html" rel="" target="">
+    2017年11月(23)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/10.html" rel="" target="">
+    2017年10月(21)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/09.html" rel="" target="">
+    2017年9月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/08.html" rel="" target="">
+    2017年8月(22)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/07.html" rel="" target="">
+    2017年7月(27)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/06.html" rel="" target="">
+    2017年6月(21)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/05.html" rel="" target="">
+    2017年5月(35)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/04.html" rel="" target="">
+    2017年4月(19)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/03.html" rel="" target="">
+    2017年3月(28)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/02.html" rel="" target="">
+    2017年2月(15)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/01.html" rel="" target="">
+    2017年1月(51)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/12.html" rel="" target="">
+    2016年12月(26)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/11.html" rel="" target="">
+    2016年11月(20)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/10.html" rel="" target="">
+    2016年10月(13)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/09.html" rel="" target="">
+    2016年9月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/08.html" rel="" target="">
+    2016年8月(11)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/07.html" rel="" target="">
+    2016年7月(24)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/06.html" rel="" target="">
+    2016年6月(26)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/05.html" rel="" target="">
+    2016年5月(34)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/04.html" rel="" target="">
+    2016年4月(73)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/03.html" rel="" target="">
+    2016年3月(33)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/02.html" rel="" target="">
+    2016年2月(7)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/12.html" rel="" target="">
+    2015年12月(2)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/11.html" rel="" target="">
+    2015年11月(4)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/10.html" rel="" target="">
+    2015年10月(7)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/09.html" rel="" target="">
+    2015年9月(6)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/08.html" rel="" target="">
+    2015年8月(54)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/07.html" rel="" target="">
+    2015年7月(25)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/06.html" rel="" target="">
+    2015年6月(4)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+文章分类
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/715136.html" rel="" target="">
+    Windows内核(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/729402.html" rel="" target="">
+    编程经验(12)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/812154.html" rel="" target="">
+    常用代码(2)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/954364.html" rel="" target="">
+    综合案例(1)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+相册
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/gallery/718135.html" rel="nofollow noopener noreferrer" target="">
+    笔记插图
+</a>
+
+</li>
+			
+				</ul>
+
+
+</div>
+
+<!-- 最新评论 -->
+<div id="sidebar_recentcomments" class="sidebar-block">
+    <div id="recent_comments_wrap" class="RecentComment">
+    <h3 class="catListTitle">最新评论</h3>
+    <div class="RecentCommentBlock">
+        <ul>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/11390495.html#4344239">1. Re:第18课 捕获机制及陷阱</a></li>
+                    <li class="recent_comment_body">博主不仅高产，而且文章质量都挺好</li>
+                    <li class="recent_comment_author">--YaphetS嘟嘟</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4315939">2. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">博主你好，觉得你的博客特别受用，可以告知一下其他博客的密码吗</li>
+                    <li class="recent_comment_author">--cp2018</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/7040429.html#4294675">3. Re:第5章 IP地址和子网划分（2）_IP地址分类和NAT技术</a></li>
+                    <li class="recent_comment_body">像icmp这种没有端口的不知道是如何实现NAT转换的？</li>
+                    <li class="recent_comment_author">--Eagle-jie</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4280947">4. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">同问</li>
+                    <li class="recent_comment_author">--tiger_wangsir</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4237914">5. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">博主你好，觉得你的博客特别受用，可以告知一下其他博客的密码吗</li>
+                    <li class="recent_comment_author">--胡瑶co</li>
+        </ul>
+    </div>
+</div>
+</div>
+
+
+
+<!-- 阅读排行榜 -->
+<div id="sidebar_topviewedposts" class="sidebar-block">
+    
+<div id="topview_posts_wrap">
+    <h3 class="catListTitle">阅读排行榜</h3>
+    <div id="TopViewPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5595153.html">
+                            1. 第17章 行为型模式—解释器模式(6762)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7376543.html">
+                            2. 第11章 拾遗1：网络地址转换(NAT)和端口映射(4936)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7095041.html">
+                            3. 第6章 静态路由和动态路由（4）_OSPF动态路由协议(3791)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/4899791.html">
+                            4. 第17章 内存映射文件（1）_内存映射文件简介(3741)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7742589.html">
+                            5. 第16课 右值引用（3）_std::forward与完美转发(3730)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- 评论排行榜 -->
+<div id="sidebar_topcommentedposts" class="sidebar-block">
+    
+<div id="topfeedback_posts_wrap">
+    <h3 class="catListTitle">评论排行榜</h3>
+    <div id="TopFeedbackPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/6498326.html">
+                            1. 第83课 另一种创建线程的方式(9)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5325466.html">
+                            2. 第20课 链接过程简介(5)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5429059.html">
+                            3. 第7课 Qt中的坐标系统(4)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5835715.html">
+                            4. 第37课 深度解析QMap与QHash(3)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5617055.html">
+                            5. 第56课 函数模板的概念和意义(2)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- 推荐排行榜 -->
+<div id="sidebar_topdiggedposts" class="sidebar-block">
+    
+<div id="topdigg_posts_wrap">
+    <div class="catListView">
+        <h3 class="catListTitle">推荐排行榜</h3>
+        <div id="TopDiggPostsBlock">
+            <ul style="word-break: break-all">
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/4812259.html">
+                                1. 第11章 Windows线程池（2）_Win2008及以上的新线程池(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/5363054.html">
+                                2. 第1课 学习 C++ 的意义(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/5367317.html">
+                                3. 第5课 引用的本质分析(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/6800234.html">
+                                4. 第1章 计算机网络和协议（1）_网络的概念(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/6829593.html">
+                                5. 第1章 计算机网络和协议（3）_TCP/IP协议(1)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div></div>
+                <script>loadBlogSideColumn();</script>
+            </div>
+		</td>
+		<td class="MainCell" width="100%">
+			<div id="main">
+				<div id="post_detail">
+	<div class="post">
+		<div class="posthead">
+			<h2>
+				
+<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/5iedu/p/5657316.html">第28章 行为型模式大PK</a>
+
+			</h2>
+ 			Posted on 
+<span id="post-date">2016-07-10 11:07</span>&nbsp;<a href="https://www.cnblogs.com/5iedu/">浅墨浓香</a> 阅读(<span id="post_view_count">142</span>) 评论(<span id="post_comment_count">0</span>) <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5657316" rel="nofollow"> 编辑</a> <a href="javascript:void(0)" onclick="AddToWz(5657316); return false;">收藏</a>
+
+			
+			
+		</div>
+		<div class="postbody">
+<div id="cnblogs_post_body" class="blogpost-body ">
+    <p style="text-align: left;" align="center"><strong style="line-height: 1.5;">27.1 </strong><strong style="line-height: 1.5;">策略模式 VS 命令模式</strong></p>
+<p><strong>27.1.1 </strong><strong>策略模式实现压缩算法</strong></p>
+<p><strong><img style="display: block; margin-left: auto; margin-right: auto;" src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/772759-20160710114954983-613702396.png" alt=""></strong></p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;fc235ccd-cca7-442b-895e-79a5dff0407c&#39;)"><img id="code_img_closed_fc235ccd-cca7-442b-895e-79a5dff0407c" class="code_img_closed" src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/ContractedBlock.gif" alt=""><img id="code_img_opened_fc235ccd-cca7-442b-895e-79a5dff0407c" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide(&#39;fc235ccd-cca7-442b-895e-79a5dff0407c&#39;,event)" src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_fc235ccd-cca7-442b-895e-79a5dff0407c" class="cnblogs_code_hide">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">行为型模式大PK——策略模式和命令模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">实例：用策略模式实现压缩算法</span>
+#include &lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">抽象压缩算法</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Algorithm
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">压缩算法</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">bool</span> compress(<span style="color: #0000ff;">string</span> source, <span style="color: #0000ff;">string</span> to) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">解压算法</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">bool</span> uncompress(<span style="color: #0000ff;">string</span> source, <span style="color: #0000ff;">string</span> to) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+    </span><span style="color: #0000ff;">virtual</span> ~<span style="color: #000000;">Algorithm(){}
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">具体算法:zip算法</span>
+<span style="color: #0000ff;">class</span> Zip : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Algorithm
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">zip格式的压缩算法</span>
+    <span style="color: #0000ff;">bool</span> compress(<span style="color: #0000ff;">string</span> source, <span style="color: #0000ff;">string</span><span style="color: #000000;"> to)
+    {
+        cout </span>&lt;&lt; source &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;"> --&gt; </span><span style="color: #800000;">"</span> &lt;&lt; to &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;"> ZIP压缩成功</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;">endl;
+        </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">true</span><span style="color: #000000;">;
+    }
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">zip格式的解压缩算法</span>
+    <span style="color: #0000ff;">bool</span> uncompress(<span style="color: #0000ff;">string</span> source, <span style="color: #0000ff;">string</span><span style="color: #000000;"> to)
+    {
+        cout </span>&lt;&lt; source &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;"> --&gt; </span><span style="color: #800000;">"</span> &lt;&lt; to &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;"> ZIP解压缩成功</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;">endl;
+        </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">true</span><span style="color: #000000;">;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">具体算法:Gzip</span>
+<span style="color: #0000ff;">class</span> Gzip : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Algorithm
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">gzip格式的压缩算法</span>
+    <span style="color: #0000ff;">bool</span> compress(<span style="color: #0000ff;">string</span> source, <span style="color: #0000ff;">string</span><span style="color: #000000;"> to)
+    {
+        cout </span>&lt;&lt; source &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;"> --&gt; </span><span style="color: #800000;">"</span> &lt;&lt; to &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;"> GZIP压缩成功</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;">endl;
+        </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">true</span><span style="color: #000000;">;
+    }
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">gzip格式的解压缩算法</span>
+    <span style="color: #0000ff;">bool</span> uncompress(<span style="color: #0000ff;">string</span> source, <span style="color: #0000ff;">string</span><span style="color: #000000;"> to)
+    {
+        cout </span>&lt;&lt; source &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;"> --&gt; </span><span style="color: #800000;">"</span> &lt;&lt; to &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;"> GZIP解压缩成功</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;">endl;
+        </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">true</span><span style="color: #000000;">;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">环境角色</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Context
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    Algorithm</span>* al; <span style="color: #008000;">//</span><span style="color: #008000;">指向抽象算法</span>
+<span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    Context(Algorithm</span>*<span style="color: #000000;"> al)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;al =<span style="color: #000000;"> al;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">设置算法策略</span>
+    <span style="color: #0000ff;">void</span> setAlgorithm(Algorithm*<span style="color: #000000;"> al)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;al =<span style="color: #000000;"> al;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">执行压缩算法</span>
+    <span style="color: #0000ff;">bool</span> compress(<span style="color: #0000ff;">string</span> source, <span style="color: #0000ff;">string</span><span style="color: #000000;"> to)
+    {
+        </span><span style="color: #0000ff;">return</span> al-&gt;<span style="color: #000000;">compress(source ,to);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">执行解压缩算法</span>
+    <span style="color: #0000ff;">bool</span> uncompress(<span style="color: #0000ff;">string</span> source, <span style="color: #0000ff;">string</span><span style="color: #000000;"> to)
+    {
+        </span><span style="color: #0000ff;">return</span> al-&gt;<span style="color: #000000;">uncompress(source ,to);
+    }
+};
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">创建两种算法策略</span>
+    Algorithm* alZip = <span style="color: #0000ff;">new</span><span style="color: #000000;"> Zip();
+    Algorithm</span>* alGzip = <span style="color: #0000ff;">new</span><span style="color: #000000;"> Gzip();
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">创建环境角色，并执行zip算法</span>
+<span style="color: #000000;">    Context ctx(alZip);
+
+    cout </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">========执算zip算法========</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">执行压缩算法</span>
+    ctx.compress(<span style="color: #800000;">"</span><span style="color: #800000;">c:\\window</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">d:\\windows.zip</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">执行解压缩算法</span>
+    ctx.compress(<span style="color: #800000;">"</span><span style="color: #800000;">c:\\window.zip</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">d:\\windows</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">"========执算gzip算法========"</span>
+    cout &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">========执算gzip算法========</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">更换算法</span>
+<span style="color: #000000;">    ctx.setAlgorithm(alGzip);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">执行压缩算法</span>
+    ctx.compress(<span style="color: #800000;">"</span><span style="color: #800000;">c:\\window</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">d:\\windows.zip</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">执行解压缩算法</span>
+    ctx.compress(<span style="color: #800000;">"</span><span style="color: #800000;">c:\\window.zip</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">d:\\windows</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> alZip;
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> alGzip;
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+</span><span style="color: #008000;">/*</span><span style="color: #008000;">输出结果：
+========执算zip算法========
+c:\window --&gt; d:\windows.zip ZIP压缩成功
+c:\window.zip --&gt; d:\windows ZIP压缩成功
+========执算gzip算法========
+c:\window --&gt; d:\windows.zip GZIP压缩成功
+c:\window.zip --&gt; d:\windows GZIP压缩成功
+</span><span style="color: #008000;">*/</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p><strong>27.1.2 </strong><strong>命令模式实现压缩算法</strong></p>
+<p style="text-align: center;"><strong><img src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/772759-20160710115304733-1700992555.png" alt=""><br></strong></p>
+<p align="center">注意：图中的接收者是按功能设计的</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;2d2b9bb0-913f-4e91-9216-1327a6123f29&#39;)"><img id="code_img_closed_2d2b9bb0-913f-4e91-9216-1327a6123f29" class="code_img_closed" src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/ContractedBlock.gif" alt=""><img id="code_img_opened_2d2b9bb0-913f-4e91-9216-1327a6123f29" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide(&#39;2d2b9bb0-913f-4e91-9216-1327a6123f29&#39;,event)" src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_2d2b9bb0-913f-4e91-9216-1327a6123f29" class="cnblogs_code_hide">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">行为型模式大PK——策略模式和命令模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">实例：用命令模式实现压缩算法</span>
+#include &lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">抽象接收者</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> IReceiver
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">压缩</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">bool</span> compress(<span style="color: #0000ff;">string</span> source, <span style="color: #0000ff;">string</span> to) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">解压</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">bool</span> uncompress(<span style="color: #0000ff;">string</span> source, <span style="color: #0000ff;">string</span> to) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+    </span><span style="color: #0000ff;">virtual</span> ~<span style="color: #000000;">IReceiver(){}
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">zip接收者</span>
+<span style="color: #0000ff;">class</span> ZipReceiver : <span style="color: #0000ff;">public</span><span style="color: #000000;"> IReceiver
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">压缩</span>
+    <span style="color: #0000ff;">bool</span> compress(<span style="color: #0000ff;">string</span> source, <span style="color: #0000ff;">string</span><span style="color: #000000;"> to)
+    {
+        cout </span>&lt;&lt; source &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;"> --&gt; </span><span style="color: #800000;">"</span> &lt;&lt; to &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;"> ZIP压缩成功</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;">endl;
+        </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">true</span><span style="color: #000000;">;
+    }
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">解压</span>
+    <span style="color: #0000ff;">bool</span> uncompress(<span style="color: #0000ff;">string</span> source, <span style="color: #0000ff;">string</span><span style="color: #000000;"> to)
+    {
+        cout </span>&lt;&lt; source &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;"> --&gt; </span><span style="color: #800000;">"</span> &lt;&lt; to &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;"> ZIP解压缩成功</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;">endl;
+        </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">true</span><span style="color: #000000;">;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">Gzip接收者</span>
+<span style="color: #0000ff;">class</span> GzipReceiver : <span style="color: #0000ff;">public</span><span style="color: #000000;"> IReceiver
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">压缩</span>
+    <span style="color: #0000ff;">bool</span> compress(<span style="color: #0000ff;">string</span> source, <span style="color: #0000ff;">string</span><span style="color: #000000;"> to)
+    {
+        cout </span>&lt;&lt; source &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;"> --&gt; </span><span style="color: #800000;">"</span> &lt;&lt; to &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;"> GZIP压缩成功</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;">endl;
+        </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">true</span><span style="color: #000000;">;
+    }
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">解压</span>
+    <span style="color: #0000ff;">bool</span> uncompress(<span style="color: #0000ff;">string</span> source, <span style="color: #0000ff;">string</span><span style="color: #000000;"> to)
+    {
+        cout </span>&lt;&lt; source &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;"> --&gt; </span><span style="color: #800000;">"</span> &lt;&lt; to &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;"> GZIP解压缩成功</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;">endl;
+        </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">true</span><span style="color: #000000;">;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">抽象压缩命令</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> AbstractCmd
+{
+</span><span style="color: #0000ff;">protected</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">持有接收者的引用</span>
+    IReceiver*<span style="color: #000000;"> zip;
+    IReceiver</span>*<span style="color: #000000;"> gzip;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    AbstractCmd()
+    {
+        zip </span>= <span style="color: #0000ff;">new</span><span style="color: #000000;"> ZipReceiver();
+        gzip </span>= <span style="color: #0000ff;">new</span><span style="color: #000000;"> GzipReceiver();
+    }
+    </span><span style="color: #0000ff;">virtual</span> ~<span style="color: #000000;">AbstractCmd()
+    {
+        </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> zip;
+        </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> gzip;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">抽象方法，命令的具体单元</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">bool</span> execute(<span style="color: #0000ff;">string</span> source, <span style="color: #0000ff;">string</span> to) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">zip压缩命令</span>
+<span style="color: #0000ff;">class</span> ZipCompressCmd : <span style="color: #0000ff;">public</span><span style="color: #000000;"> AbstractCmd
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">bool</span> execute(<span style="color: #0000ff;">string</span> source, <span style="color: #0000ff;">string</span><span style="color: #000000;"> to)
+    {
+        </span><span style="color: #0000ff;">return</span>  zip-&gt;<span style="color: #000000;">compress(source, to);
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">zip解压缩命令</span>
+<span style="color: #0000ff;">class</span> ZipUncompressCmd : <span style="color: #0000ff;">public</span><span style="color: #000000;"> AbstractCmd
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">bool</span> execute(<span style="color: #0000ff;">string</span> source, <span style="color: #0000ff;">string</span><span style="color: #000000;"> to)
+    {
+       </span><span style="color: #0000ff;">return</span>  zip-&gt;<span style="color: #000000;">uncompress(source, to);
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">gzip压缩命令</span>
+<span style="color: #0000ff;">class</span> GzipCompressCmd : <span style="color: #0000ff;">public</span><span style="color: #000000;"> AbstractCmd
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">bool</span> execute(<span style="color: #0000ff;">string</span> source, <span style="color: #0000ff;">string</span><span style="color: #000000;"> to)
+    {
+       </span><span style="color: #0000ff;">return</span>  gzip-&gt;<span style="color: #000000;">compress(source, to);
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">gzip解压缩命令</span>
+<span style="color: #0000ff;">class</span> GzipUncompressCmd : <span style="color: #0000ff;">public</span><span style="color: #000000;"> AbstractCmd
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">bool</span> execute(<span style="color: #0000ff;">string</span> source, <span style="color: #0000ff;">string</span><span style="color: #000000;"> to)
+    {
+       </span><span style="color: #0000ff;">return</span>  gzip-&gt;<span style="color: #000000;">uncompress(source, to);
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">调用者</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Invoker
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">持有抽象命令的引用</span>
+    AbstractCmd*<span style="color: #000000;"> cmd;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    Invoker(AbstractCmd</span>*<span style="color: #000000;"> cmd)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;cmd =<span style="color: #000000;"> cmd;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">执行命令</span>
+    <span style="color: #0000ff;">bool</span> execute(<span style="color: #0000ff;">string</span> source, <span style="color: #0000ff;">string</span><span style="color: #000000;"> to)
+    {
+        </span><span style="color: #0000ff;">return</span> cmd-&gt;<span style="color: #000000;">execute(source, to);
+    }
+
+    </span><span style="color: #0000ff;">void</span> setCommand(AbstractCmd*<span style="color: #000000;"> cmd)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;cmd =<span style="color: #000000;"> cmd;
+    }
+};
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">定义一个命令，压缩一个文件</span>
+    AbstractCmd* cmd = <span style="color: #0000ff;">new</span><span style="color: #000000;"> ZipCompressCmd();
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">AbstractCmd* cmd = new ZipUncompressCmd();</span><span style="color: #008000;">//</span><span style="color: #008000;">换命令
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">定义调用者</span>
+    Invoker* invoker = <span style="color: #0000ff;">new</span><span style="color: #000000;"> Invoker(cmd);
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">执行压缩命令</span>
+    cout &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">========执行压缩命令========</span><span style="color: #800000;">"</span>&lt;&lt;<span style="color: #000000;">endl;
+
+    invoker</span>-&gt;execute(<span style="color: #800000;">"</span><span style="color: #800000;">c:\\windows</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">d:\\windows.zip</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+</span><span style="color: #008000;">/*</span><span style="color: #008000;">输出结果：
+========执行压缩命令========
+c:\windows --&gt; d:\windows.zip ZIP压缩成功
+</span><span style="color: #008000;">*/</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p>//另一种实现（只提供类图）</p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/772759-20160710115111092-1124487879.png" alt=""></p>
+<p align="center">注意：图中的接收者是按对象设计的</p>
+<p><strong>27.1.3 </strong><strong>小结</strong></p>
+<p>（1）当命令模式退化时，比如无接收者(接收者非常简单，无需专门编写一个接收者)，在这种情况下，命令模式和策略模式的类图完全一样，代码实现也比较类似</p>
+<p>（2）关注点不同</p>
+<p>　　①<strong><span style="color: #ff0000;">策略模式</span>关注的是<span style="color: #0000ff;">算法替换</span>的问题</strong>，一个新的算法投产，旧算法退体，或者提供多种算法由调用者自己选择使用，算法的自由更替是它实现的要点。换句话说，策略模式关注的是算法的完整性、封装性，只有具备了这两个条件才能保证其可以自由切换。</p>
+<p>　　②<strong><span style="color: #ff0000;">命令模式</span>则关注的是<span style="color: #0000ff;">解耦问题</span></strong>，如何让请求者和执行者解耦是它需要首先解决的，解耦的要求就是把请求的内容封装为一个个命令，由接收者执行。由于封装成命令，就同时可以对命令进行多种处理，例如撤销、记录等。</p>
+<p>（3）角色功能不同</p>
+<p>　　①<span style="color: #0000ff;"><strong>策略模式</strong></span>中的具体算法是负责一个<span style="color: #ff0000;"><strong>完整算法逻辑</strong></span>，它是<span style="color: #ff0000;"><strong>不可再拆分的原子业务</strong></span>，一旦变更就是对算法整体的变更。</p>
+<p>　　②<span style="color: #0000ff;"><strong>命令模式</strong></span>它<span style="color: #ff0000;"><strong>关注命令的实现，也就是功能的实现</strong></span>。接收者对命令负责，而与请求者无关。</p>
+<p>（4）使用场景不同</p>
+<p>　　策略模式适用于算法要求变换的场景，而命令模式适用于解耦两个有紧耦合的对象。</p>
+<p><strong>27.2 </strong><strong>策略模式 VS 状态模式</strong></p>
+<p><strong>27.2.1 </strong><strong>策略模式实现人生</strong></p>
+<p>（1）孩童时期的工作就是玩耍；成人时期的主要工作是养活自己，然后为社会做贡献；老年时期的主要工作是享受天伦之乐。</p>
+<p>（2）策略模式，把<span style="color: #ff0000;"><strong>三种不同的工作方式看作三个不同时期的算法</strong></span>，随着时间推移工作内容随之更替。</p>
+<p>【编程实验】用策略模式实现人生</p>
+<p style="text-align: center;"><img src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/772759-20160710164810952-1381680014.png" alt=""></p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;14723317-d158-4cbd-a754-800262340803&#39;)"><img id="code_img_closed_14723317-d158-4cbd-a754-800262340803" class="code_img_closed" src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/ContractedBlock.gif" alt=""><img id="code_img_opened_14723317-d158-4cbd-a754-800262340803" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide(&#39;14723317-d158-4cbd-a754-800262340803&#39;,event)" src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_14723317-d158-4cbd-a754-800262340803" class="cnblogs_code_hide">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">行为型模式大PK——策略模式和状态模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">实例：用策略模式实现人生</span>
+#include &lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">抽象工作算法</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> WorkAlgorithm
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">每个年龄段都必须完成的工作</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> work() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+    </span><span style="color: #0000ff;">virtual</span> ~<span style="color: #000000;">WorkAlgorithm(){}
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">孩童工作</span>
+<span style="color: #0000ff;">class</span> ChildWork : <span style="color: #0000ff;">public</span><span style="color: #000000;"> WorkAlgorithm
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> work()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">儿童的工作是玩耍！</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">成人工作</span>
+<span style="color: #0000ff;">class</span> AdultWork : <span style="color: #0000ff;">public</span><span style="color: #000000;"> WorkAlgorithm
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> work()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">成人的工作就是养活自己，然后为社会贡献！</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">老人工作</span>
+<span style="color: #0000ff;">class</span> OldWork : <span style="color: #0000ff;">public</span><span style="color: #000000;"> WorkAlgorithm
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> work()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">老年人的工作就是享受天伦之乐！</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">环境角色</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Context
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    WorkAlgorithm</span>*<span style="color: #000000;"> workAlgorithm;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span> setWork(WorkAlgorithm*<span style="color: #000000;"> work)
+    {
+        workAlgorithm </span>=<span style="color: #000000;"> work;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">每个算法都必须具有的功能</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> work()
+    {
+        workAlgorithm</span>-&gt;<span style="color: #000000;">work();
+    }
+};
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">定义一个环境角色</span>
+<span style="color: #000000;">    Context ctx;
+    cout </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">=====儿童的主要工作=====</span><span style="color: #800000;">"</span>&lt;&lt;<span style="color: #000000;"> endl;
+    WorkAlgorithm</span>* child= <span style="color: #0000ff;">new</span><span style="color: #000000;"> ChildWork();
+    ctx.setWork(child);
+    ctx.work();
+
+    cout </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">=====成年人的主要工作=====</span><span style="color: #800000;">"</span>&lt;&lt;<span style="color: #000000;"> endl;
+    WorkAlgorithm</span>* adult= <span style="color: #0000ff;">new</span><span style="color: #000000;"> AdultWork();
+    ctx.setWork(adult);
+    ctx.work();
+
+    cout </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">=====老人的主要工作=====</span><span style="color: #800000;">"</span>&lt;&lt;<span style="color: #000000;"> endl;
+    WorkAlgorithm</span>* oldman= <span style="color: #0000ff;">new</span><span style="color: #000000;"> OldWork();
+    ctx.setWork(oldman);
+    ctx.work();
+
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> child;
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> adult;
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> oldman;
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+</span><span style="color: #008000;">/*</span><span style="color: #008000;">输出结果：
+=====儿童的主要工作=====
+儿童的工作是玩耍！
+=====成年人的主要工作=====
+成人的工作就是养活自己，然后为社会贡献！
+=====老人的主要工作=====
+老年人的工作就是享受天伦之乐！
+</span><span style="color: #008000;">*/</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p><strong>27.2.2 </strong><strong>状态模式实现人生</strong></p>
+<p>（1）孩童时期的工作就是玩耍；成人时期的主要工作是养活自己，然后为社会做贡献；老年时期的主要工作是享受天伦之乐。</p>
+<p>（2）状态模式，认为<span style="color: #0000ff;"><strong>人的状态（孩童、成人、老人）产生了不同的行为结果</strong></span>，这里的行为都相同，都是工作，但是它们的实现方式不同。</p>
+<p>【编程实验】用状态模式实现人生</p>
+<p style="text-align: center;"><img src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/772759-20160710164746592-993839693.png" alt=""></p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;9c1cba7e-b521-4331-962d-d9de1d8eabd0&#39;)"><img id="code_img_closed_9c1cba7e-b521-4331-962d-d9de1d8eabd0" class="code_img_closed" src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/ContractedBlock.gif" alt=""><img id="code_img_opened_9c1cba7e-b521-4331-962d-d9de1d8eabd0" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide(&#39;9c1cba7e-b521-4331-962d-d9de1d8eabd0&#39;,event)" src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_9c1cba7e-b521-4331-962d-d9de1d8eabd0" class="cnblogs_code_hide">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">行为型模式大PK——策略模式和状态模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">实例：用状态模式实现人生</span>
+#include &lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">**************************************接口声明******************************</span>
+<span style="color: #0000ff;">class</span> Human;  <span style="color: #008000;">//</span><span style="color: #008000;">前置声明，相当于环境角色类
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">人的抽象状态</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> HumanState
+{
+</span><span style="color: #0000ff;">protected</span><span style="color: #000000;">:
+    Human</span>*<span style="color: #000000;"> human;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span> setHuman(Human*<span style="color: #000000;"> human)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;human =<span style="color: #000000;"> human;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">每一种状态对应一种行为</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> work() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">环境角色</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Human
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    HumanState</span>* state; <span style="color: #008000;">//</span><span style="color: #008000;">当前状态</span>
+<span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">static</span> HumanState*<span style="color: #000000;"> CHILD_STATE;
+    </span><span style="color: #0000ff;">static</span> HumanState*<span style="color: #000000;"> ADULT_STATE;
+    </span><span style="color: #0000ff;">static</span> HumanState*<span style="color: #000000;"> OLD_STATE;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span> setState(HumanState*<span style="color: #000000;"> state)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;state =<span style="color: #000000;"> state;
+        state</span>-&gt;setHuman(<span style="color: #0000ff;">this</span><span style="color: #000000;">);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">人类的工作</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> work()
+    {
+        state</span>-&gt;<span style="color: #000000;">work();
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">*********************************具体的状态类*************************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">孩童状态</span>
+<span style="color: #0000ff;">class</span> ChildState : <span style="color: #0000ff;">public</span><span style="color: #000000;"> HumanState
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> work()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">儿童的工作是玩耍！</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">设置下一个状态</span>
+        human-&gt;<span style="color: #000000;">setState(Human::ADULT_STATE);
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">成人状态</span>
+<span style="color: #0000ff;">class</span> AdultState : <span style="color: #0000ff;">public</span><span style="color: #000000;"> HumanState
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> work()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">成人的工作就是养活自己，然后为社会贡献！</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">设置下一个状态</span>
+        human-&gt;<span style="color: #000000;">setState(Human::OLD_STATE);
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">老人状态</span>
+<span style="color: #0000ff;">class</span> OldState : <span style="color: #0000ff;">public</span><span style="color: #000000;"> HumanState
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> work()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">老年人的工作就是享受天伦之乐！</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+};
+
+HumanState</span>* Human::CHILD_STATE = <span style="color: #0000ff;">new</span><span style="color: #000000;"> ChildState();
+HumanState</span>* Human::ADULT_STATE = <span style="color: #0000ff;">new</span><span style="color: #000000;"> AdultState();
+HumanState</span>* Human::OLD_STATE   = <span style="color: #0000ff;">new</span><span style="color: #000000;"> OldState();
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">定义一个环境角色</span>
+<span style="color: #000000;">    Human human;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">状态的切换由环境角色和状态共同决定，是由内部引起的状态变化
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">而策略模式引起策略的变化是外部选择的结果，这两者存在很大差别
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">设置一个人的初始状态</span>
+<span style="color: #000000;">    human.setState(Human::CHILD_STATE);
+    cout </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">=====儿童的主要工作=====</span><span style="color: #800000;">"</span>&lt;&lt;<span style="color: #000000;"> endl;
+    human.work();
+
+    cout </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">=====成年人的主要工作=====</span><span style="color: #800000;">"</span>&lt;&lt;<span style="color: #000000;"> endl;
+    human.work();
+
+    cout </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">=====老人的主要工作=====</span><span style="color: #800000;">"</span>&lt;&lt;<span style="color: #000000;"> endl;
+    human.work();
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+</span><span style="color: #008000;">/*</span><span style="color: #008000;">输出结果：
+=====儿童的主要工作=====
+儿童的工作是玩耍！
+=====成年人的主要工作=====
+成人的工作就是养活自己，然后为社会贡献！
+=====老人的主要工作=====
+老年人的工作就是享受天伦之乐！
+</span><span style="color: #008000;">*/</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p><strong>27.2.3 </strong><strong>小结</strong></p>
+<p><strong>（1）解决问题的重点不同</strong></p>
+<p>　　①<span style="color: #ff0000;"><strong>策略模式</strong></span>旨<span style="color: #0000ff;"><strong>封装算法</strong></span>，并保证算法可以<span style="color: #0000ff;"><strong>自由地切换</strong></span>。但是算法之间是<span style="color: #0000ff;"><strong>没有交互的</strong></span>。</p>
+<p>　　②<span style="color: #ff0000;"><strong>状态模式</strong></span>旨在指<span style="color: #0000ff;"><strong>解决内在的状态的改变而引起的行为改变的问题</strong></span>，它的出发点是事物的状态，封装状态而暴露行为，一个对象的状态改变，从外界来看就好象是行为改变。</p>
+<p><strong>（2）解决问题的方法不同</strong></p>
+<p>　　①<span style="color: #ff0000;"><strong>策略模式</strong></span>只是确保算法可自由切换，但是<span style="color: #0000ff;"><strong>什么时候用什么算法它决定不了</strong>。</span></p>
+<p>　　②而<span style="color: #ff0000;"><strong>状态模式</strong></span>对外暴露的是行为，状态的变化一般是由环境角色和具体状态共同完成的，也就是说状态模式<span style="color: #0000ff;"><strong>封装了状态的变化而暴露了不同的行为</strong></span>或行为结果。</p>
+<p><strong>（3）环境角色的职责不同</strong></p>
+<p>　　①<strong>策略模式</strong>的环境角色<span style="color: #ff0000;"><strong>只是一个委托作用</strong></span>，负责算法的替换。</p>
+<p>　　②<strong>状态模式</strong>的环境角色<span style="color: #ff0000;"><strong>不仅仅是委托行为，它还具有登记状态变化的功能，与具体的状态类协作</strong></span>，共同完成状态切换行为随之切换的任务。</p>
+<p><strong>27.3 </strong><strong>观察者模式和责任链模式</strong></p>
+<p><strong>27.3.1 </strong><strong>责任链模式实现DNS解析过程</strong></p>
+<p>（1）首先定义<span style="color: #ff0000;"><strong>3个DNS服务器</strong></span>：上海DNS服务器（区域服务器）、中国顶级DNS服务器、全球顶级DNS服务器。</p>
+<p>（2）假设请求者发出请求，由上海DNS进行解析，如果能够解析，则返回结果，若不能解析，则提交给父服务器（中国顶级DNS）进行解析，若还不能解析，则提交到全球顶级DNS进行解析，若还不能解析，那就返回该域名无法解析。</p>
+<p align="center"><img src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/772759-20160710213343264-344422368.png" alt="" width="655" height="145">&nbsp;</p>
+<p>【编程实验】责任链模式实现DNS解析的类图</p>
+<p style="text-align: center;">&nbsp;<img src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/772759-20160710221617139-181606610.png" alt=""></p>
+<p>　　①Recorder对象，它记录DNS服务器解析后的结果，包括域名、IP地址、属主（即由谁解析的）。</p>
+<p>　　②DnsServer抽象类中的resolve方法是一个基本方法，每个DNS服务器都必须拥有该方法，它对DNS进行解析。具体是由echo方法来实现的，每个DNS服务器独自实现。</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">行为型模式大PK——观察者模式和责任链模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">实例：用责任链模式实现DNS解析过程</span>
+#include &lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;">
+#include </span>&lt;ctime&gt;<span style="color: #000000;">
+#include </span>&lt;sstream&gt; <span style="color: #008000;">//</span><span style="color: #008000;">for ostreamstring</span>
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">********************************辅助类***************************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">解析记录</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Recorder
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span> domain; <span style="color: #008000;">//</span><span style="color: #008000;">域名,如www.baidu.com</span>
+    <span style="color: #0000ff;">string</span> ip;     <span style="color: #008000;">//</span><span style="color: #008000;">ip</span>
+    <span style="color: #0000ff;">string</span> owner;  <span style="color: #008000;">//</span><span style="color: #008000;">属主，即解析者</span>
+<span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span> getDomain(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> domain;}
+    </span><span style="color: #0000ff;">void</span> setDomain(<span style="color: #0000ff;">string</span><span style="color: #000000;"> value)
+    {
+        domain </span>=<span style="color: #000000;"> value;
+    }
+
+    </span><span style="color: #0000ff;">string</span> getIp(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> ip;}
+    </span><span style="color: #0000ff;">void</span> setIp(<span style="color: #0000ff;">string</span><span style="color: #000000;"> value)
+    {
+        ip </span>=<span style="color: #000000;"> value;
+    }
+
+    </span><span style="color: #0000ff;">string</span> getOwner(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> owner;}
+    </span><span style="color: #0000ff;">void</span> setOwner(<span style="color: #0000ff;">string</span><span style="color: #000000;"> value)
+    {
+        owner </span>=<span style="color: #000000;"> value;
+    }
+
+    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> toString()
+    {
+        </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> str;
+
+        str  </span>= <span style="color: #800000;">"</span><span style="color: #800000;">域名:</span><span style="color: #800000;">"</span> +<span style="color: #000000;"> domain;
+        str </span>+= <span style="color: #800000;">"</span><span style="color: #800000;">\nIP地址:</span><span style="color: #800000;">"</span> +<span style="color: #000000;"> ip;
+        str </span>+= <span style="color: #800000;">"</span><span style="color: #800000;">\n解析者:</span><span style="color: #800000;">"</span> +<span style="color: #000000;"> owner;
+
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> str;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">抽象域名服务器</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> DnsServer
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">上级DNS是谁</span>
+    DnsServer* upperServer;  <span style="color: #008000;">//</span><span style="color: #008000;">即一下个服务器
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">随机产生一个IP地址，工具类</span>
+    <span style="color: #0000ff;">string</span><span style="color: #000000;"> genIpAddress()
+    {
+        </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> ip;
+        ostringstream oss;
+
+        oss </span>&lt;&lt; rand() % <span style="color: #800080;">256</span> &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">.</span><span style="color: #800000;">"</span> &lt;&lt; rand() % <span style="color: #800080;">256</span> &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">.</span><span style="color: #800000;">"</span>
+            &lt;&lt; rand() % <span style="color: #800080;">256</span> &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">.</span><span style="color: #800000;">"</span> &lt;&lt; rand() % <span style="color: #800080;">256</span><span style="color: #000000;"> ;
+
+        ip </span>=<span style="color: #000000;">oss.str();
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> ip;
+    }
+</span><span style="color: #0000ff;">protected</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">每个域名都在一个Zone内，判断是否在本区中。</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">bool</span> isLocal(<span style="color: #0000ff;">string</span> domain) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">每个服务器都必须实现解析任务</span>
+    <span style="color: #0000ff;">virtual</span> Recorder echo(<span style="color: #0000ff;">string</span><span style="color: #000000;"> domain)
+    {
+        Recorder rec;
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">获得IP地址</span>
+<span style="color: #000000;">        rec.setIp(genIpAddress());
+        rec.setDomain(domain);
+
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> rec;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">辅助函数，判断字符串是否以另一个字符串结尾</span>
+    <span style="color: #0000ff;">bool</span> endWith(<span style="color: #0000ff;">string</span> source, <span style="color: #0000ff;">string</span><span style="color: #000000;"> tail)
+    {
+        </span><span style="color: #0000ff;">if</span> (source.size() &lt;<span style="color: #000000;"> tail.size())
+            </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">false</span><span style="color: #000000;">;
+
+        </span><span style="color: #0000ff;">return</span> (<span style="color: #800080;">0</span> == source.compare(source.size() -<span style="color: #000000;"> tail.size(), tail.size(), tail));
+    }
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    DnsServer()
+    {
+        srand((</span><span style="color: #0000ff;">int</span><span style="color: #000000;">)time(NULL));
+    }
+
+    </span><span style="color: #0000ff;">void</span> setUpperServer(DnsServer*<span style="color: #000000;"> upperServer)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;upperServer =<span style="color: #000000;"> upperServer;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">解析域名</span>
+    Recorder resolve(<span style="color: #0000ff;">string</span><span style="color: #000000;"> domain)
+    {
+        Recorder rec;
+
+        </span><span style="color: #0000ff;">if</span><span style="color: #000000;">(isLocal(domain))
+        {
+            rec </span>= echo(domain);  <span style="color: #008000;">//</span><span style="color: #008000;">在本区，直接返回</span>
+<span style="color: #000000;">        }
+        </span><span style="color: #0000ff;">else</span><span style="color: #000000;">
+        {
+            </span><span style="color: #008000;">//</span><span style="color: #008000;">本服务器不能解析，则提交上级服务器</span>
+            rec = upperServer-&gt;<span style="color: #000000;">resolve(domain);
+        }
+
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> rec;
+    }
+    </span><span style="color: #0000ff;">virtual</span> ~<span style="color: #000000;">DnsServer(){}
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">具体的服务器：上海DNS服务器</span>
+<span style="color: #0000ff;">class</span> SHDnsServer : <span style="color: #0000ff;">public</span><span style="color: #000000;">  DnsServer
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    Recorder echo(</span><span style="color: #0000ff;">string</span><span style="color: #000000;"> domain)
+    {
+        Recorder rec </span>=<span style="color: #000000;"> DnsServer::echo(domain);
+        rec.setOwner(</span><span style="color: #800000;">"</span><span style="color: #800000;">上海DNS服务器</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> rec;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">定义上海的服务器能处理的级别，即域名后缀为.sh.cn</span>
+    <span style="color: #0000ff;">bool</span> isLocal(<span style="color: #0000ff;">string</span><span style="color: #000000;"> domain)
+    {
+        </span><span style="color: #0000ff;">return</span> endWith(domain, <span style="color: #800000;">"</span><span style="color: #800000;">.sh.cn</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">具体的服务器：中国顶级DNS服务器</span>
+<span style="color: #0000ff;">class</span> CNDnsServer : <span style="color: #0000ff;">public</span><span style="color: #000000;">  DnsServer
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    Recorder echo(</span><span style="color: #0000ff;">string</span><span style="color: #000000;"> domain)
+    {
+        Recorder rec </span>=<span style="color: #000000;"> DnsServer::echo(domain);
+        rec.setOwner(</span><span style="color: #800000;">"</span><span style="color: #800000;">中国顶级DNS服务器</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> rec;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">定义中国顶级DNS服务器能处理的级别，即域名后缀为.cn</span>
+    <span style="color: #0000ff;">bool</span> isLocal(<span style="color: #0000ff;">string</span><span style="color: #000000;"> domain)
+    {
+        </span><span style="color: #0000ff;">return</span> endWith(domain, <span style="color: #800000;">"</span><span style="color: #800000;">.cn</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">具体的服务器：全球顶级DNS服务器</span>
+<span style="color: #0000ff;">class</span> TopDnsServer : <span style="color: #0000ff;">public</span><span style="color: #000000;">  DnsServer
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    Recorder echo(</span><span style="color: #0000ff;">string</span><span style="color: #000000;"> domain)
+    {
+        Recorder rec </span>=<span style="color: #000000;"> DnsServer::echo(domain);
+        rec.setOwner(</span><span style="color: #800000;">"</span><span style="color: #800000;">全球顶级DNS服务器</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> rec;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">定义中国顶级DNS服务器能处理的级别，即域名后缀为.cn</span>
+    <span style="color: #0000ff;">bool</span> isLocal(<span style="color: #0000ff;">string</span><span style="color: #000000;"> domain)
+    {
+        </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">true</span>; <span style="color: #008000;">//</span><span style="color: #008000;">所有的域名最终的解析地点</span>
+<span style="color: #000000;">    }
+};
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">上海域名服务器</span>
+    DnsServer* sh = <span style="color: #0000ff;">new</span><span style="color: #000000;"> SHDnsServer();
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">中国顶级域名服务器</span>
+    DnsServer* cn = <span style="color: #0000ff;">new</span><span style="color: #000000;"> CNDnsServer();
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">全球顶级域名服务器</span>
+    DnsServer* top = <span style="color: #0000ff;">new</span><span style="color: #000000;"> TopDnsServer();
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">定义查询路径</span>
+    cn-&gt;<span style="color: #000000;">setUpperServer(top);
+    sh</span>-&gt;<span style="color: #000000;">setUpperServer(cn);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">解析域名</span>
+    cout &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">=====域名解析模拟器=====</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+
+    </span><span style="color: #0000ff;">string</span> domain = <span style="color: #800000;">"</span><span style="color: #800000;">www.abc.com</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+    Recorder rec </span>= sh-&gt;<span style="color: #000000;">resolve(domain);
+    cout </span>&lt;&lt; rec.toString() &lt;&lt;<span style="color: #000000;"> endl;
+    cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">=====域名解析结束=====</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> sh;
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> cn;
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> top;
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+</span><span style="color: #008000;">/*</span><span style="color: #008000;">输出结果：
+=====域名解析模拟器=====
+域名:www.abc.com
+IP地址:4.40.34.78
+解析者:全球顶级DNS服务器
+=====域名解析结束=====
+</span><span style="color: #008000;">*/</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><strong>27.3.2 </strong><strong>观察者模式实现DNS解析过程</strong></p>
+<p>（1）责任链模式模拟DNS解析过程的<span style="color: #ff0000;"><strong>缺陷</strong></span>：<strong><span style="color: #0000ff;">责任链实现的DNS解析其返回的最终解析者是不同的</span>。但</strong><span style="color: #ff0000;"><strong>实际中的DNS解析</strong>，其<strong>解析者都是相同的</strong></span>，准确地说都是由本机配置的DNS服务器来做的解析，即返回的解析者是一样的。</p>
+<p><strong>（2）真实DNS的解析过程</strong></p>
+<p align="center"><img src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/772759-20160710213411421-1969511139.png" alt="" width="696" height="153">&nbsp;</p>
+<p>　　A.首先由请求者发送一个请求，然后由上海DNS服务器尝试解析，若不能解析再通过路径②转发给中国顶级DNS进行解析，解析结果通过路径⑤返回给上海DNS，然后由上海DNS服务器通过路径⑥返回给请求者。</p>
+<p>　　B.同样，若中国顶级DNS不能解析，则通过路径③转由全球顶级DNS进行解析，通过路径④把结果返给中国顶级DNS，然后再通过路径⑤返回给上海DNS。</p>
+<p>　　C.注意标号⑥，不管一个域名最终由谁解析，最终反馈给请求者的还是第一个节点，也就是说首节点负责请求者应答，其他节点都不与请求者交互，而只与自己的左右节点交互。</p>
+<p>　　D.实际的DNS服务器就是如此处理的。</p>
+<p>【编程实验】观察者模式模拟DNS的解析过程</p>
+<p style="text-align: center;"><img src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/772759-20160710221855358-2034526604.png" alt=""></p>
+<p>　　①<strong>每个DNS可以看成<span style="color: #0000ff;">即是被观察者，又是观察者</span></strong>。以中国DNS为例，当作为被观察者时，其观察者是上一级的全球DNS，他要实现的功能是当中国DNS出现了不能解析的域名，就通知观察者（全球DNS）。如果作为观察者时，其观察的是上海DNS，当上海DNS出现不能处理的问题时，就交由他来处理。即所有的DNS服务器都具备双重身份：即是观察者也是被观察者。</p>
+<p>　　②<strong><span style="color: #0000ff;">setUpperServe</span>r的作用是<span style="color: #0000ff;">设置父DNS，也就是设置自己的观察者</span></strong>。</p>
+<p>　　③<span style="color: #ff0000;"><strong>SubmitToUppererServer</strong></span>：向父DNS请求解析，也就是通知观察者。handleRequest是函数本DNS服务器用来处理请求，也就是接到事件后的处理。</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">行为型模式大PK——观察者模式和责任链模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">实例：用观察者模式实现DNS解析过程</span>
+#include &lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;">
+#include </span>&lt;ctime&gt;<span style="color: #000000;">
+#include </span>&lt;sstream&gt; <span style="color: #008000;">//</span><span style="color: #008000;">for ostreamstring</span>
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">********************************辅助类***************************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">解析记录</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Recorder
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span> domain; <span style="color: #008000;">//</span><span style="color: #008000;">域名,如www.baidu.com</span>
+    <span style="color: #0000ff;">string</span> ip;     <span style="color: #008000;">//</span><span style="color: #008000;">ip</span>
+    <span style="color: #0000ff;">string</span> owner;  <span style="color: #008000;">//</span><span style="color: #008000;">属主，即解析者</span>
+<span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span> getDomain(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> domain;}
+    </span><span style="color: #0000ff;">void</span> setDomain(<span style="color: #0000ff;">string</span><span style="color: #000000;"> value)
+    {
+        domain </span>=<span style="color: #000000;"> value;
+    }
+
+    </span><span style="color: #0000ff;">string</span> getIp(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> ip;}
+    </span><span style="color: #0000ff;">void</span> setIp(<span style="color: #0000ff;">string</span><span style="color: #000000;"> value)
+    {
+        ip </span>=<span style="color: #000000;"> value;
+    }
+
+    </span><span style="color: #0000ff;">string</span> getOwner(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> owner;}
+    </span><span style="color: #0000ff;">void</span> setOwner(<span style="color: #0000ff;">string</span><span style="color: #000000;"> value)
+    {
+        owner </span>=<span style="color: #000000;"> value;
+    }
+
+    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> toString()
+    {
+        </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> str;
+
+        str  </span>= <span style="color: #800000;">"</span><span style="color: #800000;">域名:</span><span style="color: #800000;">"</span> +<span style="color: #000000;"> domain;
+        str </span>+= <span style="color: #800000;">"</span><span style="color: #800000;">\nIP地址:</span><span style="color: #800000;">"</span> +<span style="color: #000000;"> ip;
+        str </span>+= <span style="color: #800000;">"</span><span style="color: #800000;">\n解析者:</span><span style="color: #800000;">"</span> +<span style="color: #000000;"> owner;
+
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> str;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">观察者接口</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Observer
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> handleRequest(Recorder* recorder) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">主题对象，被观察者</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Observable
+{
+</span><span style="color: #0000ff;">protected</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">当该对象行为变更时，要通知的观察者</span>
+    Observer*<span style="color: #000000;"> observer;
+    </span><span style="color: #0000ff;">void</span> setObserver(Observer*<span style="color: #000000;"> obs)
+    {
+        observer </span>=<span style="color: #000000;"> obs;
+    }
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">通知观察者</span>
+    <span style="color: #0000ff;">void</span> notifyObserver(Recorder*<span style="color: #000000;"> rec)
+    {
+        observer</span>-&gt;<span style="color: #000000;">handleRequest(rec);
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">抽象域名服务器(从被观察者继承，并实现观察接口）
+</span><span style="color: #008000;">//</span><span style="color: #008000;">即每个服务器即做为观察者，观察来自前一级DNS的请求，
+</span><span style="color: #008000;">//</span><span style="color: #008000;">同时被观察者，在不能处理时向后一级DNS提交请求</span>
+<span style="color: #0000ff;">class</span> DnsServer : <span style="color: #0000ff;">public</span> Observable, <span style="color: #0000ff;">public</span><span style="color: #000000;"> Observer
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">随机产生一个IP地址，工具类</span>
+    <span style="color: #0000ff;">string</span><span style="color: #000000;"> genIpAddress()
+    {
+        </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> ip;
+        ostringstream oss;
+
+        oss </span>&lt;&lt; rand() % <span style="color: #800080;">256</span> &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">.</span><span style="color: #800000;">"</span> &lt;&lt; rand() % <span style="color: #800080;">256</span> &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">.</span><span style="color: #800000;">"</span>
+            &lt;&lt; rand() % <span style="color: #800080;">256</span> &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">.</span><span style="color: #800000;">"</span> &lt;&lt; rand() % <span style="color: #800080;">256</span><span style="color: #000000;"> ;
+
+        ip </span>=<span style="color: #000000;">oss.str();
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> ip;
+    }
+</span><span style="color: #0000ff;">protected</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">每个DNS服务器签名上自己的名字</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> sign(Recorder* recorder) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">每个域名都在一个Zone内，判断是否在本区中。每个服务器都必须定义自己的处理级别</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">bool</span> isLocal(Recorder* recorder) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">辅助函数，判断字符串是否以另一个字符串结尾</span>
+    <span style="color: #0000ff;">bool</span> endWith(<span style="color: #0000ff;">string</span> source, <span style="color: #0000ff;">string</span><span style="color: #000000;"> tail)
+    {
+        </span><span style="color: #0000ff;">if</span> (source.size() &lt;<span style="color: #000000;"> tail.size())
+            </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">false</span><span style="color: #000000;">;
+
+        </span><span style="color: #0000ff;">return</span> (<span style="color: #800080;">0</span> == source.compare(source.size() -<span style="color: #000000;"> tail.size(), tail.size(), tail));
+    }
+
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">作为被观察者，允许增加观察者，这里是上一级DNS，一般只有一个</span>
+    <span style="color: #0000ff;">void</span> setUpperServer(DnsServer*<span style="color: #000000;"> dnsServer)
+    {
+        setObserver(dnsServer);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">处理请求，也就是接到事件后的处理</span>
+    <span style="color: #0000ff;">void</span> handleRequest(Recorder*<span style="color: #000000;"> recorder)
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">如果并本能解析</span>
+        <span style="color: #0000ff;">if</span><span style="color: #000000;">(isLocal(recorder))
+        {
+            recorder</span>-&gt;<span style="color: #000000;">setIp(genIpAddress());
+        }
+        </span><span style="color: #0000ff;">else</span> <span style="color: #008000;">//</span><span style="color: #008000;">本服务器不能解析，则提交到上级DNS</span>
+<span style="color: #000000;">        {
+            SubmitToUpperServer(recorder); </span><span style="color: #008000;">//</span><span style="color: #008000;">通知观察者（上一级DNS）处理</span>
+<span style="color: #000000;">        }
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">处理完后，签上自己的名字</span>
+<span style="color: #000000;">        sign(recorder);
+    }
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">向父DNS请求解析，也就是通知观察者</span>
+    <span style="color: #0000ff;">void</span> SubmitToUpperServer(Recorder*<span style="color: #000000;"> recorder)
+    {
+        notifyObserver(recorder);
+    }
+
+    </span><span style="color: #0000ff;">virtual</span> ~<span style="color: #000000;">DnsServer(){}
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">上海DNS服务器</span>
+<span style="color: #0000ff;">class</span> SHDnsServer : <span style="color: #0000ff;">public</span><span style="color: #000000;"> DnsServer
+{
+</span><span style="color: #0000ff;">protected</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span> sign(Recorder*<span style="color: #000000;"> recorder)
+    {
+        recorder</span>-&gt;setOwner(<span style="color: #800000;">"</span><span style="color: #800000;">上海DNS服务器</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">定义上海的DNS服务器的处理级别</span>
+    <span style="color: #0000ff;">bool</span> isLocal(Recorder*<span style="color: #000000;"> recorder)
+    {
+        </span><span style="color: #0000ff;">return</span> endWith(recorder-&gt;getDomain(),<span style="color: #800000;">"</span><span style="color: #800000;">.sh.cn</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">中国顶级DNS服务器</span>
+<span style="color: #0000ff;">class</span> CNDnsServer : <span style="color: #0000ff;">public</span><span style="color: #000000;"> DnsServer
+{
+</span><span style="color: #0000ff;">protected</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span> sign(Recorder*<span style="color: #000000;"> recorder)
+    {
+        recorder</span>-&gt;setOwner(<span style="color: #800000;">"</span><span style="color: #800000;">中国顶级DNS服务器</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">定义上海的DNS服务器的处理级别</span>
+    <span style="color: #0000ff;">bool</span> isLocal(Recorder*<span style="color: #000000;"> recorder)
+    {
+        </span><span style="color: #0000ff;">return</span> endWith(recorder-&gt;getDomain(),<span style="color: #800000;">"</span><span style="color: #800000;">.cn</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">全球顶级DNS服务器</span>
+<span style="color: #0000ff;">class</span> TopDnsServer : <span style="color: #0000ff;">public</span><span style="color: #000000;"> DnsServer
+{
+</span><span style="color: #0000ff;">protected</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span> sign(Recorder*<span style="color: #000000;"> recorder)
+    {
+        recorder</span>-&gt;setOwner(<span style="color: #800000;">"</span><span style="color: #800000;">全球顶级DNS服务器</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">定义上海的DNS服务器的处理级别</span>
+    <span style="color: #0000ff;">bool</span> isLocal(Recorder*<span style="color: #000000;"> recorder)
+    {
+        </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">true</span>; <span style="color: #008000;">//</span><span style="color: #008000;">所有的域名最终的解析地点</span>
+<span style="color: #000000;">    }
+};
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">上海域名服务器</span>
+    DnsServer* sh = <span style="color: #0000ff;">new</span><span style="color: #000000;"> SHDnsServer();
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">中国顶级域名服务器</span>
+    DnsServer* cn = <span style="color: #0000ff;">new</span><span style="color: #000000;"> CNDnsServer();
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">全球顶级域名服务器</span>
+    DnsServer* top = <span style="color: #0000ff;">new</span><span style="color: #000000;"> TopDnsServer();
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">定义查询路径</span>
+    cn-&gt;<span style="color: #000000;">setUpperServer(top);
+    sh</span>-&gt;<span style="color: #000000;">setUpperServer(cn);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">解析域名</span>
+    cout &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">=====域名解析模拟器=====</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+
+    </span><span style="color: #0000ff;">string</span> domain = <span style="color: #800000;">"</span><span style="color: #800000;">www.abc.com</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+    Recorder rec;
+    rec.setDomain(domain);
+    sh</span>-&gt;handleRequest(&amp;<span style="color: #000000;">rec);
+    cout </span>&lt;&lt; rec.toString() &lt;&lt;<span style="color: #000000;"> endl;
+
+    cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">=====域名解析结束=====</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> sh;
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> cn;
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> top;
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+</span><span style="color: #008000;">/*</span><span style="color: #008000;">输出结果：
+=====域名解析模拟器=====
+域名:www.abc.com
+IP地址:132.190.35.41
+解析者:上海DNS服务器    //注意这里，永远都是由上海DNS服务器返回结果
+=====域名解析结束=====
+</span><span style="color: #008000;">*/</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><strong>27.3.3 </strong><strong>小结：</strong></p>
+<p>（1）相同：都是链结构。观察者模式是可看作是一个触发链。</p>
+<p><strong>（2）链中的消息对象不同</strong></p>
+<p>　　①两个链中传递的消息对象不同。责任链模式基本上不改变消息对象的结构，虽然每个节点都可以参与消费（一般是不参与消费），但是它的结构不会改变。</p>
+<p>　　②而<span style="color: #ff0000;"><strong>观察者模式中链中传递的对象可以自由变化</strong>，<strong>只要上下级节点对传递的对象了解即可</strong></span>。</p>
+<p><strong>（3）上下节点的关系不同</strong></p>
+<p>　　①在<span style="color: #ff0000;"><strong>责任链</strong></span>中，上下节点没有关系，都是接收同样的对象有，<span style="color: #ff0000;"><strong>所有传递的对象都是从链首传递过来</strong></span>。</p>
+<p>　　②<span style="color: #ff0000;"><strong>触发链模式</strong></span>它的上下级关系很亲密，<span style="color: #0000ff;"><strong>链中的任意两个相邻节点都是一个牢固的独立团体</strong></span>。</p>
+<p><strong>（4）消息的分销渠道不同</strong></p>
+<p>　　①<span style="color: #ff0000;"><strong>责任链模式</strong></span>中，一个消息从链首传递进来后，就开始沿着链条向链尾运动，<span style="color: #0000ff;"><strong>方向是单一的、固定的</strong></span>。</p>
+<p>　　②<span style="color: #ff0000;"><strong>触发链模式</strong></span>则不同，由于它采用的是观察者模式，所以很灵活，一个消息传递到链首后，具体怎么传递是不固定的，可以<span style="color: #0000ff;"><strong>以广播方式传递，也可以以跳跃方式传递</strong></span>，这取决于处理消息的逻辑。</p>
+</div>
+<div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block"><div id="BlogPostCategory">
+    分类: 
+            <a href="https://www.cnblogs.com/5iedu/category/825371.html" target="_blank">设计模式</a></div>
+
+
+    <div id="blog_post_info">
+<div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(5657316,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+        <a id="green_channel_follow" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/5iedu/" target="_blank"><img src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/20150610151331.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/5iedu/">浅墨浓香</a><br>
+            <a href="https://home.cnblogs.com/u/5iedu/followees/">关注 - 0</a><br>
+            <a href="https://home.cnblogs.com/u/5iedu/followers/">粉丝 - 149</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(5657316,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(5657316,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+    <div class="clear"></div>
+    <div id="post_next_prev">
+
+    <a href="https://www.cnblogs.com/5iedu/p/5655921.html" class="p_n_p_prefix">« </a> 上一篇：    <a href="https://www.cnblogs.com/5iedu/p/5655921.html" title="发布于 2016-07-09 15:08">第27章 结构型模式大PK</a>
+    <br>
+    <a href="https://www.cnblogs.com/5iedu/p/5659517.html" class="p_n_p_prefix">» </a> 下一篇：    <a href="https://www.cnblogs.com/5iedu/p/5659517.html" title="发布于 2016-07-11 10:52">第29章 跨战区大PK</a>
+
+</div>
+</div></div>
+	</div>
+<script src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/highlight.min.js.下载"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 231128, cb_blogApp = '5iedu', cb_blogUserGuid = '41562de4-020f-e511-b908-9dcfd8948a71';
+    var cb_entryId = 5657316, cb_entryCreatedDate = '2016-07-10 11:07', cb_postType = 1; 
+    loadViewCount(cb_entryId);
+</script><a name="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<script>
+    var commentManager = new blogCommentManager();
+    commentManager.renderComments(0);
+</script>
+
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/5iedu/p/5657316.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/5iedu/p/5657316.html#top">返回顶部</a></div>
+    <div id="comment_form_container"><div class="login_tips">
+    注册用户登录后才能发表评论，请 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a>
+     或 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，
+    <a href="https://www.cnblogs.com/">访问</a> 网站首页。
+</div></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"><a href="https://cloud.tencent.com/act/pro/overseas?fromSource=gwzcw.3090393.3090393.3090393&amp;utm_medium=cpc&amp;utm_id=gwzcw.3090393.3090393.3090393" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-腾讯云&#39;)">【推荐】腾讯云海外1核2G云服务器低至2折，半价续费券限量免费领取！</a><br><a href="http://click.aliyun.com/m/1000081987/" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-阿里云&#39;)">【推荐】阿里云双11返场来袭，热门产品低至一折等你来抢！</a><br><a href="http://www.ucancode.com/index.htm" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-工控&#39;)">【推荐】超50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://group.cnblogs.com/topic/90800.html?800019197" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-马士兵&#39;)">【提升】这个价值 50W 年薪的问题，终于被马老师说明白啦...</a><br><a href="https://www.ctyun.cn/activity/20191111?hmsr=%E7%9C%8B%E7%9C%8B-%E5%8D%9A%E5%AE%A2%E5%9B%AD-%E5%8F%8C11-1106&amp;hmpl=&amp;hmcu=&amp;hmkw=&amp;hmci=" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-天翼云&#39;)">【推荐】天翼云双十一翼降到底，云主机11.11元起，抽奖送大礼</a><br><a href="https://www.cnblogs.com/enjoyedu/p/11905399.html?800019191" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-享学&#39;)">【提升】Java程序员年薪40W，他1年走了别人5年的学习之路</a><br><a href="https://www.uibot.com.cn/sem/bky.html" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-uibot_T2&#39;)">【推荐】流程自动化专家UiBot，体系化教程成就高薪RPA工程师</a><br></div>
+    <div id="opt_under_post"></div>
+    <script async="async" src="./第28章 行为型模式大PK - 浅墨浓香 - 博客园_files/gpt.js.下载"></script>
+    <script>
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+    </script>
+    <script>
+        googletag.cmd.push(function () {
+            googletag.defineSlot("/1090369/C1", [300, 250], "div-gpt-ad-1546353474406-0").addService(googletag.pubads());
+            googletag.defineSlot("/1090369/C2", [468, 60], "div-gpt-ad-1539008685004-0").addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    </script>
+    <div id="cnblogs_c1" class="c_ad_block" style="">
+        <div id="div-gpt-ad-1546353474406-0" style="height: 250px; width: 300px;"><div id="google_ads_iframe_/1090369/C1_0__container__" style="border: 0pt none; width: 300px; height: 250px;"></div></div>
+    </div>
+    <div id="under_post_news"><div class="recomm-block"><b>相关博文：</b><br>·  <a title="第26章 创建型模式大PK" href="https://www.cnblogs.com/5iedu/p/5655196.html" target="_blank" onclick="clickRecomItmem(5655196)">第26章 创建型模式大PK</a><br>·  <a title="设计模式之行为类模式大PK" href="https://www.cnblogs.com/zhanglei93/p/6148860.html" target="_blank" onclick="clickRecomItmem(6148860)">设计模式之行为类模式大PK</a><br>·  <a title="第27章 结构型模式大PK" href="https://www.cnblogs.com/5iedu/p/5655921.html" target="_blank" onclick="clickRecomItmem(5655921)">第27章 结构型模式大PK</a><br>·  <a title="第29章 跨战区大PK" href="https://www.cnblogs.com/5iedu/p/5659517.html" target="_blank" onclick="clickRecomItmem(5659517)">第29章 跨战区大PK</a><br>·  <a title="模式---行为型 " href="https://www.cnblogs.com/kentyshang/archive/2006/06/12/424005.html" target="_blank" onclick="clickRecomItmem(424005)">模式---行为型 </a><br>»  <a target="_blank" href="https://recomm.cnblogs.com/blogpost/5657316">更多推荐...</a></div></div>
+    <div id="cnblogs_c2" class="c_ad_block" style="">
+        <div id="div-gpt-ad-1539008685004-0" style="height: 60px; width: 468px;">
+            <script>
+                if (new Date() >= new Date(2018, 9, 13)) {
+                    googletag.cmd.push(function () { googletag.display("div-gpt-ad-1539008685004-0"); });
+                }
+            </script>
+        <div id="google_ads_iframe_/1090369/C2_0__container__" style="border: 0pt none; width: 468px; height: 60px;"></div></div>
+    </div>
+    <div id="under_post_kb">
+<div class="itnews c_ad_block">
+    <b>最新 IT 新闻</b>:
+    <br>
+ ·              <a href="https://news.cnblogs.com/n/649969/" target="_blank">改变销售人员的CRM交互方式，Salesforce推出AI语音助手及开发套件</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649968/" target="_blank">“基因剪刀”治疗地中海贫血效果初现</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649967/" target="_blank">14nm 5GHz或成CPU绝唱 7/5nm多核容易高频难</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649966/" target="_blank">HTTPZ，将 HTTP 链接转到 HTTPS 的 Firefox 插件</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649965/" target="_blank">4个在2020年持续发展的数据中心冷却趋势</a>
+            <br>
+    » <a href="https://news.cnblogs.com/" title="IT 新闻" target="_blank">更多新闻...</a>
+</div></div>
+    <div id="HistoryToday" class="c_ad_block"></div>
+    <script type="text/javascript">
+        fixPostBody();
+        setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+        deliverAdT2();
+        deliverAdC1();
+        deliverAdC2();
+        loadNewsAndKb();
+        loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+        loadOptUnderPost();
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div></div>
+
+
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="FooterCell">
+			<p id="footer">
+	Powered by: 
+	<br>
+	
+	
+<a href="https://www.cnblogs.com/" id="Footer1_Hyperlink3" style="font-size: 12px; font-family: Verdana">博客园</a>
+	<br>
+	Copyright © 2019 浅墨浓香
+<br><span id="poweredby">Powered by .NET Core 3.0.0 on Linux</span>
+
+</p>
+
+
+		</td>
+	</tr>
+</tbody></table>
+
+
+
+    
+
+
+</body></html>

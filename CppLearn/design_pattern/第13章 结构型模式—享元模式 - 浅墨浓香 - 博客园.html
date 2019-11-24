@@ -1,0 +1,1814 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)https://www.cnblogs.com/5iedu/p/5544753.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin">
+    <meta property="og:description" content="1. 享元模式（Flyweight Pattern）的定义 （1）运用共享技术高效地支持大量细粒度的对象 ①对象内部状态：数据不变且重复出现，这部分不会随环境变化而改变，是可以共享的。 ②对象外部状态">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>第13章 结构型模式—享元模式 - 浅墨浓香 - 博客园</title>
+    
+    <link rel="stylesheet" href="./第13章 结构型模式—享元模式 - 浅墨浓香 - 博客园_files/blog-common.min.css">
+    <link id="MainCss" rel="stylesheet" href="./第13章 结构型模式—享元模式 - 浅墨浓香 - 博客园_files/bundle-habahaba.min.css">
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./第13章 结构型模式—享元模式 - 浅墨浓香 - 博客园_files/bundle-habahaba-mobile.min.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/5iedu/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/5iedu/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/5iedu/wlwmanifest.xml">
+    <script src="./第13章 结构型模式—享元模式 - 浅墨浓香 - 博客园_files/pubads_impl_rendering_2019111801.js.下载"></script><script async="" src="./第13章 结构型模式—享元模式 - 浅墨浓香 - 博客园_files/analytics.js.下载"></script><script type="text/javascript" src="./第13章 结构型模式—享元模式 - 浅墨浓香 - 博客园_files/encoder.js.下载"></script><script src="./第13章 结构型模式—享元模式 - 浅墨浓香 - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+    <script src="./第13章 结构型模式—享元模式 - 浅墨浓香 - 博客园_files/blog-common.min.js.下载"></script>
+    <script>
+        var currentBlogId = 231128;
+        var currentBlogApp = '5iedu';
+        var cb_enable_mathjax = true;
+        var isLogined = false;
+    </script>
+    <script type="text/x-mathjax-config;executed=true">
+        MathJax.Hub.Config({
+        tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']], processClass: 'math', processEscapes: true },
+        TeX: {
+        equationNumbers: { autoNumber: ['AMS'], useLabelIds: true },
+        extensions: ['extpfeil.js', 'mediawiki-texvc.js'],
+        Macros: {bm: "\\boldsymbol"}
+        },
+        'HTML-CSS': { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+        });
+    </script>
+    <script src="./第13章 结构型模式—享元模式 - 浅墨浓香 - 博客园_files/MathJax.js.下载"></script>
+    
+<style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover, .MJXp-munder {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > *, .MJXp-munder > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><link rel="preload" href="./第13章 结构型模式—享元模式 - 浅墨浓香 - 博客园_files/f.txt" as="script"><script type="text/javascript" src="./第13章 结构型模式—享元模式 - 浅墨浓香 - 博客园_files/f.txt"></script><script src="./第13章 结构型模式—享元模式 - 浅墨浓香 - 博客园_files/pubads_impl_2019111801.js.下载" async=""></script><link rel="prefetch" href="https://tpc.googlesyndication.com/safeframe/1-0-36/html/container.html"></head>
+<body><div id="MathJax_Message" style="display: none;"></div>
+    <a name="top"></a>
+    
+    <table width="100%" class="Framework" cellspacing="0" cellpadding="0">
+	<tbody><tr>
+		<td colspan="2">
+			
+<div id="top">
+<table width="100%" cellpadding="8" cellspacing="0">
+	<tbody><tr>
+		<td nowrap="">
+			<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/5iedu/">浅墨浓香</a>
+</h1>
+			
+想要天亮进城，就得天黑赶路。
+
+		</td>
+	</tr>
+</tbody></table>
+</div>
+<div id="sub"><div class="BlogStats">posts - 
+690, comments - 
+52, trackbacks - 
+0, articles - 
+16</div>
+
+</div>
+
+
+
+</td>
+	</tr>
+	<tr>
+		<td class="LeftCell">
+            <div id="leftmenu">
+                
+<h3>导航</h3>
+<ul>
+	<li>
+		<a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+	<li>
+		
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/5iedu/">
+首页</a>
+</li>
+	<li>
+		
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+	<li>
+		
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E6%B5%85%E5%A2%A8%E6%B5%93%E9%A6%99">
+联系</a></li>
+	<li>
+		
+<a id="blog_nav_rss" class="menu" href="https://www.cnblogs.com/5iedu/rss/">
+订阅</a></li>
+	<li>
+		
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+                
+<div id="sidebar_news" class="newsItem"><h3>公告</h3>
+<div id="news">
+	
+<div id="blog-news">
+    
+    <div id="profile_block">
+        昵称：
+        <a href="https://home.cnblogs.com/u/5iedu/">
+            浅墨浓香
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/5iedu/" title="入园时间：2015-06-10">
+            4年5个月
+        </a>
+        <br>
+        粉丝：
+        <a href="https://home.cnblogs.com/u/5iedu/followers/">
+            149
+        </a>
+        <br>
+        关注：
+        <a href="https://home.cnblogs.com/u/5iedu/followees/">
+            0
+        </a>
+        <div id="p_b_follow">
+<a href="javascript:void(0)" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;)">+加关注</a></div>
+        <script>getFollowStatus('41562de4-020f-e511-b908-9dcfd8948a71');</script>
+    </div>
+</div>
+</div>
+
+</div>
+
+                <div id="blog-calendar" style="">
+
+<table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar" border="0">
+    <tbody>
+        <tr>
+            <td colspan="7">
+                <table class="CalTitle" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/10/24&#39;); return false;">&lt;</a>
+                            </td>
+                            <td align="center">2019年11月</td>
+                            <td align="right" class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/12/24&#39;); return false;">&gt;</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+                    <th class="CalDayHeader" align="center" abbr="日" scope="col">日</th>
+                    <th class="CalDayHeader" align="center" abbr="一" scope="col">一</th>
+                    <th class="CalDayHeader" align="center" abbr="二" scope="col">二</th>
+                    <th class="CalDayHeader" align="center" abbr="三" scope="col">三</th>
+                    <th class="CalDayHeader" align="center" abbr="四" scope="col">四</th>
+                    <th class="CalDayHeader" align="center" abbr="五" scope="col">五</th>
+                    <th class="CalDayHeader" align="center" abbr="六" scope="col">六</th>
+        </tr>
+            <tr>
+                            <td class="CalOtherMonthDay" align="center">27</td>
+                            <td class="CalOtherMonthDay" align="center">28</td>
+                            <td class="CalOtherMonthDay" align="center">29</td>
+                            <td class="CalOtherMonthDay" align="center">30</td>
+                            <td class="CalOtherMonthDay" align="center">31</td>
+                        <td class="" align="center">
+                            1
+                        </td>
+                    <td class="CalWeekendDay" align="center">
+                        2
+                    </td>
+            </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            3
+                        </td>
+                            <td class="" align="center">
+                                4
+                            </td>
+                            <td class="" align="center">
+                                5
+                            </td>
+                            <td class="" align="center">
+                                6
+                            </td>
+                            <td class="" align="center">
+                                <a href="https://www.cnblogs.com/5iedu/archive/2019/11/07.html"><u>7</u></a>
+                            </td>
+                            <td class="" align="center">
+                                8
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            9
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            10
+                        </td>
+                            <td class="" align="center">
+                                11
+                            </td>
+                            <td class="" align="center">
+                                12
+                            </td>
+                            <td class="" align="center">
+                                13
+                            </td>
+                            <td class="" align="center">
+                                14
+                            </td>
+                            <td class="" align="center">
+                                15
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            16
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            <a href="https://www.cnblogs.com/5iedu/archive/2019/11/17.html"><u>17</u></a>
+                        </td>
+                            <td class="" align="center">
+                                18
+                            </td>
+                            <td class="" align="center">
+                                19
+                            </td>
+                            <td class="" align="center">
+                                <a href="https://www.cnblogs.com/5iedu/archive/2019/11/20.html"><u>20</u></a>
+                            </td>
+                            <td class="" align="center">
+                                21
+                            </td>
+                            <td class="" align="center">
+                                22
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            23
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalTodayDay" align="center">
+                            24
+                        </td>
+                            <td class="" align="center">
+                                25
+                            </td>
+                            <td class="" align="center">
+                                26
+                            </td>
+                            <td class="" align="center">
+                                27
+                            </td>
+                            <td class="" align="center">
+                                28
+                            </td>
+                            <td class="" align="center">
+                                29
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            30
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalOtherMonthDay" align="center">
+                            1
+                        </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                2
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                3
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                4
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                5
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                6
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            7
+                        </td>
+                </tr>
+    </tbody>
+</table></div>
+                <script>loadBlogDefaultCalendar();</script>
+                <div id="blog-sidecolumn">
+<!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    <div id="sidebar_search" class="mySearch">
+        <h3 class="catListTitle">搜索</h3>
+        <div id="sidebar_search_box">
+            <div id="widget_my_zzk" class="div_my_zzk">
+                <input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk">
+            </div>
+            <div id="widget_my_google" class="div_my_zzk">
+                <input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 常用链接 -->
+<div id="sidebar_shortcut" class="sidebar-block">
+    
+<h3 class="catListTitle">
+常用链接
+</h3>
+<ul>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/p/" title="我的博客的随笔列表">我的随笔</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/MyComments.html" title="我的发表过的评论列表">我的评论</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/OtherPosts.html" title="我评论过的随笔列表">我的参与</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/RecentComments.html" title="我的博客的评论列表">最新评论</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/tag/" title="我的博客的标签列表">我的标签</a>
+</li>
+</ul>
+
+<!-- TODO: 检查是否有使用这一部分的控件，如果没有则应该删除。 -->
+<div id="itemListLin_con" style="display:none">
+    <ul>
+
+    </ul>
+</div>
+
+</div>
+
+<!-- 最新随笔 -->
+
+
+
+<!-- 我的标签 -->
+<div id="sidebar_toptags" class="sidebar-block">
+    
+</div>
+
+<!-- 积分与排名 -->
+
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+    
+		<h3>
+
+随笔分类
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/811805.html" rel="" target="">
+    C++深度解析(73)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/804081.html" rel="" target="">
+    C语言进阶剖析(48)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/911906.html" rel="" target="">
+    Linux基础与系统管理(35)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/937714.html" rel="" target="">
+    Linux应用与网络编程(64)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1005833.html" rel="" target="">
+    lua(3)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1005832.html" rel="" target="">
+    makefile(10)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1503320.html" rel="" target="">
+    Modern C++ 11/14(30)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/819307.html" rel="" target="">
+    QT实验分析教程(85)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/699743.html" rel="" target="">
+    Windows程序设计(58)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/699744.html" rel="" target="">
+    Windows核心编程(57)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/994985.html" rel="" target="">
+    计算机网络原理(54)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/825371.html" rel="" target="">
+    设计模式(41)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1007185.html" rel="" target="">
+    深入应用C++11(27)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/911523.html" rel="" target="">
+    数据结构实战分析(79)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/888633.html" rel="" target="">
+    重构(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/963515.html" rel="" target="">
+    专业嵌入式软件开发(15)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+随笔档案
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/11.html" rel="" target="">
+    2019年11月(3)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/10.html" rel="" target="">
+    2019年10月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/09.html" rel="" target="">
+    2019年9月(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/08.html" rel="" target="">
+    2019年8月(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/07.html" rel="" target="">
+    2019年7月(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/12.html" rel="" target="">
+    2017年12月(13)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/11.html" rel="" target="">
+    2017年11月(23)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/10.html" rel="" target="">
+    2017年10月(21)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/09.html" rel="" target="">
+    2017年9月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/08.html" rel="" target="">
+    2017年8月(22)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/07.html" rel="" target="">
+    2017年7月(27)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/06.html" rel="" target="">
+    2017年6月(21)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/05.html" rel="" target="">
+    2017年5月(35)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/04.html" rel="" target="">
+    2017年4月(19)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/03.html" rel="" target="">
+    2017年3月(28)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/02.html" rel="" target="">
+    2017年2月(15)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/01.html" rel="" target="">
+    2017年1月(51)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/12.html" rel="" target="">
+    2016年12月(26)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/11.html" rel="" target="">
+    2016年11月(20)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/10.html" rel="" target="">
+    2016年10月(13)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/09.html" rel="" target="">
+    2016年9月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/08.html" rel="" target="">
+    2016年8月(11)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/07.html" rel="" target="">
+    2016年7月(24)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/06.html" rel="" target="">
+    2016年6月(26)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/05.html" rel="" target="">
+    2016年5月(34)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/04.html" rel="" target="">
+    2016年4月(73)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/03.html" rel="" target="">
+    2016年3月(33)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/02.html" rel="" target="">
+    2016年2月(7)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/12.html" rel="" target="">
+    2015年12月(2)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/11.html" rel="" target="">
+    2015年11月(4)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/10.html" rel="" target="">
+    2015年10月(7)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/09.html" rel="" target="">
+    2015年9月(6)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/08.html" rel="" target="">
+    2015年8月(54)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/07.html" rel="" target="">
+    2015年7月(25)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/06.html" rel="" target="">
+    2015年6月(4)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+文章分类
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/715136.html" rel="" target="">
+    Windows内核(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/729402.html" rel="" target="">
+    编程经验(12)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/812154.html" rel="" target="">
+    常用代码(2)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/954364.html" rel="" target="">
+    综合案例(1)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+相册
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/gallery/718135.html" rel="nofollow noopener noreferrer" target="">
+    笔记插图
+</a>
+
+</li>
+			
+				</ul>
+
+
+</div>
+
+<!-- 最新评论 -->
+<div id="sidebar_recentcomments" class="sidebar-block">
+    <div id="recent_comments_wrap" class="RecentComment">
+    <h3 class="catListTitle">最新评论</h3>
+    <div class="RecentCommentBlock">
+        <ul>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/11390495.html#4344239">1. Re:第18课 捕获机制及陷阱</a></li>
+                    <li class="recent_comment_body">博主不仅高产，而且文章质量都挺好</li>
+                    <li class="recent_comment_author">--YaphetS嘟嘟</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4315939">2. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">博主你好，觉得你的博客特别受用，可以告知一下其他博客的密码吗</li>
+                    <li class="recent_comment_author">--cp2018</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/7040429.html#4294675">3. Re:第5章 IP地址和子网划分（2）_IP地址分类和NAT技术</a></li>
+                    <li class="recent_comment_body">像icmp这种没有端口的不知道是如何实现NAT转换的？</li>
+                    <li class="recent_comment_author">--Eagle-jie</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4280947">4. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">同问</li>
+                    <li class="recent_comment_author">--tiger_wangsir</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4237914">5. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">博主你好，觉得你的博客特别受用，可以告知一下其他博客的密码吗</li>
+                    <li class="recent_comment_author">--胡瑶co</li>
+        </ul>
+    </div>
+</div>
+</div>
+
+
+
+<!-- 阅读排行榜 -->
+<div id="sidebar_topviewedposts" class="sidebar-block">
+    
+<div id="topview_posts_wrap">
+    <h3 class="catListTitle">阅读排行榜</h3>
+    <div id="TopViewPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5595153.html">
+                            1. 第17章 行为型模式—解释器模式(6762)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7376543.html">
+                            2. 第11章 拾遗1：网络地址转换(NAT)和端口映射(4936)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7095041.html">
+                            3. 第6章 静态路由和动态路由（4）_OSPF动态路由协议(3791)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/4899791.html">
+                            4. 第17章 内存映射文件（1）_内存映射文件简介(3741)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7742589.html">
+                            5. 第16课 右值引用（3）_std::forward与完美转发(3730)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- 评论排行榜 -->
+<div id="sidebar_topcommentedposts" class="sidebar-block">
+    
+<div id="topfeedback_posts_wrap">
+    <h3 class="catListTitle">评论排行榜</h3>
+    <div id="TopFeedbackPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/6498326.html">
+                            1. 第83课 另一种创建线程的方式(9)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5325466.html">
+                            2. 第20课 链接过程简介(5)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5429059.html">
+                            3. 第7课 Qt中的坐标系统(4)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5835715.html">
+                            4. 第37课 深度解析QMap与QHash(3)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5617055.html">
+                            5. 第56课 函数模板的概念和意义(2)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- 推荐排行榜 -->
+<div id="sidebar_topdiggedposts" class="sidebar-block">
+    
+<div id="topdigg_posts_wrap">
+    <div class="catListView">
+        <h3 class="catListTitle">推荐排行榜</h3>
+        <div id="TopDiggPostsBlock">
+            <ul style="word-break: break-all">
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/4812259.html">
+                                1. 第11章 Windows线程池（2）_Win2008及以上的新线程池(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/5363054.html">
+                                2. 第1课 学习 C++ 的意义(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/5367317.html">
+                                3. 第5课 引用的本质分析(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/6800234.html">
+                                4. 第1章 计算机网络和协议（1）_网络的概念(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/6829593.html">
+                                5. 第1章 计算机网络和协议（3）_TCP/IP协议(1)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div></div>
+                <script>loadBlogSideColumn();</script>
+            </div>
+		</td>
+		<td class="MainCell" width="100%">
+			<div id="main">
+				<div id="post_detail">
+	<div class="post">
+		<div class="posthead">
+			<h2>
+				
+<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/5iedu/p/5544753.html">第13章 结构型模式—享元模式</a>
+
+			</h2>
+ 			Posted on 
+<span id="post-date">2016-05-31 09:12</span>&nbsp;<a href="https://www.cnblogs.com/5iedu/">浅墨浓香</a> 阅读(<span id="post_view_count">187</span>) 评论(<span id="post_comment_count">0</span>) <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5544753" rel="nofollow"> 编辑</a> <a href="javascript:void(0)" onclick="AddToWz(5544753); return false;">收藏</a>
+
+			
+			
+		</div>
+		<div class="postbody">
+<div id="cnblogs_post_body" class="blogpost-body ">
+    <p style="text-align: left;" align="center"><strong style="line-height: 1.5;">1. </strong><strong style="line-height: 1.5;">享元模式（Flyweight Pattern）的定义</strong></p>
+<p>（1）运用<span style="color: #ff0000;"><strong>共享技术</strong></span>高效地支持大量细粒度的对象</p>
+<p>　　①对象<span style="color: #ff0000;"><strong>内部状态</strong></span>：<span style="color: #0000ff;"><strong>数据不变且重复出现</strong></span>，这部分不会随环境变化而改变，<span style="color: #ff0000;"><strong>是可以共享的</strong></span>。</p>
+<p>　　②对象<span style="color: #ff0000;"><strong>外部状态</strong></span>：<span style="color: #0000ff;"><strong>数据是变化的</strong></span>，会随环境变化而改变，是<span style="color: #ff0000;"><strong>不可以共享的</strong></span>。</p>
+<p>　　③所谓的享元，就是把内部状态的数据分离出来共享，通过共享享元对象，可以减少对内存的占用。把外部状态分离出来，放到外部，让应用程序在使用的时候进行维护，并在需要的时候传递给享元对象使用。</p>
+<p>　　④<span style="color: #ff0000;"><strong>享元模式真正缓存和共享的是享元的内部状态</strong></span>，而<span style="color: #ff0000;"><strong>外部状态是不被缓存共享的</strong></span>。同时内部状态和外部状态是独立的，外部状态的变化不会影响到内部状态。</p>
+<p><strong>（2）享元模式的结构和说明</strong></p>
+<p style="text-align: center;">&nbsp;<img src="./第13章 结构型模式—享元模式 - 浅墨浓香 - 博客园_files/772759-20160531091143742-1910209067.png" alt=""></p>
+<p>　　<span style="color: #0000ff;">①Flyweight：接口或抽象类，通过这个接口Flyweight可以接受并作用于外部状态。通过这个接口传入外部的状态，在享元对象的方法处理中可能会使用这些外部的数据。</span></p>
+<p><span style="color: #0000ff;">　　②ConcreteFlyweight：具体的享元实现对象，必须是可共享的，为<span style="color: #ff0000;"><strong>内部状态提供成员变量进行存储</strong></span>。（<span style="color: #ff0000;"><strong>真正要被共享的对象</strong></span>）</span></p>
+<p><span style="color: #0000ff;">　　③UnsharedConcreteFlyweight：非共享的享元实现对象，并不是所有的Flyweight实现对象都需要共享。非共享的享元实现对象通常是对共享享元对象的<strong>组合对象</strong>，这种对象虽然不需要加入到享元工厂中去共享，但也继承自Flyweight，其好处是可以统一接口。注意，本例中的<span style="color: #ff0000;"><strong>UnsharedConcreteFlyweight是从Flyweight继承而来</strong></span>，有时<span style="color: #ff0000;"><strong>也可以不用继承自Flyweight</strong></span>。（该类的作用：<span style="color: #ff0000;"><strong>提供外部状态存储</strong></span>）</span></p>
+<p><span style="color: #0000ff;">　　④FlyweightFactory：为<span style="color: #ff0000;"><strong>控制内部状态的共享</strong></span>，并且让外部能简单地使用共享数据，提供一个工厂来管理享元，把它称为<strong>享元工厂</strong>。其作用<strong>主要用来创建并管理共享的享元对象</strong>，<strong>享元池</strong>一般设计成键值对。这里也对外提供访问共享享元的接口。</span></p>
+<p><span style="color: #0000ff;">　　⑤Client：享元客户端，主要的工作是维持一个对Flyweight的引用，计算或存储享元对象的外部状态。当然这里可以访问共享和不共享的Flyweight对象。</span></p>
+<p><strong>（3）思考享元模式</strong></p>
+<p>　　①享元模式的<span style="color: #ff0000;"><strong>本质</strong></span>：分离与共享。享元模式的关键在于分离变与不变，把<span style="color: #ff0000;"><strong>不变部分作为享元对象的内部状态</strong></span>，而<span style="color: #ff0000;"><strong>变化部分则作为外部状态</strong></span>，由外部来维护.这样享元对象就能够被共享，从而减少对象的数量，并节省大量的内存空间。</p>
+<p>　　②享元模式的变与不变：为什么在一个地方要预留接口，一个常见的原因是这里存在变化，可能在今后需要扩展或改变己有的实现，而预留接口作为“可插入性的保证”</p>
+<p>　　③享元对象：又有<span style="color: #ff0000;"><strong>共享(ConcreteFlyweight)与不共享(UnsharedConcreteFlyweight)</strong></span>之分。不共享一般出现在<span style="color: #ff0000;"><strong>和组合模式合用的</strong></span>情况，通常共享是叶子对象，一般不共享的部分是由共享部分组合而成，由于所有细粒度的叶子对象己经缓存了，那么缓存组合对象就没有什么意义。（如<strong>权限管理中某安全实体的“查看”和“修改”是可共享的</strong>，如果将<span style="color: #0000ff;"><strong>“查看”和“修改”组合成“操作”权限的话</strong></span>，则<span style="color: #ff0000;">“<strong>操作”权限是不用缓存</strong></span>（共享）的，<span style="color: #ff0000;"><strong>因为己经在细粒度上进行了缓存</strong></span>）。（见后面的例子）</p>
+<p>【编程实验】围棋软件设计</p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="./第13章 结构型模式—享元模式 - 浅墨浓香 - 博客园_files/772759-20160531113351977-244784927.jpg" alt="" width="476" height="345"></p>
+<p>　　①内部状态：每个围棋那么多的棋子，可设置为享元对象，有如下属性颜色、大小、形状。</p>
+<p>　　②外部状态：棋子在棋盘中的位置。这是不可共享的。</p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="./第13章 结构型模式—享元模式 - 浅墨浓香 - 博客园_files/772759-20160531091200586-128350991.png" alt=""></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第13章 结构型模式—享元模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">结构型模式：享元模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">场景：围棋软件设计。
+</span><span style="color: #008000;">//</span><span style="color: #008000;">内部状态——围棋棋子数量多，但分只为两类：白棋和黑棋。
+</span><span style="color: #008000;">//</span><span style="color: #008000;">          有颜色、大小、形态等属性，是可共享的对象。
+</span><span style="color: #008000;">//</span><span style="color: #008000;">外部状态——棋子在棋盘中的位置。</span>
+<span style="color: #000000;">
+#include </span>&lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;">
+#include </span>&lt;map&gt;
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">************************************享元类**************************</span>
+<span style="color: #0000ff;">class</span> Coordinate; <span style="color: #008000;">//</span><span style="color: #008000;">前向声明
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">享元抽象类</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> ChessFlyweight
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">string</span>&amp; getColor() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> setColor(<span style="color: #0000ff;">string</span> color) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">显示棋子在棋盘中的位置
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">可以通过这个接口，将外部状态传入享元对象中</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> display(Coordinate&amp; c) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">非享元对象：UnsharedConcreteFlyweight（外部状态）</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Coordinate
+{
+    </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> x,y;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    Coordinate(</span><span style="color: #0000ff;">int</span> x, <span style="color: #0000ff;">int</span> y){<span style="color: #0000ff;">this</span>-&gt;x = x;<span style="color: #0000ff;">this</span>-&gt;y =<span style="color: #000000;"> y;}
+    </span><span style="color: #0000ff;">int</span> getX(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> x;}
+    </span><span style="color: #0000ff;">void</span> setX(<span style="color: #0000ff;">int</span> x){<span style="color: #0000ff;">this</span>-&gt;x =<span style="color: #000000;"> x;}
+
+    </span><span style="color: #0000ff;">int</span> getY(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> y;}
+    </span><span style="color: #0000ff;">void</span> setY(<span style="color: #0000ff;">int</span> x){<span style="color: #0000ff;">this</span>-&gt;y =<span style="color: #000000;"> y;}        
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">享元对象：ConcreteFlyweight（内部状态）</span>
+<span style="color: #0000ff;">class</span> ConcreteChess : <span style="color: #0000ff;">public</span><span style="color: #000000;"> ChessFlyweight
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> color;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    ConcreteChess(</span><span style="color: #0000ff;">string</span> color){<span style="color: #0000ff;">this</span>-&gt;color =<span style="color: #000000;"> color;} 
+    </span><span style="color: #0000ff;">string</span>&amp; getColor() {<span style="color: #0000ff;">return</span><span style="color: #000000;"> color;}
+    </span><span style="color: #0000ff;">void</span> setColor(<span style="color: #0000ff;">string</span> color){<span style="color: #0000ff;">this</span>-&gt;color =<span style="color: #000000;"> color;}
+    
+    </span><span style="color: #0000ff;">void</span> display(Coordinate&amp;<span style="color: #000000;"> c)
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">Chess's Color: </span><span style="color: #800000;">"</span> &lt;&lt; color &lt;&lt;<span style="color: #000000;"> endl; 
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">Position: x = </span><span style="color: #800000;">"</span> &lt;&lt; c.getX() &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;"> y = </span><span style="color: #800000;">"</span> &lt;&lt; c.getY() &lt;&lt;<span style="color: #000000;"> endl;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">************************************享元工厂类**************************</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> ChessFlyweightFactory
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">static</span> map&lt;<span style="color: #0000ff;">string</span>,ChessFlyweight*&gt;<span style="color: #000000;"> chessMap;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">static</span> ChessFlyweight* getChess(<span style="color: #0000ff;">string</span><span style="color: #000000;"> color)
+    {
+        ChessFlyweight</span>* ret =<span style="color: #000000;"> chessMap[color]; 
+        </span><span style="color: #0000ff;">if</span>(ret ==<span style="color: #000000;"> NULL)
+        {
+            ret </span>= <span style="color: #0000ff;">new</span><span style="color: #000000;"> ConcreteChess(color);
+            chessMap[color] </span>=<span style="color: #000000;"> ret;
+        }
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> ret;   
+    }
+
+    </span><span style="color: #0000ff;">static</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> clear()
+    {
+        map</span>&lt;<span style="color: #0000ff;">string</span>, ChessFlyweight*&gt;::iterator iter =<span style="color: #000000;"> chessMap.begin();
+        </span><span style="color: #0000ff;">while</span>(iter !=<span style="color: #000000;"> chessMap.end())
+        {
+            </span><span style="color: #0000ff;">delete</span> iter-&gt;<span style="color: #000000;">second;
+            cout </span>&lt;&lt;iter-&gt;second &lt;&lt;<span style="color: #000000;"> endl;
+            </span>++<span style="color: #000000;">iter;
+        }
+        chessMap.clear();
+    }    
+};
+
+map</span>&lt;<span style="color: #0000ff;">string</span>,ChessFlyweight*&gt;<span style="color: #000000;"> ChessFlyweightFactory::chessMap;
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    ChessFlyweight</span>* chess1 = ChessFlyweightFactory::getChess(<span style="color: #800000;">"</span><span style="color: #800000;">black</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    ChessFlyweight</span>* chess2 = ChessFlyweightFactory::getChess(<span style="color: #800000;">"</span><span style="color: #800000;">black</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    ChessFlyweight</span>* chess3 = ChessFlyweightFactory::getChess(<span style="color: #800000;">"</span><span style="color: #800000;">white</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    
+    cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">chess1 = </span><span style="color: #800000;">"</span> &lt;&lt; chess1 &lt;&lt;<span style="color: #000000;"> endl;
+    cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">chess2 = </span><span style="color: #800000;">"</span> &lt;&lt; chess2 &lt;&lt;<span style="color: #000000;"> endl;
+    cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">chess3 = </span><span style="color: #800000;">"</span> &lt;&lt; chess3 &lt;&lt;<span style="color: #000000;"> endl;
+    
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">增加外部状态的处理</span>
+    cout &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">extrinsic state: </span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    Coordinate c1(</span><span style="color: #800080;">10</span>, <span style="color: #800080;">10</span><span style="color: #000000;">);
+    Coordinate c2(</span><span style="color: #800080;">20</span>, <span style="color: #800080;">20</span><span style="color: #000000;">);
+    Coordinate c3(</span><span style="color: #800080;">30</span>, <span style="color: #800080;">30</span><span style="color: #000000;">);
+    
+    chess1</span>-&gt;<span style="color: #000000;">display(c1);
+    chess2</span>-&gt;<span style="color: #000000;">display(c2);
+    chess3</span>-&gt;<span style="color: #000000;">display(c3);
+    
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">删除享元池中的对象</span>
+<span style="color: #000000;">    ChessFlyweightFactory::clear();
+    
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第13章 结构型模式—享元模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><strong>2. </strong><strong>享元模式的对象管理</strong></p>
+<p><strong>（1）实用引用计数的基本思路</strong></p>
+<p>　　在享元工厂中<span style="color: #ff0000;"><strong>定义另外一个map</strong></span>，它的<span style="color: #0000ff;"><strong>key值与缓存对象的key是一样</strong></span>的，而<span style="color: #0000ff;"><strong>value就是被引用的次数</strong></span>，这样当外部每次获取该享元的时候，就把对应的引用计数加1，然后再记录回去。</p>
+<p><strong>（2）实现垃圾回收的基本思路</strong></p>
+<p>　　①确定垃圾：定义一个缓存对象的配置对象，在这个对象中描述了缓存的开始时间和最长不被使用时间，则<span style="color: #0000ff;"><strong>当前的时间-缓存开始时间≥最长不被使用使间是表示为<span style="color: #ff0000;">垃圾</span></strong></span>。当然<span style="color: #0000ff;"><strong>每次对象被使用时，就把那个缓存开始的时间更新为使用时的当前时间</strong></span>。</p>
+<p>　　②回收时机：判断出是垃圾的时候就可以回收了。谁来判断垃圾？一般定义<span style="color: #ff0000;"><strong>一个内部线程</strong></span>，这个<span style="color: #0000ff;"><strong>线程在享元工厂被创建时启动</strong></span>，每隔一定的时间来循环缓存中所有对象的缓存配置，看是否是垃圾，如果是就可以启动回收了。</p>
+<p>（3）怎么回收：直接从缓存的Map对象删除相应的对象。</p>
+<p><strong>3. </strong><strong>享元模式的优缺点</strong></p>
+<p>（1）优点：减少对象数量，节省内存空间</p>
+<p>（2）缺点：<span style="color: #0000ff;"><strong>维护共享对象，需要额外开销</strong></span>。如需要额外的线程来维护垃圾回收。</p>
+<p><strong>4. </strong><strong>使用场景</strong></p>
+<p>（1）系统中存在大量的相似对象</p>
+<p>（2）细粒度的对象都具有较接近的外部状态，而且内部状态与环境无关，也就是说对明没有特定的身份。</p>
+<p>（3）需要缓冲池的场景</p>
+<p>（4）如果不考虑对象的外部状态，可以用相对较少的共享对象取代很多组合对象，可以使用享元模式来共享对象，然后组合对象来使用这些共享对象。</p>
+<p>【编程实验】权限管理系统</p>
+<p style="text-align: center;">&nbsp;<img src="./第13章 结构型模式—享元模式 - 浅墨浓香 - 博客园_files/772759-20160601133508274-644486905.png" alt=""></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第13章 结构型模式—享元模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">结构型模式：享元模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">场景：权限管理。
+</span><span style="color: #008000;">//</span><span style="color: #008000;">几个概念
+</span><span style="color: #008000;">//</span><span style="color: #008000;">1.安全实体：如某个数据表
+</span><span style="color: #008000;">//</span><span style="color: #008000;">2.权限：指很对安全实体进行的操作，如查看、修改、删除等。
+</span><span style="color: #008000;">//</span><span style="color: #008000;">几个问题
+</span><span style="color: #008000;">//</span><span style="color: #008000;">1.因安全实体的权限可能被成千上万的人共享。如“人员列表”的查询权限
+</span><span style="color: #008000;">//</span><span style="color: #008000;">  为了减少创建对象，可以将“人员列表”的“查询”权限作为一个享元对象，放入享元工厂
+</span><span style="color: #008000;">//</span><span style="color: #008000;">2.为了增加实用性，这里采用享元模式+组合模式的方式实现了多层次的权限管理。
+</span><span style="color: #008000;">//</span><span style="color: #008000;">  组合：将安全实体的权限进行组合，如“查看”+“修改” = “操作”权限，由于“操作”是组
+</span><span style="color: #008000;">//</span><span style="color: #008000;">  合的权限，所以无须在享元工厂中缓存，即这个组合对象是个UnsharedConcreteFlyweight
+</span><span style="color: #008000;">//</span><span style="color: #008000;">  对象。
+</span><span style="color: #008000;">//</span><span style="color: #008000;">3. 享元工厂的垃圾回收：创建一个线程，专门负责过期的垃圾回收</span>
+<span style="color: #000000;">
+#include </span>&lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;">
+#include </span>&lt;vector&gt;<span style="color: #000000;">
+#include </span>&lt;map&gt;<span style="color: #000000;">
+#include </span>&lt;sstream&gt;<span style="color: #000000;">
+#include </span>&lt;ctime&gt;<span style="color: #000000;">
+#include </span>&lt;windows.h&gt;<span style="color: #000000;">
+#include </span>&lt;process.h&gt;
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #808080;">////////////////////////////////////////////////////////////////////////</span><span style="color: #008000;">//</span>
+<span style="color: #008000;">//</span><span style="color: #008000;"> 字符串分割
+</span><span style="color: #008000;">//</span> 
+<span style="color: #008000;">//</span><span style="color: #008000;"> -------------------------------------------------------------------------
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 函数     : Split
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 功能     : 分割STL标准字符串
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 返回值   : void 
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 参数     : Container&lt;std::basic_string&lt;CharT&gt; &gt;&amp; v 存放分割结果
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 参数     : const std::basic_string&lt;CharT&gt;&amp; s 待分割字符串
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 参数     : const std::basic_string&lt;CharT&gt;&amp; c 分割字符串
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> -------------------------------------------------------------------------</span>
+template&lt;typename CharT, template&lt;typename S, typename Q = std::allocator&lt;S&gt; &gt; <span style="color: #0000ff;">class</span> Container&gt;
+<span style="color: #0000ff;">void</span> Split(Container&lt;std::basic_string&lt;CharT&gt; &gt;&amp; v, <span style="color: #0000ff;">const</span> std::basic_string&lt;CharT&gt;&amp; s, <span style="color: #0000ff;">const</span> std::basic_string&lt;CharT&gt;&amp;<span style="color: #000000;"> c);
+
+template</span>&lt;template&lt;typename S, typename Q = std::allocator&lt;S&gt; &gt; <span style="color: #0000ff;">class</span> Container&gt;
+<span style="color: #0000ff;">void</span> Split(Container&lt;std::basic_string&lt;<span style="color: #0000ff;">char</span>&gt; &gt;&amp; v, <span style="color: #0000ff;">const</span> std::basic_string&lt;<span style="color: #0000ff;">char</span>&gt;&amp; s, <span style="color: #0000ff;">const</span> std::basic_string&lt;<span style="color: #0000ff;">char</span>&gt;&amp;<span style="color: #000000;"> c)
+{
+    </span><span style="color: #0000ff;">if</span> (<span style="color: #800080;">0</span> ==<span style="color: #000000;"> c.length())
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;">;
+
+    std::basic_string</span>&lt;<span style="color: #0000ff;">char</span>&gt;::size_type pos1 = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    std::basic_string</span>&lt;<span style="color: #0000ff;">char</span>&gt;::size_type pos2 = <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+    pos1 </span>= <span style="color: #800080;">0</span><span style="color: #000000;">;
+    pos2 </span>=<span style="color: #000000;"> s.find(c);
+    </span><span style="color: #0000ff;">while</span> (std::basic_string&lt;<span style="color: #0000ff;">char</span>&gt;::npos !=<span style="color: #000000;"> pos2)
+    {
+        v.push_back(s.substr(pos1, pos2 </span>-<span style="color: #000000;"> pos1));
+
+        pos1 </span>= pos2 +<span style="color: #000000;"> c.size();
+        pos2 </span>=<span style="color: #000000;"> s.find(c, pos1);
+    }
+
+    </span><span style="color: #0000ff;">if</span> (pos1 !=<span style="color: #000000;"> s.length())
+    {
+        v.push_back(s.substr(pos1));
+    }
+}
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">*******************************************辅助类******************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">测试数据（在内存中模拟数据库中的值）</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> TestDB
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    TestDB(){}
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">用来存放单独授权数据的值</span>
+    <span style="color: #0000ff;">static</span> vector&lt;<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;"> vectorDB;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">用来存放组合授权数据的值
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">其中的key为组合数据的id，value为该组合包含的多条授权数据的值</span>
+    <span style="color: #0000ff;">static</span> map&lt;<span style="color: #0000ff;">string</span>, vector&lt;<span style="color: #0000ff;">string</span>&gt; &gt;<span style="color: #000000;"> mapDB;
+};
+</span><span style="color: #008000;">//</span><span style="color: #008000;">单独授权数据</span>
+<span style="color: #0000ff;">static</span> vector&lt;<span style="color: #0000ff;">string</span>&gt;::value_type init_value[] =<span style="color: #000000;">
+{
+    vector</span>&lt;<span style="color: #0000ff;">string</span>&gt;::value_type(<span style="color: #800000;">"</span><span style="color: #800000;">ZhangSan,PersonTable,Query,1</span><span style="color: #800000;">"</span><span style="color: #000000;">),
+    vector</span>&lt;<span style="color: #0000ff;">string</span>&gt;::value_type(<span style="color: #800000;">"</span><span style="color: #800000;">LiSi,PersonTable,Query,1</span><span style="color: #800000;">"</span><span style="color: #000000;">),
+    vector</span>&lt;<span style="color: #0000ff;">string</span>&gt;::value_type(<span style="color: #800000;">"</span><span style="color: #800000;">LiSi,OperateSalaryTable,,2</span><span style="color: #800000;">"</span><span style="color: #000000;">),
+    vector</span>&lt;<span style="color: #0000ff;">string</span>&gt;::value_type(<span style="color: #800000;">"</span><span style="color: #800000;">ZhangSan0,PersonTable,Query,1</span><span style="color: #800000;">"</span><span style="color: #000000;">),
+    vector</span>&lt;<span style="color: #0000ff;">string</span>&gt;::value_type(<span style="color: #800000;">"</span><span style="color: #800000;">ZhangSan1,PersonTable,Query,1</span><span style="color: #800000;">"</span><span style="color: #000000;">),
+    vector</span>&lt;<span style="color: #0000ff;">string</span>&gt;::value_type(<span style="color: #800000;">"</span><span style="color: #800000;">ZhangSan2,PersonTable,Query,1</span><span style="color: #800000;">"</span><span style="color: #000000;">),
+};
+vector</span>&lt;<span style="color: #0000ff;">string</span>&gt; TestDB::vectorDB(init_value, init_value + <span style="color: #800080;">6</span><span style="color: #000000;">);
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">组合授权数据</span>
+<span style="color: #0000ff;">static</span> vector&lt;<span style="color: #0000ff;">string</span>&gt;::value_type initValue[] =<span style="color: #000000;">
+{
+    vector</span>&lt;<span style="color: #0000ff;">string</span>&gt;::value_type(<span style="color: #800000;">"</span><span style="color: #800000;">SalaryTable,Query</span><span style="color: #800000;">"</span><span style="color: #000000;">),
+    vector</span>&lt;<span style="color: #0000ff;">string</span>&gt;::value_type(<span style="color: #800000;">"</span><span style="color: #800000;">SalaryTable,Modify</span><span style="color: #800000;">"</span><span style="color: #000000;">)
+};
+</span><span style="color: #0000ff;">static</span> vector&lt;<span style="color: #0000ff;">string</span>&gt; compositePermit(initValue, initValue + <span style="color: #800080;">2</span><span style="color: #000000;">);
+</span><span style="color: #0000ff;">static</span> map&lt;<span style="color: #0000ff;">string</span>, vector&lt;<span style="color: #0000ff;">string</span>&gt; &gt;::value_type initMap_value[] =<span style="color: #000000;">
+{
+    map</span>&lt;<span style="color: #0000ff;">string</span>, vector&lt;<span style="color: #0000ff;">string</span>&gt; &gt;::value_type(<span style="color: #800000;">"</span><span style="color: #800000;">OperateSalaryTable</span><span style="color: #800000;">"</span><span style="color: #000000;">, compositePermit)
+};
+
+map</span>&lt;<span style="color: #0000ff;">string</span>, vector&lt;<span style="color: #0000ff;">string</span>&gt; &gt; TestDB::mapDB(initMap_value, initMap_value + <span style="color: #800080;">1</span><span style="color: #000000;">);
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">**********************************享元类************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">享元接口：描述授权数据的接口</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;">  Flyweight
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">bool</span> match(<span style="color: #0000ff;">string</span> securityEntity, <span style="color: #0000ff;">string</span> permit) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">享元模式与组合模式的结合。为Flyweight添加子Flyweight对象</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> add(Flyweight* f) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">具体享元对象（封装授权数据中重复出现的部分）
+</span><span style="color: #008000;">//</span><span style="color: #008000;">由于add是针对组合对象的，而这个可共享的是叶子对象，所以这里抛出
+</span><span style="color: #008000;">//</span><span style="color: #008000;">异常就可以了。
+</span><span style="color: #008000;">//</span><span style="color: #008000;">享元工厂里存放的是这个对象，如“薪资数据表的查看权限”。因为某一权限
+</span><span style="color: #008000;">//</span><span style="color: #008000;">可能被分配给成上千万个人，所以需要缓存。即享元</span>
+<span style="color: #0000ff;">class</span> AuthorizationFlyweight : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Flyweight
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">内部状态</span>
+
+    <span style="color: #0000ff;">string</span> securityEntity;<span style="color: #008000;">//</span><span style="color: #008000;">安全实体</span>
+    <span style="color: #0000ff;">string</span> permit;        <span style="color: #008000;">//</span><span style="color: #008000;">权限</span>
+
+<span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">构造函数，传入状态数据，包含安全实体和权限的数据，用“,”分隔</span>
+    AuthorizationFlyweight(<span style="color: #0000ff;">string</span><span style="color: #000000;"> state)
+    {
+        vector</span>&lt;<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;"> v;
+        Split(v, state, </span><span style="color: #800000;">"</span><span style="color: #800000;">,</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+        securityEntity </span>= v[<span style="color: #800080;">0</span><span style="color: #000000;">];
+        permit </span>= v[<span style="color: #800080;">1</span><span style="color: #000000;">];
+    }
+
+    </span><span style="color: #0000ff;">string</span>&amp; getSecurityEntity(){ <span style="color: #0000ff;">return</span><span style="color: #000000;"> securityEntity; }
+    </span><span style="color: #0000ff;">string</span>&amp; getPermit(){ <span style="color: #0000ff;">return</span><span style="color: #000000;"> permit; }
+
+    </span><span style="color: #0000ff;">bool</span> match(<span style="color: #0000ff;">string</span> securityEntity, <span style="color: #0000ff;">string</span><span style="color: #000000;"> permit)
+    {
+        </span><span style="color: #0000ff;">bool</span> ret = (<span style="color: #0000ff;">this</span>-&gt;securityEntity == securityEntity &amp;&amp;
+                    <span style="color: #0000ff;">this</span>-&gt;permit ==<span style="color: #000000;"> permit);
+
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> ret;
+    }
+
+    </span><span style="color: #0000ff;">void</span> add(Flyweight*<span style="color: #000000;"> f)
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">叶子对象，什么都不做！这里也可以抛出异常！</span>
+<span style="color: #000000;">    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">不需要共享的享元对象的实现，也是组合模式中的组合对象</span>
+<span style="color: #0000ff;">class</span> UnsharedConcreteFlyweight : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Flyweight
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">记录每个组合对象所包含的子组件</span>
+    vector&lt;Flyweight*&gt;<span style="color: #000000;"> flyweights;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span> add(Flyweight*<span style="color: #000000;"> f)
+    {
+
+        flyweights.push_back(f);
+    }
+
+    </span><span style="color: #0000ff;">bool</span> match(<span style="color: #0000ff;">string</span> securityEntity, <span style="color: #0000ff;">string</span><span style="color: #000000;"> permit)
+    {
+        </span><span style="color: #0000ff;">bool</span> ret = <span style="color: #0000ff;">false</span><span style="color: #000000;">;
+
+        vector</span>&lt;Flyweight*&gt;::iterator iter =<span style="color: #000000;"> flyweights.begin();
+        </span><span style="color: #0000ff;">while</span> (iter !=<span style="color: #000000;"> flyweights.end())
+        {
+            </span><span style="color: #0000ff;">if</span> ((*iter)-&gt;<span style="color: #000000;">match(securityEntity, permit))
+            {
+                ret </span>= <span style="color: #0000ff;">true</span><span style="color: #000000;">;
+                </span><span style="color: #0000ff;">break</span><span style="color: #000000;">;
+            }
+            </span>++<span style="color: #000000;">iter;
+        }
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> ret;
+    }
+
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">**************************************垃圾回收************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">描述享元对象缓存的配置对象</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> CacheConfModel
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">被引用次数</span>
+    <span style="color: #0000ff;">int</span><span style="color: #000000;"> refCount;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">缓存开始计时的开始时间</span>
+    <span style="color: #0000ff;">long</span><span style="color: #000000;"> beginTime;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">缓存对象存放的持续时间，其实是最长不被使用时间</span>
+    <span style="color: #0000ff;">double</span><span style="color: #000000;"> durableTime;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">缓存对象需要被永久存储，也就是不需要从缓存中删除</span>
+    <span style="color: #0000ff;">bool</span><span style="color: #000000;"> forever;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    CacheConfModel() :refCount(</span><span style="color: #800080;">0</span>), beginTime(<span style="color: #800080;">0</span>), durableTime(<span style="color: #800080;">0</span>), forever(<span style="color: #0000ff;">false</span><span style="color: #000000;">){}
+
+    </span><span style="color: #0000ff;">int</span> getRefCount(){ <span style="color: #0000ff;">return</span><span style="color: #000000;"> refCount; }
+    </span><span style="color: #0000ff;">void</span> setRefCount(<span style="color: #0000ff;">int</span> refCount){ <span style="color: #0000ff;">this</span>-&gt;refCount =<span style="color: #000000;"> refCount; }
+    </span><span style="color: #0000ff;">int</span> addRefCount(){ <span style="color: #0000ff;">return</span> ++<span style="color: #000000;">refCount; }
+    </span><span style="color: #0000ff;">int</span> decRefCount(){ <span style="color: #0000ff;">return</span> --<span style="color: #000000;">refCount; }
+
+    </span><span style="color: #0000ff;">bool</span> isForever(){ <span style="color: #0000ff;">return</span><span style="color: #000000;"> forever; }
+    </span><span style="color: #0000ff;">void</span> setForever(<span style="color: #0000ff;">bool</span> forever){ <span style="color: #0000ff;">this</span>-&gt;forever =<span style="color: #000000;"> forever; }
+
+    </span><span style="color: #0000ff;">long</span> getBeginTime(){ <span style="color: #0000ff;">return</span><span style="color: #000000;"> beginTime; }
+    </span><span style="color: #0000ff;">void</span> setBeginTime(<span style="color: #0000ff;">long</span> beginTime){ <span style="color: #0000ff;">this</span>-&gt;beginTime =<span style="color: #000000;"> beginTime; }
+
+    </span><span style="color: #0000ff;">double</span> getDurableTime(){ <span style="color: #0000ff;">return</span><span style="color: #000000;"> durableTime; }
+    </span><span style="color: #0000ff;">void</span> setDurableTime(<span style="color: #0000ff;">double</span> durableTime){ <span style="color: #0000ff;">this</span>-&gt;durableTime =<span style="color: #000000;"> durableTime; }
+
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">******************************************************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">享元工厂,通常实现为单例
+</span><span style="color: #008000;">//</span><span style="color: #008000;">加入实现垃圾回收和引用计数的功能</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> FlyweightFactory
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">构造函数设为私有</span>
+<span style="color: #000000;">    FlyweightFactory()
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">启动清除缓存值的线程</span>
+        HANDLE hThread = (HANDLE)_beginthreadex(NULL, <span style="color: #800080;">0</span>, clearCache, NULL, <span style="color: #800080;">0</span><span style="color: #000000;">, NULL);
+
+    };
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">缓存多个Flyweight对象</span>
+    <span style="color: #0000ff;">static</span> map&lt;<span style="color: #0000ff;">string</span>, Flyweight*&gt;<span style="color: #000000;"> fsMap;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">用来缓存被共享对象的缓存配置，key和上面fsMap一致</span>
+    <span style="color: #0000ff;">static</span> map&lt;<span style="color: #0000ff;">string</span>, CacheConfModel&gt;<span style="color: #000000;"> cacheConfMap;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">默认保存6秒钟，主要为了测试方便，这个时间可以根据实际来设置</span>
+    <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">const</span> <span style="color: #0000ff;">long</span> DURABLE_TIME = <span style="color: #800080;">6L</span><span style="color: #000000;">;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">删除key对应的享元对象，连带清除对应的缓存配置</span>
+    <span style="color: #0000ff;">void</span> removeFlyweight(<span style="color: #0000ff;">string</span> key) <span style="color: #008000;">//</span><span style="color: #008000;">线程不安全，实际应用中要加同步</span>
+<span style="color: #000000;">    {
+        fsMap.erase(key);
+        cacheConfMap.erase(key);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">维护清除缓存的线程函数</span>
+    <span style="color: #0000ff;">static</span> unsigned <span style="color: #0000ff;">int</span><span style="color: #000000;"> __stdcall clearCache(PVOID pvParam)
+    {
+        </span><span style="color: #0000ff;">while</span> (<span style="color: #0000ff;">true</span><span style="color: #000000;">)
+        {
+            map</span>&lt;<span style="color: #0000ff;">string</span>, CacheConfModel&gt;::iterator iter =<span style="color: #000000;"> cacheConfMap.begin();
+            vector</span>&lt;<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;"> tmpKey;
+
+            CacheConfModel ccm;
+            </span><span style="color: #0000ff;">while</span> (iter !=<span style="color: #000000;"> cacheConfMap.end())
+            {
+                ccm </span>= iter-&gt;<span style="color: #000000;">second;
+
+                </span><span style="color: #008000;">//</span><span style="color: #008000;">比较是否需要清除</span>
+                <span style="color: #0000ff;">if</span> (time(NULL) - ccm.getBeginTime() &gt;=<span style="color: #000000;"> 
+                    ccm.getDurableTime())
+                {
+                    </span><span style="color: #008000;">//</span><span style="color: #008000;">可以清除，先记录下来</span>
+                    tmpKey.push_back(iter-&gt;<span style="color: #000000;">first);
+                }
+                </span>++<span style="color: #000000;">iter;
+            }
+
+            </span><span style="color: #008000;">//</span><span style="color: #008000;">真正清除</span>
+            vector&lt;<span style="color: #0000ff;">string</span>&gt;::iterator iterKey =<span style="color: #000000;"> tmpKey.begin();
+            </span><span style="color: #0000ff;">while</span> (iterKey !=<span style="color: #000000;"> tmpKey.end())
+            {
+                (FlyweightFactory::getInstance())</span>-&gt;removeFlyweight(*<span style="color: #000000;">iterKey);
+                </span>++<span style="color: #000000;">iterKey;
+            }
+
+            </span><span style="color: #008000;">//</span><span style="color: #008000;">显示</span>
+            cout &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">now thread=</span><span style="color: #800000;">"</span> &lt;&lt; fsMap.size() &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;"> [</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+            map</span>&lt;<span style="color: #0000ff;">string</span>, Flyweight*&gt;::iterator fsIter =<span style="color: #000000;"> fsMap.begin();
+            </span><span style="color: #0000ff;">while</span> (fsIter !=<span style="color: #000000;"> fsMap.end())
+            {
+                cout </span>&lt;&lt; fsIter-&gt;first &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">;</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+                </span>++<span style="color: #000000;">fsIter;
+            }
+            cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">]</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+
+            </span><span style="color: #008000;">//</span><span style="color: #008000;">休息1秒钟，再重新判断</span>
+            Sleep(<span style="color: #800080;">1000</span><span style="color: #000000;">);
+        }
+        </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+    }
+
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">static</span> FlyweightFactory*<span style="color: #000000;"> getInstance(){
+        </span><span style="color: #0000ff;">static</span><span style="color: #000000;"> FlyweightFactory factory;
+        </span><span style="color: #0000ff;">return</span> &amp;<span style="color: #000000;">factory;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">缓存多个Flyweight对象(线程不安全，实际应用中要加同步)</span>
+    Flyweight* getFlyweight(<span style="color: #0000ff;">string</span><span style="color: #000000;"> key)
+    {
+        Flyweight</span>* f =<span style="color: #000000;"> fsMap[key];
+
+        </span><span style="color: #0000ff;">if</span> (f ==<span style="color: #000000;"> NULL)
+        {
+            f </span>= <span style="color: #0000ff;">new</span><span style="color: #000000;"> AuthorizationFlyweight(key);
+            fsMap[key] </span>=<span style="color: #000000;"> f;
+
+            </span><span style="color: #008000;">//</span><span style="color: #008000;">同时设置缓存配置数据和引用计数</span>
+<span style="color: #000000;">            CacheConfModel cm;
+            cm.setBeginTime((</span><span style="color: #0000ff;">long</span><span style="color: #000000;">)time(NULL));
+            cm.setDurableTime(DURABLE_TIME);
+            cm.setForever(</span><span style="color: #0000ff;">false</span><span style="color: #000000;">);
+            cm.addRefCount();
+
+            cacheConfMap[key] </span>=<span style="color: #000000;"> cm;
+        } </span><span style="color: #0000ff;">else</span><span style="color: #000000;">
+        {
+            CacheConfModel cm </span>=<span style="color: #000000;"> cacheConfMap[key];
+            cm.setBeginTime((</span><span style="color: #0000ff;">long</span><span style="color: #000000;">)time(NULL));
+            cm.addRefCount();
+            cacheConfMap[key] </span>=<span style="color: #000000;"> cm;
+        }
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> f;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">获取某个享元被使用的次数(线程不安全，没有同步！)</span>
+    <span style="color: #0000ff;">int</span> getUseTimes(<span style="color: #0000ff;">string</span><span style="color: #000000;"> key)
+    {
+        CacheConfModel ccm </span>=<span style="color: #000000;"> cacheConfMap[key];
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> ccm.getRefCount();
+    }
+
+};
+
+map</span>&lt;<span style="color: #0000ff;">string</span>, Flyweight*&gt;<span style="color: #000000;">  FlyweightFactory::fsMap;
+map</span>&lt;<span style="color: #0000ff;">string</span>, CacheConfModel&gt;<span style="color: #000000;">  FlyweightFactory::cacheConfMap;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">安全管理，实现成单例</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> SecurityMgr
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    SecurityMgr(){}
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">饿汉式</span>
+    <span style="color: #0000ff;">static</span> SecurityMgr*<span style="color: #000000;"> getInstance()
+    {
+        </span><span style="color: #0000ff;">static</span><span style="color: #000000;"> SecurityMgr instance;
+        </span><span style="color: #0000ff;">return</span> &amp;<span style="color: #000000;">instance;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">从数据库中获取某人所拥有的权限</span>
+    vector&lt;Flyweight*&gt; queryByUser(<span style="color: #0000ff;">string</span><span style="color: #000000;"> user)
+    {
+        vector</span>&lt;Flyweight*&gt;<span style="color: #000000;"> ret;
+        vector</span>&lt;<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;"> vc;
+        vector</span>&lt;<span style="color: #0000ff;">string</span>&gt;::iterator iter =<span style="color: #000000;"> TestDB::vectorDB.begin();
+
+        </span><span style="color: #0000ff;">while</span> (iter !=<span style="color: #000000;"> TestDB::vectorDB.end())
+        {
+            vc.clear();
+            Split(vc, </span>*iter, <span style="color: #800000;">"</span><span style="color: #800000;">,</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+
+            </span><span style="color: #0000ff;">if</span> (vc.size() &lt;<span style="color: #800080;">4</span>) <span style="color: #0000ff;">break</span><span style="color: #000000;">;
+
+            </span><span style="color: #0000ff;">if</span> (vc[<span style="color: #800080;">0</span>] ==<span style="color: #000000;"> user)
+            {
+
+                Flyweight</span>* fm =<span style="color: #000000;"> NULL;
+                </span><span style="color: #0000ff;">if</span> (vc[<span style="color: #800080;">3</span>] == <span style="color: #800000;">"</span><span style="color: #800000;">2</span><span style="color: #800000;">"</span><span style="color: #000000;">){
+                    </span><span style="color: #008000;">//</span><span style="color: #008000;">表示组合</span>
+                    fm = <span style="color: #0000ff;">new</span><span style="color: #000000;"> UnsharedConcreteFlyweight();
+                    vector</span>&lt;<span style="color: #0000ff;">string</span>&gt; tempSs = TestDB::mapDB[vc[<span style="color: #800080;">1</span><span style="color: #000000;">]];
+                    vector</span>&lt;<span style="color: #0000ff;">string</span>&gt;::iterator iter =<span style="color: #000000;"> tempSs.begin();
+                    </span><span style="color: #0000ff;">while</span> (iter !=<span style="color: #000000;"> tempSs.end())
+                    {
+                        Flyweight</span>* tempFm = (FlyweightFactory::getInstance())-&gt;getFlyweight(*<span style="color: #000000;">iter);
+                        </span><span style="color: #008000;">//</span><span style="color: #008000;">把这个对象加入到组合对象中</span>
+                        fm-&gt;<span style="color: #000000;">add(tempFm);
+                        </span>++<span style="color: #000000;">iter;
+                    }
+
+                } </span><span style="color: #0000ff;">else</span><span style="color: #000000;">
+                {
+                    fm </span>= (FlyweightFactory::getInstance())-&gt;getFlyweight(vc[<span style="color: #800080;">1</span>] + <span style="color: #800000;">"</span><span style="color: #800000;">,</span><span style="color: #800000;">"</span> + vc[<span style="color: #800080;">2</span><span style="color: #000000;">]);
+                }
+                ret.push_back(fm);
+            }
+
+            </span>++<span style="color: #000000;">iter;
+        }
+
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> ret;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">判断某用户对某个安全实体是否拥有某种权限</span>
+    <span style="color: #0000ff;">bool</span> hasPermit(<span style="color: #0000ff;">string</span> user, <span style="color: #0000ff;">string</span> securityEntity, <span style="color: #0000ff;">string</span><span style="color: #000000;"> permit)
+    {
+        </span><span style="color: #0000ff;">bool</span> ret = <span style="color: #0000ff;">false</span><span style="color: #000000;">;
+        vector</span>&lt;Flyweight*&gt; vfw =<span style="color: #000000;"> queryByUser(user);
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">cout &lt;&lt; "Now testing: " &lt;&lt; securityEntity &lt;&lt; "\'s " &lt;&lt; permit &lt;&lt; " permission, map.size = "
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">&lt;&lt; maps.size() &lt;&lt; endl;</span>
+
+        <span style="color: #0000ff;">if</span> (vfw.size() == <span style="color: #800080;">0</span><span style="color: #000000;">)
+        {
+            cout </span>&lt;&lt; user &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">: no permit to operate </span><span style="color: #800000;">"</span> &lt;&lt; securityEntity &lt;&lt;<span style="color: #000000;"> endl;
+            </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> ret;
+        }
+
+        vector</span>&lt;Flyweight*&gt;::iterator iter =<span style="color: #000000;"> vfw.begin();
+        </span><span style="color: #0000ff;">while</span> (iter !=<span style="color: #000000;"> vfw.end())
+        {
+            cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">am == </span><span style="color: #800000;">"</span> &lt;&lt; (*iter) &lt;&lt;<span style="color: #000000;"> endl;
+            </span><span style="color: #0000ff;">if</span> ((*iter)-&gt;<span style="color: #000000;">match(securityEntity, permit))
+            {
+                ret </span>= <span style="color: #0000ff;">true</span><span style="color: #000000;">;
+                </span><span style="color: #0000ff;">break</span><span style="color: #000000;">;
+            }
+
+            </span>++<span style="color: #000000;">iter;
+        }
+
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> ret;
+    }
+};
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">客户端调用
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">需要先登录，然后再判断是否有权限</span>
+    SecurityMgr* mgr =<span style="color: #000000;"> SecurityMgr::getInstance();
+
+    </span><span style="color: #0000ff;">bool</span> f1 = mgr-&gt;hasPermit(<span style="color: #800000;">"</span><span style="color: #800000;">ZhangSan</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">PersonTable</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">Query</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    </span><span style="color: #0000ff;">bool</span> f2 = mgr-&gt;hasPermit(<span style="color: #800000;">"</span><span style="color: #800000;">LiSi</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">SalaryTable</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">Query</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    </span><span style="color: #0000ff;">bool</span> f3 = mgr-&gt;hasPermit(<span style="color: #800000;">"</span><span style="color: #800000;">LiSi</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">SalaryTable</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">Modify</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+
+    cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">f1 = </span><span style="color: #800000;">"</span> &lt;&lt; f1 &lt;&lt;<span style="color: #000000;"> endl;
+    cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">f2 = </span><span style="color: #800000;">"</span> &lt;&lt; f2 &lt;&lt;<span style="color: #000000;"> endl;
+    cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">f3 = </span><span style="color: #800000;">"</span> &lt;&lt; f3 &lt;&lt;<span style="color: #000000;"> endl;
+
+    ostringstream oss;
+    </span><span style="color: #0000ff;">for</span> (<span style="color: #0000ff;">int</span> i = <span style="color: #800080;">0</span>; i &lt; <span style="color: #800080;">3</span>; i++<span style="color: #000000;">){
+        oss.str(</span><span style="color: #800000;">""</span><span style="color: #000000;">);
+        oss </span>&lt;&lt;<span style="color: #000000;"> i;
+        </span><span style="color: #0000ff;">string</span> name = <span style="color: #800000;">"</span><span style="color: #800000;">ZhangSan</span><span style="color: #800000;">"</span> +<span style="color: #000000;"> oss.str();
+        mgr</span>-&gt;hasPermit(name, <span style="color: #800000;">"</span><span style="color: #800000;">SalaryTable</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">Query</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">查看引用次数，不是指测试使用的次数，指的是SecurityMgr里的
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">queryByUser方法通过享元工厂去获以享元对象的次数</span>
+    cout &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">Salary, Query reference count: </span><span style="color: #800000;">"</span> &lt;&lt; (FlyweightFactory::getInstance())-&gt;getUseTimes(<span style="color: #800000;">"</span><span style="color: #800000;">SalaryTable,Query</span><span style="color: #800000;">"</span>) &lt;&lt;<span style="color: #000000;"> endl;
+    cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">Salary, Modify reference count: </span><span style="color: #800000;">"</span> &lt;&lt; (FlyweightFactory::getInstance())-&gt;getUseTimes(<span style="color: #800000;">"</span><span style="color: #800000;">SalaryTable,Modify</span><span style="color: #800000;">"</span>) &lt;&lt;<span style="color: #000000;"> endl;
+    cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">Person, Query reference count: </span><span style="color: #800000;">"</span> &lt;&lt; (FlyweightFactory::getInstance())-&gt;getUseTimes(<span style="color: #800000;">"</span><span style="color: #800000;">PersonTable,Query</span><span style="color: #800000;">"</span>) &lt;&lt;<span style="color: #000000;"> endl;
+
+    system(</span><span style="color: #800000;">"</span><span style="color: #800000;">pause</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第13章 结构型模式—享元模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><strong>5. </strong><strong>相关模式</strong></p>
+<p><strong>（1）享元模式与组合模式</strong></p>
+<p>　　在享元模式中，存在不需要共享的享元实现（UnsharedConcreteFlyweight），这些<span style="color: #0000ff;"><strong>不需要共享的享元通常是对共享的享元对象的组合对象</strong></span>。也就是说，享元模式通常会和组合模式使用，来实现更复杂的对象层次结构。</p>
+<p><strong>（2）享元模式与状态模式</strong></p>
+<p>　　可以使用享元模式来共享状态模式中的状态对象，通常在状态模式中，会存在数量很大的、细粒度的状态对象，而且它们基本上是可以重复使用的，都是用来处理某一个固定的状态的，它们需要的数据通常是由外部传入的，也就是变化的部分分离出去了，所以可以用享元模式来实现这些状态对象。</p>
+<p><strong>（3）享元模式与策略模式</strong></p>
+<p>　　可以使用享元模式来实现策略模式中的策略对象。和状态模式一样，在策略模式中也存在大量细粒度的策略对象，它们需要的数据同样从上下文传入，所以也可以使用享元模式来缓存在这些策略对象。</p>
+</div>
+<div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block"><div id="BlogPostCategory">
+    分类: 
+            <a href="https://www.cnblogs.com/5iedu/category/825371.html" target="_blank">设计模式</a></div>
+
+
+    <div id="blog_post_info">
+<div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(5544753,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+        <a id="green_channel_follow" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./第13章 结构型模式—享元模式 - 浅墨浓香 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./第13章 结构型模式—享元模式 - 浅墨浓香 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/5iedu/" target="_blank"><img src="./第13章 结构型模式—享元模式 - 浅墨浓香 - 博客园_files/20150610151331.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/5iedu/">浅墨浓香</a><br>
+            <a href="https://home.cnblogs.com/u/5iedu/followees/">关注 - 0</a><br>
+            <a href="https://home.cnblogs.com/u/5iedu/followers/">粉丝 - 149</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(5544753,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(5544753,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+    <div class="clear"></div>
+    <div id="post_next_prev">
+
+    <a href="https://www.cnblogs.com/5iedu/p/5538954.html" class="p_n_p_prefix">« </a> 上一篇：    <a href="https://www.cnblogs.com/5iedu/p/5538954.html" title="发布于 2016-05-29 10:02">第12章 结构型模式—外观模式</a>
+    <br>
+    <a href="https://www.cnblogs.com/5iedu/p/5554775.html" class="p_n_p_prefix">» </a> 下一篇：    <a href="https://www.cnblogs.com/5iedu/p/5554775.html" title="发布于 2016-06-02 23:21">第43课 继承的概念及意义</a>
+
+</div>
+</div></div>
+	</div>
+<script src="./第13章 结构型模式—享元模式 - 浅墨浓香 - 博客园_files/highlight.min.js.下载"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 231128, cb_blogApp = '5iedu', cb_blogUserGuid = '41562de4-020f-e511-b908-9dcfd8948a71';
+    var cb_entryId = 5544753, cb_entryCreatedDate = '2016-05-31 09:12', cb_postType = 1; 
+    loadViewCount(cb_entryId);
+</script><a name="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<script>
+    var commentManager = new blogCommentManager();
+    commentManager.renderComments(0);
+</script>
+
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/5iedu/p/5544753.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/5iedu/p/5544753.html#top">返回顶部</a></div>
+    <div id="comment_form_container"><div class="login_tips">
+    注册用户登录后才能发表评论，请 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a>
+     或 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，
+    <a href="https://www.cnblogs.com/">访问</a> 网站首页。
+</div></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"><a href="https://cloud.tencent.com/act/pro/overseas?fromSource=gwzcw.3090393.3090393.3090393&amp;utm_medium=cpc&amp;utm_id=gwzcw.3090393.3090393.3090393" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-腾讯云&#39;)">【推荐】腾讯云海外1核2G云服务器低至2折，半价续费券限量免费领取！</a><br><a href="http://click.aliyun.com/m/1000081987/" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-阿里云&#39;)">【推荐】阿里云双11返场来袭，热门产品低至一折等你来抢！</a><br><a href="http://www.ucancode.com/index.htm" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-工控&#39;)">【推荐】超50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://group.cnblogs.com/topic/90800.html?800019197" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-马士兵&#39;)">【提升】这个价值 50W 年薪的问题，终于被马老师说明白啦...</a><br><a href="https://www.ctyun.cn/activity/20191111?hmsr=%E7%9C%8B%E7%9C%8B-%E5%8D%9A%E5%AE%A2%E5%9B%AD-%E5%8F%8C11-1106&amp;hmpl=&amp;hmcu=&amp;hmkw=&amp;hmci=" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-天翼云&#39;)">【推荐】天翼云双十一翼降到底，云主机11.11元起，抽奖送大礼</a><br><a href="https://www.cnblogs.com/enjoyedu/p/11905399.html?800019191" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-享学&#39;)">【提升】Java程序员年薪40W，他1年走了别人5年的学习之路</a><br><a href="https://www.uibot.com.cn/sem/bky.html" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-uibot_T2&#39;)">【推荐】流程自动化专家UiBot，体系化教程成就高薪RPA工程师</a><br></div>
+    <div id="opt_under_post"></div>
+    <script async="async" src="./第13章 结构型模式—享元模式 - 浅墨浓香 - 博客园_files/gpt.js.下载"></script>
+    <script>
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+    </script>
+    <script>
+        googletag.cmd.push(function () {
+            googletag.defineSlot("/1090369/C1", [300, 250], "div-gpt-ad-1546353474406-0").addService(googletag.pubads());
+            googletag.defineSlot("/1090369/C2", [468, 60], "div-gpt-ad-1539008685004-0").addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    </script>
+    <div id="cnblogs_c1" class="c_ad_block" style="">
+        <div id="div-gpt-ad-1546353474406-0" style="height: 250px; width: 300px;"><div id="google_ads_iframe_/1090369/C1_0__container__" style="border: 0pt none; width: 300px; height: 250px;"></div></div>
+    </div>
+    <div id="under_post_news"><div class="recomm-block"><b>相关博文：</b><br>·  <a title="北风设计模式课程---享元模式" href="https://www.cnblogs.com/Renyi-Fan/p/11029069.html" target="_blank" onclick="clickRecomItmem(11029069)">北风设计模式课程---享元模式</a><br>·  <a title="设计模式之GOF23享元模式" href="https://www.cnblogs.com/code-fun/p/11351592.html" target="_blank" onclick="clickRecomItmem(11351592)">设计模式之GOF23享元模式</a><br>·  <a title="第26章享元模式" href="https://www.cnblogs.com/Manual-Linux/p/11130458.html" target="_blank" onclick="clickRecomItmem(11130458)">第26章享元模式</a><br>·  <a title="第 13 章 装饰模式【Decorator Pattern】" href="https://www.cnblogs.com/mjorcen/p/3849351.html" target="_blank" onclick="clickRecomItmem(3849351)">第 13 章 装饰模式【Decorator Pattern】</a><br>·  <a title="设计模式之第13章-职责链模式(Java实现)" href="https://www.cnblogs.com/voidy/p/4247936.html" target="_blank" onclick="clickRecomItmem(4247936)">设计模式之第13章-职责链模式(Java实现)</a><br>»  <a target="_blank" href="https://recomm.cnblogs.com/blogpost/5544753">更多推荐...</a></div></div>
+    <div id="cnblogs_c2" class="c_ad_block" style="">
+        <div id="div-gpt-ad-1539008685004-0" style="height: 60px; width: 468px;">
+            <script>
+                if (new Date() >= new Date(2018, 9, 13)) {
+                    googletag.cmd.push(function () { googletag.display("div-gpt-ad-1539008685004-0"); });
+                }
+            </script>
+        <div id="google_ads_iframe_/1090369/C2_0__container__" style="border: 0pt none; width: 468px; height: 60px;"></div></div>
+    </div>
+    <div id="under_post_kb">
+<div class="itnews c_ad_block">
+    <b>最新 IT 新闻</b>:
+    <br>
+ ·              <a href="https://news.cnblogs.com/n/649969/" target="_blank">改变销售人员的CRM交互方式，Salesforce推出AI语音助手及开发套件</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649968/" target="_blank">“基因剪刀”治疗地中海贫血效果初现</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649967/" target="_blank">14nm 5GHz或成CPU绝唱 7/5nm多核容易高频难</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649966/" target="_blank">HTTPZ，将 HTTP 链接转到 HTTPS 的 Firefox 插件</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649965/" target="_blank">4个在2020年持续发展的数据中心冷却趋势</a>
+            <br>
+    » <a href="https://news.cnblogs.com/" title="IT 新闻" target="_blank">更多新闻...</a>
+</div></div>
+    <div id="HistoryToday" class="c_ad_block"></div>
+    <script type="text/javascript">
+        fixPostBody();
+        setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+        deliverAdT2();
+        deliverAdC1();
+        deliverAdC2();
+        loadNewsAndKb();
+        loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+        loadOptUnderPost();
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div></div>
+
+
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="FooterCell">
+			<p id="footer">
+	Powered by: 
+	<br>
+	
+	
+<a href="https://www.cnblogs.com/" id="Footer1_Hyperlink3" style="font-size: 12px; font-family: Verdana">博客园</a>
+	<br>
+	Copyright © 2019 浅墨浓香
+<br><span id="poweredby">Powered by .NET Core 3.0.0 on Linux</span>
+
+</p>
+
+
+		</td>
+	</tr>
+</tbody></table>
+
+
+
+    
+
+
+</body></html>

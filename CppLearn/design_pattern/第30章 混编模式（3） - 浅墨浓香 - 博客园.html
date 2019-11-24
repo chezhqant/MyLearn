@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)https://www.cnblogs.com/5iedu/p/5690072.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin">
+    <meta property="og:description" content="30.3 事件触发器的开发（观察者模式+中介者模式） 30.3.1 场景介绍 （1）有一产品它有多个触发事件（如创建事件、修改、删除），如创建文本框时触发OnCreate事件，修改时触发onChang">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>第30章 混编模式（3） - 浅墨浓香 - 博客园</title>
+    
+    <link rel="stylesheet" href="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/blog-common.min.css">
+    <link id="MainCss" rel="stylesheet" href="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/bundle-habahaba.min.css">
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/bundle-habahaba-mobile.min.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/5iedu/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/5iedu/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/5iedu/wlwmanifest.xml">
+    <script src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/pubads_impl_rendering_2019111801.js.下载"></script><script async="" src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/analytics.js.下载"></script><script type="text/javascript" src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/encoder.js.下载"></script><script src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+    <script src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/blog-common.min.js.下载"></script>
+    <script>
+        var currentBlogId = 231128;
+        var currentBlogApp = '5iedu';
+        var cb_enable_mathjax = true;
+        var isLogined = false;
+    </script>
+    <script type="text/x-mathjax-config;executed=true">
+        MathJax.Hub.Config({
+        tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']], processClass: 'math', processEscapes: true },
+        TeX: {
+        equationNumbers: { autoNumber: ['AMS'], useLabelIds: true },
+        extensions: ['extpfeil.js', 'mediawiki-texvc.js'],
+        Macros: {bm: "\\boldsymbol"}
+        },
+        'HTML-CSS': { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+        });
+    </script>
+    <script src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/MathJax.js.下载"></script>
+    
+<style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover, .MJXp-munder {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > *, .MJXp-munder > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><link rel="preload" href="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/f.txt" as="script"><script type="text/javascript" src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/f.txt"></script><script src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/pubads_impl_2019111801.js.下载" async=""></script><link rel="prefetch" href="https://tpc.googlesyndication.com/safeframe/1-0-36/html/container.html"></head>
+<body><div id="MathJax_Message" style="display: none;"></div>
+    <a name="top"></a>
+    
+    <table width="100%" class="Framework" cellspacing="0" cellpadding="0">
+	<tbody><tr>
+		<td colspan="2">
+			
+<div id="top">
+<table width="100%" cellpadding="8" cellspacing="0">
+	<tbody><tr>
+		<td nowrap="">
+			<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/5iedu/">浅墨浓香</a>
+</h1>
+			
+想要天亮进城，就得天黑赶路。
+
+		</td>
+	</tr>
+</tbody></table>
+</div>
+<div id="sub"><div class="BlogStats">posts - 
+690, comments - 
+52, trackbacks - 
+0, articles - 
+16</div>
+
+</div>
+
+
+
+</td>
+	</tr>
+	<tr>
+		<td class="LeftCell">
+            <div id="leftmenu">
+                
+<h3>导航</h3>
+<ul>
+	<li>
+		<a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+	<li>
+		
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/5iedu/">
+首页</a>
+</li>
+	<li>
+		
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+	<li>
+		
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E6%B5%85%E5%A2%A8%E6%B5%93%E9%A6%99">
+联系</a></li>
+	<li>
+		
+<a id="blog_nav_rss" class="menu" href="https://www.cnblogs.com/5iedu/rss/">
+订阅</a></li>
+	<li>
+		
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+                
+<div id="sidebar_news" class="newsItem"><h3>公告</h3>
+<div id="news">
+	
+<div id="blog-news">
+    
+    <div id="profile_block">
+        昵称：
+        <a href="https://home.cnblogs.com/u/5iedu/">
+            浅墨浓香
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/5iedu/" title="入园时间：2015-06-10">
+            4年5个月
+        </a>
+        <br>
+        粉丝：
+        <a href="https://home.cnblogs.com/u/5iedu/followers/">
+            149
+        </a>
+        <br>
+        关注：
+        <a href="https://home.cnblogs.com/u/5iedu/followees/">
+            0
+        </a>
+        <div id="p_b_follow">
+<a href="javascript:void(0)" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;)">+加关注</a></div>
+        <script>getFollowStatus('41562de4-020f-e511-b908-9dcfd8948a71');</script>
+    </div>
+</div>
+</div>
+
+</div>
+
+                <div id="blog-calendar" style="">
+
+<table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar" border="0">
+    <tbody>
+        <tr>
+            <td colspan="7">
+                <table class="CalTitle" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/10/24&#39;); return false;">&lt;</a>
+                            </td>
+                            <td align="center">2019年11月</td>
+                            <td align="right" class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/12/24&#39;); return false;">&gt;</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+                    <th class="CalDayHeader" align="center" abbr="日" scope="col">日</th>
+                    <th class="CalDayHeader" align="center" abbr="一" scope="col">一</th>
+                    <th class="CalDayHeader" align="center" abbr="二" scope="col">二</th>
+                    <th class="CalDayHeader" align="center" abbr="三" scope="col">三</th>
+                    <th class="CalDayHeader" align="center" abbr="四" scope="col">四</th>
+                    <th class="CalDayHeader" align="center" abbr="五" scope="col">五</th>
+                    <th class="CalDayHeader" align="center" abbr="六" scope="col">六</th>
+        </tr>
+            <tr>
+                            <td class="CalOtherMonthDay" align="center">27</td>
+                            <td class="CalOtherMonthDay" align="center">28</td>
+                            <td class="CalOtherMonthDay" align="center">29</td>
+                            <td class="CalOtherMonthDay" align="center">30</td>
+                            <td class="CalOtherMonthDay" align="center">31</td>
+                        <td class="" align="center">
+                            1
+                        </td>
+                    <td class="CalWeekendDay" align="center">
+                        2
+                    </td>
+            </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            3
+                        </td>
+                            <td class="" align="center">
+                                4
+                            </td>
+                            <td class="" align="center">
+                                5
+                            </td>
+                            <td class="" align="center">
+                                6
+                            </td>
+                            <td class="" align="center">
+                                <a href="https://www.cnblogs.com/5iedu/archive/2019/11/07.html"><u>7</u></a>
+                            </td>
+                            <td class="" align="center">
+                                8
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            9
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            10
+                        </td>
+                            <td class="" align="center">
+                                11
+                            </td>
+                            <td class="" align="center">
+                                12
+                            </td>
+                            <td class="" align="center">
+                                13
+                            </td>
+                            <td class="" align="center">
+                                14
+                            </td>
+                            <td class="" align="center">
+                                15
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            16
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            <a href="https://www.cnblogs.com/5iedu/archive/2019/11/17.html"><u>17</u></a>
+                        </td>
+                            <td class="" align="center">
+                                18
+                            </td>
+                            <td class="" align="center">
+                                19
+                            </td>
+                            <td class="" align="center">
+                                <a href="https://www.cnblogs.com/5iedu/archive/2019/11/20.html"><u>20</u></a>
+                            </td>
+                            <td class="" align="center">
+                                21
+                            </td>
+                            <td class="" align="center">
+                                22
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            23
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalTodayDay" align="center">
+                            24
+                        </td>
+                            <td class="" align="center">
+                                25
+                            </td>
+                            <td class="" align="center">
+                                26
+                            </td>
+                            <td class="" align="center">
+                                27
+                            </td>
+                            <td class="" align="center">
+                                28
+                            </td>
+                            <td class="" align="center">
+                                29
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            30
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalOtherMonthDay" align="center">
+                            1
+                        </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                2
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                3
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                4
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                5
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                6
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            7
+                        </td>
+                </tr>
+    </tbody>
+</table></div>
+                <script>loadBlogDefaultCalendar();</script>
+                <div id="blog-sidecolumn">
+<!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    <div id="sidebar_search" class="mySearch">
+        <h3 class="catListTitle">搜索</h3>
+        <div id="sidebar_search_box">
+            <div id="widget_my_zzk" class="div_my_zzk">
+                <input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk">
+            </div>
+            <div id="widget_my_google" class="div_my_zzk">
+                <input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 常用链接 -->
+<div id="sidebar_shortcut" class="sidebar-block">
+    
+<h3 class="catListTitle">
+常用链接
+</h3>
+<ul>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/p/" title="我的博客的随笔列表">我的随笔</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/MyComments.html" title="我的发表过的评论列表">我的评论</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/OtherPosts.html" title="我评论过的随笔列表">我的参与</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/RecentComments.html" title="我的博客的评论列表">最新评论</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/tag/" title="我的博客的标签列表">我的标签</a>
+</li>
+</ul>
+
+<!-- TODO: 检查是否有使用这一部分的控件，如果没有则应该删除。 -->
+<div id="itemListLin_con" style="display:none">
+    <ul>
+
+    </ul>
+</div>
+
+</div>
+
+<!-- 最新随笔 -->
+
+
+
+<!-- 我的标签 -->
+<div id="sidebar_toptags" class="sidebar-block">
+    
+</div>
+
+<!-- 积分与排名 -->
+
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+    
+		<h3>
+
+随笔分类
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/811805.html" rel="" target="">
+    C++深度解析(73)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/804081.html" rel="" target="">
+    C语言进阶剖析(48)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/911906.html" rel="" target="">
+    Linux基础与系统管理(35)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/937714.html" rel="" target="">
+    Linux应用与网络编程(64)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1005833.html" rel="" target="">
+    lua(3)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1005832.html" rel="" target="">
+    makefile(10)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1503320.html" rel="" target="">
+    Modern C++ 11/14(30)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/819307.html" rel="" target="">
+    QT实验分析教程(85)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/699743.html" rel="" target="">
+    Windows程序设计(58)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/699744.html" rel="" target="">
+    Windows核心编程(57)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/994985.html" rel="" target="">
+    计算机网络原理(54)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/825371.html" rel="" target="">
+    设计模式(41)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1007185.html" rel="" target="">
+    深入应用C++11(27)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/911523.html" rel="" target="">
+    数据结构实战分析(79)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/888633.html" rel="" target="">
+    重构(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/963515.html" rel="" target="">
+    专业嵌入式软件开发(15)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+随笔档案
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/11.html" rel="" target="">
+    2019年11月(3)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/10.html" rel="" target="">
+    2019年10月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/09.html" rel="" target="">
+    2019年9月(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/08.html" rel="" target="">
+    2019年8月(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/07.html" rel="" target="">
+    2019年7月(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/12.html" rel="" target="">
+    2017年12月(13)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/11.html" rel="" target="">
+    2017年11月(23)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/10.html" rel="" target="">
+    2017年10月(21)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/09.html" rel="" target="">
+    2017年9月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/08.html" rel="" target="">
+    2017年8月(22)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/07.html" rel="" target="">
+    2017年7月(27)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/06.html" rel="" target="">
+    2017年6月(21)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/05.html" rel="" target="">
+    2017年5月(35)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/04.html" rel="" target="">
+    2017年4月(19)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/03.html" rel="" target="">
+    2017年3月(28)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/02.html" rel="" target="">
+    2017年2月(15)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/01.html" rel="" target="">
+    2017年1月(51)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/12.html" rel="" target="">
+    2016年12月(26)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/11.html" rel="" target="">
+    2016年11月(20)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/10.html" rel="" target="">
+    2016年10月(13)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/09.html" rel="" target="">
+    2016年9月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/08.html" rel="" target="">
+    2016年8月(11)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/07.html" rel="" target="">
+    2016年7月(24)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/06.html" rel="" target="">
+    2016年6月(26)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/05.html" rel="" target="">
+    2016年5月(34)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/04.html" rel="" target="">
+    2016年4月(73)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/03.html" rel="" target="">
+    2016年3月(33)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/02.html" rel="" target="">
+    2016年2月(7)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/12.html" rel="" target="">
+    2015年12月(2)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/11.html" rel="" target="">
+    2015年11月(4)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/10.html" rel="" target="">
+    2015年10月(7)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/09.html" rel="" target="">
+    2015年9月(6)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/08.html" rel="" target="">
+    2015年8月(54)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/07.html" rel="" target="">
+    2015年7月(25)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/06.html" rel="" target="">
+    2015年6月(4)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+文章分类
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/715136.html" rel="" target="">
+    Windows内核(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/729402.html" rel="" target="">
+    编程经验(12)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/812154.html" rel="" target="">
+    常用代码(2)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/954364.html" rel="" target="">
+    综合案例(1)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+相册
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/gallery/718135.html" rel="nofollow noopener noreferrer" target="">
+    笔记插图
+</a>
+
+</li>
+			
+				</ul>
+
+
+</div>
+
+<!-- 最新评论 -->
+<div id="sidebar_recentcomments" class="sidebar-block">
+    <div id="recent_comments_wrap" class="RecentComment">
+    <h3 class="catListTitle">最新评论</h3>
+    <div class="RecentCommentBlock">
+        <ul>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/11390495.html#4344239">1. Re:第18课 捕获机制及陷阱</a></li>
+                    <li class="recent_comment_body">博主不仅高产，而且文章质量都挺好</li>
+                    <li class="recent_comment_author">--YaphetS嘟嘟</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4315939">2. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">博主你好，觉得你的博客特别受用，可以告知一下其他博客的密码吗</li>
+                    <li class="recent_comment_author">--cp2018</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/7040429.html#4294675">3. Re:第5章 IP地址和子网划分（2）_IP地址分类和NAT技术</a></li>
+                    <li class="recent_comment_body">像icmp这种没有端口的不知道是如何实现NAT转换的？</li>
+                    <li class="recent_comment_author">--Eagle-jie</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4280947">4. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">同问</li>
+                    <li class="recent_comment_author">--tiger_wangsir</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4237914">5. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">博主你好，觉得你的博客特别受用，可以告知一下其他博客的密码吗</li>
+                    <li class="recent_comment_author">--胡瑶co</li>
+        </ul>
+    </div>
+</div>
+</div>
+
+
+
+<!-- 阅读排行榜 -->
+<div id="sidebar_topviewedposts" class="sidebar-block">
+    
+<div id="topview_posts_wrap">
+    <h3 class="catListTitle">阅读排行榜</h3>
+    <div id="TopViewPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5595153.html">
+                            1. 第17章 行为型模式—解释器模式(6762)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7376543.html">
+                            2. 第11章 拾遗1：网络地址转换(NAT)和端口映射(4936)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7095041.html">
+                            3. 第6章 静态路由和动态路由（4）_OSPF动态路由协议(3791)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/4899791.html">
+                            4. 第17章 内存映射文件（1）_内存映射文件简介(3741)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7742589.html">
+                            5. 第16课 右值引用（3）_std::forward与完美转发(3730)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- 评论排行榜 -->
+<div id="sidebar_topcommentedposts" class="sidebar-block">
+    
+<div id="topfeedback_posts_wrap">
+    <h3 class="catListTitle">评论排行榜</h3>
+    <div id="TopFeedbackPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/6498326.html">
+                            1. 第83课 另一种创建线程的方式(9)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5325466.html">
+                            2. 第20课 链接过程简介(5)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5429059.html">
+                            3. 第7课 Qt中的坐标系统(4)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5835715.html">
+                            4. 第37课 深度解析QMap与QHash(3)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5617055.html">
+                            5. 第56课 函数模板的概念和意义(2)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- 推荐排行榜 -->
+<div id="sidebar_topdiggedposts" class="sidebar-block">
+    
+<div id="topdigg_posts_wrap">
+    <div class="catListView">
+        <h3 class="catListTitle">推荐排行榜</h3>
+        <div id="TopDiggPostsBlock">
+            <ul style="word-break: break-all">
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/4812259.html">
+                                1. 第11章 Windows线程池（2）_Win2008及以上的新线程池(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/5363054.html">
+                                2. 第1课 学习 C++ 的意义(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/5367317.html">
+                                3. 第5课 引用的本质分析(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/6800234.html">
+                                4. 第1章 计算机网络和协议（1）_网络的概念(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/6829593.html">
+                                5. 第1章 计算机网络和协议（3）_TCP/IP协议(1)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div></div>
+                <script>loadBlogSideColumn();</script>
+            </div>
+		</td>
+		<td class="MainCell" width="100%">
+			<div id="main">
+				<div id="post_detail">
+	<div class="post">
+		<div class="posthead">
+			<h2>
+				
+<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/5iedu/p/5690072.html">第30章 混编模式（3）</a>
+
+			</h2>
+ 			Posted on 
+<span id="post-date">2016-07-20 23:22</span>&nbsp;<a href="https://www.cnblogs.com/5iedu/">浅墨浓香</a> 阅读(<span id="post_view_count">91</span>) 评论(<span id="post_comment_count">0</span>) <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5690072" rel="nofollow"> 编辑</a> <a href="javascript:void(0)" onclick="AddToWz(5690072); return false;">收藏</a>
+
+			
+			
+		</div>
+		<div class="postbody">
+<div id="cnblogs_post_body" class="blogpost-body ">
+    <p><strong>30.3 </strong><strong>事件触发器的开发（观察者模式+中介者模式）</strong></p>
+<p><strong>30.3.1 </strong><strong>场景介绍</strong></p>
+<p>（1）有一产品它有<span style="color: #ff0000;"><strong>多个触发事件</strong></span>（如<span style="color: #0000ff;"><strong>创建事件、修改、删除</strong></span>），如创建文本框时触发OnCreate事件，修改时触发onChange事件，双击时触发onDblClick事件。</p>
+<p>（2）当<span style="color: #0000ff;"><strong>产品触发事件时</strong></span>，会<span style="color: #ff0000;"><strong>创建相应的产品事件对象</strong></span>（ProductEvent），并将这个事件对象传递给观察者，以便<span style="color: #0000ff;"><strong>通知观察者该事件的发生</strong></span>。</p>
+<p>（3）<strong><span style="color: #0000ff;">观察者</span>实现上是一个<span style="color: #ff0000;">事件的分发者</span></strong>，<span style="color: #0000ff;"><strong>相当于</strong></span>中介模式中的<span style="color: #ff0000;"><strong>中介对象</strong></span>，会把这个事件分发者相应的事件处理对象。</p>
+<p><strong>30.3.2 </strong><strong>类图</strong></p>
+<p style="text-align: center;">&nbsp;<img src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/772759-20160720231910701-1176913447.png" alt=""></p>
+<p><strong>（1）事件的<span style="color: #ff0000;">观察者</span></strong>：作为观察者模式中的观察者角色，接收观察期望完成的任务，在这个框架中<span style="color: #0000ff;"><strong>主要用来接收ProductEvent事件</strong>。</span></p>
+<p><strong>（2）事件<span style="color: #ff0000;">分发者</span></strong>：作为中介者模式中的<span style="color: #0000ff;"><strong>中介者角色</strong></span>，它担当着非常重要的<span style="color: #ff0000;"><strong>任务——分发事件</strong></span>，并同时协调各个同事类（也就是事件的处理者）处理事件。</p>
+<p>（3）抽象事件处理者：相当于中介者模式中的抽象同事类。为每个事件处理者定义能够处理事件的级别，但定义与中介者交互的接口（exec）</p>
+<p>【编程实验】事件触发器</p>
+<p>//Classes.h</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;9398410c-fb21-4562-842d-176623cba479&#39;)"><img id="code_img_closed_9398410c-fb21-4562-842d-176623cba479" class="code_img_closed" src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/ContractedBlock.gif" alt=""><img id="code_img_opened_9398410c-fb21-4562-842d-176623cba479" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide(&#39;9398410c-fb21-4562-842d-176623cba479&#39;,event)" src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_9398410c-fb21-4562-842d-176623cba479" class="cnblogs_code_hide">
+<pre><span style="color: #0000ff;">#pragma</span> once
+<span style="color: #008000;">//</span><span style="color: #008000;">**************************************辅助类********************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">产品事件类型</span>
+<span style="color: #0000ff;">enum</span><span style="color: #000000;"> ProductEventType
+{
+    NEW_PRODUCT </span>= <span style="color: #800080;">1</span><span style="color: #000000;">,
+    DEL_PRODUCT </span>= <span style="color: #800080;">2</span><span style="color: #000000;">,
+    EDIT_PRODUCT </span>= <span style="color: #800080;">3</span><span style="color: #000000;">,
+    CLONE_PRODUCT </span>= <span style="color: #800080;">4</span><span style="color: #000000;">
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">事件处理类型</span>
+<span style="color: #0000ff;">enum</span><span style="color: #000000;"> EventHandlerType
+{
+    NEW </span>= <span style="color: #800080;">1</span><span style="color: #000000;">,
+    DEL </span>= <span style="color: #800080;">2</span><span style="color: #000000;">,
+    EDIT </span>=<span style="color: #800080;">3</span><span style="color: #000000;">,
+    CLONE </span>= <span style="color: #800080;">4</span><span style="color: #000000;">
+};
+
+typedef </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> Object;
+</span><span style="color: #008000;">//</span><span style="color: #008000;">事件对象类(主要用来记录触发事件的源对象)</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> EventObject
+{
+    Object</span>* source; <span style="color: #008000;">//</span><span style="color: #008000;">记录事件源对象</span>
+<span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    EventObject(Object</span>*<span style="color: #000000;"> source)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;source =<span style="color: #000000;"> source;
+    }
+
+    Object</span>*<span style="color: #000000;"> EventSource()
+    {
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> source;
+    }
+};</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p>//Product.h</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">*******************************************辅助类***********************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">以下的Product和ProductManager类是组合关系，为了让Product类只能由ProductManager类来创建
+</span><span style="color: #008000;">//</span><span style="color: #008000;">而外部无法直接创建，可以将Product的构造函数私有化，并在Product中声明ProductManager为友
+</span><span style="color: #008000;">//</span><span style="color: #008000;">元类来达到目的。但以下利用一种适合于其他不支持友元类的语言中的方法，这种方种被称为
+</span><span style="color: #008000;">//</span><span style="color: #008000;">单来源调用（Single Call）的方法。</span>
+<span style="color: #0000ff;">#pragma</span> once<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #0000ff;">class</span><span style="color: #000000;"> Product;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">ProductManager</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> ProductManager
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">是否可以创建一个产品</span>
+    <span style="color: #0000ff;">bool</span><span style="color: #000000;"> isPermittedCreate;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">建立一个产品</span>
+    Product* createProduct(<span style="color: #0000ff;">string</span><span style="color: #000000;"> name);
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">获得是否可以创建一个产品</span>
+    <span style="color: #0000ff;">bool</span><span style="color: #000000;"> isCreateProduct();
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">修改一个产品</span>
+    <span style="color: #0000ff;">void</span> editProduct(Product&amp; p,<span style="color: #0000ff;">string</span><span style="color: #000000;"> name);
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">废弃一个产品</span>
+    <span style="color: #0000ff;">void</span> abandonProduct(Product&amp;<span style="color: #000000;"> p);
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">克隆一个产品</span>
+    Product&amp; clone(Product&amp;<span style="color: #000000;"> p);
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">产品类</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Product
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span> name; <span style="color: #008000;">//</span><span style="color: #008000;">产品名称</span>
+    <span style="color: #0000ff;">bool</span> canChanged; <span style="color: #008000;">//</span><span style="color: #008000;">是否允许修改属性</span>
+    ProductManager*<span style="color: #000000;"> manager;
+
+    Product(ProductManager</span>&amp; manager, <span style="color: #0000ff;">string</span><span style="color: #000000;"> name);
+
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">static</span> Product&amp; getInstance(ProductManager&amp; manager, <span style="color: #0000ff;">string</span><span style="color: #000000;"> name);
+
+    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> getName();
+
+    </span><span style="color: #0000ff;">void</span> setName(<span style="color: #0000ff;">string</span><span style="color: #000000;"> value);
+
+    Product</span>&amp;<span style="color: #000000;"> clone();
+};</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>//Product.cpp</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;cfc3e642-a2b0-4079-9ce9-f9df12fed68e&#39;)"><img id="code_img_closed_cfc3e642-a2b0-4079-9ce9-f9df12fed68e" class="code_img_closed" src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/ContractedBlock.gif" alt=""><img id="code_img_opened_cfc3e642-a2b0-4079-9ce9-f9df12fed68e" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide(&#39;cfc3e642-a2b0-4079-9ce9-f9df12fed68e&#39;,event)" src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_cfc3e642-a2b0-4079-9ce9-f9df12fed68e" class="cnblogs_code_hide">
+<pre>#include <span style="color: #800000;">"</span><span style="color: #800000;">Product.h</span><span style="color: #800000;">"</span><span style="color: #000000;">
+#include </span><span style="color: #800000;">"</span><span style="color: #800000;">Observable.h</span><span style="color: #800000;">"</span>
+<span style="color: #008000;">//</span><span style="color: #008000;">********************Product Impl*********************</span>
+Product::Product(ProductManager&amp; manager, <span style="color: #0000ff;">string</span><span style="color: #000000;"> name)
+{
+    </span><span style="color: #0000ff;">this</span>-&gt;canChanged = <span style="color: #0000ff;">false</span><span style="color: #000000;">;
+
+    </span><span style="color: #0000ff;">this</span>-&gt;manager = &amp;<span style="color: #000000;">manager;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">允许建立产品</span>
+    <span style="color: #0000ff;">if</span><span style="color: #000000;">(manager.isCreateProduct())
+    {
+        canChanged </span>= <span style="color: #0000ff;">true</span><span style="color: #000000;">;
+        </span><span style="color: #0000ff;">this</span>-&gt;name =<span style="color: #000000;"> name;
+    }
+}
+
+Product</span>&amp; Product::getInstance(ProductManager&amp; manager, <span style="color: #0000ff;">string</span><span style="color: #000000;"> name)
+{
+    Product</span>* ret =<span style="color: #000000;"> NULL;
+    </span><span style="color: #0000ff;">if</span><span style="color: #000000;">(manager.isCreateProduct())
+    {
+        ret </span>= <span style="color: #0000ff;">new</span><span style="color: #000000;"> Product(manager, name);
+    }
+
+    </span><span style="color: #0000ff;">return</span> *<span style="color: #000000;">ret;
+}
+
+</span><span style="color: #0000ff;">string</span> Product::getName(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> name;}
+
+</span><span style="color: #0000ff;">void</span> Product::setName(<span style="color: #0000ff;">string</span><span style="color: #000000;"> value)
+{
+    </span><span style="color: #0000ff;">if</span><span style="color: #000000;">(canChanged)
+        name </span>=<span style="color: #000000;"> value;
+}
+
+Product</span>&amp;<span style="color: #000000;"> Product::clone()
+{
+    Product</span>* ret = <span style="color: #0000ff;">new</span> Product(*<span style="color: #000000;">manager, name);
+
+    </span><span style="color: #0000ff;">return</span> *<span style="color: #000000;">ret;
+}
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">********************ProductManager Impl*********************</span>
+Product* ProductManager::createProduct(<span style="color: #0000ff;">string</span><span style="color: #000000;"> name)
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">首先修改权限，允许创建</span>
+    isPermittedCreate = <span style="color: #0000ff;">true</span><span style="color: #000000;">;
+    Product</span>&amp; p = Product::getInstance(*<span style="color: #0000ff;">this</span><span style="color: #000000;">, name);
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">产生一个创建事件</span>
+    ProductEvent <span style="color: #0000ff;">event</span>(&amp;<span style="color: #000000;">p, ProductEventType::NEW_PRODUCT);
+    </span><span style="color: #0000ff;">return</span> &amp;<span style="color: #000000;">p;
+}
+</span><span style="color: #008000;">//</span><span style="color: #008000;">获得是否可以创建一个产品</span>
+<span style="color: #0000ff;">bool</span><span style="color: #000000;"> ProductManager::isCreateProduct()
+{
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> isPermittedCreate;
+}
+</span><span style="color: #008000;">//</span><span style="color: #008000;">修改一个产品</span>
+<span style="color: #0000ff;">void</span> ProductManager::editProduct(Product&amp; p,<span style="color: #0000ff;">string</span><span style="color: #000000;"> name)
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">修改后的名字</span>
+<span style="color: #000000;">    p.setName(name);
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">产生一个修改事件</span>
+    ProductEvent <span style="color: #0000ff;">event</span>(&amp;<span style="color: #000000;">p, ProductEventType::EDIT_PRODUCT);
+}
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">废弃一个产品</span>
+<span style="color: #0000ff;">void</span> ProductManager::abandonProduct(Product&amp;<span style="color: #000000;"> p)
+{
+   </span><span style="color: #008000;">//</span><span style="color: #008000;">产生一个删除事件</span>
+    ProductEvent <span style="color: #0000ff;">event</span>(&amp;<span style="color: #000000;">p, ProductEventType::DEL_PRODUCT);
+    </span><span style="color: #0000ff;">delete</span> &amp;<span style="color: #000000;">p;
+}
+</span><span style="color: #008000;">//</span><span style="color: #008000;">克隆一个产品</span>
+Product&amp; ProductManager::clone(Product&amp;<span style="color: #000000;"> p)
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">产生一个克隆事件</span>
+    ProductEvent <span style="color: #0000ff;">event</span>(&amp;<span style="color: #000000;">p, ProductEventType::CLONE_PRODUCT);
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> p.clone();
+}</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p>//Observable.h</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">#pragma</span> once<span style="color: #000000;">
+#include </span>&lt;list&gt;<span style="color: #000000;">
+#include </span><span style="color: #800000;">"</span><span style="color: #800000;">classes.h</span><span style="color: #800000;">"</span><span style="color: #000000;">
+#include </span><span style="color: #800000;">"</span><span style="color: #800000;">Observer.h</span><span style="color: #800000;">"</span>
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #0000ff;">class</span><span style="color: #000000;"> Product;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">被观察者</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Observable
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    list</span>&lt;Observer*&gt;<span style="color: #000000;"> obs;
+    EventObject eo;
+
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    Observable():eo(</span><span style="color: #800080;">0</span><span style="color: #000000;">){}
+
+    </span><span style="color: #0000ff;">void</span> addObserver(Observer*<span style="color: #000000;"> observer);
+
+    EventObject</span>&amp;<span style="color: #000000;"> getEventObject();
+
+    </span><span style="color: #0000ff;">void</span> notifyObservers(Observable*<span style="color: #000000;"> o);
+
+    </span><span style="color: #0000ff;">virtual</span> ~<span style="color: #000000;">Observable(){}
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">产品事件</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> ProductEvent : Observable
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    Product</span>* source; <span style="color: #008000;">//</span><span style="color: #008000;">事件起源</span>
+<span style="color: #000000;">    ProductEventType type;
+    </span><span style="color: #0000ff;">void</span> init(Product*<span style="color: #000000;"> p, ProductEventType t);
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">通知事件处理中心</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> notifyEventDispatch();
+
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">传入事件的源头，默认为新建类型</span>
+    ProductEvent(Product*<span style="color: #000000;"> p);
+
+    ProductEvent(Product</span>*<span style="color: #000000;"> p, ProductEventType type);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">获得事件的始作俑者</span>
+    Product*<span style="color: #000000;"> getSource();
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">获得事件类型</span>
+<span style="color: #000000;">    ProductEventType getEventType();
+};</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>//Observable.cpp</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;221b20ba-f2ed-40c4-ab33-caa72c09e617&#39;)"><img id="code_img_closed_221b20ba-f2ed-40c4-ab33-caa72c09e617" class="code_img_closed" src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/ContractedBlock.gif" alt=""><img id="code_img_opened_221b20ba-f2ed-40c4-ab33-caa72c09e617" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide(&#39;221b20ba-f2ed-40c4-ab33-caa72c09e617&#39;,event)" src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_221b20ba-f2ed-40c4-ab33-caa72c09e617" class="cnblogs_code_hide">
+<pre>#include <span style="color: #800000;">"</span><span style="color: #800000;">Observable.h</span><span style="color: #800000;">"</span>
+
+<span style="color: #008000;">//</span><span style="color: #008000;">被观察者</span>
+<span style="color: #0000ff;">void</span> Observable::addObserver(Observer*<span style="color: #000000;"> observer)
+{
+    obs.push_back(observer);
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">notifyObservers(this);</span>
+<span style="color: #000000;">}
+
+EventObject</span>&amp; Observable::getEventObject(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> eo;}
+
+</span><span style="color: #0000ff;">void</span> Observable::notifyObservers(Observable*<span style="color: #000000;"> o)
+{
+    list</span>&lt;Observer*&gt;::iterator iter =<span style="color: #000000;"> obs.begin();
+    </span><span style="color: #0000ff;">while</span>(iter !=<span style="color: #000000;"> obs.end())
+    {
+        (</span>*iter)-&gt;update(o, &amp;<span style="color: #000000;">eo);
+        </span>++<span style="color: #000000;">iter;
+    }
+}
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">产品事件</span>
+<span style="color: #0000ff;">void</span>  ProductEvent::init(Product*<span style="color: #000000;"> p, ProductEventType t)
+{
+    </span><span style="color: #0000ff;">this</span>-&gt;source =<span style="color: #000000;"> p;
+    </span><span style="color: #0000ff;">this</span>-&gt;type =<span style="color: #000000;"> t;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">事件触发</span>
+<span style="color: #000000;">    notifyEventDispatch();
+}
+</span><span style="color: #008000;">//</span><span style="color: #008000;">通知事件处理中心</span>
+<span style="color: #0000ff;">void</span><span style="color: #000000;"> ProductEvent::notifyEventDispatch()
+{
+    addObserver(EventDispatch::getInstance());
+    Observable::notifyObservers(</span><span style="color: #0000ff;">this</span><span style="color: #000000;">);
+}
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">传入事件的源头，默认为新建类型</span>
+ProductEvent::ProductEvent(Product*<span style="color: #000000;"> p):Observable()
+{
+    init(p, ProductEventType::NEW_PRODUCT);
+}
+
+ProductEvent::ProductEvent(Product</span>*<span style="color: #000000;"> p, ProductEventType type):Observable()
+{
+    init(p, type);
+}
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">获得事件的始作俑者</span>
+Product*<span style="color: #000000;"> ProductEvent::getSource()
+{
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> source;
+}
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">获得事件类型</span>
+<span style="color: #000000;">ProductEventType ProductEvent::getEventType()
+{
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> type;
+}</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p>//Observer.h</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">#pragma</span> once<span style="color: #000000;">
+#include </span>&lt;vector&gt;<span style="color: #000000;">
+#include </span><span style="color: #800000;">"</span><span style="color: #800000;">classes.h</span><span style="color: #800000;">"</span>
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #0000ff;">class</span><span style="color: #000000;"> Observable;
+</span><span style="color: #0000ff;">class</span><span style="color: #000000;"> EventHandler;
+
+</span><span style="color: #0000ff;">class</span><span style="color: #000000;"> Observer
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> update(Observable* o, EventObject* e) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">virtual</span> ~<span style="color: #000000;">Observer(){}
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">事件通知对象</span>
+<span style="color: #0000ff;">class</span> EventDispatch :<span style="color: #0000ff;">public</span><span style="color: #000000;"> Observer
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">单例模式</span>
+    <span style="color: #0000ff;">static</span> EventDispatch*<span style="color: #000000;"> dispatch;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">事件处理者</span>
+    vector&lt;EventHandler*&gt;<span style="color: #000000;"> handlers;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">不允许生成新的实例</span>
+<span style="color: #000000;">    EventDispatch(){}
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">获得单例对象</span>
+    <span style="color: #0000ff;">static</span> EventDispatch*<span style="color: #000000;"> getInstance();
+
+    EventDispatch</span>*<span style="color: #000000;"> getEventDispatch();
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">事件触发</span>
+    <span style="color: #0000ff;">void</span> update(Observable* o, EventObject*<span style="color: #000000;"> e);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">注册事件处理者</span>
+    <span style="color: #0000ff;">void</span> registerHandler(EventHandler*<span style="color: #000000;"> eventHandler);
+};</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>//Observer.cpp</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;eac1336d-dae2-4a07-9121-8359074b966f&#39;)"><img id="code_img_closed_eac1336d-dae2-4a07-9121-8359074b966f" class="code_img_closed" src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/ContractedBlock.gif" alt=""><img id="code_img_opened_eac1336d-dae2-4a07-9121-8359074b966f" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide(&#39;eac1336d-dae2-4a07-9121-8359074b966f&#39;,event)" src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_eac1336d-dae2-4a07-9121-8359074b966f" class="cnblogs_code_hide">
+<pre>#include <span style="color: #800000;">"</span><span style="color: #800000;">Observer.h</span><span style="color: #800000;">"</span><span style="color: #000000;">
+#include </span><span style="color: #800000;">"</span><span style="color: #800000;">Product.h</span><span style="color: #800000;">"</span><span style="color: #000000;">
+#include </span><span style="color: #800000;">"</span><span style="color: #800000;">Observable.h</span><span style="color: #800000;">"</span><span style="color: #000000;">
+#include </span><span style="color: #800000;">"</span><span style="color: #800000;">Handler.h</span><span style="color: #800000;">"</span>
+<span style="color: #008000;">//</span><span style="color: #008000;">事件通知对象</span>
+EventDispatch*<span style="color: #000000;"> EventDispatch::getInstance()
+{
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> dispatch;
+}
+
+EventDispatch</span>*<span style="color: #000000;"> EventDispatch::getEventDispatch()
+{
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> dispatch;
+}
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">事件触发</span>
+<span style="color: #0000ff;">void</span> EventDispatch::update(Observable* o, EventObject*<span style="color: #000000;"> e)
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">事件的源头
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">Product&amp; p = (Product&amp;)(*(Product*)(e-&gt;EventSource()));
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">事件</span>
+    ProductEvent&amp; <span style="color: #0000ff;">event</span> = (ProductEvent&amp;)(*<span style="color: #000000;">o);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">处理者处理，这里是中介者模式的核心，可以是很复杂的业务逻辑</span>
+    vector&lt;EventHandler*&gt;::iterator iter =<span style="color: #000000;">  handlers.begin();
+    </span><span style="color: #0000ff;">while</span>(iter !=<span style="color: #000000;"> handlers.end())
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">处理能力是否匹配</span>
+        vector&lt;EventHandlerType&gt;&amp; eht= (*iter)-&gt;<span style="color: #000000;">getHandlerType();
+        vector</span>&lt;EventHandlerType&gt;::iterator it =<span style="color: #000000;"> eht.begin();
+        </span><span style="color: #0000ff;">while</span>(it !=<span style="color: #000000;"> eht.end())
+        {
+            </span><span style="color: #0000ff;">if</span> ((<span style="color: #0000ff;">int</span>)(*it) == (<span style="color: #0000ff;">int</span>)<span style="color: #0000ff;">event</span><span style="color: #000000;">.getEventType())
+                (</span>*iter)-&gt;exec(&amp;<span style="color: #0000ff;">event</span><span style="color: #000000;">);
+            </span>++<span style="color: #000000;">it;
+        }
+        </span>++<span style="color: #000000;">iter;
+    }
+}
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">注册事件处理者</span>
+<span style="color: #0000ff;">void</span> EventDispatch::registerHandler(EventHandler*<span style="color: #000000;"> eventHandler)
+{
+    handlers.push_back(eventHandler);
+}
+EventDispatch</span>* EventDispatch::dispatch = <span style="color: #0000ff;">new</span> EventDispatch();</pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p>//Handler.h</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">#pragma</span> once<span style="color: #000000;">
+#include </span>&lt;vector&gt;<span style="color: #000000;">
+#include </span><span style="color: #800000;">"</span><span style="color: #800000;">Classes.h</span><span style="color: #800000;">"</span><span style="color: #000000;">
+#include </span><span style="color: #800000;">"</span><span style="color: #800000;">Observable.h</span><span style="color: #800000;">"</span>
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #0000ff;">class</span><span style="color: #000000;"> EventHandler
+{
+</span><span style="color: #0000ff;">protected</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">定义每个事件处理者处理的级别</span>
+    vector&lt;EventHandlerType&gt;<span style="color: #000000;"> handlerType;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">每个事件处理者都要声明自己处理哪一类别的消息</span>
+<span style="color: #000000;">    EventHandler(EventHandlerType type);
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> addHandlerType(EventHandlerType type);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">得到自己的处理能力</span>
+    vector&lt;EventHandlerType&gt;&amp;<span style="color: #000000;"> getHandlerType();
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">处理事件</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> exec(ProductEvent* e) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">删除事件的处理者</span>
+<span style="color: #0000ff;">class</span> DelEventHandler: <span style="color: #0000ff;">public</span><span style="color: #000000;"> EventHandler
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    DelEventHandler():EventHandler(EventHandlerType::DEL){}
+    </span><span style="color: #0000ff;">void</span> exec(ProductEvent* <span style="color: #0000ff;">event</span><span style="color: #000000;">);
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">创建事件的处理者</span>
+<span style="color: #0000ff;">class</span> CreateEventHandler: <span style="color: #0000ff;">public</span><span style="color: #000000;"> EventHandler
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    CreateEventHandler();
+
+    </span><span style="color: #0000ff;">void</span> exec(ProductEvent* <span style="color: #0000ff;">event</span><span style="color: #000000;">);
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">修改事件的处理者</span>
+<span style="color: #0000ff;">class</span> EditEventHandler: <span style="color: #0000ff;">public</span><span style="color: #000000;"> EventHandler
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    EditEventHandler():EventHandler(EventHandlerType::EDIT){}
+    </span><span style="color: #0000ff;">void</span> exec(ProductEvent* <span style="color: #0000ff;">event</span><span style="color: #000000;">);
+};</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>//Handler.cpp</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;8c5b05c5-035c-42ff-b469-9fc3e21b401f&#39;)"><img id="code_img_closed_8c5b05c5-035c-42ff-b469-9fc3e21b401f" class="code_img_closed" src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/ContractedBlock.gif" alt=""><img id="code_img_opened_8c5b05c5-035c-42ff-b469-9fc3e21b401f" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide(&#39;8c5b05c5-035c-42ff-b469-9fc3e21b401f&#39;,event)" src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_8c5b05c5-035c-42ff-b469-9fc3e21b401f" class="cnblogs_code_hide">
+<pre>#include &lt;iostream&gt;<span style="color: #000000;">
+#include </span><span style="color: #800000;">"</span><span style="color: #800000;">Handler.h</span><span style="color: #800000;">"</span><span style="color: #000000;">
+#include </span><span style="color: #800000;">"</span><span style="color: #800000;">Product.h</span><span style="color: #800000;">"</span>
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">每个事件处理者都要声明自己处理哪一类别的消息</span>
+<span style="color: #000000;">EventHandler::EventHandler(EventHandlerType type)
+{
+    handlerType.push_back(type);
+}
+</span><span style="color: #0000ff;">void</span><span style="color: #000000;"> EventHandler::addHandlerType(EventHandlerType type)
+{
+    handlerType.push_back(type);
+}
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">得到自己的处理能力</span>
+vector&lt;EventHandlerType&gt;&amp;<span style="color: #000000;"> EventHandler::getHandlerType()
+{
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> handlerType;
+}
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">删除事件的处理者</span>
+<span style="color: #0000ff;">void</span> DelEventHandler::exec(ProductEvent* <span style="color: #0000ff;">event</span><span style="color: #000000;">)
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">事件的源头</span>
+    Product* p = <span style="color: #0000ff;">event</span>-&gt;<span style="color: #000000;">getSource();
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">事件类型</span>
+    ProductEventType type = <span style="color: #0000ff;">event</span>-&gt;<span style="color: #000000;">getEventType();
+    cout </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">删除事件的处理:销毁</span><span style="color: #800000;">"</span> &lt;&lt; p-&gt;getName() &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">，事件类型:</span><span style="color: #800000;">"</span> &lt;&lt; type &lt;&lt;<span style="color: #000000;">endl;
+}
+
+CreateEventHandler::CreateEventHandler():EventHandler(EventHandlerType::NEW)
+{
+    handlerType.push_back(EventHandlerType::CLONE);
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">创建事件的处理者</span>
+<span style="color: #0000ff;">void</span> CreateEventHandler::exec(ProductEvent* <span style="color: #0000ff;">event</span><span style="color: #000000;">)
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">事件的源头</span>
+    Product* p = <span style="color: #0000ff;">event</span>-&gt;<span style="color: #000000;">getSource();
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">事件类型</span>
+    ProductEventType type = <span style="color: #0000ff;">event</span>-&gt;<span style="color: #000000;">getEventType();
+    </span><span style="color: #0000ff;">if</span>(type ==<span style="color: #000000;"> ProductEventType::NEW_PRODUCT)
+    {
+        cout </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">新建事件的处理:新建</span><span style="color: #800000;">"</span> &lt;&lt; p-&gt;getName() &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">，事件类型:</span><span style="color: #800000;">"</span> &lt;&lt; type &lt;&lt;<span style="color: #000000;">endl;
+    }
+    </span><span style="color: #0000ff;">else</span><span style="color: #000000;">
+    {
+        cout </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">克隆事件的处理:克隆</span><span style="color: #800000;">"</span> &lt;&lt; p-&gt;getName() &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">，事件类型:</span><span style="color: #800000;">"</span> &lt;&lt; type &lt;&lt;<span style="color: #000000;">endl;
+    }
+}
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">修改事件的处理者</span>
+<span style="color: #0000ff;">void</span> EditEventHandler::exec(ProductEvent* <span style="color: #0000ff;">event</span><span style="color: #000000;">)
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">事件的源头</span>
+    Product* p = <span style="color: #0000ff;">event</span>-&gt;<span style="color: #000000;">getSource();
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">事件类型</span>
+    ProductEventType type = <span style="color: #0000ff;">event</span>-&gt;<span style="color: #000000;">getEventType();
+    cout </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">修改事件的处理:修改</span><span style="color: #800000;">"</span> &lt;&lt; p-&gt;getName() &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">，事件类型:</span><span style="color: #800000;">"</span> &lt;&lt; type &lt;&lt;<span style="color: #000000;">endl;
+}</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p>//main.cpp</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">设计模式混编——观察者模式+中介模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">实例：事件触发器</span>
+#include &lt;iostream&gt;<span style="color: #000000;">
+#include </span><span style="color: #800000;">"</span><span style="color: #800000;">Product.h</span><span style="color: #800000;">"</span><span style="color: #000000;">
+#include </span><span style="color: #800000;">"</span><span style="color: #800000;">Handler.h</span><span style="color: #800000;">"</span>
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">获得事件分发中心</span>
+    EventDispatch* dispatch =<span style="color: #000000;"> EventDispatch::getInstance();
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">接受修改事件的处理</span>
+<span style="color: #000000;">    EditEventHandler editHandler;
+    dispatch</span>-&gt;registerHandler(&amp;<span style="color: #000000;">editHandler);
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">接受删除事件的处理</span>
+<span style="color: #000000;">    DelEventHandler delHandler;
+    dispatch</span>-&gt;registerHandler(&amp;<span style="color: #000000;">delHandler);
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">接受创建事件的处理</span>
+<span style="color: #000000;">    CreateEventHandler createHandler;
+    dispatch</span>-&gt;registerHandler(&amp;<span style="color: #000000;">createHandler);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">建立一个导弹生产工厂</span>
+<span style="color: #000000;">    ProductManager factory;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">制造一个产品</span>
+    cout &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">==========模拟创建产品事件==========</span><span style="color: #800000;">"</span>&lt;&lt;<span style="color: #000000;">endl;
+    cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">创建\"战斧式巡航导弹\"</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    Product</span>* p = factory.createProduct(<span style="color: #800000;">"</span><span style="color: #800000;">战斧式巡航导弹</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">导弹维修</span>
+    cout &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">==========模拟维修产品事件==========</span><span style="color: #800000;">"</span>&lt;&lt;<span style="color: #000000;">endl;
+    cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">升级\"战斧式巡航导弹\"</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    factory.editProduct(</span>*p, <span style="color: #800000;">"</span><span style="color: #800000;">战斧式巡航导弹II</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">导弹维修</span>
+    cout &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">==========模拟克隆产品事件==========</span><span style="color: #800000;">"</span>&lt;&lt;<span style="color: #000000;">endl;
+    cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">克隆\"战斧式巡航导弹II\"</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    factory.clone(</span>*<span style="color: #000000;">p);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">销毁产品</span>
+    cout &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">==========模拟销毁产品事件==========</span><span style="color: #800000;">"</span>&lt;&lt;<span style="color: #000000;">endl;
+    cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">销毁\"战斧式巡航导弹II\"</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    factory.abandonProduct(</span>*<span style="color: #000000;">p);
+
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> dispatch;
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+</span><span style="color: #008000;">/*</span><span style="color: #008000;">输出结果：
+==========模拟创建产品事件==========
+创建"战斧式巡航导弹"
+新建事件的处理:新建战斧式巡航导弹，事件类型:1
+==========模拟维修产品事件==========
+升级"战斧式巡航导弹"
+修改事件的处理:修改战斧式巡航导弹II，事件类型:3
+==========模拟克隆产品事件==========
+克隆"战斧式巡航导弹II"
+克隆事件的处理:克隆战斧式巡航导弹II，事件类型:4
+==========模拟销毁产品事件==========
+销毁"战斧式巡航导弹II"
+删除事件的处理:销毁战斧式巡航导弹II，事件类型:2
+</span><span style="color: #008000;">*/</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><strong>30.3.3 </strong><strong>混编小结</strong></p>
+<p>（1）工厂方法模式：负责产生产品对象，方便产品的修改和扩展，并且实现了产品和工厂的紧耦合，<span style="color: #ff0000;"><strong>避免产品被随意创建而无触发事件的情况发生</strong></span>。</p>
+<p>（2）桥梁模式：在产品和事件两个对象的关系中使用了桥梁模式，如果两者均可独立变化。</p>
+<p><strong>（3）观察者模式</strong></p>
+<p>&nbsp; &nbsp; 观察者模式<span style="color: #ff0000;"><strong>解决了事件如何通知处理者的问题</strong></span>，而且观察者模式还有一个优点是可以有多个观察者，也就是我们的架构是可以有多层次、多分类的处理者。</p>
+<p><strong>（4）中介者模式</strong></p>
+<p>&nbsp; &nbsp; 有了<span style="color: #ff0000;"><strong>事件和处理者</strong></span>，可以利用中介者模式将<span style="color: #ff0000;"><strong>两者解耦</strong></span>，它可以完美地处理这些复杂的关系。</p>
+</div>
+<div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block"><div id="BlogPostCategory">
+    分类: 
+            <a href="https://www.cnblogs.com/5iedu/category/825371.html" target="_blank">设计模式</a></div>
+
+
+    <div id="blog_post_info">
+<div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(5690072,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+        <a id="green_channel_follow" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/5iedu/" target="_blank"><img src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/20150610151331.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/5iedu/">浅墨浓香</a><br>
+            <a href="https://home.cnblogs.com/u/5iedu/followees/">关注 - 0</a><br>
+            <a href="https://home.cnblogs.com/u/5iedu/followers/">粉丝 - 149</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(5690072,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(5690072,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+    <div class="clear"></div>
+    <div id="post_next_prev">
+
+    <a href="https://www.cnblogs.com/5iedu/p/5683622.html" class="p_n_p_prefix">« </a> 上一篇：    <a href="https://www.cnblogs.com/5iedu/p/5683622.html" title="发布于 2016-07-19 09:59">第30章 混编模式（2）</a>
+    <br>
+    <a href="https://www.cnblogs.com/5iedu/p/5693374.html" class="p_n_p_prefix">» </a> 下一篇：    <a href="https://www.cnblogs.com/5iedu/p/5693374.html" title="发布于 2016-07-21 22:21">第31章 新的设计模式（1）</a>
+
+</div>
+</div></div>
+	</div>
+<script src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/highlight.min.js.下载"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 231128, cb_blogApp = '5iedu', cb_blogUserGuid = '41562de4-020f-e511-b908-9dcfd8948a71';
+    var cb_entryId = 5690072, cb_entryCreatedDate = '2016-07-20 23:22', cb_postType = 1; 
+    loadViewCount(cb_entryId);
+</script><a name="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<script>
+    var commentManager = new blogCommentManager();
+    commentManager.renderComments(0);
+</script>
+
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/5iedu/p/5690072.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/5iedu/p/5690072.html#top">返回顶部</a></div>
+    <div id="comment_form_container"><div class="login_tips">
+    注册用户登录后才能发表评论，请 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a>
+     或 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，
+    <a href="https://www.cnblogs.com/">访问</a> 网站首页。
+</div></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"><a href="https://cloud.tencent.com/act/pro/overseas?fromSource=gwzcw.3090393.3090393.3090393&amp;utm_medium=cpc&amp;utm_id=gwzcw.3090393.3090393.3090393" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-腾讯云&#39;)">【推荐】腾讯云海外1核2G云服务器低至2折，半价续费券限量免费领取！</a><br><a href="http://click.aliyun.com/m/1000081987/" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-阿里云&#39;)">【推荐】阿里云双11返场来袭，热门产品低至一折等你来抢！</a><br><a href="http://www.ucancode.com/index.htm" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-工控&#39;)">【推荐】超50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://group.cnblogs.com/topic/90800.html?800019197" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-马士兵&#39;)">【提升】这个价值 50W 年薪的问题，终于被马老师说明白啦...</a><br><a href="https://www.ctyun.cn/activity/20191111?hmsr=%E7%9C%8B%E7%9C%8B-%E5%8D%9A%E5%AE%A2%E5%9B%AD-%E5%8F%8C11-1106&amp;hmpl=&amp;hmcu=&amp;hmkw=&amp;hmci=" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-天翼云&#39;)">【推荐】天翼云双十一翼降到底，云主机11.11元起，抽奖送大礼</a><br><a href="https://www.cnblogs.com/enjoyedu/p/11905399.html?800019191" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-享学&#39;)">【提升】Java程序员年薪40W，他1年走了别人5年的学习之路</a><br><a href="https://www.uibot.com.cn/sem/bky.html" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-uibot_T2&#39;)">【推荐】流程自动化专家UiBot，体系化教程成就高薪RPA工程师</a><br></div>
+    <div id="opt_under_post"></div>
+    <script async="async" src="./第30章 混编模式（3） - 浅墨浓香 - 博客园_files/gpt.js.下载"></script>
+    <script>
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+    </script>
+    <script>
+        googletag.cmd.push(function () {
+            googletag.defineSlot("/1090369/C1", [300, 250], "div-gpt-ad-1546353474406-0").addService(googletag.pubads());
+            googletag.defineSlot("/1090369/C2", [468, 60], "div-gpt-ad-1539008685004-0").addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    </script>
+    <div id="cnblogs_c1" class="c_ad_block" style="">
+        <div id="div-gpt-ad-1546353474406-0" style="height: 250px; width: 300px;"><div id="google_ads_iframe_/1090369/C1_0__container__" style="border: 0pt none; width: 300px; height: 250px;"></div></div>
+    </div>
+    <div id="under_post_news"><div class="recomm-block"><b>相关博文：</b><br>·  <a title="第21章 行为型模式—观察者模式" href="https://www.cnblogs.com/5iedu/p/5629585.html" target="_blank" onclick="clickRecomItmem(5629585)">第21章 行为型模式—观察者模式</a><br>·  <a title="[Python设计模式]第14章老板来了——观察者模式" href="https://www.cnblogs.com/CheeseZH/p/9440617.html" target="_blank" onclick="clickRecomItmem(9440617)">[Python设计模式]第14章老板来了——观察者模式</a><br>·  <a title="第30章 混编模式（2）" href="https://www.cnblogs.com/5iedu/p/5683622.html" target="_blank" onclick="clickRecomItmem(5683622)">第30章 混编模式（2）</a><br>·  <a title="第28章 行为型模式大PK" href="https://www.cnblogs.com/5iedu/p/5657316.html" target="_blank" onclick="clickRecomItmem(5657316)">第28章 行为型模式大PK</a><br>·  <a title="第30章 混编模式（1）" href="https://www.cnblogs.com/5iedu/p/5677251.html" target="_blank" onclick="clickRecomItmem(5677251)">第30章 混编模式（1）</a><br>»  <a target="_blank" href="https://recomm.cnblogs.com/blogpost/5690072">更多推荐...</a></div></div>
+    <div id="cnblogs_c2" class="c_ad_block" style="">
+        <div id="div-gpt-ad-1539008685004-0" style="height: 60px; width: 468px;">
+            <script>
+                if (new Date() >= new Date(2018, 9, 13)) {
+                    googletag.cmd.push(function () { googletag.display("div-gpt-ad-1539008685004-0"); });
+                }
+            </script>
+        <div id="google_ads_iframe_/1090369/C2_0__container__" style="border: 0pt none; width: 468px; height: 60px;"></div></div>
+    </div>
+    <div id="under_post_kb">
+<div class="itnews c_ad_block">
+    <b>最新 IT 新闻</b>:
+    <br>
+ ·              <a href="https://news.cnblogs.com/n/649969/" target="_blank">改变销售人员的CRM交互方式，Salesforce推出AI语音助手及开发套件</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649968/" target="_blank">“基因剪刀”治疗地中海贫血效果初现</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649967/" target="_blank">14nm 5GHz或成CPU绝唱 7/5nm多核容易高频难</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649966/" target="_blank">HTTPZ，将 HTTP 链接转到 HTTPS 的 Firefox 插件</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649965/" target="_blank">4个在2020年持续发展的数据中心冷却趋势</a>
+            <br>
+    » <a href="https://news.cnblogs.com/" title="IT 新闻" target="_blank">更多新闻...</a>
+</div></div>
+    <div id="HistoryToday" class="c_ad_block"></div>
+    <script type="text/javascript">
+        fixPostBody();
+        setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+        deliverAdT2();
+        deliverAdC1();
+        deliverAdC2();
+        loadNewsAndKb();
+        loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+        loadOptUnderPost();
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div></div>
+
+
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="FooterCell">
+			<p id="footer">
+	Powered by: 
+	<br>
+	
+	
+<a href="https://www.cnblogs.com/" id="Footer1_Hyperlink3" style="font-size: 12px; font-family: Verdana">博客园</a>
+	<br>
+	Copyright © 2019 浅墨浓香
+<br><span id="poweredby">Powered by .NET Core 3.0.0 on Linux</span>
+
+</p>
+
+
+		</td>
+	</tr>
+</tbody></table>
+
+
+
+    
+
+
+</body></html>

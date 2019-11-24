@@ -1,0 +1,2316 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)https://www.cnblogs.com/5iedu/category/825371.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="Origin">
+    
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>设计模式 - 随笔分类 - 浅墨浓香 - 博客园</title>
+    
+    <link rel="stylesheet" href="./设计模式 - 随笔分类 - 浅墨浓香 - 博客园_files/blog-common.min.css">
+    <link id="MainCss" rel="stylesheet" href="./设计模式 - 随笔分类 - 浅墨浓香 - 博客园_files/bundle-habahaba.min.css">
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./设计模式 - 随笔分类 - 浅墨浓香 - 博客园_files/bundle-habahaba-mobile.min.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/5iedu/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/5iedu/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/5iedu/wlwmanifest.xml">
+    <script async="" src="./设计模式 - 随笔分类 - 浅墨浓香 - 博客园_files/analytics.js.下载"></script><script src="./设计模式 - 随笔分类 - 浅墨浓香 - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+    <script src="./设计模式 - 随笔分类 - 浅墨浓香 - 博客园_files/blog-common.min.js.下载"></script>
+    <script>
+        var currentBlogId = 231128;
+        var currentBlogApp = '5iedu';
+        var cb_enable_mathjax = true;
+        var isLogined = false;
+    </script>
+    <script type="text/x-mathjax-config;executed=true">
+        MathJax.Hub.Config({
+        tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']], processClass: 'math', processEscapes: true },
+        TeX: {
+        equationNumbers: { autoNumber: ['AMS'], useLabelIds: true },
+        extensions: ['extpfeil.js', 'mediawiki-texvc.js'],
+        Macros: {bm: "\\boldsymbol"}
+        },
+        'HTML-CSS': { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+        });
+    </script>
+    <script src="./设计模式 - 随笔分类 - 浅墨浓香 - 博客园_files/MathJax.js.下载"></script>
+    
+<style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover, .MJXp-munder {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > *, .MJXp-munder > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+<body><div id="MathJax_Message" style="display: none;"></div>
+    <a name="top"></a>
+    
+    <table width="100%" class="Framework" cellspacing="0" cellpadding="0">
+	<tbody><tr>
+		<td colspan="2">
+			
+<div id="top">
+<table width="100%" cellpadding="8" cellspacing="0">
+	<tbody><tr>
+		<td nowrap="">
+			<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/5iedu/">浅墨浓香</a>
+</h1>
+			
+想要天亮进城，就得天黑赶路。
+
+		</td>
+	</tr>
+</tbody></table>
+</div>
+<div id="sub"><div class="BlogStats">posts - 
+690, comments - 
+52, trackbacks - 
+0, articles - 
+16</div>
+
+</div>
+
+
+
+</td>
+	</tr>
+	<tr>
+		<td class="LeftCell">
+            <div id="leftmenu">
+                
+<h3>导航</h3>
+<ul>
+	<li>
+		<a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+	<li>
+		
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/5iedu/">
+首页</a>
+</li>
+	<li>
+		
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+	<li>
+		
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E6%B5%85%E5%A2%A8%E6%B5%93%E9%A6%99">
+联系</a></li>
+	<li>
+		
+<a id="blog_nav_rss" class="menu" href="https://www.cnblogs.com/5iedu/rss/">
+订阅</a></li>
+	<li>
+		
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+                
+<div id="sidebar_news" class="newsItem"><h3>公告</h3>
+<div id="news">
+	
+<div id="blog-news">
+    
+    <div id="profile_block">
+        昵称：
+        <a href="https://home.cnblogs.com/u/5iedu/">
+            浅墨浓香
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/5iedu/" title="入园时间：2015-06-10">
+            4年5个月
+        </a>
+        <br>
+        粉丝：
+        <a href="https://home.cnblogs.com/u/5iedu/followers/">
+            149
+        </a>
+        <br>
+        关注：
+        <a href="https://home.cnblogs.com/u/5iedu/followees/">
+            0
+        </a>
+        <div id="p_b_follow">
+<a href="javascript:void(0)" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;)">+加关注</a></div>
+        <script>getFollowStatus('41562de4-020f-e511-b908-9dcfd8948a71');</script>
+    </div>
+</div>
+</div>
+
+</div>
+
+                <div id="blog-calendar" style="">
+
+<table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar" border="0">
+    <tbody>
+        <tr>
+            <td colspan="7">
+                <table class="CalTitle" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/10/24&#39;); return false;">&lt;</a>
+                            </td>
+                            <td align="center">2019年11月</td>
+                            <td align="right" class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/12/24&#39;); return false;">&gt;</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+                    <th class="CalDayHeader" align="center" abbr="日" scope="col">日</th>
+                    <th class="CalDayHeader" align="center" abbr="一" scope="col">一</th>
+                    <th class="CalDayHeader" align="center" abbr="二" scope="col">二</th>
+                    <th class="CalDayHeader" align="center" abbr="三" scope="col">三</th>
+                    <th class="CalDayHeader" align="center" abbr="四" scope="col">四</th>
+                    <th class="CalDayHeader" align="center" abbr="五" scope="col">五</th>
+                    <th class="CalDayHeader" align="center" abbr="六" scope="col">六</th>
+        </tr>
+            <tr>
+                            <td class="CalOtherMonthDay" align="center">27</td>
+                            <td class="CalOtherMonthDay" align="center">28</td>
+                            <td class="CalOtherMonthDay" align="center">29</td>
+                            <td class="CalOtherMonthDay" align="center">30</td>
+                            <td class="CalOtherMonthDay" align="center">31</td>
+                        <td class="" align="center">
+                            1
+                        </td>
+                    <td class="CalWeekendDay" align="center">
+                        2
+                    </td>
+            </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            3
+                        </td>
+                            <td class="" align="center">
+                                4
+                            </td>
+                            <td class="" align="center">
+                                5
+                            </td>
+                            <td class="" align="center">
+                                6
+                            </td>
+                            <td class="" align="center">
+                                <a href="https://www.cnblogs.com/5iedu/archive/2019/11/07.html"><u>7</u></a>
+                            </td>
+                            <td class="" align="center">
+                                8
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            9
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            10
+                        </td>
+                            <td class="" align="center">
+                                11
+                            </td>
+                            <td class="" align="center">
+                                12
+                            </td>
+                            <td class="" align="center">
+                                13
+                            </td>
+                            <td class="" align="center">
+                                14
+                            </td>
+                            <td class="" align="center">
+                                15
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            16
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            <a href="https://www.cnblogs.com/5iedu/archive/2019/11/17.html"><u>17</u></a>
+                        </td>
+                            <td class="" align="center">
+                                18
+                            </td>
+                            <td class="" align="center">
+                                19
+                            </td>
+                            <td class="" align="center">
+                                <a href="https://www.cnblogs.com/5iedu/archive/2019/11/20.html"><u>20</u></a>
+                            </td>
+                            <td class="" align="center">
+                                21
+                            </td>
+                            <td class="" align="center">
+                                22
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            23
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalTodayDay" align="center">
+                            24
+                        </td>
+                            <td class="" align="center">
+                                25
+                            </td>
+                            <td class="" align="center">
+                                26
+                            </td>
+                            <td class="" align="center">
+                                27
+                            </td>
+                            <td class="" align="center">
+                                28
+                            </td>
+                            <td class="" align="center">
+                                29
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            30
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalOtherMonthDay" align="center">
+                            1
+                        </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                2
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                3
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                4
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                5
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                6
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            7
+                        </td>
+                </tr>
+    </tbody>
+</table></div>
+                <script>loadBlogDefaultCalendar();</script>
+                <div id="blog-sidecolumn">
+<!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    <div id="sidebar_search" class="mySearch">
+        <h3 class="catListTitle">搜索</h3>
+        <div id="sidebar_search_box">
+            <div id="widget_my_zzk" class="div_my_zzk">
+                <input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk">
+            </div>
+            <div id="widget_my_google" class="div_my_zzk">
+                <input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 常用链接 -->
+<div id="sidebar_shortcut" class="sidebar-block">
+    
+<h3 class="catListTitle">
+常用链接
+</h3>
+<ul>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/p/" title="我的博客的随笔列表">我的随笔</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/MyComments.html" title="我的发表过的评论列表">我的评论</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/OtherPosts.html" title="我评论过的随笔列表">我的参与</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/RecentComments.html" title="我的博客的评论列表">最新评论</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/tag/" title="我的博客的标签列表">我的标签</a>
+</li>
+</ul>
+
+<!-- TODO: 检查是否有使用这一部分的控件，如果没有则应该删除。 -->
+<div id="itemListLin_con" style="display:none">
+    <ul>
+
+    </ul>
+</div>
+
+</div>
+
+<!-- 最新随笔 -->
+
+
+
+<!-- 我的标签 -->
+<div id="sidebar_toptags" class="sidebar-block">
+    
+</div>
+
+<!-- 积分与排名 -->
+
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+    
+		<h3>
+
+随笔分类
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/811805.html" rel="" target="">
+    C++深度解析(73)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/804081.html" rel="" target="">
+    C语言进阶剖析(48)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/911906.html" rel="" target="">
+    Linux基础与系统管理(35)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/937714.html" rel="" target="">
+    Linux应用与网络编程(64)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1005833.html" rel="" target="">
+    lua(3)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1005832.html" rel="" target="">
+    makefile(10)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1503320.html" rel="" target="">
+    Modern C++ 11/14(30)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/819307.html" rel="" target="">
+    QT实验分析教程(85)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/699743.html" rel="" target="">
+    Windows程序设计(58)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/699744.html" rel="" target="">
+    Windows核心编程(57)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/994985.html" rel="" target="">
+    计算机网络原理(54)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/825371.html" rel="" target="">
+    设计模式(41)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1007185.html" rel="" target="">
+    深入应用C++11(27)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/911523.html" rel="" target="">
+    数据结构实战分析(79)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/888633.html" rel="" target="">
+    重构(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/963515.html" rel="" target="">
+    专业嵌入式软件开发(15)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+随笔档案
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/11.html" rel="" target="">
+    2019年11月(3)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/10.html" rel="" target="">
+    2019年10月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/09.html" rel="" target="">
+    2019年9月(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/08.html" rel="" target="">
+    2019年8月(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/07.html" rel="" target="">
+    2019年7月(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/12.html" rel="" target="">
+    2017年12月(13)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/11.html" rel="" target="">
+    2017年11月(23)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/10.html" rel="" target="">
+    2017年10月(21)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/09.html" rel="" target="">
+    2017年9月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/08.html" rel="" target="">
+    2017年8月(22)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/07.html" rel="" target="">
+    2017年7月(27)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/06.html" rel="" target="">
+    2017年6月(21)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/05.html" rel="" target="">
+    2017年5月(35)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/04.html" rel="" target="">
+    2017年4月(19)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/03.html" rel="" target="">
+    2017年3月(28)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/02.html" rel="" target="">
+    2017年2月(15)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/01.html" rel="" target="">
+    2017年1月(51)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/12.html" rel="" target="">
+    2016年12月(26)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/11.html" rel="" target="">
+    2016年11月(20)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/10.html" rel="" target="">
+    2016年10月(13)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/09.html" rel="" target="">
+    2016年9月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/08.html" rel="" target="">
+    2016年8月(11)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/07.html" rel="" target="">
+    2016年7月(24)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/06.html" rel="" target="">
+    2016年6月(26)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/05.html" rel="" target="">
+    2016年5月(34)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/04.html" rel="" target="">
+    2016年4月(73)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/03.html" rel="" target="">
+    2016年3月(33)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/02.html" rel="" target="">
+    2016年2月(7)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/12.html" rel="" target="">
+    2015年12月(2)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/11.html" rel="" target="">
+    2015年11月(4)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/10.html" rel="" target="">
+    2015年10月(7)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/09.html" rel="" target="">
+    2015年9月(6)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/08.html" rel="" target="">
+    2015年8月(54)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/07.html" rel="" target="">
+    2015年7月(25)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/06.html" rel="" target="">
+    2015年6月(4)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+文章分类
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/715136.html" rel="" target="">
+    Windows内核(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/729402.html" rel="" target="">
+    编程经验(12)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/812154.html" rel="" target="">
+    常用代码(2)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/954364.html" rel="" target="">
+    综合案例(1)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+相册
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/gallery/718135.html" rel="nofollow noopener noreferrer" target="">
+    笔记插图
+</a>
+
+</li>
+			
+				</ul>
+
+
+</div>
+
+<!-- 最新评论 -->
+<div id="sidebar_recentcomments" class="sidebar-block">
+    <div id="recent_comments_wrap" class="RecentComment">
+    <h3 class="catListTitle">最新评论</h3>
+    <div class="RecentCommentBlock">
+        <ul>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/11390495.html#4344239">1. Re:第18课 捕获机制及陷阱</a></li>
+                    <li class="recent_comment_body">博主不仅高产，而且文章质量都挺好</li>
+                    <li class="recent_comment_author">--YaphetS嘟嘟</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4315939">2. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">博主你好，觉得你的博客特别受用，可以告知一下其他博客的密码吗</li>
+                    <li class="recent_comment_author">--cp2018</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/7040429.html#4294675">3. Re:第5章 IP地址和子网划分（2）_IP地址分类和NAT技术</a></li>
+                    <li class="recent_comment_body">像icmp这种没有端口的不知道是如何实现NAT转换的？</li>
+                    <li class="recent_comment_author">--Eagle-jie</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4280947">4. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">同问</li>
+                    <li class="recent_comment_author">--tiger_wangsir</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4237914">5. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">博主你好，觉得你的博客特别受用，可以告知一下其他博客的密码吗</li>
+                    <li class="recent_comment_author">--胡瑶co</li>
+        </ul>
+    </div>
+</div>
+</div>
+
+
+
+<!-- 阅读排行榜 -->
+<div id="sidebar_topviewedposts" class="sidebar-block">
+    
+<div id="topview_posts_wrap">
+    <h3 class="catListTitle">阅读排行榜</h3>
+    <div id="TopViewPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5595153.html">
+                            1. 第17章 行为型模式—解释器模式(6762)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7376543.html">
+                            2. 第11章 拾遗1：网络地址转换(NAT)和端口映射(4936)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7095041.html">
+                            3. 第6章 静态路由和动态路由（4）_OSPF动态路由协议(3791)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/4899791.html">
+                            4. 第17章 内存映射文件（1）_内存映射文件简介(3741)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7742589.html">
+                            5. 第16课 右值引用（3）_std::forward与完美转发(3730)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- 评论排行榜 -->
+<div id="sidebar_topcommentedposts" class="sidebar-block">
+    
+<div id="topfeedback_posts_wrap">
+    <h3 class="catListTitle">评论排行榜</h3>
+    <div id="TopFeedbackPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/6498326.html">
+                            1. 第83课 另一种创建线程的方式(9)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5325466.html">
+                            2. 第20课 链接过程简介(5)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5429059.html">
+                            3. 第7课 Qt中的坐标系统(4)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5835715.html">
+                            4. 第37课 深度解析QMap与QHash(3)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5617055.html">
+                            5. 第56课 函数模板的概念和意义(2)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- 推荐排行榜 -->
+<div id="sidebar_topdiggedposts" class="sidebar-block">
+    
+<div id="topdigg_posts_wrap">
+    <div class="catListView">
+        <h3 class="catListTitle">推荐排行榜</h3>
+        <div id="TopDiggPostsBlock">
+            <ul style="word-break: break-all">
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/4812259.html">
+                                1. 第11章 Windows线程池（2）_Win2008及以上的新线程池(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/5363054.html">
+                                2. 第1课 学习 C++ 的意义(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/5367317.html">
+                                3. 第5课 引用的本质分析(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/6800234.html">
+                                4. 第1章 计算机网络和协议（1）_网络的概念(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/6829593.html">
+                                5. 第1章 计算机网络和协议（3）_TCP/IP协议(1)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div></div>
+                <script>loadBlogSideColumn();</script>
+            </div>
+		</td>
+		<td class="MainCell" width="100%">
+			<div id="main">
+				
+
+<h2>
+    
+随笔分类 - 设计模式
+
+</h2>
+
+
+
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5695345.html">第31章 新的设计模式（3）</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：31.3 空对象模式（Null Object Pattern） 31.3.1 定义和类图 （1）定义：通过实现一个默认的无意义对象来避免NULL值出现。简单地说，就是为了避免在程序中出现NULL值判断而诞生的一种常用设计方法。 （2）类图 31.3.2 应用场景 （1）不使用空对象模式的例子 【编程
+        <a href="https://www.cnblogs.com/5iedu/p/5695345.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5695345.html" title="permalink">2016-07-22 15:26</a>
+浅墨浓香
+ 阅读 (180) |         <a href="https://www.cnblogs.com/5iedu/p/5695345.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5695345" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5694641.html">第31章 新的设计模式（2）</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：31.2 对象池模式 31.2.1 定义和类图 （1）定义：对象池是一种设计模式，它通过管理有限对象复用来共享某些稀少或必须付出昂贵代价的资源。 （2）类图： 31.2.2 对象池的扩展接口 （1）两级对象池方式：空闲对象池和已用对象池 （2）利用Wrapper模式包装复用对象，使附加一些属性（如空
+        <a href="https://www.cnblogs.com/5iedu/p/5694641.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5694641.html" title="permalink">2016-07-22 11:44</a>
+浅墨浓香
+ 阅读 (170) |         <a href="https://www.cnblogs.com/5iedu/p/5694641.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5694641" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5693374.html">第31章 新的设计模式（1）</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：31.1 规格模式（Specification Pattern） 31.1.1 查询筛选条件 （1）场景：根据条件从数据库的用户表中筛选出对象 （2）存在问题 ①findUserByAgeThan和findUserByName两个方法中除了if后面的判断条件不同，其他地方完全一样 ②这两个程序中唯一
+        <a href="https://www.cnblogs.com/5iedu/p/5693374.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5693374.html" title="permalink">2016-07-21 22:21</a>
+浅墨浓香
+ 阅读 (175) |         <a href="https://www.cnblogs.com/5iedu/p/5693374.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5693374" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5690072.html">第30章 混编模式（3）</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：30.3 事件触发器的开发（观察者模式+中介者模式） 30.3.1 场景介绍 （1）有一产品它有多个触发事件（如创建事件、修改、删除），如创建文本框时触发OnCreate事件，修改时触发onChange事件，双击时触发onDblClick事件。 （2）当产品触发事件时，会创建相应的产品事件对象（Pr
+        <a href="https://www.cnblogs.com/5iedu/p/5690072.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5690072.html" title="permalink">2016-07-20 23:22</a>
+浅墨浓香
+ 阅读 (91) |         <a href="https://www.cnblogs.com/5iedu/p/5690072.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5690072" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5683622.html">第30章 混编模式（2）</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：30.2 迷你版交易系统（工厂模式+策略模式） 30.2.1 IC卡的两种金额 （1）固定金额：指员工不能提现的金额，这部分金额只能用来特定消费，即员工日常必需的消费，如食堂内吃饭、理发、健身等活动。 （2）自由金额：可以提现，也可以用于消费， 30.2.2 扣款策略（假设卡内有充足的余额） （1）
+        <a href="https://www.cnblogs.com/5iedu/p/5683622.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5683622.html" title="permalink">2016-07-19 09:59</a>
+浅墨浓香
+ 阅读 (156) |         <a href="https://www.cnblogs.com/5iedu/p/5683622.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5683622" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5677251.html">第30章 混编模式（1）</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：30.1 命令链模式（命令模式+责任链模式） 30.1.1 UNIX下的命令规则（如ls） （1）命令名为小写字母 （2）命令名、选项、操作数之间以空格分隔，空格数量不受限制 （3）选项之间可以组合使用，也可以单独拆分使用 （4）选项以“-”开头 30.1.2 ls命令详解（如ls -a -l /u
+        <a href="https://www.cnblogs.com/5iedu/p/5677251.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5677251.html" title="permalink">2016-07-16 21:17</a>
+浅墨浓香
+ 阅读 (162) |         <a href="https://www.cnblogs.com/5iedu/p/5677251.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5677251" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5659517.html">第29章 跨战区大PK</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：29.1 策略模式 VS 桥梁模式 29.1.1 策略模式 【编程实验】用策略模式实现邮件发送 （1）有文本和超文本两种格式的邮件，将这两种格式封装成两种不同的发送策略。 （2）文本邮件和超文本邮件分别是两种不同格式的邮件的封装。MailServer是一个环境角色，它接收一个MailTemplate
+        <a href="https://www.cnblogs.com/5iedu/p/5659517.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5659517.html" title="permalink">2016-07-11 10:52</a>
+浅墨浓香
+ 阅读 (105) |         <a href="https://www.cnblogs.com/5iedu/p/5659517.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5659517" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5657316.html">第28章 行为型模式大PK</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：27.1 策略模式 VS 命令模式 27.1.1 策略模式实现压缩算法 //行为型模式大PK——策略模式和命令模式 //实例：用策略模式实现压缩算法 #include &lt;iostream&gt; #include &lt;string&gt; using namespace std; //抽象压缩算法 class A
+        <a href="https://www.cnblogs.com/5iedu/p/5657316.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5657316.html" title="permalink">2016-07-10 11:07</a>
+浅墨浓香
+ 阅读 (141) |         <a href="https://www.cnblogs.com/5iedu/p/5657316.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5657316" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5655921.html">第27章 结构型模式大PK</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：27.1 代理模式 VS 装饰模式 27.1.1 代理模式 （1）场景：客人找运动员代理要求安排运动员参加比赛 （2）说明：代理人有控制权，可以拒绝客人的要求，也可以答应安排，甚至自己下去跑（因为有些运动员本身就作自己的代理） 【编程实验】找代理安排运动员比赛 //结构型模式大PK——代理模式和装饰
+        <a href="https://www.cnblogs.com/5iedu/p/5655921.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5655921.html" title="permalink">2016-07-09 15:08</a>
+浅墨浓香
+ 阅读 (112) |         <a href="https://www.cnblogs.com/5iedu/p/5655921.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5655921" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5655196.html">第26章 创建型模式大PK</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：26.1 工厂方法模式 VS 建造者模式 26.1.1 按工厂方法建造超人 （1）产品：两类超人，成年超人和未成年超人。 （2）工厂：这里选择简单工厂 【编程实验】工厂方法建造超人 26.1.2 按建造者模式建造超人 （1）产品的三大组成部分：躯体、特殊技能、身份标记 （2）建造者：Builder。
+        <a href="https://www.cnblogs.com/5iedu/p/5655196.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5655196.html" title="permalink">2016-07-09 09:22</a>
+浅墨浓香
+ 阅读 (179) |         <a href="https://www.cnblogs.com/5iedu/p/5655196.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (1)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5655196" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5649013.html">第25章 行为型模式—访问者模式</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：1. 访问者模式（Visitor Pattern）的定义 （1）定义：表示一个作用于某对象结构中的各元素的操作。它使你可以在不改变各元素的类的前提下定义作用于这些元素的新操作。 ①模式是要解决当为对象添加新的操作和功能时候，如何尽可能不修改对象的类的一种方法。一般为对象添加功能，是需要向对象添加成员
+        <a href="https://www.cnblogs.com/5iedu/p/5649013.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5649013.html" title="permalink">2016-07-07 10:02</a>
+浅墨浓香
+ 阅读 (210) |         <a href="https://www.cnblogs.com/5iedu/p/5649013.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5649013" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5642059.html">第24章 行为型模式—模板方法模式</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：1. 模板方法模式（Template Method Pattern）的定义 （1）定义：定义一个操作中的算法的骨架，而将一些步骤延迟到子类中。模板方法使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。 （2）模板方法模式的结构和说明 ①AbstractClass：抽象类。用于定义算法骨
+        <a href="https://www.cnblogs.com/5iedu/p/5642059.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5642059.html" title="permalink">2016-07-04 23:28</a>
+浅墨浓香
+ 阅读 (582) |         <a href="https://www.cnblogs.com/5iedu/p/5642059.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5642059" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5639626.html">第23章 行为型模式—策略模式</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：1. 策略模式（Strategy Pattern）的定义 （1）定义：定义一系列的算法，把它们一个个封装起来，并且使它们可相互替换。本模式使得算法可独立于使用它的客户而变化。 ①算法是同一接口的不同实现，地位是平等的，可以相互替换。 ②引入上下文对象，可以实现让算法能独立使用它的客户。因为这个对象负
+        <a href="https://www.cnblogs.com/5iedu/p/5639626.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5639626.html" title="permalink">2016-07-04 10:14</a>
+浅墨浓香
+ 阅读 (201) |         <a href="https://www.cnblogs.com/5iedu/p/5639626.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5639626" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5637909.html">第22章 行为型模式—状态模式</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：1. 状态模式（State Pattern）的定义 （1）定义：允许一个对象在其内部状态改变时改变它的行为。对象看起来似乎修改了它的类。 ①状态和行为，它们的关系可以描述为“状态决定行为” ②因状态是在运行期被改变，行为也会在运行期根据状态的改变而改变。看起来，同一个对象，在不同的运行时刻，行为是不
+        <a href="https://www.cnblogs.com/5iedu/p/5637909.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5637909.html" title="permalink">2016-07-03 13:30</a>
+浅墨浓香
+ 阅读 (1007) |         <a href="https://www.cnblogs.com/5iedu/p/5637909.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5637909" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5629585.html">第21章 行为型模式—观察者模式</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：1. 观察者模式（Observer Pattern）的定义 （1）定义：定义对象间的一种一对多的依赖关系。当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。 （2）观察者模式的结构和说明（拉模型） ①Subject：目标对象，通常具如的功能：一个目标可以被多个观察者观察；目标提供
+        <a href="https://www.cnblogs.com/5iedu/p/5629585.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5629585.html" title="permalink">2016-06-30 12:30</a>
+浅墨浓香
+ 阅读 (177) |         <a href="https://www.cnblogs.com/5iedu/p/5629585.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5629585" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5622988.html">第20章 行为型模式—备忘录模式</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：1. 备忘录模式（Memento Pattern）的定义 （1）定义：在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。这样以后就可将该对象恢复到原先保存的状态。 ①不破坏封装性：对象不能暴露它不应该暴露的细节。 ②捕获对象的内部状态：保存状态的目的是为了恢复，把以将某个对
+        <a href="https://www.cnblogs.com/5iedu/p/5622988.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5622988.html" title="permalink">2016-06-28 12:17</a>
+浅墨浓香
+ 阅读 (184) |         <a href="https://www.cnblogs.com/5iedu/p/5622988.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5622988" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5618826.html">第19章 行为型模式—中介者模式</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：1. 中介者模式（Mediator Pattern）的定义 （1）定义：用一个中介对象来封装一系统对象交互。中介者使得各对象不需要显式地相互引用，从而使其耦合松散，而且可以独立地改变它们之间的交互。 ①中介者模式主要用来将同事类之间网状结构变为星状结构，使同事类之间的关系变的清晰一些。 ②所有对象只
+        <a href="https://www.cnblogs.com/5iedu/p/5618826.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5618826.html" title="permalink">2016-06-26 23:02</a>
+浅墨浓香
+ 阅读 (859) |         <a href="https://www.cnblogs.com/5iedu/p/5618826.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5618826" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5596939.html">第18章 行为型模式—迭代器模式</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：1. 迭代器模式（Iterator Pattern）的定义 （1）定义：提供一种方法顺序访问一个聚合对象中的各个元素，而又不需要暴露该对象的内部表示。 ①迭代器迭代的是具体的聚合对象（如数组和链表等），它围绕的是“访问”做文章。 ②可用不同的遍历策略来遍历聚合，比如是否需要过滤 ③为不同聚合结构提供
+        <a href="https://www.cnblogs.com/5iedu/p/5596939.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5596939.html" title="permalink">2016-06-18 21:40</a>
+浅墨浓香
+ 阅读 (192) |         <a href="https://www.cnblogs.com/5iedu/p/5596939.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5596939" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5595153.html">第17章 行为型模式—解释器模式</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：1. 解释器模式（Interpreter Pattern）的定义 （1）定义 给定一个语言，定义它的文法的一种表示，并定义一个解释器，这个解释器使用该表示来解释语言中的句子。 ①文法：即语法规则。在解释器模式中每一个语法都将对应一个解释器对象，用来处理相应的语法规则。它对于扩展、改变文法以及增加新的
+        <a href="https://www.cnblogs.com/5iedu/p/5595153.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5595153.html" title="permalink">2016-06-17 21:11</a>
+浅墨浓香
+ 阅读 (6762) |         <a href="https://www.cnblogs.com/5iedu/p/5595153.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5595153" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5578970.html">第16章 行为型模式—命令模式</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：1. 命令模式（Command Pattern）的定义 （1）定义 将一个请求封装为一个对象，从而使你可用不同的请求对客户进行参数化；对请求排队或记录请求日志，以及支持可撤销的操作。 ①封装请求：抽象出需要执行的动作，封装成对象（有统一的接口）。 ②参数化：可以用不同的命令对象，去参数化配置客户的请
+        <a href="https://www.cnblogs.com/5iedu/p/5578970.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5578970.html" title="permalink">2016-06-12 22:15</a>
+浅墨浓香
+ 阅读 (859) |         <a href="https://www.cnblogs.com/5iedu/p/5578970.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5578970" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5573318.html">第15章 行为型模式—职责链模式</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：1. 职责链模式（Chain Of Responsibility）的定义 （1）定义 使多个对象都有机会处理请求，从而避免请求的发送者和接收者之间的耦合关系。将这些对象连成一条链，并沿着这条链传递该请求，直到有一个对象处理它为止。 ①标准的职责链模式中，只要有对象处理了请求，这个请求就到此为至，不再
+        <a href="https://www.cnblogs.com/5iedu/p/5573318.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5573318.html" title="permalink">2016-06-10 10:17</a>
+浅墨浓香
+ 阅读 (256) |         <a href="https://www.cnblogs.com/5iedu/p/5573318.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5573318" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5560495.html">第14章 结构型模式—代理模式</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：1. 代理模式（Proxy Pattern）的定义 （1）为其他对象提供一种代理以控制对这个对象的访问 ①代理模式在客户和被客户访问的对象之间，引入了一定程度的间接性，客户是直接使用代理，让代理来与被访问的对象进行交互。 ②这种附加的间接性增加了灵活性和不同的用途。 （2）代理模式的结构和说明 ①P
+        <a href="https://www.cnblogs.com/5iedu/p/5560495.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5560495.html" title="permalink">2016-06-05 12:52</a>
+浅墨浓香
+ 阅读 (229) |         <a href="https://www.cnblogs.com/5iedu/p/5560495.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5560495" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5544753.html">第13章 结构型模式—享元模式</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：1. 享元模式（Flyweight Pattern）的定义 （1）运用共享技术高效地支持大量细粒度的对象 ①对象内部状态：数据不变且重复出现，这部分不会随环境变化而改变，是可以共享的。 ②对象外部状态：数据是变化的，会随环境变化而改变，是不可以共享的。 ③所谓的享元，就是把内部状态的数据分离出来共享
+        <a href="https://www.cnblogs.com/5iedu/p/5544753.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5544753.html" title="permalink">2016-05-31 09:12</a>
+浅墨浓香
+ 阅读 (187) |         <a href="https://www.cnblogs.com/5iedu/p/5544753.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5544753" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5538954.html">第12章 结构型模式—外观模式</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：1. 外观（门面）模式（Facade Pattern）的定义 （1）为子系统中的一组接口提供一个一致的界面，Façade模式定义了一个高层接口，这个接口使得这一子系统更加容易使用。 ①这里说的界面是指从一个组件外部来看这个组件，能够看到什么，也就是外观。如从一个类外部看这个类，那么这个类的publi
+        <a href="https://www.cnblogs.com/5iedu/p/5538954.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5538954.html" title="permalink">2016-05-29 10:02</a>
+浅墨浓香
+ 阅读 (176) |         <a href="https://www.cnblogs.com/5iedu/p/5538954.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5538954" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5538182.html">第11章 结构型模式—装饰模式</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：1. 装饰模式（Decorator Pattern）的定义 （1）动态地给一个对象添加一些额外的职责。就增加功能来说，装饰模式比生成子类更为灵活。 ①装饰模式是为对象（而不是类）添加功能的。 ②用组合方式，而不是继承方式为对象添加功能。 （2）装饰模式的结构和说明 ①Component：组件对象的接
+        <a href="https://www.cnblogs.com/5iedu/p/5538182.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5538182.html" title="permalink">2016-05-28 19:48</a>
+浅墨浓香
+ 阅读 (228) |         <a href="https://www.cnblogs.com/5iedu/p/5538182.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5538182" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5526625.html">第10章 结构型模式—组合模式</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：1. 组合模式（Composite Pattern）的定义 （1）将对象组合成树型结构以表示“部分-整体”的层次结构。组合模式使得用户对单个对象和组合对象的使用具有一致性。 （2）组合模式的结构和说明 ①Component：抽象的组件对象，为组合中的对象声明接口，让客户端可以通过这个接口来访问和管理
+        <a href="https://www.cnblogs.com/5iedu/p/5526625.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5526625.html" title="permalink">2016-05-25 13:00</a>
+浅墨浓香
+ 阅读 (241) |         <a href="https://www.cnblogs.com/5iedu/p/5526625.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5526625" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5521590.html">第9章 结构型模式—桥接模式</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：1. 桥接模式（Bridge Pattern）的定义 （1）将抽象部分与它的实现部分分离，使它们都可以独立地变化 ①一般的“抽象”与“实现”是指父子类的继承关系。但这里，GoF所谓的“抽象”是如果引起一个类变化是多维度的因素（设为2维），就将其他变化因素抽象成一个接口，在“Abstraction类”
+        <a href="https://www.cnblogs.com/5iedu/p/5521590.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5521590.html" title="permalink">2016-05-23 22:00</a>
+浅墨浓香
+ 阅读 (245) |         <a href="https://www.cnblogs.com/5iedu/p/5521590.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5521590" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5514428.html">第8章 结构型模式—适配器模式</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：1. 适配器模式（Adpater pattern）的定义 （1）将一个类的接口转换成客户希望的另外一个接口。适配器模式使得原来由于接口不兼容而不能一起工作的那些可以一起工作。 （2）适配器模式的结构和说明 ①Client客户端，调用自己需要的领域接口Target ②Target：定义客户端需要的跟特
+        <a href="https://www.cnblogs.com/5iedu/p/5514428.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5514428.html" title="permalink">2016-05-21 12:13</a>
+浅墨浓香
+ 阅读 (218) |         <a href="https://www.cnblogs.com/5iedu/p/5514428.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5514428" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5508332.html">第7章 创建型模式—原型模式</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：1. 原型模式（Prototype pattern）的定义 （1）用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象 ①通过克隆来创建新的对象实例 ②新的对象实例复制原型实例属性的值 （2）原型模式的结构和说明 ①Prototype：声明一个克隆自身的接口，用来约束想要克隆自己的类，要求
+        <a href="https://www.cnblogs.com/5iedu/p/5508332.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5508332.html" title="permalink">2016-05-19 13:21</a>
+浅墨浓香
+ 阅读 (157) |         <a href="https://www.cnblogs.com/5iedu/p/5508332.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5508332" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5503775.html">第6章 创建型模式—建造者模式</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：1. 建造者（Builder，或生成器）模式的定义 （1）将一个复杂对象构建与它的表示分离，使得同样的构建过程可以创建不同的表示。 ①上述提到的“构建”是指构造过程的算法（即构造顺序，位于director类中），“表示”指生成各部件的具体细节（或叫实现，位于Builder或其子类中）。 ②由指导者(
+        <a href="https://www.cnblogs.com/5iedu/p/5503775.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5503775.html" title="permalink">2016-05-18 00:09</a>
+浅墨浓香
+ 阅读 (225) |         <a href="https://www.cnblogs.com/5iedu/p/5503775.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5503775" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5499351.html">第5章 创建型模式—抽象工厂模式</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：1. 抽象工厂的定义 （1）提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类 ①只需要知道创建一系列对象的接口，而无需知道具体使用的是哪一个实现 ②这一系列对象是相关或相互依赖的，也就是说既要创建对象，还要约束它们之间的关系。 ③一系列对象是构建新对象所需要的组成部分，并且对象之间
+        <a href="https://www.cnblogs.com/5iedu/p/5499351.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5499351.html" title="permalink">2016-05-16 20:22</a>
+浅墨浓香
+ 阅读 (247) |         <a href="https://www.cnblogs.com/5iedu/p/5499351.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5499351" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5493296.html">第4章 创建型模式—工厂方法模式(2)</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：2. 工厂方法模式 2.1工厂方法模式的定义 （1）定义一个用于创建对象的接口，让子类决定实例化哪一个类，工厂模式使一个类的实例化延迟到其子类 ①Product：定义了工厂方法创建对象的接口。也就是实际需要使用的产品对象的接口 ②ConcreteProduct：具体的Product接口的实现对象。 
+        <a href="https://www.cnblogs.com/5iedu/p/5493296.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5493296.html" title="permalink">2016-05-14 20:42</a>
+浅墨浓香
+ 阅读 (239) |         <a href="https://www.cnblogs.com/5iedu/p/5493296.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5493296" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5491639.html">第4章 创建型模式—工厂方法模式(1)</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：1. 简单工厂 1.1 简单工厂的定义 （1）提供一个创建对象实例的功能，而无须关心其具体实现。 ①Api接口：定义客户所需要的功能接口 ②Impl：具体实现Api的实现类，可能会有多个 ③SimpleFatory类：工厂，选择合适的实现类来创建Api接口对象 ④Client：客户端，通过Facto
+        <a href="https://www.cnblogs.com/5iedu/p/5491639.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5491639.html" title="permalink">2016-05-13 23:36</a>
+浅墨浓香
+ 阅读 (255) |         <a href="https://www.cnblogs.com/5iedu/p/5491639.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5491639" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5480719.html">第3章 创建型模式—单例模式</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：1. 单例模式（Singleton Pattern） （1）定义：保证一个类仅有一个实例，同时提供能对该实例加以访问的全局访问方法。 （2）解决思路： ①在类中，要构造一个实例，就必须调用类的构造函数。如此，为了防止在外部调用类的构造函数而创建实例，需要将构造函数的访问权限设为protected或p
+        <a href="https://www.cnblogs.com/5iedu/p/5480719.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5480719.html" title="permalink">2016-05-11 09:21</a>
+浅墨浓香
+ 阅读 (308) |         <a href="https://www.cnblogs.com/5iedu/p/5480719.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5480719" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5479106.html">第2章 面向对象的设计原则（SOLID）：6_开闭原则</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：6. 开闭原则（Open Closed Principle，OCP） 6.1 定义 （1）一个类应该对扩展开放，对修改关闭。要求通过扩展来实现变化，而且是在不修改己有的代码情况下进行扩展，也不必改动己有的源代码或二进制代码。 （2）在软件生命周期内，变化是一个既定的事实，在设计时尽量适应这些变化，以
+        <a href="https://www.cnblogs.com/5iedu/p/5479106.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5479106.html" title="permalink">2016-05-10 19:14</a>
+浅墨浓香
+ 阅读 (226) |         <a href="https://www.cnblogs.com/5iedu/p/5479106.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5479106" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5478221.html">第2章 面向对象的设计原则（SOLID）：5_迪米特法则</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：5. 迪米特法则（Law of Demeter，LoD） 5.1 定义 （1）应尽量减少其他对象之间的交互，对象只和自己的朋友交谈，即对其他依赖的类越少越好（不要和太多的类发生关系）。 （2）尽量不要让类和类之间建立直接的关系，这样可减少类与类之间的依赖，降低类之间的耦合。 （3）一个类应对自己需要
+        <a href="https://www.cnblogs.com/5iedu/p/5478221.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5478221.html" title="permalink">2016-05-10 16:11</a>
+浅墨浓香
+ 阅读 (188) |         <a href="https://www.cnblogs.com/5iedu/p/5478221.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5478221" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5476757.html">第2章 面向对象的设计原则（SOLID）：4_接口隔离原则（ISP）</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：4. 接口隔离原则（Interface Segregation Principle，ISP） 4.1 定义 （1）使用多个专门的接口，而不使用单一的总接口，即客户端不应该依赖那些它不需要的接口。类间的依赖关系应该建立在最小接口上 （2）接口尽量细化，同时接口中的方法尽量少。每个接口中只包含一个客户端
+        <a href="https://www.cnblogs.com/5iedu/p/5476757.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5476757.html" title="permalink">2016-05-10 10:02</a>
+浅墨浓香
+ 阅读 (172) |         <a href="https://www.cnblogs.com/5iedu/p/5476757.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5476757" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5475813.html">第2章 面向对象的设计原则（SOLID）：3_依赖倒置原则（DIP）</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：3. 依赖倒置原则（Dependence Inversion Principle，DIP） 3.1 定义 （1）要依赖抽象，不要依赖具体的实现类。简单的说就是对抽象（或接口）进行编程，不要依赖实现进行编程，这样就降低了客户与实现模块间的耦合。包含3层含义： ①高层模块不应依赖低层模块，两者都应该依赖
+        <a href="https://www.cnblogs.com/5iedu/p/5475813.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5475813.html" title="permalink">2016-05-09 22:54</a>
+浅墨浓香
+ 阅读 (177) |         <a href="https://www.cnblogs.com/5iedu/p/5475813.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5475813" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5475107.html">第2章 面向对象的设计原则（SOLID）：2_里氏替换原则（LSP）</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：2. 里氏替换原则（Liskov Substitution Principle，LSP） 2.1 定义 （1）所有使用基类的地方必须能透明地使用子类替换，而程序的行为没有任何变化（不会产生运行结果错误或异常）。只有这样，父类才能被真正复用，而且子类也能够在父类的基础上增加新的行为。也只有这样才能正确
+        <a href="https://www.cnblogs.com/5iedu/p/5475107.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5475107.html" title="permalink">2016-05-09 19:14</a>
+浅墨浓香
+ 阅读 (201) |         <a href="https://www.cnblogs.com/5iedu/p/5475107.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5475107" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5470089.html">第2章 面向对象的设计原则（SOLID）：1_单一职责原则（SRP）</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：1. 单一职责原则（Single Responsibility Principle，SRP） 1.1 单一职责的定义 （1）定义：一个类应该仅有一个引起它变化的原因。这里变化的原因就是所说的“职责”。 （2）如果一个类有多个引起它变化的原因，也就意味着这个类有多个职责。即把多个职责耦合在一起了。 （
+        <a href="https://www.cnblogs.com/5iedu/p/5470089.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5470089.html" title="permalink">2016-05-08 11:18</a>
+浅墨浓香
+ 阅读 (259) |         <a href="https://www.cnblogs.com/5iedu/p/5470089.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5470089" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+    <div class="post">
+        <div class="posthead">
+            <h2>
+                
+<a class="entrylistItemTitle" href="https://www.cnblogs.com/5iedu/p/5465247.html">第1章 UML基础：类的关系</a>
+
+            </h2>
+        </div>
+        <div class="postbody">
+            
+<!--Post Text-->
+    <div class="c_b_p_desc">
+        摘要：1. 类的关系 1.1 继承和实现：继承表示有父子关系 1.2 依赖：（use–a），表示一个类要使用（use）另一个类。 （1）类图 （2）三种依赖方式：函数参数或返回值、局部变量和静态成员变量或函数 1.3 关联：是一种平等的、朋友关系 （1）双向关联：双方都知道对方的存在，都可以调用对方的公有
+        <a href="https://www.cnblogs.com/5iedu/p/5465247.html" class="c_b_p_desc_readmore">阅读全文</a>
+    </div>
+
+        </div>
+
+        <p class="postfoot">
+            
+
+<!--Post Desc-->
+posted @ <a href="https://www.cnblogs.com/5iedu/p/5465247.html" title="permalink">2016-05-06 13:06</a>
+浅墨浓香
+ 阅读 (405) |         <a href="https://www.cnblogs.com/5iedu/p/5465247.html#FeedBack" title="comments, pingbacks, trackbacks">
+            评论 (0)
+        </a>
+    <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5465247" rel="nofollow">编辑</a>
+
+        </p>
+    </div>
+
+<p>
+    
+
+
+
+</p>
+
+
+
+
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="FooterCell">
+			<p id="footer">
+	Powered by: 
+	<br>
+	
+	
+<a href="https://www.cnblogs.com/" id="Footer1_Hyperlink3" style="font-size: 12px; font-family: Verdana">博客园</a>
+	<br>
+	Copyright © 2019 浅墨浓香
+<br><span id="poweredby">Powered by .NET Core 3.0.0 on Linux</span>
+
+</p>
+
+
+		</td>
+	</tr>
+</tbody></table>
+
+
+
+    
+
+
+</body></html>

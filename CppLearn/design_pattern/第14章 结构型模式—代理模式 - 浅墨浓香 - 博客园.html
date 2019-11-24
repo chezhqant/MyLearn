@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)https://www.cnblogs.com/5iedu/p/5560495.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin">
+    <meta property="og:description" content="1. 代理模式（Proxy Pattern）的定义 （1）为其他对象提供一种代理以控制对这个对象的访问 ①代理模式在客户和被客户访问的对象之间，引入了一定程度的间接性，客户是直接使用代理，让代理来与被">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>第14章 结构型模式—代理模式 - 浅墨浓香 - 博客园</title>
+    
+    <link rel="stylesheet" href="./第14章 结构型模式—代理模式 - 浅墨浓香 - 博客园_files/blog-common.min.css">
+    <link id="MainCss" rel="stylesheet" href="./第14章 结构型模式—代理模式 - 浅墨浓香 - 博客园_files/bundle-habahaba.min.css">
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./第14章 结构型模式—代理模式 - 浅墨浓香 - 博客园_files/bundle-habahaba-mobile.min.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/5iedu/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/5iedu/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/5iedu/wlwmanifest.xml">
+    <script src="./第14章 结构型模式—代理模式 - 浅墨浓香 - 博客园_files/pubads_impl_rendering_2019111801.js.下载"></script><script async="" src="./第14章 结构型模式—代理模式 - 浅墨浓香 - 博客园_files/analytics.js.下载"></script><script type="text/javascript" src="./第14章 结构型模式—代理模式 - 浅墨浓香 - 博客园_files/encoder.js.下载"></script><script src="./第14章 结构型模式—代理模式 - 浅墨浓香 - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+    <script src="./第14章 结构型模式—代理模式 - 浅墨浓香 - 博客园_files/blog-common.min.js.下载"></script>
+    <script>
+        var currentBlogId = 231128;
+        var currentBlogApp = '5iedu';
+        var cb_enable_mathjax = true;
+        var isLogined = false;
+    </script>
+    <script type="text/x-mathjax-config;executed=true">
+        MathJax.Hub.Config({
+        tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']], processClass: 'math', processEscapes: true },
+        TeX: {
+        equationNumbers: { autoNumber: ['AMS'], useLabelIds: true },
+        extensions: ['extpfeil.js', 'mediawiki-texvc.js'],
+        Macros: {bm: "\\boldsymbol"}
+        },
+        'HTML-CSS': { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+        });
+    </script>
+    <script src="./第14章 结构型模式—代理模式 - 浅墨浓香 - 博客园_files/MathJax.js.下载"></script>
+    
+<link rel="preload" href="./第14章 结构型模式—代理模式 - 浅墨浓香 - 博客园_files/f.txt" as="script"><script type="text/javascript" src="./第14章 结构型模式—代理模式 - 浅墨浓香 - 博客园_files/f.txt"></script><script src="./第14章 结构型模式—代理模式 - 浅墨浓香 - 博客园_files/pubads_impl_2019111801.js.下载" async=""></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover, .MJXp-munder {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > *, .MJXp-munder > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><link rel="prefetch" href="https://tpc.googlesyndication.com/safeframe/1-0-36/html/container.html"></head>
+<body><div id="MathJax_Message" style="display: none;"></div>
+    <a name="top"></a>
+    
+    <table width="100%" class="Framework" cellspacing="0" cellpadding="0">
+	<tbody><tr>
+		<td colspan="2">
+			
+<div id="top">
+<table width="100%" cellpadding="8" cellspacing="0">
+	<tbody><tr>
+		<td nowrap="">
+			<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/5iedu/">浅墨浓香</a>
+</h1>
+			
+想要天亮进城，就得天黑赶路。
+
+		</td>
+	</tr>
+</tbody></table>
+</div>
+<div id="sub"><div class="BlogStats">posts - 
+690, comments - 
+52, trackbacks - 
+0, articles - 
+16</div>
+
+</div>
+
+
+
+</td>
+	</tr>
+	<tr>
+		<td class="LeftCell">
+            <div id="leftmenu">
+                
+<h3>导航</h3>
+<ul>
+	<li>
+		<a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+	<li>
+		
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/5iedu/">
+首页</a>
+</li>
+	<li>
+		
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+	<li>
+		
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E6%B5%85%E5%A2%A8%E6%B5%93%E9%A6%99">
+联系</a></li>
+	<li>
+		
+<a id="blog_nav_rss" class="menu" href="https://www.cnblogs.com/5iedu/rss/">
+订阅</a></li>
+	<li>
+		
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+                
+<div id="sidebar_news" class="newsItem"><h3>公告</h3>
+<div id="news">
+	
+<div id="blog-news">
+    
+    <div id="profile_block">
+        昵称：
+        <a href="https://home.cnblogs.com/u/5iedu/">
+            浅墨浓香
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/5iedu/" title="入园时间：2015-06-10">
+            4年5个月
+        </a>
+        <br>
+        粉丝：
+        <a href="https://home.cnblogs.com/u/5iedu/followers/">
+            149
+        </a>
+        <br>
+        关注：
+        <a href="https://home.cnblogs.com/u/5iedu/followees/">
+            0
+        </a>
+        <div id="p_b_follow">
+<a href="javascript:void(0)" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;)">+加关注</a></div>
+        <script>getFollowStatus('41562de4-020f-e511-b908-9dcfd8948a71');</script>
+    </div>
+</div>
+</div>
+
+</div>
+
+                <div id="blog-calendar" style="">
+
+<table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar" border="0">
+    <tbody>
+        <tr>
+            <td colspan="7">
+                <table class="CalTitle" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/10/24&#39;); return false;">&lt;</a>
+                            </td>
+                            <td align="center">2019年11月</td>
+                            <td align="right" class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/12/24&#39;); return false;">&gt;</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+                    <th class="CalDayHeader" align="center" abbr="日" scope="col">日</th>
+                    <th class="CalDayHeader" align="center" abbr="一" scope="col">一</th>
+                    <th class="CalDayHeader" align="center" abbr="二" scope="col">二</th>
+                    <th class="CalDayHeader" align="center" abbr="三" scope="col">三</th>
+                    <th class="CalDayHeader" align="center" abbr="四" scope="col">四</th>
+                    <th class="CalDayHeader" align="center" abbr="五" scope="col">五</th>
+                    <th class="CalDayHeader" align="center" abbr="六" scope="col">六</th>
+        </tr>
+            <tr>
+                            <td class="CalOtherMonthDay" align="center">27</td>
+                            <td class="CalOtherMonthDay" align="center">28</td>
+                            <td class="CalOtherMonthDay" align="center">29</td>
+                            <td class="CalOtherMonthDay" align="center">30</td>
+                            <td class="CalOtherMonthDay" align="center">31</td>
+                        <td class="" align="center">
+                            1
+                        </td>
+                    <td class="CalWeekendDay" align="center">
+                        2
+                    </td>
+            </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            3
+                        </td>
+                            <td class="" align="center">
+                                4
+                            </td>
+                            <td class="" align="center">
+                                5
+                            </td>
+                            <td class="" align="center">
+                                6
+                            </td>
+                            <td class="" align="center">
+                                <a href="https://www.cnblogs.com/5iedu/archive/2019/11/07.html"><u>7</u></a>
+                            </td>
+                            <td class="" align="center">
+                                8
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            9
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            10
+                        </td>
+                            <td class="" align="center">
+                                11
+                            </td>
+                            <td class="" align="center">
+                                12
+                            </td>
+                            <td class="" align="center">
+                                13
+                            </td>
+                            <td class="" align="center">
+                                14
+                            </td>
+                            <td class="" align="center">
+                                15
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            16
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            <a href="https://www.cnblogs.com/5iedu/archive/2019/11/17.html"><u>17</u></a>
+                        </td>
+                            <td class="" align="center">
+                                18
+                            </td>
+                            <td class="" align="center">
+                                19
+                            </td>
+                            <td class="" align="center">
+                                <a href="https://www.cnblogs.com/5iedu/archive/2019/11/20.html"><u>20</u></a>
+                            </td>
+                            <td class="" align="center">
+                                21
+                            </td>
+                            <td class="" align="center">
+                                22
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            23
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalTodayDay" align="center">
+                            24
+                        </td>
+                            <td class="" align="center">
+                                25
+                            </td>
+                            <td class="" align="center">
+                                26
+                            </td>
+                            <td class="" align="center">
+                                27
+                            </td>
+                            <td class="" align="center">
+                                28
+                            </td>
+                            <td class="" align="center">
+                                29
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            30
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalOtherMonthDay" align="center">
+                            1
+                        </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                2
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                3
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                4
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                5
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                6
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            7
+                        </td>
+                </tr>
+    </tbody>
+</table></div>
+                <script>loadBlogDefaultCalendar();</script>
+                <div id="blog-sidecolumn">
+<!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    <div id="sidebar_search" class="mySearch">
+        <h3 class="catListTitle">搜索</h3>
+        <div id="sidebar_search_box">
+            <div id="widget_my_zzk" class="div_my_zzk">
+                <input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk">
+            </div>
+            <div id="widget_my_google" class="div_my_zzk">
+                <input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 常用链接 -->
+<div id="sidebar_shortcut" class="sidebar-block">
+    
+<h3 class="catListTitle">
+常用链接
+</h3>
+<ul>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/p/" title="我的博客的随笔列表">我的随笔</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/MyComments.html" title="我的发表过的评论列表">我的评论</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/OtherPosts.html" title="我评论过的随笔列表">我的参与</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/RecentComments.html" title="我的博客的评论列表">最新评论</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/tag/" title="我的博客的标签列表">我的标签</a>
+</li>
+</ul>
+
+<!-- TODO: 检查是否有使用这一部分的控件，如果没有则应该删除。 -->
+<div id="itemListLin_con" style="display:none">
+    <ul>
+
+    </ul>
+</div>
+
+</div>
+
+<!-- 最新随笔 -->
+
+
+
+<!-- 我的标签 -->
+<div id="sidebar_toptags" class="sidebar-block">
+    
+</div>
+
+<!-- 积分与排名 -->
+
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+    
+		<h3>
+
+随笔分类
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/811805.html" rel="" target="">
+    C++深度解析(73)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/804081.html" rel="" target="">
+    C语言进阶剖析(48)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/911906.html" rel="" target="">
+    Linux基础与系统管理(35)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/937714.html" rel="" target="">
+    Linux应用与网络编程(64)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1005833.html" rel="" target="">
+    lua(3)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1005832.html" rel="" target="">
+    makefile(10)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1503320.html" rel="" target="">
+    Modern C++ 11/14(30)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/819307.html" rel="" target="">
+    QT实验分析教程(85)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/699743.html" rel="" target="">
+    Windows程序设计(58)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/699744.html" rel="" target="">
+    Windows核心编程(57)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/994985.html" rel="" target="">
+    计算机网络原理(54)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/825371.html" rel="" target="">
+    设计模式(41)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1007185.html" rel="" target="">
+    深入应用C++11(27)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/911523.html" rel="" target="">
+    数据结构实战分析(79)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/888633.html" rel="" target="">
+    重构(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/963515.html" rel="" target="">
+    专业嵌入式软件开发(15)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+随笔档案
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/11.html" rel="" target="">
+    2019年11月(3)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/10.html" rel="" target="">
+    2019年10月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/09.html" rel="" target="">
+    2019年9月(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/08.html" rel="" target="">
+    2019年8月(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/07.html" rel="" target="">
+    2019年7月(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/12.html" rel="" target="">
+    2017年12月(13)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/11.html" rel="" target="">
+    2017年11月(23)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/10.html" rel="" target="">
+    2017年10月(21)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/09.html" rel="" target="">
+    2017年9月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/08.html" rel="" target="">
+    2017年8月(22)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/07.html" rel="" target="">
+    2017年7月(27)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/06.html" rel="" target="">
+    2017年6月(21)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/05.html" rel="" target="">
+    2017年5月(35)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/04.html" rel="" target="">
+    2017年4月(19)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/03.html" rel="" target="">
+    2017年3月(28)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/02.html" rel="" target="">
+    2017年2月(15)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/01.html" rel="" target="">
+    2017年1月(51)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/12.html" rel="" target="">
+    2016年12月(26)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/11.html" rel="" target="">
+    2016年11月(20)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/10.html" rel="" target="">
+    2016年10月(13)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/09.html" rel="" target="">
+    2016年9月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/08.html" rel="" target="">
+    2016年8月(11)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/07.html" rel="" target="">
+    2016年7月(24)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/06.html" rel="" target="">
+    2016年6月(26)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/05.html" rel="" target="">
+    2016年5月(34)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/04.html" rel="" target="">
+    2016年4月(73)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/03.html" rel="" target="">
+    2016年3月(33)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/02.html" rel="" target="">
+    2016年2月(7)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/12.html" rel="" target="">
+    2015年12月(2)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/11.html" rel="" target="">
+    2015年11月(4)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/10.html" rel="" target="">
+    2015年10月(7)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/09.html" rel="" target="">
+    2015年9月(6)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/08.html" rel="" target="">
+    2015年8月(54)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/07.html" rel="" target="">
+    2015年7月(25)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/06.html" rel="" target="">
+    2015年6月(4)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+文章分类
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/715136.html" rel="" target="">
+    Windows内核(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/729402.html" rel="" target="">
+    编程经验(12)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/812154.html" rel="" target="">
+    常用代码(2)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/954364.html" rel="" target="">
+    综合案例(1)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+相册
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/gallery/718135.html" rel="nofollow noopener noreferrer" target="">
+    笔记插图
+</a>
+
+</li>
+			
+				</ul>
+
+
+</div>
+
+<!-- 最新评论 -->
+<div id="sidebar_recentcomments" class="sidebar-block">
+    <div id="recent_comments_wrap" class="RecentComment">
+    <h3 class="catListTitle">最新评论</h3>
+    <div class="RecentCommentBlock">
+        <ul>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/11390495.html#4344239">1. Re:第18课 捕获机制及陷阱</a></li>
+                    <li class="recent_comment_body">博主不仅高产，而且文章质量都挺好</li>
+                    <li class="recent_comment_author">--YaphetS嘟嘟</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4315939">2. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">博主你好，觉得你的博客特别受用，可以告知一下其他博客的密码吗</li>
+                    <li class="recent_comment_author">--cp2018</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/7040429.html#4294675">3. Re:第5章 IP地址和子网划分（2）_IP地址分类和NAT技术</a></li>
+                    <li class="recent_comment_body">像icmp这种没有端口的不知道是如何实现NAT转换的？</li>
+                    <li class="recent_comment_author">--Eagle-jie</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4280947">4. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">同问</li>
+                    <li class="recent_comment_author">--tiger_wangsir</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4237914">5. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">博主你好，觉得你的博客特别受用，可以告知一下其他博客的密码吗</li>
+                    <li class="recent_comment_author">--胡瑶co</li>
+        </ul>
+    </div>
+</div>
+</div>
+
+
+
+<!-- 阅读排行榜 -->
+<div id="sidebar_topviewedposts" class="sidebar-block">
+    
+<div id="topview_posts_wrap">
+    <h3 class="catListTitle">阅读排行榜</h3>
+    <div id="TopViewPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5595153.html">
+                            1. 第17章 行为型模式—解释器模式(6762)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7376543.html">
+                            2. 第11章 拾遗1：网络地址转换(NAT)和端口映射(4936)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7095041.html">
+                            3. 第6章 静态路由和动态路由（4）_OSPF动态路由协议(3791)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/4899791.html">
+                            4. 第17章 内存映射文件（1）_内存映射文件简介(3741)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7742589.html">
+                            5. 第16课 右值引用（3）_std::forward与完美转发(3730)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- 评论排行榜 -->
+<div id="sidebar_topcommentedposts" class="sidebar-block">
+    
+<div id="topfeedback_posts_wrap">
+    <h3 class="catListTitle">评论排行榜</h3>
+    <div id="TopFeedbackPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/6498326.html">
+                            1. 第83课 另一种创建线程的方式(9)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5325466.html">
+                            2. 第20课 链接过程简介(5)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5429059.html">
+                            3. 第7课 Qt中的坐标系统(4)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5835715.html">
+                            4. 第37课 深度解析QMap与QHash(3)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5617055.html">
+                            5. 第56课 函数模板的概念和意义(2)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- 推荐排行榜 -->
+<div id="sidebar_topdiggedposts" class="sidebar-block">
+    
+<div id="topdigg_posts_wrap">
+    <div class="catListView">
+        <h3 class="catListTitle">推荐排行榜</h3>
+        <div id="TopDiggPostsBlock">
+            <ul style="word-break: break-all">
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/4812259.html">
+                                1. 第11章 Windows线程池（2）_Win2008及以上的新线程池(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/5363054.html">
+                                2. 第1课 学习 C++ 的意义(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/5367317.html">
+                                3. 第5课 引用的本质分析(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/6800234.html">
+                                4. 第1章 计算机网络和协议（1）_网络的概念(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/6829593.html">
+                                5. 第1章 计算机网络和协议（3）_TCP/IP协议(1)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div></div>
+                <script>loadBlogSideColumn();</script>
+            </div>
+		</td>
+		<td class="MainCell" width="100%">
+			<div id="main">
+				<div id="post_detail">
+	<div class="post">
+		<div class="posthead">
+			<h2>
+				
+<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/5iedu/p/5560495.html">第14章 结构型模式—代理模式</a>
+
+			</h2>
+ 			Posted on 
+<span id="post-date">2016-06-05 12:52</span>&nbsp;<a href="https://www.cnblogs.com/5iedu/">浅墨浓香</a> 阅读(<span id="post_view_count">229</span>) 评论(<span id="post_comment_count">0</span>) <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5560495" rel="nofollow"> 编辑</a> <a href="javascript:void(0)" onclick="AddToWz(5560495); return false;">收藏</a>
+
+			
+			
+		</div>
+		<div class="postbody">
+<div id="cnblogs_post_body" class="blogpost-body ">
+    <p style="text-align: left;" align="center"><strong style="line-height: 1.5;">1. </strong><strong style="line-height: 1.5;">代理模式（Proxy Pattern）的定义</strong></p>
+<p>（1）为其他对象提供一种代理以<span style="color: #ff0000;"><strong>控制</strong></span>对这个对象的访问</p>
+<p>　　①代理模式在<span style="color: #0000ff;"><strong>客户和被客户访问的对象</strong></span>之间，<span style="color: #ff0000;"><strong>引入了一定程度的间接性</strong></span>，客户是直接使用代理，让代理来与被访问的对象进行交互。</p>
+<p>　　②这种附加的间接性<span style="color: #0000ff;"><strong>增加了灵活性和不同的用途</strong></span>。</p>
+<p><strong>（2）代理模式的结构和说明</strong></p>
+<p align="center"><img src="./第14章 结构型模式—代理模式 - 浅墨浓香 - 博客园_files/772759-20160605125212664-36426988.png" alt="">&nbsp;</p>
+<p><strong>　　①Proxy：代理对象</strong>，通常实现与具体的目标对象一样的接口，这样就可以使用代理来代替具体的目标对象。</p>
+<p>　　A、<span style="color: #0000ff;"><strong>保存一个指向具体目标对象的指针</strong></span>，可以在需要的时候调用具体的目标对象，若RealSubject和Subject的接口相同，<span style="color: #0000ff;"><strong>Proxy会引用Subject，并控制对具体目标对象的访问</strong></span>。</p>
+<p>　　B、可以为代理类<span style="color: #0000ff;"><strong>传入一个RealSubject</strong></span>的引用。也可以在Proxy内部<span style="color: #ff0000;"><strong>自己创建一个RealSubject</strong></span>，并可能负责创建和删除它</p>
+<p>　　C、从Subject继承，这样<span style="color: #0000ff;"><strong>代理就可以用来替代目标对象</strong></span>。</p>
+<p><strong>　　②<span style="color: #ff0000;">Subject：目标接口</span></strong>，定义代理和具体目标对象的接口，这样可以在任何使用具体目标对象的地方使用代理对象，让客户端透明地使用代理。</p>
+<p><strong>　　③RealSubject</strong>：具体的目标对象，真正实现目标接口要求的功能。</p>
+<p><strong>（3）思考代理模式</strong></p>
+<p>　　①代理模式的<span style="color: #ff0000;"><strong>本质</strong></span>：<span style="color: #0000ff;"><strong>控制对象访问</strong></span>，通过代理目标对象，把代理对象插入到客户和目标对象之间，从而为客户和目标对象引入一定的间接性。正是这个间接性，给代理对象很多活动空间。代理对象可以在调用具体的目标对象前后，附加很多操作，从而实现新的功能或扩展功能。<span style="color: #0000ff;"><strong>更狠的是，代理对象还可以不去创建和调用目标对象</strong></span>，也就是说，<span style="color: #ff0000;"><strong>目标对象被完全代理掉了（替换）</strong></span></p>
+<p>　　②代理模式的<span style="color: #ff0000;"><strong>动机</strong></span>：在面向对象系统中，有些对象由于某种原因（比如<span style="color: #0000ff;"><strong>对象创建的开销很大</strong></span>，或者<span style="color: #0000ff;"><strong>某些操作需要安全控制</strong></span>，或者<span style="color: #0000ff;"><strong>需要进程外的访问</strong></span>等），直接访问会给使用者或系统结构带来很多麻烦。这时可以增加一个代理对象，以不失透明操作对象的同理来管理/控制对对象的访问。</p>
+<p>　　③代理模式的<span style="color: #ff0000;"><strong>实现</strong></span>：主要<span style="color: #0000ff;"><strong>使用对象的组合和委托</strong></span>。但<span style="color: #0000ff;"><strong>也可以采用对象继承的方式</strong></span>来实现代理。</p>
+<p>【编程实验】联系代理（而不是歌星本人）开演唱会</p>
+<p style="text-align: center;">&nbsp;<img src="./第14章 结构型模式—代理模式 - 浅墨浓香 - 博客园_files/772759-20160605132913289-494336039.png" alt=""></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第14章 结构型模式—代理模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre>#include &lt;iostream&gt;
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">结构型模式：代理模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">场景：联系代理（而不是歌星本人）开演唱会</span>
+
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Star
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> confer() = <span style="color: #800080;">0</span>;        <span style="color: #008000;">//</span><span style="color: #008000;">面谈</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> signContract() = <span style="color: #800080;">0</span>;  <span style="color: #008000;">//</span><span style="color: #008000;">签合同</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> bookTicket() = <span style="color: #800080;">0</span>;    <span style="color: #008000;">//</span><span style="color: #008000;">订票</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> sing() = <span style="color: #800080;">0</span>;          <span style="color: #008000;">//</span><span style="color: #008000;">唱歌</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> collectMoney() = <span style="color: #800080;">0</span>;   <span style="color: #008000;">//</span><span style="color: #008000;">收钱</span>
+<span style="color: #000000;">};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">RealStar</span>
+<span style="color: #0000ff;">class</span> RealStar : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Star
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> confer()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">RealStart.confer()</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> signContract()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">RealStart.signContract()</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> bookTicket()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">RealStart.bookTicket()</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> sing()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">RealStart(ZhouJieLun).sing(()</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> collectMoney()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">RealStart.collectMoney()</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">ProxyStar</span>
+<span style="color: #0000ff;">class</span> ProxyStar : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Star
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    Star</span>*<span style="color: #000000;"> realStar;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    ProxyStar(Star</span>* realStar){<span style="color: #0000ff;">this</span>-&gt;realStar =<span style="color: #000000;"> realStar;}
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> confer()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">ProxyStar.confer()</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> signContract()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">ProxyStar.signContract()</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> bookTicket()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">ProxyStar.bookTicket()</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> sing()
+    {
+        realStar</span>-&gt;<span style="color: #000000;">sing();
+    }
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> collectMoney()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">ProxyStar.collectMoney()</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+};
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    Star</span>* realStar = <span style="color: #0000ff;">new</span><span style="color: #000000;"> RealStar();
+    Star</span>* proxyStar = <span style="color: #0000ff;">new</span><span style="color: #000000;"> ProxyStar(realStar);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">面谈、签合同、订票、收钱由代理来做
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">实际唱歌时，由代理去找真实明星来唱，对于客户端不需要
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">直接和真实明白打交道。</span>
+    proxyStar-&gt;<span style="color: #000000;">confer();
+    proxyStar</span>-&gt;<span style="color: #000000;">signContract();
+    proxyStar</span>-&gt;<span style="color: #000000;">bookTicket();
+    proxyStar</span>-&gt;sing();      <span style="color: #008000;">//</span><span style="color: #008000;">唱歌时由代理去找真实明星来唱</span>
+    proxyStar-&gt;<span style="color: #000000;">collectMoney();
+
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> realStar;
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> proxyStar;
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第14章 结构型模式—代理模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><strong>2. </strong><strong>代理模式的分类</strong></p>
+<p><strong>（1）<span style="color: #ff0000;">虚代理</span></strong><strong>：</strong>可以<span style="color: #0000ff;"><strong>根据需要来创建“大”对象</strong></span>，只有到必须创建对象的时候，虚代理才会去创建对象，从而大大加快程序运行速度，并节省资源。通过虚代理可以对系统进行优化。如开发一个大文档查看软件（如图片100MB），在打开文件前，先显示缩略图，而不是将所有图片都显示出来，在需要查看图片时，再用Proxy来进行大图片的打开）</p>
+<p><strong>（2）<span style="color: #ff0000;">保护代理</span></strong>：可以在访问一个对象的前后，执行很多附加的操作，除了<span style="color: #0000ff;"><strong>进行权限控制</strong></span>之外，还可以进行很多跟业务相关的处理，而不需要修改被代理的对象。也就是说，可以通过代理来给目标对象增加功能。</p>
+<p><strong>（3）<span style="color: #ff0000;">Copy-on-write代理</span></strong>：也是虚代理的一个分支，在客户端操作的时候，<span style="color: #0000ff;"><strong>只有对象确实改变了，才会真的拷贝（或克隆）一个目标的对象</strong></span>。在实现Copy-on-write时必须对目标对象进行引用计数。代理仅会增加引用。只有当用户请求一个修改目标对象的操作时，代理才会真正的拷贝它。在这种情况下，代理还必须减少目标对象的引用次数。当引用计数为0时，将目标对象删除。</p>
+<p><strong>（4）远程代理</strong>：隐藏了一个对象存在于不同地址空间的事实，也即是客户通过远程代理去访问一个对象，根本就不关心这个对象在哪里，也不关心如何通过网络去访问到这个对象，从客户的角度来看，它只是在使用代理对象而己。</p>
+<p><strong>（5）智能指针</strong>：和保护代理类似，也是允许在访问一个对象的前后，执行很多附加的操作，这样一来就可以做很多额外的事情，比如引用计数、第1次引用一个持久对象时，将它载入内存、在访问一个实际对象前，检查是否己经锁定了它，以确保其他对象不能改变它等。</p>
+<p><strong>（6）Cache代理</strong>：为那些昂贵操作的结果提供临时的存储空间，以便多个客户端可以共享这些结构。</p>
+<p><strong>（7）防火墙代理</strong>：保护对象不被恶意用户访问或操作。</p>
+<p><strong>（8）同步代理</strong>：使多个用户能够同时访问目标对象而没有冲突。</p>
+<p><strong>3. </strong><strong>代理的优点</strong></p>
+<p><strong>（1）职责清晰：</strong>RealSubject就是实现实际的业务逻辑，不用关心其他非本职责的事务，通过后期的代理完成其他事务，附带的结果就是编程简洁清晰。</p>
+<p><strong>（2）可扩展性好</strong>：RealSubject可以随时变化，只要它实现了接口，甭管如何变化，代理可以在完全不做任何修改的情况下使用。</p>
+<p><strong>4. </strong><strong>代理的使用场景</strong></p>
+<p>（1）需要<span style="color: #0000ff;"><strong>为一个对象在不同的地址空间提供局部代表</strong></span>的时候，可以使用<span style="color: #ff0000;"><strong>远程代理</strong></span></p>
+<p>（2）需要按照需要<span style="color: #0000ff;"><strong>创建开销很大的对象</strong></span>的时候，可以使用<span style="color: #ff0000;"><strong>虚代理</strong></span></p>
+<p>（3）需要控制<span style="color: #0000ff;"><strong>对原始对象的访问</strong></span>的时候，可以使用<span style="color: #ff0000;"><strong>保护代理</strong></span></p>
+<p>（4）需要在访问对象执行一些附加操作时，可以使用智能指引代理。</p>
+<p>【编程实验】利用虚代理实现大对象的延时加载</p>
+<p style="text-align: center;"><img src="./第14章 结构型模式—代理模式 - 浅墨浓香 - 博客园_files/772759-20160605132929899-1156563873.png" alt=""></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第14章 结构型模式—代理模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008000;">/*</span><span style="color: #008000;">
+//结构型模式：代理模式
+//场景：一次性访问多条数据问题。
+//需求：一个HR（人力资源）应用项目中，当用户选择一个部门时要把这个部门下所有员工都显示出来（只显示部门ID和姓名）
+        在需要的时候，可以选择查看某位员工的详细信息
+//思路：由于访问多条用户数据时，基本上只需要看到用户的姓名可以考虑刚开始从数据库查询返回的用户数据只有编号和用户姓名，当客户想要详细查看某个用户数据时，再根据编号从数
+        据库中获取完整的用户数据。这样可以大大减少对内存的开销
+//解决方案：使用代理（虚代理），刚开始只用一个不完整的用户对象（代理对象）。当需要访问时，再由代理对象从数据库中重新获取相应的数据，而这个过程对用户来说是透明的。
+</span><span style="color: #008000;">*/</span><span style="color: #000000;">
+
+#include </span>&lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;">
+#include </span>&lt;vector&gt;
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #808080;">////////////////////////////////////////////////////////////////////////</span><span style="color: #008000;">//</span>
+<span style="color: #008000;">//</span><span style="color: #008000;"> 字符串分割
+</span><span style="color: #008000;">//</span>
+<span style="color: #008000;">//</span><span style="color: #008000;"> -------------------------------------------------------------------------
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 函数     : Split
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 功能     : 分割STL标准字符串
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 返回值   : void
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 参数     : Container&lt;std::basic_string&lt;CharT&gt; &gt;&amp; v 存放分割结果
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 参数     : const std::basic_string&lt;CharT&gt;&amp; s 待分割字符串
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> 参数     : const std::basic_string&lt;CharT&gt;&amp; c 分割字符串
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> -------------------------------------------------------------------------</span>
+template&lt;typename CharT, template&lt;typename S, typename Q = std::allocator&lt;S&gt; &gt; <span style="color: #0000ff;">class</span> Container&gt;
+<span style="color: #0000ff;">void</span> Split(Container&lt;std::basic_string&lt;CharT&gt; &gt;&amp; v, <span style="color: #0000ff;">const</span> std::basic_string&lt;CharT&gt;&amp; s, <span style="color: #0000ff;">const</span> std::basic_string&lt;CharT&gt;&amp;<span style="color: #000000;"> c);
+
+template</span>&lt;template&lt;typename S, typename Q = std::allocator&lt;S&gt; &gt; <span style="color: #0000ff;">class</span> Container&gt;
+<span style="color: #0000ff;">void</span> Split(Container&lt;std::basic_string&lt;<span style="color: #0000ff;">char</span>&gt; &gt;&amp; v, <span style="color: #0000ff;">const</span> std::basic_string&lt;<span style="color: #0000ff;">char</span>&gt;&amp; s, <span style="color: #0000ff;">const</span> std::basic_string&lt;<span style="color: #0000ff;">char</span>&gt;&amp;<span style="color: #000000;"> c)
+{
+    </span><span style="color: #0000ff;">if</span> (<span style="color: #800080;">0</span> ==<span style="color: #000000;"> c.length())
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;">;
+
+    std::basic_string</span>&lt;<span style="color: #0000ff;">char</span>&gt;::size_type pos1 = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    std::basic_string</span>&lt;<span style="color: #0000ff;">char</span>&gt;::size_type pos2 = <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+    pos1 </span>= <span style="color: #800080;">0</span><span style="color: #000000;">;
+    pos2 </span>=<span style="color: #000000;"> s.find(c);
+    </span><span style="color: #0000ff;">while</span> (std::basic_string&lt;<span style="color: #0000ff;">char</span>&gt;::npos !=<span style="color: #000000;"> pos2)
+    {
+        v.push_back(s.substr(pos1, pos2 </span>-<span style="color: #000000;"> pos1));
+
+        pos1 </span>= pos2 +<span style="color: #000000;"> c.size();
+        pos2 </span>=<span style="color: #000000;"> s.find(c, pos1);
+    }
+
+    </span><span style="color: #0000ff;">if</span> (pos1 !=<span style="color: #000000;"> s.length())
+    {
+        v.push_back(s.substr(pos1));
+    }
+}
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">******************************辅助类***************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">测试数据（在内存中模拟数据库中的值）</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> TestDB
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+   TestDB(){}
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">static</span> vector&lt;<span style="color: #0000ff;">string</span>&gt; userDB; <span style="color: #008000;">//</span><span style="color: #008000;">人员列表
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">static vector&lt;string&gt; depDB;  </span><span style="color: #008000;">//</span><span style="color: #008000;">部门列表</span>
+<span style="color: #000000;">};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">人员列表初始数据</span>
+<span style="color: #0000ff;">static</span> vector&lt;<span style="color: #0000ff;">string</span>&gt;::value_type initUsers[] =<span style="color: #000000;">
+{
+    vector</span>&lt;<span style="color: #0000ff;">string</span>&gt;::value_type(<span style="color: #800000;">"</span><span style="color: #800000;">use0001,ZhangSan1,010101,male</span><span style="color: #800000;">"</span><span style="color: #000000;">),
+    vector</span>&lt;<span style="color: #0000ff;">string</span>&gt;::value_type(<span style="color: #800000;">"</span><span style="color: #800000;">use0002,ZhangSan2,010101,male</span><span style="color: #800000;">"</span><span style="color: #000000;">),
+    vector</span>&lt;<span style="color: #0000ff;">string</span>&gt;::value_type(<span style="color: #800000;">"</span><span style="color: #800000;">use0003,ZhangSan3,010102,male</span><span style="color: #800000;">"</span><span style="color: #000000;">),
+    vector</span>&lt;<span style="color: #0000ff;">string</span>&gt;::value_type(<span style="color: #800000;">"</span><span style="color: #800000;">use0004,ZhangSan4,010201,male</span><span style="color: #800000;">"</span><span style="color: #000000;">),
+    vector</span>&lt;<span style="color: #0000ff;">string</span>&gt;::value_type(<span style="color: #800000;">"</span><span style="color: #800000;">use0005,ZhangSan5,010201,male</span><span style="color: #800000;">"</span><span style="color: #000000;">),
+    vector</span>&lt;<span style="color: #0000ff;">string</span>&gt;::value_type(<span style="color: #800000;">"</span><span style="color: #800000;">use0006,ZhangSan6,010202,male</span><span style="color: #800000;">"</span><span style="color: #000000;">)
+
+};
+vector</span>&lt;<span style="color: #0000ff;">string</span>&gt; TestDB::userDB(initUsers, initUsers + <span style="color: #800080;">6</span><span style="color: #000000;">);
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">部门列表初始数据
+</span><span style="color: #008000;">//</span><span style="color: #008000;">编号规则：如010201：表示总公司下的二分公司里的开发部
+</span><span style="color: #008000;">//</span><span style="color: #008000;">static vector&lt;string&gt;::value_type initDepsDB[] =
+</span><span style="color: #008000;">//</span><span style="color: #008000;">{
+</span><span style="color: #008000;">//</span><span style="color: #008000;">    vector&lt;string&gt;::value_type("01,Company"),         </span><span style="color: #008000;">//</span><span style="color: #008000;">总公司
+</span><span style="color: #008000;">//</span><span style="color: #008000;">    vector&lt;string&gt;::value_type("0101,BranchCompany1"),</span><span style="color: #008000;">//</span><span style="color: #008000;">一分公司
+</span><span style="color: #008000;">//</span><span style="color: #008000;">    vector&lt;string&gt;::value_type("0102,BranchCompany2"),</span><span style="color: #008000;">//</span><span style="color: #008000;">二分公司
+</span><span style="color: #008000;">//</span><span style="color: #008000;">    vector&lt;string&gt;::value_type("010101,DevelopDep"),  </span><span style="color: #008000;">//</span><span style="color: #008000;">开发部
+</span><span style="color: #008000;">//</span><span style="color: #008000;">    vector&lt;string&gt;::value_type("010102,TestDep"),     </span><span style="color: #008000;">//</span><span style="color: #008000;">测试部
+</span><span style="color: #008000;">//</span><span style="color: #008000;">    vector&lt;string&gt;::value_type("010201,DevelopDep"),  </span><span style="color: #008000;">//</span><span style="color: #008000;">开发部
+</span><span style="color: #008000;">//</span><span style="color: #008000;">    vector&lt;string&gt;::value_type("010201,serviceDep")   </span><span style="color: #008000;">//</span><span style="color: #008000;">客服部
+</span><span style="color: #008000;">//</span>
+<span style="color: #008000;">//</span><span style="color: #008000;">};
+</span><span style="color: #008000;">//</span><span style="color: #008000;">vector&lt;string&gt; TestDB::depDB(initDepsDB, initDepsDB + 7);
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">**************************************代理类****************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">定义用户数据对象的接口</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> UserModelApi
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">string</span>&amp; getUserId() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> setUserId(<span style="color: #0000ff;">string</span> userId) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">string</span>&amp;  getName() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> setName(<span style="color: #0000ff;">string</span> name) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">string</span>&amp;  getDepId() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> setDepId(<span style="color: #0000ff;">string</span> name) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">string</span>&amp;  getSex() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> setSex(<span style="color: #0000ff;">string</span> sex) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">virtual</span> ~<span style="color: #000000;">UserModelApi(){};
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">真实的目标对象——描述用户数据的对象</span>
+<span style="color: #0000ff;">class</span> UserModel: <span style="color: #0000ff;">public</span><span style="color: #000000;"> UserModelApi
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span> userId; <span style="color: #008000;">//</span><span style="color: #008000;">用户编号</span>
+    <span style="color: #0000ff;">string</span> name;   <span style="color: #008000;">//</span><span style="color: #008000;">用户姓名</span>
+    <span style="color: #0000ff;">string</span> depId;  <span style="color: #008000;">//</span><span style="color: #008000;">部门编号</span>
+    <span style="color: #0000ff;">string</span> sex;    <span style="color: #008000;">//</span><span style="color: #008000;">用户性别</span>
+<span style="color: #0000ff;">public</span><span style="color: #000000;">:
+
+    </span><span style="color: #0000ff;">string</span>&amp; getUserId(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> userId;}
+    </span><span style="color: #0000ff;">void</span> setUserId(<span style="color: #0000ff;">string</span><span style="color: #000000;"> userId)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;userId =<span style="color: #000000;"> userId;
+    }
+
+    </span><span style="color: #0000ff;">string</span>&amp; getName(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> name;}
+    </span><span style="color: #0000ff;">void</span> setName(<span style="color: #0000ff;">string</span><span style="color: #000000;"> name)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;name =<span style="color: #000000;"> name;
+    }
+
+    </span><span style="color: #0000ff;">string</span>&amp; getDepId(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> depId;}
+    </span><span style="color: #0000ff;">void</span> setDepId(<span style="color: #0000ff;">string</span><span style="color: #000000;"> depId)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;depId =<span style="color: #000000;"> depId;
+    }
+
+    </span><span style="color: #0000ff;">string</span>&amp; getSex(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> sex;}
+    </span><span style="color: #0000ff;">void</span> setSex(<span style="color: #0000ff;">string</span><span style="color: #000000;"> sex)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;sex =<span style="color: #000000;"> sex;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">代理对象，代理用户数据对象</span>
+<span style="color: #0000ff;">class</span> Proxy : <span style="color: #0000ff;">public</span><span style="color: #000000;"> UserModelApi
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    UserModel</span>* realSubject; <span style="color: #008000;">//</span><span style="color: #008000;">持有被代理的具体的目标对象</span>
+    <span style="color: #0000ff;">bool</span> loaded;   <span style="color: #008000;">//</span><span style="color: #008000;">用来标识是否己经重新装载过数据了
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">重新询数据库以获取完整的用户数据</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> reload()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">reload full information，userId ==</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;">
+             realSubject</span>-&gt;getUserId() &lt;&lt;<span style="color: #000000;"> endl;
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">实际中，这里应该处理连接数据库的代码
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">这里获取除了userId和name外的数据</span>
+        vector&lt;<span style="color: #0000ff;">string</span>&gt;::iterator iter =<span style="color: #000000;"> TestDB::userDB.begin();
+        vector</span>&lt;<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;"> tmpStr;
+        </span><span style="color: #0000ff;">while</span> (iter !=<span style="color: #000000;"> TestDB::userDB.end())
+        {
+            tmpStr.clear();
+            Split(tmpStr,</span>*iter,<span style="color: #800000;">"</span><span style="color: #800000;">,</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+
+            </span><span style="color: #0000ff;">if</span>(tmpStr.size() == <span style="color: #800080;">4</span><span style="color: #000000;">)
+            {
+                </span><span style="color: #0000ff;">if</span>(tmpStr[<span style="color: #800080;">0</span>] == realSubject-&gt;<span style="color: #000000;">getUserId())
+                {
+                    realSubject</span>-&gt;setDepId(tmpStr[<span style="color: #800080;">2</span><span style="color: #000000;">]);
+                    realSubject</span>-&gt;setSex(tmpStr[<span style="color: #800080;">3</span><span style="color: #000000;">]);
+                }
+            }
+            </span>++<span style="color: #000000;">iter;
+        }
+    }
+
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    Proxy():loaded(</span><span style="color: #0000ff;">false</span><span style="color: #000000;">)
+    {
+        realSubject </span>= <span style="color: #0000ff;">new</span><span style="color: #000000;"> UserModel();
+    }
+
+    </span>~Proxy(){<span style="color: #0000ff;">delete</span><span style="color: #000000;"> realSubject;}
+
+    </span><span style="color: #0000ff;">string</span>&amp;<span style="color: #000000;"> getUserId()
+    {
+        </span><span style="color: #0000ff;">return</span> realSubject-&gt;<span style="color: #000000;">getUserId();
+    }
+
+    </span><span style="color: #0000ff;">void</span> setUserId(<span style="color: #0000ff;">string</span><span style="color: #000000;"> userId)
+    {
+        realSubject</span>-&gt;<span style="color: #000000;">setUserId(userId);
+    }
+
+    </span><span style="color: #0000ff;">string</span>&amp;<span style="color: #000000;"> getName()
+    {
+       </span><span style="color: #0000ff;">return</span>  realSubject-&gt;<span style="color: #000000;">getName();
+    }
+
+    </span><span style="color: #0000ff;">void</span> setName(<span style="color: #0000ff;">string</span><span style="color: #000000;"> name)
+    {
+        realSubject</span>-&gt;<span style="color: #000000;">setName(name);
+    }
+
+    </span><span style="color: #0000ff;">string</span>&amp;<span style="color: #000000;"> getDepId()
+    {
+        </span><span style="color: #0000ff;">if</span>(!<span style="color: #000000;">loaded)
+        {
+            </span><span style="color: #008000;">//</span><span style="color: #008000;">从数据库中重新装载</span>
+<span style="color: #000000;">            reload();
+            </span><span style="color: #008000;">//</span><span style="color: #008000;">设置重新装载标志为true</span>
+            loaded = <span style="color: #0000ff;">true</span><span style="color: #000000;">;
+        }
+       </span><span style="color: #0000ff;">return</span>  realSubject-&gt;<span style="color: #000000;">getDepId();
+    }
+
+    </span><span style="color: #0000ff;">void</span> setDepId(<span style="color: #0000ff;">string</span><span style="color: #000000;"> depId)
+    {
+        realSubject</span>-&gt;<span style="color: #000000;">setDepId(depId);
+    }
+
+    </span><span style="color: #0000ff;">string</span>&amp;<span style="color: #000000;"> getSex()
+    {
+        </span><span style="color: #0000ff;">if</span>(!<span style="color: #000000;">loaded)
+        {
+            </span><span style="color: #008000;">//</span><span style="color: #008000;">从数据库中重新装载</span>
+<span style="color: #000000;">            reload();
+            </span><span style="color: #008000;">//</span><span style="color: #008000;">设置重新装载标志为true</span>
+            loaded = <span style="color: #0000ff;">true</span><span style="color: #000000;">;
+        }
+        </span><span style="color: #0000ff;">return</span> realSubject-&gt;<span style="color: #000000;">getSex();
+    }
+
+    </span><span style="color: #0000ff;">void</span> setSex(<span style="color: #0000ff;">string</span><span style="color: #000000;"> sex)
+    {
+        realSubject</span>-&gt;<span style="color: #000000;">setSex(sex);
+    }
+
+    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> toString()
+    {
+        </span><span style="color: #0000ff;">return</span> <span style="color: #800000;">"</span><span style="color: #800000;">userId = </span><span style="color: #800000;">"</span> + getUserId() + <span style="color: #800000;">"</span><span style="color: #800000;">,</span><span style="color: #800000;">"</span>  +
+               <span style="color: #800000;">"</span><span style="color: #800000;">name = </span><span style="color: #800000;">"</span>   + getName()   + <span style="color: #800000;">"</span><span style="color: #800000;">, </span><span style="color: #800000;">"</span> +
+               <span style="color: #800000;">"</span><span style="color: #800000;">depId = </span><span style="color: #800000;">"</span>  + getDepId()  + <span style="color: #800000;">"</span><span style="color: #800000;">, </span><span style="color: #800000;">"</span> +
+               <span style="color: #800000;">"</span><span style="color: #800000;">sex = </span><span style="color: #800000;">"</span>    +<span style="color: #000000;"> getSex();
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">实现示例要求的功能</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> UserManager
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    vector</span>&lt;UserModelApi*&gt;<span style="color: #000000;">  users;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">清除</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> clearUsers()
+    {
+        vector</span>&lt;UserModelApi*&gt;::iterator iter =<span style="color: #000000;"> users.begin();
+        </span><span style="color: #0000ff;">while</span>(iter !=<span style="color: #000000;"> users.end())
+        {
+            </span><span style="color: #0000ff;">delete</span> *<span style="color: #000000;">iter;
+        }
+        users.clear();
+    }
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">根据部门编号来获取该部门下的所有人员</span>
+    vector&lt;UserModelApi*&gt; getUserByDepId(<span style="color: #0000ff;">string</span><span style="color: #000000;"> depId)
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">只查询userId和name两个值就可以了</span>
+<span style="color: #000000;">        clearUsers();
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">实际中，这里须访问数据库</span>
+        vector&lt;<span style="color: #0000ff;">string</span>&gt;::iterator iter =<span style="color: #000000;"> TestDB::userDB.begin();
+        vector</span>&lt;<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;"> tmpStr;
+        </span><span style="color: #0000ff;">while</span> (iter !=<span style="color: #000000;"> TestDB::userDB.end())
+        {
+            tmpStr.clear();
+            Split(tmpStr,</span>*iter,<span style="color: #800000;">"</span><span style="color: #800000;">,</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+
+            </span><span style="color: #0000ff;">if</span>(tmpStr.size() == <span style="color: #800080;">4</span><span style="color: #000000;">)
+            {
+                </span><span style="color: #0000ff;">if</span>(tmpStr[<span style="color: #800080;">2</span>].substr(<span style="color: #800080;">0</span>,<span style="color: #800080;">4</span>) ==<span style="color: #000000;"> depId)
+                {
+                    </span><span style="color: #008000;">//</span><span style="color: #008000;">这里创建代理对象，而不是直接创建UserModel</span>
+                    Proxy* proxy = <span style="color: #0000ff;">new</span><span style="color: #000000;"> Proxy();
+
+                    </span><span style="color: #008000;">//</span><span style="color: #008000;">只设置userId和name两个值就可以了</span>
+                    proxy-&gt;setUserId(tmpStr[<span style="color: #800080;">0</span><span style="color: #000000;">]);
+                    proxy</span>-&gt;setName(tmpStr[<span style="color: #800080;">1</span><span style="color: #000000;">]);
+                    users.push_back(proxy);
+                }
+            }
+            </span>++<span style="color: #000000;">iter;
+        }
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> users;
+    }
+
+    </span>~<span style="color: #000000;">UserManager()
+    {
+        clearUsers();
+    }
+};
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    UserManager userManager;
+    vector</span>&lt;UserModelApi*&gt; Users = userManager.getUserByDepId(<span style="color: #800000;">"</span><span style="color: #800000;">0101</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">如果只是显示用户名称，则不需要重新查询数据库</span>
+    vector&lt;UserModelApi*&gt;::iterator iter =<span style="color: #000000;"> Users.begin();
+    </span><span style="color: #0000ff;">while</span>(iter !=<span style="color: #000000;">Users.end())
+    {
+        cout </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">userId:=</span><span style="color: #800000;">"</span> &lt;&lt; (*iter)-&gt;getUserId() &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;"> userName:=</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;">
+             (</span>*iter)-&gt;getName() &lt;&lt;<span style="color: #000000;"> endl;
+        </span>++<span style="color: #000000;">iter;
+    }
+
+    cout </span>&lt;&lt;<span style="color: #000000;"> endl;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">如果访问非用户编号和用户姓名外的属性，那就会重新查询数据库</span>
+    vector&lt;UserModelApi*&gt;::iterator iter2 =<span style="color: #000000;"> Users.begin();
+    </span><span style="color: #0000ff;">while</span>(iter2 !=<span style="color: #000000;">Users.end())
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">cout &lt;&lt; ((Proxy*)(*iter2))-&gt;toString() &lt;&lt; endl;</span>
+        cout &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">userId:=</span><span style="color: #800000;">"</span> &lt;&lt; (*iter2)-&gt;getUserId() &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">, </span><span style="color: #800000;">"</span> &lt;&lt;
+               <span style="color: #800000;">"</span><span style="color: #800000;">userName:=</span><span style="color: #800000;">"</span> &lt;&lt; (*iter2)-&gt;getName()   &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">, </span><span style="color: #800000;">"</span> &lt;&lt;
+               <span style="color: #800000;">"</span><span style="color: #800000;">depId:= </span><span style="color: #800000;">"</span>&lt;&lt; (*iter2)-&gt;getDepId()  &lt;&lt;<span style="color: #000000;"> endl;
+        </span>++<span style="color: #000000;">iter2;
+    }
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第14章 结构型模式—代理模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><strong>5. </strong><strong>相关模式</strong></p>
+<p><strong>（1）代理模式与适配器模式</strong></p>
+<p>　　①相似：都为另一个对象提供间接性的访问，而且都是从自身以外的一个接口向另这个对象转发请求。</p>
+<p>　　②不同：<span style="color: #0000ff;"><strong>适配器模式主要用来解决接口之间不匹配的问题</strong></span>，它通常为所适配对象提供一个不同的接口；而<span style="color: #0000ff;"><strong>代理模式会实现和目标对象相同的接口</strong></span></p>
+<p><strong>（2）代理模式与装饰模式</strong></p>
+<p>　　①相似：<span style="color: #0000ff;"><strong>装饰模式</strong></span>的实现和<span style="color: #ff0000;"><strong>保护代理</strong></span>的实现上是类似的。都是在转调其他对象的前后执行一定的功能。</p>
+<p>　　②不同：<span style="color: #ff0000;"><strong>装饰模式</strong></span>的目的是为让你不生成子类就可以<span style="color: #ff0000;"><strong>给对象添加职责</strong></span>，也就是为了动态增加功能；而<span style="color: #0000ff;"><strong>代理模式</strong></span>的主要目的是<span style="color: #0000ff;"><strong>控制对对象的访问</strong></span>（如当代理检测到有<span style="color: #0000ff;"><strong>敏感关键词</strong></span>时，就直接返回，<span style="color: #0000ff;"><strong>不会再调用真实的目标对象</strong>了</span>，但<span style="color: #ff0000;"><strong>装饰模式</strong></span>的目的是增加新功能，所以<span style="color: #0000ff;"><strong>一般得继续调用真实目标对象</strong></span>，所以可以认为<span style="color: #0000ff;"><strong>装饰只是新增功能，但不能跳过原来的功能</strong></span>）。</p>
+<p>　　③当<span style="color: #0000ff;"><strong>实现代理模式</strong></span>的时候，我们常常在一个<span style="color: #0000ff;"><strong>代理类中创建一个真实目标对象的实例</strong></span>，但<span style="color: #ff0000;"><strong>装饰模式</strong></span>时，我们通常的做法是<span style="color: #ff0000;"><strong>将原始对象作为一个参数传递给装饰者</strong></span>的构造器。</p>
+</div>
+<div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block"><div id="BlogPostCategory">
+    分类: 
+            <a href="https://www.cnblogs.com/5iedu/category/825371.html" target="_blank">设计模式</a></div>
+
+
+    <div id="blog_post_info">
+<div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(5560495,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+        <a id="green_channel_follow" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./第14章 结构型模式—代理模式 - 浅墨浓香 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./第14章 结构型模式—代理模式 - 浅墨浓香 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/5iedu/" target="_blank"><img src="./第14章 结构型模式—代理模式 - 浅墨浓香 - 博客园_files/20150610151331.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/5iedu/">浅墨浓香</a><br>
+            <a href="https://home.cnblogs.com/u/5iedu/followees/">关注 - 0</a><br>
+            <a href="https://home.cnblogs.com/u/5iedu/followers/">粉丝 - 149</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(5560495,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(5560495,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+    <div class="clear"></div>
+    <div id="post_next_prev">
+
+    <a href="https://www.cnblogs.com/5iedu/p/5557701.html" class="p_n_p_prefix">« </a> 上一篇：    <a href="https://www.cnblogs.com/5iedu/p/5557701.html" title="发布于 2016-06-03 21:53">第44课 继承中的访问级别</a>
+    <br>
+    <a href="https://www.cnblogs.com/5iedu/p/5572208.html" class="p_n_p_prefix">» </a> 下一篇：    <a href="https://www.cnblogs.com/5iedu/p/5572208.html" title="发布于 2016-06-09 12:29">第45课 不同的继承方式</a>
+
+</div>
+</div></div>
+	</div>
+<script src="./第14章 结构型模式—代理模式 - 浅墨浓香 - 博客园_files/highlight.min.js.下载"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 231128, cb_blogApp = '5iedu', cb_blogUserGuid = '41562de4-020f-e511-b908-9dcfd8948a71';
+    var cb_entryId = 5560495, cb_entryCreatedDate = '2016-06-05 12:52', cb_postType = 1; 
+    loadViewCount(cb_entryId);
+</script><a name="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<script>
+    var commentManager = new blogCommentManager();
+    commentManager.renderComments(0);
+</script>
+
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/5iedu/p/5560495.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/5iedu/p/5560495.html#top">返回顶部</a></div>
+    <div id="comment_form_container"><div class="login_tips">
+    注册用户登录后才能发表评论，请 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a>
+     或 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，
+    <a href="https://www.cnblogs.com/">访问</a> 网站首页。
+</div></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"><a href="https://cloud.tencent.com/act/pro/overseas?fromSource=gwzcw.3090393.3090393.3090393&amp;utm_medium=cpc&amp;utm_id=gwzcw.3090393.3090393.3090393" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-腾讯云&#39;)">【推荐】腾讯云海外1核2G云服务器低至2折，半价续费券限量免费领取！</a><br><a href="http://click.aliyun.com/m/1000081987/" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-阿里云&#39;)">【推荐】阿里云双11返场来袭，热门产品低至一折等你来抢！</a><br><a href="http://www.ucancode.com/index.htm" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-工控&#39;)">【推荐】超50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://group.cnblogs.com/topic/90800.html?800019197" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-马士兵&#39;)">【提升】这个价值 50W 年薪的问题，终于被马老师说明白啦...</a><br><a href="https://www.ctyun.cn/activity/20191111?hmsr=%E7%9C%8B%E7%9C%8B-%E5%8D%9A%E5%AE%A2%E5%9B%AD-%E5%8F%8C11-1106&amp;hmpl=&amp;hmcu=&amp;hmkw=&amp;hmci=" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-天翼云&#39;)">【推荐】天翼云双十一翼降到底，云主机11.11元起，抽奖送大礼</a><br><a href="https://www.cnblogs.com/enjoyedu/p/11905399.html?800019191" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-享学&#39;)">【提升】Java程序员年薪40W，他1年走了别人5年的学习之路</a><br><a href="https://www.uibot.com.cn/sem/bky.html" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-uibot_T2&#39;)">【推荐】流程自动化专家UiBot，体系化教程成就高薪RPA工程师</a><br></div>
+    <div id="opt_under_post"></div>
+    <script async="async" src="./第14章 结构型模式—代理模式 - 浅墨浓香 - 博客园_files/gpt.js.下载"></script>
+    <script>
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+    </script>
+    <script>
+        googletag.cmd.push(function () {
+            googletag.defineSlot("/1090369/C1", [300, 250], "div-gpt-ad-1546353474406-0").addService(googletag.pubads());
+            googletag.defineSlot("/1090369/C2", [468, 60], "div-gpt-ad-1539008685004-0").addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    </script>
+    <div id="cnblogs_c1" class="c_ad_block" style="">
+        <div id="div-gpt-ad-1546353474406-0" style="height: 250px; width: 300px;"><div id="google_ads_iframe_/1090369/C1_0__container__" style="border: 0pt none; width: 300px; height: 250px;"></div></div>
+    </div>
+    <div id="under_post_news"><div class="recomm-block"><b>相关博文：</b><br>·  <a title="9.代理模式-Proxy" href="https://www.cnblogs.com/weixiaotao/p/10799691.html" target="_blank" onclick="clickRecomItmem(10799691)">9.代理模式-Proxy</a><br>·  <a title="大话设计之代理模式" href="https://www.cnblogs.com/xzpblog/p/5117995.html" target="_blank" onclick="clickRecomItmem(5117995)">大话设计之代理模式</a><br>·  <a title="设计模式--Proxy模式" href="https://www.cnblogs.com/xieshuang/p/10892703.html" target="_blank" onclick="clickRecomItmem(10892703)">设计模式--Proxy模式</a><br>·  <a title="结构模式-2代理模式" href="https://www.cnblogs.com/43726581Gavin/p/9043935.html" target="_blank" onclick="clickRecomItmem(9043935)">结构模式-2代理模式</a><br>·  <a title="设计模式之代理模式（十）" href="https://www.cnblogs.com/zxj159/p/3449320.html" target="_blank" onclick="clickRecomItmem(3449320)">设计模式之代理模式（十）</a><br>»  <a target="_blank" href="https://recomm.cnblogs.com/blogpost/5560495">更多推荐...</a></div></div>
+    <div id="cnblogs_c2" class="c_ad_block" style="">
+        <div id="div-gpt-ad-1539008685004-0" style="height: 60px; width: 468px;">
+            <script>
+                if (new Date() >= new Date(2018, 9, 13)) {
+                    googletag.cmd.push(function () { googletag.display("div-gpt-ad-1539008685004-0"); });
+                }
+            </script>
+        <div id="google_ads_iframe_/1090369/C2_0__container__" style="border: 0pt none; width: 468px; height: 60px;"></div></div>
+    </div>
+    <div id="under_post_kb">
+<div class="itnews c_ad_block">
+    <b>最新 IT 新闻</b>:
+    <br>
+ ·              <a href="https://news.cnblogs.com/n/649969/" target="_blank">改变销售人员的CRM交互方式，Salesforce推出AI语音助手及开发套件</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649968/" target="_blank">“基因剪刀”治疗地中海贫血效果初现</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649967/" target="_blank">14nm 5GHz或成CPU绝唱 7/5nm多核容易高频难</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649966/" target="_blank">HTTPZ，将 HTTP 链接转到 HTTPS 的 Firefox 插件</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649965/" target="_blank">4个在2020年持续发展的数据中心冷却趋势</a>
+            <br>
+    » <a href="https://news.cnblogs.com/" title="IT 新闻" target="_blank">更多新闻...</a>
+</div></div>
+    <div id="HistoryToday" class="c_ad_block"></div>
+    <script type="text/javascript">
+        fixPostBody();
+        setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+        deliverAdT2();
+        deliverAdC1();
+        deliverAdC2();
+        loadNewsAndKb();
+        loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+        loadOptUnderPost();
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div></div>
+
+
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="FooterCell">
+			<p id="footer">
+	Powered by: 
+	<br>
+	
+	
+<a href="https://www.cnblogs.com/" id="Footer1_Hyperlink3" style="font-size: 12px; font-family: Verdana">博客园</a>
+	<br>
+	Copyright © 2019 浅墨浓香
+<br><span id="poweredby">Powered by .NET Core 3.0.0 on Linux</span>
+
+</p>
+
+
+		</td>
+	</tr>
+</tbody></table>
+
+
+
+    
+
+
+</body></html>

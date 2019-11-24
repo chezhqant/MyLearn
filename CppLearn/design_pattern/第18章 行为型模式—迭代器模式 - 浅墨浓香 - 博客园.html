@@ -1,0 +1,2120 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)https://www.cnblogs.com/5iedu/p/5596939.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin">
+    <meta property="og:description" content="1. 迭代器模式（Iterator Pattern）的定义 （1）定义：提供一种方法顺序访问一个聚合对象中的各个元素，而又不需要暴露该对象的内部表示。 ①迭代器迭代的是具体的聚合对象（如数组和链表等）">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园</title>
+    
+    <link rel="stylesheet" href="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/blog-common.min.css">
+    <link id="MainCss" rel="stylesheet" href="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/bundle-habahaba.min.css">
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/bundle-habahaba-mobile.min.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/5iedu/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/5iedu/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/5iedu/wlwmanifest.xml">
+    <script src="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/pubads_impl_rendering_2019111801.js.下载"></script><script async="" src="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/analytics.js.下载"></script><script type="text/javascript" src="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/encoder.js.下载"></script><script src="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+    <script src="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/blog-common.min.js.下载"></script>
+    <script>
+        var currentBlogId = 231128;
+        var currentBlogApp = '5iedu';
+        var cb_enable_mathjax = true;
+        var isLogined = false;
+    </script>
+    <script type="text/x-mathjax-config;executed=true">
+        MathJax.Hub.Config({
+        tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']], processClass: 'math', processEscapes: true },
+        TeX: {
+        equationNumbers: { autoNumber: ['AMS'], useLabelIds: true },
+        extensions: ['extpfeil.js', 'mediawiki-texvc.js'],
+        Macros: {bm: "\\boldsymbol"}
+        },
+        'HTML-CSS': { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+        });
+    </script>
+    <script src="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/MathJax.js.下载"></script>
+    
+<style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><link rel="preload" href="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/f.txt" as="script"><script type="text/javascript" src="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/f.txt"></script><script src="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/pubads_impl_2019111801.js.下载" async=""></script><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover, .MJXp-munder {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > *, .MJXp-munder > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><link rel="prefetch" href="https://tpc.googlesyndication.com/safeframe/1-0-36/html/container.html"></head>
+<body><div id="MathJax_Message" style="display: none;"></div>
+    <a name="top"></a>
+    
+    <table width="100%" class="Framework" cellspacing="0" cellpadding="0">
+	<tbody><tr>
+		<td colspan="2">
+			
+<div id="top">
+<table width="100%" cellpadding="8" cellspacing="0">
+	<tbody><tr>
+		<td nowrap="">
+			<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/5iedu/">浅墨浓香</a>
+</h1>
+			
+想要天亮进城，就得天黑赶路。
+
+		</td>
+	</tr>
+</tbody></table>
+</div>
+<div id="sub"><div class="BlogStats">posts - 
+690, comments - 
+52, trackbacks - 
+0, articles - 
+16</div>
+
+</div>
+
+
+
+</td>
+	</tr>
+	<tr>
+		<td class="LeftCell">
+            <div id="leftmenu">
+                
+<h3>导航</h3>
+<ul>
+	<li>
+		<a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+	<li>
+		
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/5iedu/">
+首页</a>
+</li>
+	<li>
+		
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+	<li>
+		
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E6%B5%85%E5%A2%A8%E6%B5%93%E9%A6%99">
+联系</a></li>
+	<li>
+		
+<a id="blog_nav_rss" class="menu" href="https://www.cnblogs.com/5iedu/rss/">
+订阅</a></li>
+	<li>
+		
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+                
+<div id="sidebar_news" class="newsItem"><h3>公告</h3>
+<div id="news">
+	
+<div id="blog-news">
+    
+    <div id="profile_block">
+        昵称：
+        <a href="https://home.cnblogs.com/u/5iedu/">
+            浅墨浓香
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/5iedu/" title="入园时间：2015-06-10">
+            4年5个月
+        </a>
+        <br>
+        粉丝：
+        <a href="https://home.cnblogs.com/u/5iedu/followers/">
+            149
+        </a>
+        <br>
+        关注：
+        <a href="https://home.cnblogs.com/u/5iedu/followees/">
+            0
+        </a>
+        <div id="p_b_follow">
+<a href="javascript:void(0)" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;)">+加关注</a></div>
+        <script>getFollowStatus('41562de4-020f-e511-b908-9dcfd8948a71');</script>
+    </div>
+</div>
+</div>
+
+</div>
+
+                <div id="blog-calendar" style="">
+
+<table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar" border="0">
+    <tbody>
+        <tr>
+            <td colspan="7">
+                <table class="CalTitle" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/10/24&#39;); return false;">&lt;</a>
+                            </td>
+                            <td align="center">2019年11月</td>
+                            <td align="right" class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/12/24&#39;); return false;">&gt;</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+                    <th class="CalDayHeader" align="center" abbr="日" scope="col">日</th>
+                    <th class="CalDayHeader" align="center" abbr="一" scope="col">一</th>
+                    <th class="CalDayHeader" align="center" abbr="二" scope="col">二</th>
+                    <th class="CalDayHeader" align="center" abbr="三" scope="col">三</th>
+                    <th class="CalDayHeader" align="center" abbr="四" scope="col">四</th>
+                    <th class="CalDayHeader" align="center" abbr="五" scope="col">五</th>
+                    <th class="CalDayHeader" align="center" abbr="六" scope="col">六</th>
+        </tr>
+            <tr>
+                            <td class="CalOtherMonthDay" align="center">27</td>
+                            <td class="CalOtherMonthDay" align="center">28</td>
+                            <td class="CalOtherMonthDay" align="center">29</td>
+                            <td class="CalOtherMonthDay" align="center">30</td>
+                            <td class="CalOtherMonthDay" align="center">31</td>
+                        <td class="" align="center">
+                            1
+                        </td>
+                    <td class="CalWeekendDay" align="center">
+                        2
+                    </td>
+            </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            3
+                        </td>
+                            <td class="" align="center">
+                                4
+                            </td>
+                            <td class="" align="center">
+                                5
+                            </td>
+                            <td class="" align="center">
+                                6
+                            </td>
+                            <td class="" align="center">
+                                <a href="https://www.cnblogs.com/5iedu/archive/2019/11/07.html"><u>7</u></a>
+                            </td>
+                            <td class="" align="center">
+                                8
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            9
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            10
+                        </td>
+                            <td class="" align="center">
+                                11
+                            </td>
+                            <td class="" align="center">
+                                12
+                            </td>
+                            <td class="" align="center">
+                                13
+                            </td>
+                            <td class="" align="center">
+                                14
+                            </td>
+                            <td class="" align="center">
+                                15
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            16
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            <a href="https://www.cnblogs.com/5iedu/archive/2019/11/17.html"><u>17</u></a>
+                        </td>
+                            <td class="" align="center">
+                                18
+                            </td>
+                            <td class="" align="center">
+                                19
+                            </td>
+                            <td class="" align="center">
+                                <a href="https://www.cnblogs.com/5iedu/archive/2019/11/20.html"><u>20</u></a>
+                            </td>
+                            <td class="" align="center">
+                                21
+                            </td>
+                            <td class="" align="center">
+                                22
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            23
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalTodayDay" align="center">
+                            24
+                        </td>
+                            <td class="" align="center">
+                                25
+                            </td>
+                            <td class="" align="center">
+                                26
+                            </td>
+                            <td class="" align="center">
+                                27
+                            </td>
+                            <td class="" align="center">
+                                28
+                            </td>
+                            <td class="" align="center">
+                                29
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            30
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalOtherMonthDay" align="center">
+                            1
+                        </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                2
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                3
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                4
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                5
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                6
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            7
+                        </td>
+                </tr>
+    </tbody>
+</table></div>
+                <script>loadBlogDefaultCalendar();</script>
+                <div id="blog-sidecolumn">
+<!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    <div id="sidebar_search" class="mySearch">
+        <h3 class="catListTitle">搜索</h3>
+        <div id="sidebar_search_box">
+            <div id="widget_my_zzk" class="div_my_zzk">
+                <input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk">
+            </div>
+            <div id="widget_my_google" class="div_my_zzk">
+                <input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 常用链接 -->
+<div id="sidebar_shortcut" class="sidebar-block">
+    
+<h3 class="catListTitle">
+常用链接
+</h3>
+<ul>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/p/" title="我的博客的随笔列表">我的随笔</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/MyComments.html" title="我的发表过的评论列表">我的评论</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/OtherPosts.html" title="我评论过的随笔列表">我的参与</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/RecentComments.html" title="我的博客的评论列表">最新评论</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/tag/" title="我的博客的标签列表">我的标签</a>
+</li>
+</ul>
+
+<!-- TODO: 检查是否有使用这一部分的控件，如果没有则应该删除。 -->
+<div id="itemListLin_con" style="display:none">
+    <ul>
+
+    </ul>
+</div>
+
+</div>
+
+<!-- 最新随笔 -->
+
+
+
+<!-- 我的标签 -->
+<div id="sidebar_toptags" class="sidebar-block">
+    
+</div>
+
+<!-- 积分与排名 -->
+
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+    
+		<h3>
+
+随笔分类
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/811805.html" rel="" target="">
+    C++深度解析(73)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/804081.html" rel="" target="">
+    C语言进阶剖析(48)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/911906.html" rel="" target="">
+    Linux基础与系统管理(35)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/937714.html" rel="" target="">
+    Linux应用与网络编程(64)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1005833.html" rel="" target="">
+    lua(3)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1005832.html" rel="" target="">
+    makefile(10)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1503320.html" rel="" target="">
+    Modern C++ 11/14(30)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/819307.html" rel="" target="">
+    QT实验分析教程(85)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/699743.html" rel="" target="">
+    Windows程序设计(58)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/699744.html" rel="" target="">
+    Windows核心编程(57)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/994985.html" rel="" target="">
+    计算机网络原理(54)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/825371.html" rel="" target="">
+    设计模式(41)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1007185.html" rel="" target="">
+    深入应用C++11(27)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/911523.html" rel="" target="">
+    数据结构实战分析(79)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/888633.html" rel="" target="">
+    重构(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/963515.html" rel="" target="">
+    专业嵌入式软件开发(15)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+随笔档案
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/11.html" rel="" target="">
+    2019年11月(3)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/10.html" rel="" target="">
+    2019年10月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/09.html" rel="" target="">
+    2019年9月(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/08.html" rel="" target="">
+    2019年8月(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/07.html" rel="" target="">
+    2019年7月(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/12.html" rel="" target="">
+    2017年12月(13)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/11.html" rel="" target="">
+    2017年11月(23)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/10.html" rel="" target="">
+    2017年10月(21)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/09.html" rel="" target="">
+    2017年9月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/08.html" rel="" target="">
+    2017年8月(22)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/07.html" rel="" target="">
+    2017年7月(27)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/06.html" rel="" target="">
+    2017年6月(21)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/05.html" rel="" target="">
+    2017年5月(35)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/04.html" rel="" target="">
+    2017年4月(19)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/03.html" rel="" target="">
+    2017年3月(28)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/02.html" rel="" target="">
+    2017年2月(15)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/01.html" rel="" target="">
+    2017年1月(51)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/12.html" rel="" target="">
+    2016年12月(26)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/11.html" rel="" target="">
+    2016年11月(20)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/10.html" rel="" target="">
+    2016年10月(13)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/09.html" rel="" target="">
+    2016年9月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/08.html" rel="" target="">
+    2016年8月(11)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/07.html" rel="" target="">
+    2016年7月(24)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/06.html" rel="" target="">
+    2016年6月(26)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/05.html" rel="" target="">
+    2016年5月(34)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/04.html" rel="" target="">
+    2016年4月(73)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/03.html" rel="" target="">
+    2016年3月(33)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/02.html" rel="" target="">
+    2016年2月(7)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/12.html" rel="" target="">
+    2015年12月(2)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/11.html" rel="" target="">
+    2015年11月(4)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/10.html" rel="" target="">
+    2015年10月(7)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/09.html" rel="" target="">
+    2015年9月(6)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/08.html" rel="" target="">
+    2015年8月(54)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/07.html" rel="" target="">
+    2015年7月(25)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/06.html" rel="" target="">
+    2015年6月(4)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+文章分类
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/715136.html" rel="" target="">
+    Windows内核(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/729402.html" rel="" target="">
+    编程经验(12)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/812154.html" rel="" target="">
+    常用代码(2)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/954364.html" rel="" target="">
+    综合案例(1)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+相册
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/gallery/718135.html" rel="nofollow noopener noreferrer" target="">
+    笔记插图
+</a>
+
+</li>
+			
+				</ul>
+
+
+</div>
+
+<!-- 最新评论 -->
+<div id="sidebar_recentcomments" class="sidebar-block">
+    <div id="recent_comments_wrap" class="RecentComment">
+    <h3 class="catListTitle">最新评论</h3>
+    <div class="RecentCommentBlock">
+        <ul>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/11390495.html#4344239">1. Re:第18课 捕获机制及陷阱</a></li>
+                    <li class="recent_comment_body">博主不仅高产，而且文章质量都挺好</li>
+                    <li class="recent_comment_author">--YaphetS嘟嘟</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4315939">2. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">博主你好，觉得你的博客特别受用，可以告知一下其他博客的密码吗</li>
+                    <li class="recent_comment_author">--cp2018</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/7040429.html#4294675">3. Re:第5章 IP地址和子网划分（2）_IP地址分类和NAT技术</a></li>
+                    <li class="recent_comment_body">像icmp这种没有端口的不知道是如何实现NAT转换的？</li>
+                    <li class="recent_comment_author">--Eagle-jie</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4280947">4. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">同问</li>
+                    <li class="recent_comment_author">--tiger_wangsir</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4237914">5. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">博主你好，觉得你的博客特别受用，可以告知一下其他博客的密码吗</li>
+                    <li class="recent_comment_author">--胡瑶co</li>
+        </ul>
+    </div>
+</div>
+</div>
+
+
+
+<!-- 阅读排行榜 -->
+<div id="sidebar_topviewedposts" class="sidebar-block">
+    
+<div id="topview_posts_wrap">
+    <h3 class="catListTitle">阅读排行榜</h3>
+    <div id="TopViewPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5595153.html">
+                            1. 第17章 行为型模式—解释器模式(6762)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7376543.html">
+                            2. 第11章 拾遗1：网络地址转换(NAT)和端口映射(4936)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7095041.html">
+                            3. 第6章 静态路由和动态路由（4）_OSPF动态路由协议(3791)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/4899791.html">
+                            4. 第17章 内存映射文件（1）_内存映射文件简介(3741)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7742589.html">
+                            5. 第16课 右值引用（3）_std::forward与完美转发(3730)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- 评论排行榜 -->
+<div id="sidebar_topcommentedposts" class="sidebar-block">
+    
+<div id="topfeedback_posts_wrap">
+    <h3 class="catListTitle">评论排行榜</h3>
+    <div id="TopFeedbackPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/6498326.html">
+                            1. 第83课 另一种创建线程的方式(9)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5325466.html">
+                            2. 第20课 链接过程简介(5)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5429059.html">
+                            3. 第7课 Qt中的坐标系统(4)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5835715.html">
+                            4. 第37课 深度解析QMap与QHash(3)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5617055.html">
+                            5. 第56课 函数模板的概念和意义(2)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- 推荐排行榜 -->
+<div id="sidebar_topdiggedposts" class="sidebar-block">
+    
+<div id="topdigg_posts_wrap">
+    <div class="catListView">
+        <h3 class="catListTitle">推荐排行榜</h3>
+        <div id="TopDiggPostsBlock">
+            <ul style="word-break: break-all">
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/4812259.html">
+                                1. 第11章 Windows线程池（2）_Win2008及以上的新线程池(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/5363054.html">
+                                2. 第1课 学习 C++ 的意义(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/5367317.html">
+                                3. 第5课 引用的本质分析(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/6800234.html">
+                                4. 第1章 计算机网络和协议（1）_网络的概念(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/6829593.html">
+                                5. 第1章 计算机网络和协议（3）_TCP/IP协议(1)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div></div>
+                <script>loadBlogSideColumn();</script>
+            </div>
+		</td>
+		<td class="MainCell" width="100%">
+			<div id="main">
+				<div id="post_detail">
+	<div class="post">
+		<div class="posthead">
+			<h2>
+				
+<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/5iedu/p/5596939.html">第18章 行为型模式—迭代器模式</a>
+
+			</h2>
+ 			Posted on 
+<span id="post-date">2016-06-18 21:40</span>&nbsp;<a href="https://www.cnblogs.com/5iedu/">浅墨浓香</a> 阅读(<span id="post_view_count">192</span>) 评论(<span id="post_comment_count">0</span>) <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5596939" rel="nofollow"> 编辑</a> <a href="javascript:void(0)" onclick="AddToWz(5596939); return false;">收藏</a>
+
+			
+			
+		</div>
+		<div class="postbody">
+<div id="cnblogs_post_body" class="blogpost-body ">
+    <p style="text-align: left;" align="center"><strong style="line-height: 1.5;">1. </strong><strong style="line-height: 1.5;">迭代器模式（Iterator Pattern）的定义</strong></p>
+<p><strong>（1）定义：</strong>提供一种方法<span style="color: #ff0000;"><strong>顺序访问</strong></span>一个<span style="color: #ff0000;"><strong>聚合对象</strong></span>中的各个元素，而<span style="color: #0000ff;"><strong>又不需要暴露该对象的内部表示</strong></span>。</p>
+<p>　　①迭代器迭代的是具体的<span style="color: #ff0000;"><strong>聚合对象（如数组和链表等）</strong></span>，它围绕的是“访问”做文章。</p>
+<p>　　②可用不同的遍历策略来遍历聚合，比如是否需要过滤</p>
+<p>　　③为不同聚合结构提供统一的迭代接口，也就是说通过一个迭代接口可以访问不同的聚合结构，这叫做<span style="color: #ff0000;"><strong>多态迭代</strong></span>。标准的迭代模式实现基本上都是支持多态迭代的。如<span style="color: #0000ff;"><strong>用同一个迭代接口来实现对数组和链表的遍历</strong></span>。</p>
+<p><strong>（2）迭代器模式的结构和说明</strong></p>
+<p align="center"><img src="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/772759-20160618213826495-621069573.png" alt="">&nbsp;</p>
+<p><span style="color: #0000ff;">　　①Iterator：迭代器接口。定义访问和遍历元素的接口。</span></p>
+<p><span style="color: #0000ff;">　　②ConcreteInterator：具体的迭代器实现对象，会<span style="color: #ff0000;"><strong>持有被迭代的具体的聚合对象的引用</strong></span>，并对聚合对象的遍历及跟踪遍历时的当前位置。</span></p>
+<p><span style="color: #0000ff;">　　③Aggregate：聚合对象。提供<span style="color: #ff0000;">创建相应迭代器对象</span>的函数（如createIterator()）。</span></p>
+<p><span style="color: #0000ff;">　　④ConcreteAggregate：具体聚合对象。实现创建相应迭代器对象。</span></p>
+<p>【编程实验】以统一的方式对数组和链表进行遍历（多态迭代）</p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/772759-20160618213845463-795945482.png" alt=""></p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;a5073f1c-0286-496a-84ca-23aa230c1860&#39;)"><img id="code_img_closed_a5073f1c-0286-496a-84ca-23aa230c1860" class="code_img_closed" src="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/ContractedBlock.gif" alt=""><img id="code_img_opened_a5073f1c-0286-496a-84ca-23aa230c1860" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide(&#39;a5073f1c-0286-496a-84ca-23aa230c1860&#39;,event)" src="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_a5073f1c-0286-496a-84ca-23aa230c1860" class="cnblogs_code_hide">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">行为模式——迭代器模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">场景：统一数组类和链表类的操作及遍历方法
+</span><span style="color: #008000;">//</span><span style="color: #008000;">说明：1、本实例没有采用内部类来实现具体的迭代器，目的是
+</span><span style="color: #008000;">//</span><span style="color: #008000;">         为了演示与课本相同的结构图
+</span><span style="color: #008000;">//</span><span style="color: #008000;">      2、调用next方法，除了可以获得相应元素，而且游标下移一个。</span>
+#include &lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">前向声明</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Iterator;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">***************************辅助类***************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">容器存储的对象</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Object
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> id;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    Object(</span><span style="color: #0000ff;">int</span> id = <span style="color: #800080;">0</span><span style="color: #000000;">)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;id =<span style="color: #000000;"> id;
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;">  toString()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">Object:</span><span style="color: #800000;">"</span>  &lt;&lt; id &lt;&lt;<span style="color: #000000;"> endl;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">链表节点</span>
+<span style="color: #0000ff;">struct</span><span style="color: #000000;"> Node
+{
+    Node</span>*<span style="color: #000000;">  next;
+    Object</span>*<span style="color: #000000;"> data;
+    Node(Object</span>* data, Node*<span style="color: #000000;"> next)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;next =<span style="color: #000000;"> next;
+        </span><span style="color: #0000ff;">this</span>-&gt;data =<span style="color: #000000;"> data;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">*******************************聚合类(Aggregate)接口************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">抽象聚合类</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Collection
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">int</span> add(Object* o) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">int</span> getCount() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">virtual</span> Iterator* createIterator() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">virtual</span> Object* getObject(<span style="color: #0000ff;">int</span> index) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">***********************************迭代器接口*******************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">抽象迭代器</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Iterator
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">virtual</span> Object* next() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">bool</span> hasNext() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">virtual</span> ~<span style="color: #000000;">Iterator(){}
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">****************************************具体迭代器*******************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">数组类的迭代器（因专为数组提供迭代，可以直接嵌入数组类作为其内部类使用，
+</span><span style="color: #008000;">//</span><span style="color: #008000;">但这里为了与课本一致，先暂时分开）</span>
+<span style="color: #0000ff;">class</span> ArrayListIterator : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Iterator
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> currentIndex;
+    Collection</span>*<span style="color: #000000;"> clt;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    ArrayListIterator(Collection</span>*<span style="color: #000000;"> clt)
+    {
+        </span><span style="color: #0000ff;">this</span> -&gt;clt =<span style="color: #000000;"> clt;
+        currentIndex </span>= <span style="color: #800080;">0</span><span style="color: #000000;">;
+    }
+
+    Object</span>*<span style="color: #000000;"> next()
+    {
+        </span><span style="color: #0000ff;">return</span> clt-&gt;getObject(currentIndex++<span style="color: #000000;">);
+    }
+
+    </span><span style="color: #0000ff;">bool</span><span style="color: #000000;"> hasNext()
+    {
+        </span><span style="color: #0000ff;">bool</span> bRet = currentIndex &lt; clt-&gt;<span style="color: #000000;">getCount();
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> (bRet);
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">链表类迭代器</span>
+<span style="color: #0000ff;">class</span> LinkedListIterator : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Iterator
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    Collection</span>*<span style="color: #000000;"> clt;
+    </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> currentIndex;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    LinkedListIterator(Collection</span>*<span style="color: #000000;"> clt)
+    {
+        </span><span style="color: #0000ff;">this</span> -&gt; clt =<span style="color: #000000;"> clt;
+        currentIndex </span>= <span style="color: #800080;">0</span><span style="color: #000000;">;
+    }
+
+    Object</span>*<span style="color: #000000;"> next()
+    {
+
+        </span><span style="color: #0000ff;">return</span> clt-&gt;getObject(currentIndex++<span style="color: #000000;">);
+    }
+
+    </span><span style="color: #0000ff;">bool</span><span style="color: #000000;"> hasNext()
+    {
+        </span><span style="color: #0000ff;">bool</span> bRet = currentIndex &lt; clt-&gt;<span style="color: #000000;">getCount();
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> (bRet);
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">************************************具体聚合类****************************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">数组类</span>
+<span style="color: #0000ff;">class</span> ArrayList : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Collection
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    Object</span>** objects; <span style="color: #008000;">//</span><span style="color: #008000;">对象数组;</span>
+    <span style="color: #0000ff;">int</span><span style="color: #000000;"> mCount;
+    </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> mSize;
+
+    Iterator</span>*<span style="color: #000000;"> mIterator;
+
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+
+    ArrayList()
+    {
+        mSize </span>= <span style="color: #800080;">10</span><span style="color: #000000;">;
+        mCount </span>= <span style="color: #800080;">0</span><span style="color: #000000;">;
+        objects </span>= <span style="color: #0000ff;">new</span> Object*<span style="color: #000000;">[mSize];
+        mIterator </span>=<span style="color: #000000;"> NULL;
+    }
+
+    </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> getCount()
+    {
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> mCount;
+    }
+
+    </span><span style="color: #0000ff;">int</span> add(Object*<span style="color: #000000;"> o)
+    {
+        </span><span style="color: #0000ff;">if</span>(mCount ==<span style="color: #000000;"> mSize)
+        {
+            </span><span style="color: #008000;">//</span><span style="color: #008000;">扩大数组大小</span>
+            mSize += <span style="color: #800080;">10</span><span style="color: #000000;">;
+            Object</span>** newObjects = <span style="color: #0000ff;">new</span> Object*<span style="color: #000000;">[mSize];
+
+
+            </span><span style="color: #008000;">//</span><span style="color: #008000;">复制</span>
+            <span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">int</span> i = <span style="color: #800080;">0</span>; i &lt; mSize; i++<span style="color: #000000;">)
+            {
+                newObjects[i] </span>=<span style="color: #000000;"> objects[i];
+            }
+
+            </span><span style="color: #008000;">//</span><span style="color: #008000;">删除原数组，并更新objects指针</span>
+            <span style="color: #0000ff;">delete</span><span style="color: #000000;">[] objects;
+            objects </span>=<span style="color: #000000;"> newObjects;
+        }
+
+        objects[mCount] </span>=<span style="color: #000000;"> o;
+        </span><span style="color: #0000ff;">return</span> mCount++<span style="color: #000000;">;
+    }
+
+    Object</span>* getObject(<span style="color: #0000ff;">int</span><span style="color: #000000;"> index)
+    {
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> objects[index];
+    }
+
+    Iterator</span>*<span style="color: #000000;"> createIterator()
+    {
+        </span><span style="color: #0000ff;">if</span>(mIterator ==<span style="color: #000000;"> NULL)
+            mIterator </span>= <span style="color: #0000ff;">new</span> ArrayListIterator(<span style="color: #0000ff;">this</span><span style="color: #000000;">);
+
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> mIterator;
+    }
+
+    </span>~<span style="color: #000000;">ArrayList()
+    {
+        </span><span style="color: #0000ff;">delete</span><span style="color: #000000;">[] objects;
+        </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> mIterator;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">链表类</span>
+<span style="color: #0000ff;">class</span> LinkedList : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Collection
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    Node</span>*<span style="color: #000000;"> head;
+    Node</span>*<span style="color: #000000;"> tail;
+    </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> mCount;
+    Iterator</span>*<span style="color: #000000;"> mIterator;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    LinkedList()
+    {
+        head </span>=<span style="color: #000000;"> NULL;
+        tail </span>=<span style="color: #000000;"> NULL;
+        mCount </span>= <span style="color: #800080;">0</span><span style="color: #000000;">;
+        mIterator </span>=<span style="color: #000000;"> NULL;
+    }
+
+    </span><span style="color: #0000ff;">int</span> add(Object*<span style="color: #000000;"> o)
+    {
+        </span><span style="color: #0000ff;">int</span> index =<span style="color: #000000;"> mCount;
+
+        </span><span style="color: #0000ff;">if</span>(o !=<span style="color: #000000;"> NULL)
+        {
+            Node</span>* node = <span style="color: #0000ff;">new</span><span style="color: #000000;"> Node(o, NULL);
+            </span><span style="color: #0000ff;">if</span>(head ==<span style="color: #000000;"> NULL)
+            {
+                head </span>=<span style="color: #000000;"> node;
+                tail </span>=<span style="color: #000000;"> node;
+            }
+
+            tail</span>-&gt;next =<span style="color: #000000;"> node;
+            tail </span>=<span style="color: #000000;"> node;
+
+            </span>++<span style="color: #000000;">mCount;
+        }
+
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> index;
+    }
+
+    </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> getCount()
+    {
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> mCount;
+    }
+    Iterator</span>*<span style="color: #000000;"> createIterator()
+    {
+        </span><span style="color: #0000ff;">if</span>(mIterator ==<span style="color: #000000;"> NULL)
+            mIterator </span>= <span style="color: #0000ff;">new</span> LinkedListIterator(<span style="color: #0000ff;">this</span><span style="color: #000000;">);
+
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> mIterator;
+    }
+
+    Object</span>* getObject(<span style="color: #0000ff;">int</span><span style="color: #000000;"> index)
+    {
+        </span><span style="color: #0000ff;">int</span> tmpIndex = <span style="color: #800080;">0</span><span style="color: #000000;">;
+        Object</span>* ret =<span style="color: #000000;"> NULL;
+
+        Node</span>* node =<span style="color: #000000;"> head;
+        </span><span style="color: #0000ff;">while</span>(node != NULL &amp;&amp; tmpIndex &lt;=<span style="color: #000000;">index)
+        {
+            </span><span style="color: #0000ff;">if</span>(tmpIndex ==<span style="color: #000000;"> index)
+            {
+                ret </span>= node-&gt;<span style="color: #000000;">data;
+                </span><span style="color: #0000ff;">break</span><span style="color: #000000;">;
+            }
+            node </span>= node-&gt;<span style="color: #000000;">next;
+            </span>++<span style="color: #000000;">tmpIndex;
+        }
+
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> ret;
+    }
+
+    </span>~<span style="color: #000000;">LinkedList()
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">清空链表</span>
+        Node* node =<span style="color: #000000;"> head;
+        Node</span>* curr =<span style="color: #000000;"> NULL;
+        </span><span style="color: #0000ff;">while</span>(node !=<span style="color: #000000;"> NULL)
+        {
+            curr </span>=<span style="color: #000000;"> node;
+            </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> node;
+
+            node </span>= curr-&gt;<span style="color: #000000;">next;
+        }
+
+        </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> mIterator;
+    }
+};
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">Collection* c = new ArrayList();</span>
+    Collection* c = <span style="color: #0000ff;">new</span><span style="color: #000000;"> LinkedList();
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">面向接口编程，由于数组类和链表类继承自同一接口
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">所以他们具有一的操作（如增加元素）</span>
+    <span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">int</span> i = <span style="color: #800080;">0</span>; i &lt; <span style="color: #800080;">15</span>; i++<span style="color: #000000;">)
+    {
+        c</span>-&gt;add(<span style="color: #0000ff;">new</span><span style="color: #000000;"> Object(i));
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">由于Collection提供迭代器的接口，
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">所以可以该接口对Collection及子类对象进行遍历</span>
+    Iterator* iter = c-&gt;createIterator();   <span style="color: #008000;">//</span><span style="color: #008000;">面向接口编程，</span>
+    <span style="color: #0000ff;">while</span>(iter-&gt;<span style="color: #000000;">hasNext())
+    {
+        Object</span>* obj = iter-&gt;<span style="color: #000000;">next();
+
+        (</span>*<span style="color: #000000;">obj).toString();
+        </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> obj;
+    }
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p><strong>2. </strong><strong>思考迭代器模式</strong></p>
+<p>（1）迭代器的<span style="color: #ff0000;"><strong>本质</strong></span>：<span style="color: #0000ff;"><strong>控制访问聚合对象中的元素</strong></span>。迭代器能实现“无须暴露聚合对象的内部实现，就能够访问到聚合对象的各个元素的功能”，做到“透明”的访问聚合对象中的元素。注意迭代器能够即<span style="color: #ff0000;"><strong>“透明”访问</strong></span>，又可以<span style="color: #ff0000;"><strong>“控制访问”聚合对象</strong></span>，认识这点，对于识别和变形使用迭代器模式很有帮助。</p>
+<p>（2）迭代器的<span style="color: #ff0000;"><strong>关键思想</strong></span>：把<span style="color: #0000ff;"><strong>对聚合对象的遍历访问从聚合对象中分离出来</strong></span>，放入单独的迭代器中，这样聚合对象会变得简单，而且迭代器和聚合对象可以独立地变化和发展，会大大加强系统的灵活性。</p>
+<p>（3）迭代器的<span style="color: #ff0000;"><strong>动机</strong></span>：</p>
+<p>　　在软件构建过程中，集合对象内部结构常常变化各异。但对于这些集合对象，我们希望在不暴露其内部结构的同时，可以让外部客户代码透明地访问其中包含的元素；同时这种“透明遍历”也为“同一种算法在多种集合对象上进行操作”提供了可能。将遍历机制抽象为“迭代器对象”为“应对变化中的集合对象”提供了一种优雅的方法</p>
+<p><strong>（4）内部迭代器与外部迭代器</strong></p>
+<p>　　①<span style="color: #ff0000;"><strong>内部迭代器</strong></span>：指的是由<span style="color: #0000ff;"><strong>迭代器自己来控制下一个元素</strong></span>的步骤，即当客户端利用迭代器读取当前元素后，迭代器的当前元素自动移到一下个元素，而客户端无法干预。</p>
+<p>　　②<span style="color: #ff0000;"><strong>外部迭代器</strong></span>：则客户端控制迭代下一个元素的步骤，即<span style="color: #0000ff;"><strong>客户端必须显示的next来迭代下一个元素</strong></span>。从总体来说外部迭代器比内部迭代器要灵活一些。这也是常见的实现方式。</p>
+<p>【编程实验】简单模仿STL库容器类的遍历方式（变式迭代器）</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;920cb832-10f4-438a-a1ed-59964368c893&#39;)"><img id="code_img_closed_920cb832-10f4-438a-a1ed-59964368c893" class="code_img_closed" src="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/ContractedBlock.gif" alt=""><img id="code_img_opened_920cb832-10f4-438a-a1ed-59964368c893" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide(&#39;920cb832-10f4-438a-a1ed-59964368c893&#39;,event)" src="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_920cb832-10f4-438a-a1ed-59964368c893" class="cnblogs_code_hide">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">行为模式——迭代器模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">场景：简单仿STL容器类的Iterator
+</span><span style="color: #008000;">//</span><span style="color: #008000;">说明：该模式主要用于将列表的访问和遍历分离出来并放进一个迭代器中，
+</span><span style="color: #008000;">//</span><span style="color: #008000;">本例是模仿STL库的容量遍历方式</span>
+#include &lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #0000ff;">class</span><span style="color: #000000;"> ArrayList
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> cnt;
+    </span><span style="color: #0000ff;">int</span> arr[<span style="color: #800080;">100</span><span style="color: #000000;">];
+
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    typedef </span><span style="color: #0000ff;">int</span>* Iterator; <span style="color: #008000;">//</span><span style="color: #008000;">内部类（型）</span>
+<span style="color: #000000;">
+    ArrayList(){cnt </span>= <span style="color: #800080;">0</span><span style="color: #000000;">;}
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">这里可以看出来Iterator声明为一个Int*类型的指针</span>
+<span style="color: #000000;">    Iterator begin()
+    {
+        </span><span style="color: #0000ff;">return</span> &amp;arr[<span style="color: #800080;">0</span><span style="color: #000000;">];
+    }
+
+    Iterator end()
+    {
+        </span><span style="color: #0000ff;">return</span> &amp;<span style="color: #000000;">arr[cnt];
+    }
+
+    </span><span style="color: #0000ff;">void</span> insert(<span style="color: #0000ff;">int</span><span style="color: #000000;"> v)
+    {
+        </span><span style="color: #0000ff;">if</span>(cnt&gt;=<span style="color: #800080;">100</span><span style="color: #000000;">)
+        {
+            cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">列表容量己满，不可再插入</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+            </span><span style="color: #0000ff;">return</span><span style="color: #000000;">;
+        }
+        arr[cnt</span>++] =<span style="color: #000000;"> v;
+    }
+};
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    ArrayList al;
+
+    </span><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">int</span> i = <span style="color: #800080;">0</span>; i&lt; <span style="color: #800080;">110</span>; i++<span style="color: #000000;">)
+    {
+        al.insert(i);
+    }
+
+    ArrayList::Iterator iter </span>=<span style="color: #000000;"> al.begin();
+    </span><span style="color: #0000ff;">while</span>( iter !=<span style="color: #000000;"> al.end())
+    {
+        cout </span>&lt;&lt; *iter &lt;&lt;<span style="color: #000000;"> endl;
+        </span>++<span style="color: #000000;">iter;
+    }
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p><strong>3. </strong><strong>迭代器模式高级应用</strong></p>
+<p><strong>（1）带迭代策略的迭代器</strong></p>
+<p>　　①由于迭代器模式把聚合对象和访问聚合的机制实现了分离，因此可以在迭代器上实现不同的迭代策略，如实现<span style="color: #ff0000;"><strong>过滤功能的迭代器</strong></span></p>
+<p>　　②在实现过滤功能的迭代器中，有两种常见的过滤情况，一是对数据整条过滤，如只能查看自己部门的数据；另一种情况是对数据进行部分过滤，如某些人不能查看工资数据。</p>
+<p>　　③带迭代策略的迭代器实现的一个<span style="color: #ff0000;"><strong>基本思路</strong></span>就是<span style="color: #ff0000;"><strong>把聚合对象的聚合数据获取到并存储在迭代器中</strong></span>，这样迭代器就可以按照不同的策略来迭代数据了。</p>
+<p><strong>（2）双向迭代器：</strong>可以<strong>向前和向后遍历</strong>数据的迭代器</p>
+<p>&nbsp;【编程实验】带过滤和双向遍历功能的工资查看系统</p>
+<p style="text-align: center;"><img src="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/772759-20160619095551347-511588616.png" alt=""></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">行为模式——迭代器模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">场景：工资表数据遍历(带过滤和双向遍历功能)</span>
+<span style="color: #000000;">
+#include </span>&lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;">
+#include </span>&lt;vector&gt;
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+</span><span style="color: #008000;">//</span><span style="color: #008000;">***************************辅助类*************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">前向声明</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Iterator;
+</span><span style="color: #0000ff;">class</span><span style="color: #000000;"> SalaryModel;
+typedef SalaryModel Object;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">工资描述模型对象</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> SalaryModel
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span> userName; <span style="color: #008000;">//</span><span style="color: #008000;">职工姓名</span>
+    <span style="color: #0000ff;">double</span> salary;      <span style="color: #008000;">//</span><span style="color: #008000;">工资数额</span>
+<span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span>&amp; getUserName(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> userName;}
+    </span><span style="color: #0000ff;">void</span> setUserName(<span style="color: #0000ff;">string</span><span style="color: #000000;"> name)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;userName =<span style="color: #000000;"> name;
+    }
+
+    </span><span style="color: #0000ff;">double</span> getSalary(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> salary;}
+    </span><span style="color: #0000ff;">void</span> setSalary(<span style="color: #0000ff;">double</span><span style="color: #000000;"> salary)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;salary =<span style="color: #000000;"> salary;
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> toString()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">userName = </span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> userName
+             </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">, Salary = </span><span style="color: #800000;">"</span> &lt;&lt; salary &lt;&lt;<span style="color: #000000;"> endl;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">**********************迭代器接口***************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">迭代器接口，定义访问和遍历元素的操作（双向遍历）</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Iterator
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">移动到聚合对象的第一个位置</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> first() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">移动到最后一个位置</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> last() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">移动到聚合对象的下一个位置</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> next() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">移动到聚合对象的上一个位置</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> previous() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">判断是否到了尾部位置</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">bool</span> isEof() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">判断是否到了头部位置</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">bool</span> isBof() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">获取当前元素</span>
+    <span style="color: #0000ff;">virtual</span> Object* currentItem() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">virtual</span> ~<span style="color: #000000;">Iterator(){};
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">************************************抽象聚合类**************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">聚合对象的接口</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Aggregate
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">创建相应迭代器对象的接口</span>
+    <span style="color: #0000ff;">virtual</span> Iterator* createIterator() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">获取数量大小</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">int</span> size() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">获取指定位置的元素</span>
+    <span style="color: #0000ff;">virtual</span> Object* <span style="color: #0000ff;">get</span>(<span style="color: #0000ff;">int</span> index) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">加入元素</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> add(Object* o) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">virtual</span> Aggregate* newInstance() {<span style="color: #0000ff;">return</span><span style="color: #000000;"> NULL;}
+    </span><span style="color: #0000ff;">virtual</span> ~<span style="color: #000000;">Aggregate(){}
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">***********************具体迭代器*****************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">具体的迭代器对象
+</span><span style="color: #008000;">//</span><span style="color: #008000;">用来实现访问数组的迭代接口，加入了迭代策略
+</span><span style="color: #008000;">//</span><span style="color: #008000;">其主要思路就是在ArrayInterator中保存一份过滤后的Aggregate聚合对象数据。</span>
+<span style="color: #0000ff;">class</span> ArrayIterator : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Iterator
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    Aggregate</span>*<span style="color: #000000;"> agg;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">记录当前迭代到的位置索引</span>
+    <span style="color: #0000ff;">int</span><span style="color: #000000;"> index;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    ArrayIterator(Aggregate</span>*<span style="color: #000000;"> agg)
+    {
+        index </span>= <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">在这里先对聚合对象的数据进行过滤，比如必须在3000以上</span>
+        <span style="color: #0000ff;">this</span> -&gt;agg = agg-&gt;newInstance();<span style="color: #008000;">//</span><span style="color: #008000;">原型模式，根据agg的实际类型创建对象
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">下面用一般遍历方法，而不agg的迭代器，否则那样会造成死循环。</span>
+        <span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">int</span> i = <span style="color: #800080;">0</span>;i &lt; agg-&gt;size(); i++<span style="color: #000000;">)
+        {
+            Object</span>* obj = agg-&gt;<span style="color: #0000ff;">get</span><span style="color: #000000;">(i);
+            </span><span style="color: #0000ff;">if</span> (obj-&gt;getSalary()&gt; <span style="color: #800080;">3000</span><span style="color: #000000;">)
+            {
+                </span><span style="color: #0000ff;">this</span>-&gt;agg-&gt;<span style="color: #000000;">add(obj);
+            }
+        }
+    }
+
+    </span><span style="color: #0000ff;">void</span> first()<span style="color: #008000;">//</span><span style="color: #008000;">移动到聚合对象的第1个位置</span>
+<span style="color: #000000;">    {
+        index </span>= <span style="color: #800080;">0</span><span style="color: #000000;">;
+    }
+
+    </span><span style="color: #0000ff;">void</span> last()<span style="color: #008000;">//</span><span style="color: #008000;">移动到聚合对象的最后一个位置</span>
+<span style="color: #000000;">    {
+        index </span>= agg-&gt;size() -<span style="color: #800080;">1</span><span style="color: #000000;">;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">移动到聚合对象的下一个位置</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> next()
+    {
+        </span><span style="color: #0000ff;">if</span>(index &lt; agg-&gt;<span style="color: #000000;">size())
+            </span>++<span style="color: #000000;">index;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">移动到前一个位置</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> previous()
+    {
+        </span><span style="color: #0000ff;">if</span>(index&gt;=<span style="color: #800080;">0</span><span style="color: #000000;">)
+        {
+            </span>--<span style="color: #000000;">index;
+        }
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">判断是否到了尾部位置</span>
+    <span style="color: #0000ff;">bool</span><span style="color: #000000;"> isEof()
+    {
+        </span><span style="color: #0000ff;">return</span> (index &gt;= agg-&gt;<span style="color: #000000;">size());
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">判断是否到了头部位置</span>
+    <span style="color: #0000ff;">bool</span><span style="color: #000000;"> isBof()
+    {
+        </span><span style="color: #0000ff;">return</span> (index &lt; <span style="color: #800080;">0</span><span style="color: #000000;">);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">获取当前元素</span>
+    Object*<span style="color: #000000;"> currentItem()
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">在这里对返回的数据进行过滤，比如不让查看具体的工资数据</span>
+        Object* obj = agg-&gt;<span style="color: #0000ff;">get</span><span style="color: #000000;">(index);
+        obj</span>-&gt;setSalary(<span style="color: #800080;">0</span><span style="color: #000000;">);
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> obj;
+    }
+
+    </span>~<span style="color: #000000;">ArrayIterator()
+    {
+        </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> agg;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">用数组模拟具体的聚合对象</span>
+<span style="color: #0000ff;">class</span> SalaryManager : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Aggregate
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">聚合对象</span>
+    vector&lt;Object*&gt; vecSalarys; <span style="color: #008000;">//</span><span style="color: #008000;">数组
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">提供创建具体迭代器的接口</span>
+    Iterator*<span style="color: #000000;"> mIter;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+
+    SalaryManager()
+    {
+        mIter </span>=<span style="color: #000000;"> NULL;
+    }
+
+    Iterator</span>*<span style="color: #000000;"> createIterator()
+    {
+        </span><span style="color: #0000ff;">if</span> (mIter ==<span style="color: #000000;"> NULL)
+        {
+            mIter </span>= <span style="color: #0000ff;">new</span> ArrayIterator(<span style="color: #0000ff;">this</span><span style="color: #000000;">);
+        }
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> mIter;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">获取数量大小</span>
+    <span style="color: #0000ff;">int</span><span style="color: #000000;"> size()
+    {
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> vecSalarys.size();
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">获取指定位置的元素</span>
+    Object* <span style="color: #0000ff;">get</span>(<span style="color: #0000ff;">int</span><span style="color: #000000;"> index)
+    {
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> vecSalarys[index];
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">加入元素</span>
+    <span style="color: #0000ff;">void</span> add(Object*<span style="color: #000000;"> o)
+    {
+        vecSalarys.push_back(o);
+    }
+
+    Aggregate</span>*<span style="color: #000000;"> newInstance()
+    {
+        Aggregate</span>* ret = <span style="color: #0000ff;">new</span><span style="color: #000000;"> SalaryManager();
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> ret;
+    }
+    </span>~<span style="color: #000000;">SalaryManager()
+    {
+        </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> mIter;
+        vecSalarys.clear();
+    }
+};
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    Aggregate</span>* agg = <span style="color: #0000ff;">new</span><span style="color: #000000;"> SalaryManager();
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">为了测试，输入些数据进去</span>
+    SalaryModel* sm = <span style="color: #0000ff;">new</span><span style="color: #000000;"> SalaryModel();
+    sm</span>-&gt;setSalary(<span style="color: #800080;">3800</span><span style="color: #000000;">);
+    sm</span>-&gt;setUserName(<span style="color: #800000;">"</span><span style="color: #800000;">张三</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    agg</span>-&gt;<span style="color: #000000;">add(sm);
+
+    sm </span>= <span style="color: #0000ff;">new</span><span style="color: #000000;"> SalaryModel();
+    sm</span>-&gt;setSalary(<span style="color: #800080;">5800</span><span style="color: #000000;">);
+    sm</span>-&gt;setUserName(<span style="color: #800000;">"</span><span style="color: #800000;">李四</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    agg</span>-&gt;<span style="color: #000000;">add(sm);
+
+    sm </span>= <span style="color: #0000ff;">new</span><span style="color: #000000;"> SalaryModel();
+    sm</span>-&gt;setSalary(<span style="color: #800080;">2200</span><span style="color: #000000;">);
+    sm</span>-&gt;setUserName(<span style="color: #800000;">"</span><span style="color: #800000;">王五</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    agg</span>-&gt;<span style="color: #000000;">add(sm);
+
+    sm </span>= <span style="color: #0000ff;">new</span><span style="color: #000000;"> SalaryModel();
+    sm</span>-&gt;setSalary(<span style="color: #800080;">3500</span><span style="color: #000000;">);
+    sm</span>-&gt;setUserName(<span style="color: #800000;">"</span><span style="color: #800000;">赵六</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    agg</span>-&gt;<span style="color: #000000;">add(sm);
+
+    Iterator</span>* it = agg-&gt;<span style="color: #000000;">createIterator();
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">正向遍历</span>
+    it-&gt;<span style="color: #000000;">first();
+    </span><span style="color: #0000ff;">while</span>(!it-&gt;<span style="color: #000000;">isEof())
+    {
+        it</span>-&gt;currentItem()-&gt;<span style="color: #000000;">toString();
+        it</span>-&gt;<span style="color: #000000;">next();
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">返向遍历、</span>
+    it-&gt;<span style="color: #000000;">last();
+    </span><span style="color: #0000ff;">while</span>(!it-&gt;<span style="color: #000000;">isBof())
+    {
+        it</span>-&gt;currentItem()-&gt;<span style="color: #000000;">toString();
+        it</span>-&gt;<span style="color: #000000;">previous();
+    }
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><strong>（3）翻页迭代器</strong></p>
+<p>　　①在数据库访问中，如果每页显示10条记录，通常用户很少翻到10页以后，那么在第一次访问时，可以从从数据库中获取前10页的数据，即100条记录放在内存里。</p>
+<p>　　②当用户在前10页进行翻页操作时，就可以不再访问数据库而是直接从内存中获取数据，速度就快了。</p>
+<p>　　③当想获取第11页的数据时，才会再次访问数据库。而<span style="color: #ff0000;"><strong>翻页迭代的意思是一次迭代要求取出一页的数据，而不是一条数据</strong></span>。所以其实现主要把原来一次迭代一条数据的接口，都修改成一次迭代一页的数据就可以了。</p>
+<p>&nbsp;【编程实验】带随机翻页功能的工资查看系统</p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/772759-20160619110203974-1829258969.png" alt=""></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">行为模式——迭代器模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">场景：工资表数据遍历(带随机翻页功能)
+</span><span style="color: #008000;">//</span><span style="color: #008000;">说明：翻页即每页读取若干条记录，
+</span><span style="color: #008000;">//</span><span style="color: #008000;">      随机指可以指定页数和每页的记录数的访问方式，
+</span><span style="color: #008000;">//</span><span style="color: #008000;">      而不是按顺序访问页面.</span>
+<span style="color: #000000;">
+#include </span>&lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;">
+#include </span>&lt;vector&gt;
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+</span><span style="color: #008000;">//</span><span style="color: #008000;">***************************辅助类*************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">前向声明</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Iterator;
+</span><span style="color: #0000ff;">class</span><span style="color: #000000;"> SalaryModel;
+typedef SalaryModel Object;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">工资描述模型对象</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> SalaryModel
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span> userName; <span style="color: #008000;">//</span><span style="color: #008000;">职工姓名</span>
+    <span style="color: #0000ff;">double</span> salary;      <span style="color: #008000;">//</span><span style="color: #008000;">工资数额</span>
+<span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span>&amp; getUserName(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> userName;}
+    </span><span style="color: #0000ff;">void</span> setUserName(<span style="color: #0000ff;">string</span><span style="color: #000000;"> name)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;userName =<span style="color: #000000;"> name;
+    }
+
+    </span><span style="color: #0000ff;">double</span> getSalary(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> salary;}
+    </span><span style="color: #0000ff;">void</span> setSalary(<span style="color: #0000ff;">double</span><span style="color: #000000;"> salary)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;salary =<span style="color: #000000;"> salary;
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> toString()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">userName = </span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> userName
+             </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">, Salary = </span><span style="color: #800000;">"</span> &lt;&lt; salary &lt;&lt;<span style="color: #000000;"> endl;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">**********************迭代器接口***************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">迭代器接口，定义访问和遍历元素的操作（双向遍历）</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Iterator
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">判断是否还有下一个元素，无所谓是否够一页数据
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">因为最后哪怕只有一条数据，也是要算一页。</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">bool</span> hasNext() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">判断是否还有上一个元素，无所谓是否够一页数据
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">因为最后哪怕只有一条数据，也是要算一页。</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">bool</span> hasPrevious() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">获取指定页号和每页显示的数量</span>
+    <span style="color: #0000ff;">virtual</span>  <span style="color: #0000ff;">void</span> getPage(<span style="color: #0000ff;">int</span> pageNum, <span style="color: #0000ff;">int</span> pageCount) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+    </span><span style="color: #0000ff;">virtual</span> ~<span style="color: #000000;">Iterator(){};
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">************************************抽象聚合类**************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">聚合对象的接口</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Aggregate
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">创建相应迭代器对象的接口</span>
+    <span style="color: #0000ff;">virtual</span> Iterator* createIterator() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">获取数量大小</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">int</span> size() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">获取指定位置的元素</span>
+    <span style="color: #0000ff;">virtual</span> Object* <span style="color: #0000ff;">get</span>(<span style="color: #0000ff;">int</span> index) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">加入元素</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> add(Object* o) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">virtual</span> Aggregate* newInstance() {<span style="color: #0000ff;">return</span><span style="color: #000000;"> NULL;}
+    </span><span style="color: #0000ff;">virtual</span> ~<span style="color: #000000;">Aggregate(){}
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">***********************具体迭代器*****************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">具体的迭代器对象
+</span><span style="color: #008000;">//</span><span style="color: #008000;">用来实现访问数组的迭代接口，加入了迭代策略
+</span><span style="color: #008000;">//</span><span style="color: #008000;">其主要思路就是在ArrayInterator中保存一份过滤后的Aggregate聚合对象数据。</span>
+<span style="color: #0000ff;">class</span> ArrayIterator : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Iterator
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    Aggregate</span>*<span style="color: #000000;"> agg;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">记录当前迭代到的位置索引</span>
+    <span style="color: #0000ff;">int</span><span style="color: #000000;"> index;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    ArrayIterator(Aggregate</span>*<span style="color: #000000;"> agg)
+    {
+        index </span>= <span style="color: #800080;">0</span><span style="color: #000000;">;
+        </span><span style="color: #0000ff;">this</span> -&gt;agg =<span style="color: #000000;"> agg;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">判断是否还有下一个元素，无所谓是否够一页数据
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">因为最后哪怕只有一条数据，也是要算一页。</span>
+    <span style="color: #0000ff;">bool</span><span style="color: #000000;"> hasNext()
+    {
+        </span><span style="color: #0000ff;">return</span> (index &lt;agg-&gt;<span style="color: #000000;">size());
+    }
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">判断是否还有上一个元素，无所谓是否够一页数据
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">因为最后哪怕只有一条数据，也是要算一页。</span>
+    <span style="color: #0000ff;">bool</span><span style="color: #000000;"> hasPrevious()
+    {
+        </span><span style="color: #0000ff;">return</span> (index &gt;<span style="color: #800080;">0</span><span style="color: #000000;">);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">获取指定页号和每页显示的数量</span>
+    <span style="color: #0000ff;">void</span> getPage(<span style="color: #0000ff;">int</span> pageNum, <span style="color: #0000ff;">int</span><span style="color: #000000;"> pageCount)
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">这里可读取到的数据通过数组或链表返回给客户
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">但为了简便，我们在这里
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">计算需要获取的数据的开始条数和结束条数</span>
+        <span style="color: #0000ff;">int</span> start = (pageNum - <span style="color: #800080;">1</span>)*<span style="color: #000000;"> pageCount;
+        </span><span style="color: #0000ff;">int</span> end = start + pageCount - <span style="color: #800080;">1</span><span style="color: #000000;">;
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">控制start的边界，最小是0</span>
+        <span style="color: #0000ff;">if</span>(start &lt; <span style="color: #800080;">0</span><span style="color: #000000;">)
+            start </span>= <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">控制end的边界</span>
+        <span style="color: #0000ff;">if</span>(end &gt; agg-&gt;size()-<span style="color: #800080;">1</span><span style="color: #000000;">)
+            end </span>= agg-&gt;size() -<span style="color: #800080;">1</span><span style="color: #000000;">;
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">每次取值都是从头开始循环</span>
+        index = <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+        </span><span style="color: #0000ff;">while</span>(hasNext() &amp;&amp; index &lt;=<span style="color: #000000;"> end)
+        {
+            </span><span style="color: #0000ff;">if</span>(index&gt;=<span style="color: #000000;">start)
+            {
+                agg</span>-&gt;<span style="color: #0000ff;">get</span>(index)-&gt;<span style="color: #000000;">toString();
+            }
+            index</span>++<span style="color: #000000;">;
+        }
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">用数组模拟具体的聚合对象</span>
+<span style="color: #0000ff;">class</span> SalaryManager : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Aggregate
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">聚合对象</span>
+    vector&lt;Object*&gt; vecSalarys; <span style="color: #008000;">//</span><span style="color: #008000;">数组
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">提供创建具体迭代器的接口</span>
+    Iterator*<span style="color: #000000;"> mIter;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+
+    SalaryManager()
+    {
+        mIter </span>=<span style="color: #000000;"> NULL;
+    }
+
+    Iterator</span>*<span style="color: #000000;"> createIterator()
+    {
+        </span><span style="color: #0000ff;">if</span> (mIter ==<span style="color: #000000;"> NULL)
+        {
+            mIter </span>= <span style="color: #0000ff;">new</span> ArrayIterator(<span style="color: #0000ff;">this</span><span style="color: #000000;">);
+        }
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> mIter;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">获取数量大小</span>
+    <span style="color: #0000ff;">int</span><span style="color: #000000;"> size()
+    {
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> vecSalarys.size();
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">获取指定位置的元素</span>
+    Object* <span style="color: #0000ff;">get</span>(<span style="color: #0000ff;">int</span><span style="color: #000000;"> index)
+    {
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> vecSalarys[index];
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">加入元素</span>
+    <span style="color: #0000ff;">void</span> add(Object*<span style="color: #000000;"> o)
+    {
+        vecSalarys.push_back(o);
+    }
+
+    Aggregate</span>*<span style="color: #000000;"> newInstance()
+    {
+        Aggregate</span>* ret = <span style="color: #0000ff;">new</span><span style="color: #000000;"> SalaryManager();
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> ret;
+    }
+    </span>~<span style="color: #000000;">SalaryManager()
+    {
+        </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> mIter;
+        vecSalarys.clear();
+    }
+};
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    Aggregate</span>* agg = <span style="color: #0000ff;">new</span><span style="color: #000000;"> SalaryManager();
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">为了测试，输入些数据进去</span>
+    SalaryModel* sm = <span style="color: #0000ff;">new</span><span style="color: #000000;"> SalaryModel();
+    sm</span>-&gt;setSalary(<span style="color: #800080;">3800</span><span style="color: #000000;">);
+    sm</span>-&gt;setUserName(<span style="color: #800000;">"</span><span style="color: #800000;">张三</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    agg</span>-&gt;<span style="color: #000000;">add(sm);
+
+    sm </span>= <span style="color: #0000ff;">new</span><span style="color: #000000;"> SalaryModel();
+    sm</span>-&gt;setSalary(<span style="color: #800080;">5800</span><span style="color: #000000;">);
+    sm</span>-&gt;setUserName(<span style="color: #800000;">"</span><span style="color: #800000;">李四</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    agg</span>-&gt;<span style="color: #000000;">add(sm);
+
+    sm </span>= <span style="color: #0000ff;">new</span><span style="color: #000000;"> SalaryModel();
+    sm</span>-&gt;setSalary(<span style="color: #800080;">2200</span><span style="color: #000000;">);
+    sm</span>-&gt;setUserName(<span style="color: #800000;">"</span><span style="color: #800000;">王五</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    agg</span>-&gt;<span style="color: #000000;">add(sm);
+
+    sm </span>= <span style="color: #0000ff;">new</span><span style="color: #000000;"> SalaryModel();
+    sm</span>-&gt;setSalary(<span style="color: #800080;">3500</span><span style="color: #000000;">);
+    sm</span>-&gt;setUserName(<span style="color: #800000;">"</span><span style="color: #800000;">赵六</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    agg</span>-&gt;<span style="color: #000000;">add(sm);
+
+    sm </span>= <span style="color: #0000ff;">new</span><span style="color: #000000;"> SalaryModel();
+    sm</span>-&gt;setSalary(<span style="color: #800080;">2900</span><span style="color: #000000;">);
+    sm</span>-&gt;setUserName(<span style="color: #800000;">"</span><span style="color: #800000;">钱七</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    agg</span>-&gt;<span style="color: #000000;">add(sm);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">得到翻页迭代器</span>
+    Iterator* it = agg-&gt;<span style="color: #000000;">createIterator();
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">获取第一页，每页显示2条</span>
+    cout &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">第1页数据：</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;">endl;
+    it</span>-&gt;getPage(<span style="color: #800080;">1</span>, <span style="color: #800080;">2</span><span style="color: #000000;">);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">获取第2页，每页显示2条</span>
+    cout &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">第2页数据：</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;">endl;
+    it</span>-&gt;getPage(<span style="color: #800080;">2</span>, <span style="color: #800080;">2</span><span style="color: #000000;">);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">再获取第1页，每页显示2条</span>
+    cout &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">第1页数据：</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;">endl;
+    it</span>-&gt;getPage(<span style="color: #800080;">1</span>, <span style="color: #800080;">2</span><span style="color: #000000;">);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">再获取第3页，每页显示2条</span>
+    cout &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">第3页数据：</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;">endl;
+    it</span>-&gt;getPage(<span style="color: #800080;">3</span>, <span style="color: #800080;">2</span><span style="color: #000000;">);
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><strong>4. </strong><strong>迭代器的优缺点</strong></p>
+<p>（1）优点</p>
+<p>　　①更好的封装性，可对一个聚合对象的访问，而无须暴露聚合对象的内部实现。</p>
+<p>　　②可以不同的遍历方式来遍历一个聚合对象（如正向和反向遍历）</p>
+<p>　　③将<span style="color: #0000ff;"><strong>聚合对象的内容和具体的迭代算法分离开</strong></span>，这样就可以通过使用不同的迭代器实例、不同的遍历方式来遍历一个聚合对象。</p>
+<p>　　④简化客户端调用：迭代器为遍历不同的聚合对象<span style="color: #0000ff;"><strong>提供了一个统一的接口</strong></span>，使用客户端遍历聚合对象的内容变得更加简单。</p>
+<p>　　⑤<span style="color: #0000ff;"><strong>同一个聚合上可以有多个遍历</strong></span>。每个迭代器保持它自己的遍历状态（如索引位置），因此可以对同一个聚合对象同时进行多个遍历。只要为其设置设计不同的迭代器。</p>
+<p>（2）缺点：</p>
+<p>　　①由于迭代器模式<span style="color: #ff0000;"><strong>将存储数据和遍历数据的职责分离</strong></span>，增加新的聚合类需要对应增加新的迭代器类，<span style="color: #ff0000;"><strong>类的个数成对增加</strong></span>，这在一定程度上<span style="color: #ff0000;"><strong>增加了系统的复杂性</strong></span>。对于比较简单的遍历（像数组或者有序列表），使用迭代器方式遍历较为繁琐。</p>
+<p>　　②迭代器模式在遍历的同时更改迭代器所在的集合结构会导致出现异常。所以使用foreach语句只能在对集合进行遍历，不能在遍历的同时更改集合中的元素。</p>
+<p><strong>5. </strong><strong>应用场景</strong></p>
+<p>（1）如果希望提供访问一个聚合对象的内容，但又不想暴露它的内部表示的时候可使用迭代器模式</p>
+<p>（2）如果希望有多种遍历方式可以访问聚合对象。</p>
+<p>（3）如果希望为遍历不同的聚合对象提供一个统一的接口，可以使用迭代器模式（多态迭代）。</p>
+<p><strong>6. </strong><strong>相关模式</strong></p>
+<p>（1）迭代器模式和组合模式</p>
+<p>　　组合模式是一种递归的对象结构，在枚举某个组合对象的子对象时，通常会使用迭代器模式。</p>
+<p>（2）迭代器模式和工厂方法模式</p>
+<p>　　在聚合对象创建迭代器的时候，通常会采用工厂方法模式来实例化相应的迭代器对象。</p>
+</div>
+<div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block"><div id="BlogPostCategory">
+    分类: 
+            <a href="https://www.cnblogs.com/5iedu/category/825371.html" target="_blank">设计模式</a></div>
+
+
+    <div id="blog_post_info">
+<div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(5596939,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+        <a id="green_channel_follow" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/5iedu/" target="_blank"><img src="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/20150610151331.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/5iedu/">浅墨浓香</a><br>
+            <a href="https://home.cnblogs.com/u/5iedu/followees/">关注 - 0</a><br>
+            <a href="https://home.cnblogs.com/u/5iedu/followers/">粉丝 - 149</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(5596939,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(5596939,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+    <div class="clear"></div>
+    <div id="post_next_prev">
+
+    <a href="https://www.cnblogs.com/5iedu/p/5595153.html" class="p_n_p_prefix">« </a> 上一篇：    <a href="https://www.cnblogs.com/5iedu/p/5595153.html" title="发布于 2016-06-17 21:11">第17章 行为型模式—解释器模式</a>
+    <br>
+    <a href="https://www.cnblogs.com/5iedu/p/5615544.html" class="p_n_p_prefix">» </a> 下一篇：    <a href="https://www.cnblogs.com/5iedu/p/5615544.html" title="发布于 2016-06-24 23:08">第53课 被遗弃的多重继承（上）</a>
+
+</div>
+</div></div>
+	</div>
+<script src="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/highlight.min.js.下载"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 231128, cb_blogApp = '5iedu', cb_blogUserGuid = '41562de4-020f-e511-b908-9dcfd8948a71';
+    var cb_entryId = 5596939, cb_entryCreatedDate = '2016-06-18 21:40', cb_postType = 1; 
+    loadViewCount(cb_entryId);
+</script><a name="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<script>
+    var commentManager = new blogCommentManager();
+    commentManager.renderComments(0);
+</script>
+
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/5iedu/p/5596939.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/5iedu/p/5596939.html#top">返回顶部</a></div>
+    <div id="comment_form_container"><div class="login_tips">
+    注册用户登录后才能发表评论，请 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a>
+     或 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，
+    <a href="https://www.cnblogs.com/">访问</a> 网站首页。
+</div></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"><a href="https://cloud.tencent.com/act/pro/overseas?fromSource=gwzcw.3090393.3090393.3090393&amp;utm_medium=cpc&amp;utm_id=gwzcw.3090393.3090393.3090393" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-腾讯云&#39;)">【推荐】腾讯云海外1核2G云服务器低至2折，半价续费券限量免费领取！</a><br><a href="http://click.aliyun.com/m/1000081987/" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-阿里云&#39;)">【推荐】阿里云双11返场来袭，热门产品低至一折等你来抢！</a><br><a href="http://www.ucancode.com/index.htm" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-工控&#39;)">【推荐】超50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://group.cnblogs.com/topic/90800.html?800019197" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-马士兵&#39;)">【提升】这个价值 50W 年薪的问题，终于被马老师说明白啦...</a><br><a href="https://www.ctyun.cn/activity/20191111?hmsr=%E7%9C%8B%E7%9C%8B-%E5%8D%9A%E5%AE%A2%E5%9B%AD-%E5%8F%8C11-1106&amp;hmpl=&amp;hmcu=&amp;hmkw=&amp;hmci=" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-天翼云&#39;)">【推荐】天翼云双十一翼降到底，云主机11.11元起，抽奖送大礼</a><br><a href="https://www.cnblogs.com/enjoyedu/p/11905399.html?800019191" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-享学&#39;)">【提升】Java程序员年薪40W，他1年走了别人5年的学习之路</a><br><a href="https://www.uibot.com.cn/sem/bky.html" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-uibot_T2&#39;)">【推荐】流程自动化专家UiBot，体系化教程成就高薪RPA工程师</a><br></div>
+    <div id="opt_under_post"></div>
+    <script async="async" src="./第18章 行为型模式—迭代器模式 - 浅墨浓香 - 博客园_files/gpt.js.下载"></script>
+    <script>
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+    </script>
+    <script>
+        googletag.cmd.push(function () {
+            googletag.defineSlot("/1090369/C1", [300, 250], "div-gpt-ad-1546353474406-0").addService(googletag.pubads());
+            googletag.defineSlot("/1090369/C2", [468, 60], "div-gpt-ad-1539008685004-0").addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    </script>
+    <div id="cnblogs_c1" class="c_ad_block" style="">
+        <div id="div-gpt-ad-1546353474406-0" style="height: 250px; width: 300px;"><div id="google_ads_iframe_/1090369/C1_0__container__" style="border: 0pt none; width: 300px; height: 250px;"></div></div>
+    </div>
+    <div id="under_post_news"><div class="recomm-block"><b>相关博文：</b><br>·  <a title="设计模式笔记(18)---迭代器模式（行为型）" href="https://www.cnblogs.com/abenmao/archive/2012/05/25/2518030.html" target="_blank" onclick="clickRecomItmem(2518030)">设计模式笔记(18)---迭代器模式（行为型）</a><br>·  <a title="设计模式笔记(18)---迭代器模式（行为型）" href="https://www.cnblogs.com/oec2003/archive/2010/01/24/1655399.html" target="_blank" onclick="clickRecomItmem(1655399)">设计模式笔记(18)---迭代器模式（行为型）</a><br>·  <a title="行为模式之迭代器模式" href="https://www.cnblogs.com/liudaihuablogs/p/9213767.html" target="_blank" onclick="clickRecomItmem(9213767)">行为模式之迭代器模式</a><br>·  <a title="第18讲：Iterator 迭代器模式" href="https://www.cnblogs.com/cdts_change/archive/2010/10/17/1853689.html" target="_blank" onclick="clickRecomItmem(1853689)">第18讲：Iterator 迭代器模式</a><br>·  <a title="十八、 Iterator 迭代器（行为型模式）" href="https://www.cnblogs.com/stone_lv/archive/2011/05/03/2035171.html" target="_blank" onclick="clickRecomItmem(2035171)">十八、 Iterator 迭代器（行为型模式）</a><br>»  <a target="_blank" href="https://recomm.cnblogs.com/blogpost/5596939">更多推荐...</a></div></div>
+    <div id="cnblogs_c2" class="c_ad_block" style="">
+        <div id="div-gpt-ad-1539008685004-0" style="height: 60px; width: 468px;">
+            <script>
+                if (new Date() >= new Date(2018, 9, 13)) {
+                    googletag.cmd.push(function () { googletag.display("div-gpt-ad-1539008685004-0"); });
+                }
+            </script>
+        <div id="google_ads_iframe_/1090369/C2_0__container__" style="border: 0pt none; width: 468px; height: 60px;"></div></div>
+    </div>
+    <div id="under_post_kb">
+<div class="itnews c_ad_block">
+    <b>最新 IT 新闻</b>:
+    <br>
+ ·              <a href="https://news.cnblogs.com/n/649969/" target="_blank">改变销售人员的CRM交互方式，Salesforce推出AI语音助手及开发套件</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649968/" target="_blank">“基因剪刀”治疗地中海贫血效果初现</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649967/" target="_blank">14nm 5GHz或成CPU绝唱 7/5nm多核容易高频难</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649966/" target="_blank">HTTPZ，将 HTTP 链接转到 HTTPS 的 Firefox 插件</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649965/" target="_blank">4个在2020年持续发展的数据中心冷却趋势</a>
+            <br>
+    » <a href="https://news.cnblogs.com/" title="IT 新闻" target="_blank">更多新闻...</a>
+</div></div>
+    <div id="HistoryToday" class="c_ad_block"></div>
+    <script type="text/javascript">
+        fixPostBody();
+        setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+        deliverAdT2();
+        deliverAdC1();
+        deliverAdC2();
+        loadNewsAndKb();
+        loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+        loadOptUnderPost();
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div></div>
+
+
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="FooterCell">
+			<p id="footer">
+	Powered by: 
+	<br>
+	
+	
+<a href="https://www.cnblogs.com/" id="Footer1_Hyperlink3" style="font-size: 12px; font-family: Verdana">博客园</a>
+	<br>
+	Copyright © 2019 浅墨浓香
+<br><span id="poweredby">Powered by .NET Core 3.0.0 on Linux</span>
+
+</p>
+
+
+		</td>
+	</tr>
+</tbody></table>
+
+
+
+    
+
+
+</body></html>

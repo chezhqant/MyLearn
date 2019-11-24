@@ -259,7 +259,7 @@ const int& x = 666; // OK
 # C++11
 ## 深入理解C++11   
 ## [Effective Modern C++(部分翻译)](https://github.com/kelthuzadx/EffectiveModernCppChinese)     
-## [另一个完整版本的Effective Modern C++的翻译](https://www.bookstack.cn/read/open-c-book/zh-cha)    
+## [另一个完整版本的Effective Modern C++的翻译](https://blog.csdn.net/zhangyifei216/article/details/72868345)    
 ## [Effective Modern C++(英文书)](./)
 
 

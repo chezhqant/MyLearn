@@ -1,0 +1,2027 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)https://www.cnblogs.com/5iedu/p/5637909.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin">
+    <meta property="og:description" content="1. 状态模式（State Pattern）的定义 （1）定义：允许一个对象在其内部状态改变时改变它的行为。对象看起来似乎修改了它的类。 ①状态和行为，它们的关系可以描述为“状态决定行为” ②因状态是">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园</title>
+    
+    <link rel="stylesheet" href="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/blog-common.min.css">
+    <link id="MainCss" rel="stylesheet" href="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/bundle-habahaba.min.css">
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/bundle-habahaba-mobile.min.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/5iedu/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/5iedu/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/5iedu/wlwmanifest.xml">
+    <script src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/pubads_impl_modern_rendering_2019111801.js.下载"></script><script async="" src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/analytics.js.下载"></script><script type="text/javascript" src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/encoder.js.下载"></script><script src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+    <script src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/blog-common.min.js.下载"></script>
+    <script>
+        var currentBlogId = 231128;
+        var currentBlogApp = '5iedu';
+        var cb_enable_mathjax = true;
+        var isLogined = false;
+    </script>
+    <script type="text/x-mathjax-config;executed=true">
+        MathJax.Hub.Config({
+        tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']], processClass: 'math', processEscapes: true },
+        TeX: {
+        equationNumbers: { autoNumber: ['AMS'], useLabelIds: true },
+        extensions: ['extpfeil.js', 'mediawiki-texvc.js'],
+        Macros: {bm: "\\boldsymbol"}
+        },
+        'HTML-CSS': { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+        });
+    </script>
+    <script src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/MathJax.js.下载"></script>
+    
+<link rel="preload" href="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/f.txt" as="script"><script type="text/javascript" src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/f.txt"></script><script src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/pubads_impl_modern_2019111801.js.下载" async=""></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover, .MJXp-munder {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > *, .MJXp-munder > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><link rel="prefetch" href="https://tpc.googlesyndication.com/safeframe/1-0-36/html/container.html"></head>
+<body><div id="MathJax_Message" style="display: none;"></div>
+    <a name="top"></a>
+    
+    <table width="100%" class="Framework" cellspacing="0" cellpadding="0">
+	<tbody><tr>
+		<td colspan="2">
+			
+<div id="top">
+<table width="100%" cellpadding="8" cellspacing="0">
+	<tbody><tr>
+		<td nowrap="">
+			<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/5iedu/">浅墨浓香</a>
+</h1>
+			
+想要天亮进城，就得天黑赶路。
+
+		</td>
+	</tr>
+</tbody></table>
+</div>
+<div id="sub"><div class="BlogStats">posts - 
+690, comments - 
+52, trackbacks - 
+0, articles - 
+16</div>
+
+</div>
+
+
+
+</td>
+	</tr>
+	<tr>
+		<td class="LeftCell">
+            <div id="leftmenu">
+                
+<h3>导航</h3>
+<ul>
+	<li>
+		<a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+	<li>
+		
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/5iedu/">
+首页</a>
+</li>
+	<li>
+		
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+	<li>
+		
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E6%B5%85%E5%A2%A8%E6%B5%93%E9%A6%99">
+联系</a></li>
+	<li>
+		
+<a id="blog_nav_rss" class="menu" href="https://www.cnblogs.com/5iedu/rss/">
+订阅</a></li>
+	<li>
+		
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+                
+<div id="sidebar_news" class="newsItem"><h3>公告</h3>
+<div id="news">
+	
+<div id="blog-news">
+    
+    <div id="profile_block">
+        昵称：
+        <a href="https://home.cnblogs.com/u/5iedu/">
+            浅墨浓香
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/5iedu/" title="入园时间：2015-06-10">
+            4年5个月
+        </a>
+        <br>
+        粉丝：
+        <a href="https://home.cnblogs.com/u/5iedu/followers/">
+            149
+        </a>
+        <br>
+        关注：
+        <a href="https://home.cnblogs.com/u/5iedu/followees/">
+            0
+        </a>
+        <div id="p_b_follow">
+<a href="javascript:void(0)" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;)">+加关注</a></div>
+        <script>getFollowStatus('41562de4-020f-e511-b908-9dcfd8948a71');</script>
+    </div>
+</div>
+</div>
+
+</div>
+
+                <div id="blog-calendar" style="">
+
+<table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar" border="0">
+    <tbody>
+        <tr>
+            <td colspan="7">
+                <table class="CalTitle" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/10/24&#39;); return false;">&lt;</a>
+                            </td>
+                            <td align="center">2019年11月</td>
+                            <td align="right" class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/12/24&#39;); return false;">&gt;</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+                    <th class="CalDayHeader" align="center" abbr="日" scope="col">日</th>
+                    <th class="CalDayHeader" align="center" abbr="一" scope="col">一</th>
+                    <th class="CalDayHeader" align="center" abbr="二" scope="col">二</th>
+                    <th class="CalDayHeader" align="center" abbr="三" scope="col">三</th>
+                    <th class="CalDayHeader" align="center" abbr="四" scope="col">四</th>
+                    <th class="CalDayHeader" align="center" abbr="五" scope="col">五</th>
+                    <th class="CalDayHeader" align="center" abbr="六" scope="col">六</th>
+        </tr>
+            <tr>
+                            <td class="CalOtherMonthDay" align="center">27</td>
+                            <td class="CalOtherMonthDay" align="center">28</td>
+                            <td class="CalOtherMonthDay" align="center">29</td>
+                            <td class="CalOtherMonthDay" align="center">30</td>
+                            <td class="CalOtherMonthDay" align="center">31</td>
+                        <td class="" align="center">
+                            1
+                        </td>
+                    <td class="CalWeekendDay" align="center">
+                        2
+                    </td>
+            </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            3
+                        </td>
+                            <td class="" align="center">
+                                4
+                            </td>
+                            <td class="" align="center">
+                                5
+                            </td>
+                            <td class="" align="center">
+                                6
+                            </td>
+                            <td class="" align="center">
+                                <a href="https://www.cnblogs.com/5iedu/archive/2019/11/07.html"><u>7</u></a>
+                            </td>
+                            <td class="" align="center">
+                                8
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            9
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            10
+                        </td>
+                            <td class="" align="center">
+                                11
+                            </td>
+                            <td class="" align="center">
+                                12
+                            </td>
+                            <td class="" align="center">
+                                13
+                            </td>
+                            <td class="" align="center">
+                                14
+                            </td>
+                            <td class="" align="center">
+                                15
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            16
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            <a href="https://www.cnblogs.com/5iedu/archive/2019/11/17.html"><u>17</u></a>
+                        </td>
+                            <td class="" align="center">
+                                18
+                            </td>
+                            <td class="" align="center">
+                                19
+                            </td>
+                            <td class="" align="center">
+                                <a href="https://www.cnblogs.com/5iedu/archive/2019/11/20.html"><u>20</u></a>
+                            </td>
+                            <td class="" align="center">
+                                21
+                            </td>
+                            <td class="" align="center">
+                                22
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            23
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalTodayDay" align="center">
+                            24
+                        </td>
+                            <td class="" align="center">
+                                25
+                            </td>
+                            <td class="" align="center">
+                                26
+                            </td>
+                            <td class="" align="center">
+                                27
+                            </td>
+                            <td class="" align="center">
+                                28
+                            </td>
+                            <td class="" align="center">
+                                29
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            30
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalOtherMonthDay" align="center">
+                            1
+                        </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                2
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                3
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                4
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                5
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                6
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            7
+                        </td>
+                </tr>
+    </tbody>
+</table></div>
+                <script>loadBlogDefaultCalendar();</script>
+                <div id="blog-sidecolumn">
+<!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    <div id="sidebar_search" class="mySearch">
+        <h3 class="catListTitle">搜索</h3>
+        <div id="sidebar_search_box">
+            <div id="widget_my_zzk" class="div_my_zzk">
+                <input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk">
+            </div>
+            <div id="widget_my_google" class="div_my_zzk">
+                <input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 常用链接 -->
+<div id="sidebar_shortcut" class="sidebar-block">
+    
+<h3 class="catListTitle">
+常用链接
+</h3>
+<ul>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/p/" title="我的博客的随笔列表">我的随笔</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/MyComments.html" title="我的发表过的评论列表">我的评论</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/OtherPosts.html" title="我评论过的随笔列表">我的参与</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/RecentComments.html" title="我的博客的评论列表">最新评论</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/tag/" title="我的博客的标签列表">我的标签</a>
+</li>
+</ul>
+
+<!-- TODO: 检查是否有使用这一部分的控件，如果没有则应该删除。 -->
+<div id="itemListLin_con" style="display:none">
+    <ul>
+
+    </ul>
+</div>
+
+</div>
+
+<!-- 最新随笔 -->
+
+
+
+<!-- 我的标签 -->
+<div id="sidebar_toptags" class="sidebar-block">
+    
+</div>
+
+<!-- 积分与排名 -->
+
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+    
+		<h3>
+
+随笔分类
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/811805.html" rel="" target="">
+    C++深度解析(73)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/804081.html" rel="" target="">
+    C语言进阶剖析(48)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/911906.html" rel="" target="">
+    Linux基础与系统管理(35)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/937714.html" rel="" target="">
+    Linux应用与网络编程(64)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1005833.html" rel="" target="">
+    lua(3)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1005832.html" rel="" target="">
+    makefile(10)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1503320.html" rel="" target="">
+    Modern C++ 11/14(30)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/819307.html" rel="" target="">
+    QT实验分析教程(85)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/699743.html" rel="" target="">
+    Windows程序设计(58)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/699744.html" rel="" target="">
+    Windows核心编程(57)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/994985.html" rel="" target="">
+    计算机网络原理(54)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/825371.html" rel="" target="">
+    设计模式(41)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1007185.html" rel="" target="">
+    深入应用C++11(27)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/911523.html" rel="" target="">
+    数据结构实战分析(79)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/888633.html" rel="" target="">
+    重构(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/963515.html" rel="" target="">
+    专业嵌入式软件开发(15)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+随笔档案
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/11.html" rel="" target="">
+    2019年11月(3)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/10.html" rel="" target="">
+    2019年10月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/09.html" rel="" target="">
+    2019年9月(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/08.html" rel="" target="">
+    2019年8月(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/07.html" rel="" target="">
+    2019年7月(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/12.html" rel="" target="">
+    2017年12月(13)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/11.html" rel="" target="">
+    2017年11月(23)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/10.html" rel="" target="">
+    2017年10月(21)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/09.html" rel="" target="">
+    2017年9月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/08.html" rel="" target="">
+    2017年8月(22)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/07.html" rel="" target="">
+    2017年7月(27)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/06.html" rel="" target="">
+    2017年6月(21)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/05.html" rel="" target="">
+    2017年5月(35)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/04.html" rel="" target="">
+    2017年4月(19)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/03.html" rel="" target="">
+    2017年3月(28)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/02.html" rel="" target="">
+    2017年2月(15)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/01.html" rel="" target="">
+    2017年1月(51)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/12.html" rel="" target="">
+    2016年12月(26)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/11.html" rel="" target="">
+    2016年11月(20)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/10.html" rel="" target="">
+    2016年10月(13)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/09.html" rel="" target="">
+    2016年9月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/08.html" rel="" target="">
+    2016年8月(11)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/07.html" rel="" target="">
+    2016年7月(24)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/06.html" rel="" target="">
+    2016年6月(26)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/05.html" rel="" target="">
+    2016年5月(34)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/04.html" rel="" target="">
+    2016年4月(73)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/03.html" rel="" target="">
+    2016年3月(33)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/02.html" rel="" target="">
+    2016年2月(7)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/12.html" rel="" target="">
+    2015年12月(2)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/11.html" rel="" target="">
+    2015年11月(4)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/10.html" rel="" target="">
+    2015年10月(7)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/09.html" rel="" target="">
+    2015年9月(6)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/08.html" rel="" target="">
+    2015年8月(54)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/07.html" rel="" target="">
+    2015年7月(25)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/06.html" rel="" target="">
+    2015年6月(4)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+文章分类
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/715136.html" rel="" target="">
+    Windows内核(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/729402.html" rel="" target="">
+    编程经验(12)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/812154.html" rel="" target="">
+    常用代码(2)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/954364.html" rel="" target="">
+    综合案例(1)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+相册
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/gallery/718135.html" rel="nofollow noopener noreferrer" target="">
+    笔记插图
+</a>
+
+</li>
+			
+				</ul>
+
+
+</div>
+
+<!-- 最新评论 -->
+<div id="sidebar_recentcomments" class="sidebar-block">
+    <div id="recent_comments_wrap" class="RecentComment">
+    <h3 class="catListTitle">最新评论</h3>
+    <div class="RecentCommentBlock">
+        <ul>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/11390495.html#4344239">1. Re:第18课 捕获机制及陷阱</a></li>
+                    <li class="recent_comment_body">博主不仅高产，而且文章质量都挺好</li>
+                    <li class="recent_comment_author">--YaphetS嘟嘟</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4315939">2. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">博主你好，觉得你的博客特别受用，可以告知一下其他博客的密码吗</li>
+                    <li class="recent_comment_author">--cp2018</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/7040429.html#4294675">3. Re:第5章 IP地址和子网划分（2）_IP地址分类和NAT技术</a></li>
+                    <li class="recent_comment_body">像icmp这种没有端口的不知道是如何实现NAT转换的？</li>
+                    <li class="recent_comment_author">--Eagle-jie</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4280947">4. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">同问</li>
+                    <li class="recent_comment_author">--tiger_wangsir</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4237914">5. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">博主你好，觉得你的博客特别受用，可以告知一下其他博客的密码吗</li>
+                    <li class="recent_comment_author">--胡瑶co</li>
+        </ul>
+    </div>
+</div>
+</div>
+
+
+
+<!-- 阅读排行榜 -->
+<div id="sidebar_topviewedposts" class="sidebar-block">
+    
+<div id="topview_posts_wrap">
+    <h3 class="catListTitle">阅读排行榜</h3>
+    <div id="TopViewPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5595153.html">
+                            1. 第17章 行为型模式—解释器模式(6762)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7376543.html">
+                            2. 第11章 拾遗1：网络地址转换(NAT)和端口映射(4936)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7095041.html">
+                            3. 第6章 静态路由和动态路由（4）_OSPF动态路由协议(3791)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/4899791.html">
+                            4. 第17章 内存映射文件（1）_内存映射文件简介(3741)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7742589.html">
+                            5. 第16课 右值引用（3）_std::forward与完美转发(3730)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- 评论排行榜 -->
+<div id="sidebar_topcommentedposts" class="sidebar-block">
+    
+<div id="topfeedback_posts_wrap">
+    <h3 class="catListTitle">评论排行榜</h3>
+    <div id="TopFeedbackPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/6498326.html">
+                            1. 第83课 另一种创建线程的方式(9)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5325466.html">
+                            2. 第20课 链接过程简介(5)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5429059.html">
+                            3. 第7课 Qt中的坐标系统(4)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5835715.html">
+                            4. 第37课 深度解析QMap与QHash(3)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5617055.html">
+                            5. 第56课 函数模板的概念和意义(2)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- 推荐排行榜 -->
+<div id="sidebar_topdiggedposts" class="sidebar-block">
+    
+<div id="topdigg_posts_wrap">
+    <div class="catListView">
+        <h3 class="catListTitle">推荐排行榜</h3>
+        <div id="TopDiggPostsBlock">
+            <ul style="word-break: break-all">
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/4812259.html">
+                                1. 第11章 Windows线程池（2）_Win2008及以上的新线程池(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/5363054.html">
+                                2. 第1课 学习 C++ 的意义(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/5367317.html">
+                                3. 第5课 引用的本质分析(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/6800234.html">
+                                4. 第1章 计算机网络和协议（1）_网络的概念(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/6829593.html">
+                                5. 第1章 计算机网络和协议（3）_TCP/IP协议(1)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div></div>
+                <script>loadBlogSideColumn();</script>
+            </div>
+		</td>
+		<td class="MainCell" width="100%">
+			<div id="main">
+				<div id="post_detail">
+	<div class="post">
+		<div class="posthead">
+			<h2>
+				
+<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/5iedu/p/5637909.html">第22章 行为型模式—状态模式</a>
+
+			</h2>
+ 			Posted on 
+<span id="post-date">2016-07-03 13:30</span>&nbsp;<a href="https://www.cnblogs.com/5iedu/">浅墨浓香</a> 阅读(<span id="post_view_count">1007</span>) 评论(<span id="post_comment_count">0</span>) <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5637909" rel="nofollow"> 编辑</a> <a href="javascript:void(0)" onclick="AddToWz(5637909); return false;">收藏</a>
+
+			
+			
+		</div>
+		<div class="postbody">
+<div id="cnblogs_post_body" class="blogpost-body ">
+    <p style="text-align: left;" align="center"><strong style="line-height: 1.5;">1. </strong><strong style="line-height: 1.5;">状态模式（State Pattern）的定义</strong></p>
+<p><strong>（1）定义：</strong>允许一个对象在其<span style="color: #0000ff;"><strong>内部状态改变时改变它的行为</strong></span>。对象看起来似乎修改了它的类。</p>
+<p>　　①状态和行为，它们的关系可以描述为<span style="color: #ff0000;">“<strong>状态决定行为</strong>”</span></p>
+<p>　　②因状态是在运行期被改变，行为也会在运行期根据状态的改变而改变。看起来，<span style="color: #0000ff;"><strong>同一个对象，在不同的运行时刻，行为是不一样的，就像是类被修改了一样</strong></span>。</p>
+<p><strong>（2）状态模式的结构和说明</strong></p>
+<p align="center"><img src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/772759-20160703132952749-1328390216.png" alt="">&nbsp;</p>
+<p>　<span style="color: #0000ff;">　①Context：环境，也称上下文，通常用来<span style="color: #ff0000;"><strong>定义客户感兴趣的接口</strong></span>，同时<span style="color: #ff0000;"><strong>维护一个来具体处理当前状态的实例对象</strong></span>。</span></p>
+<p><span style="color: #0000ff;">　　②State：状态接口，用来封装与上下文的一个特定状态所对应的行为。</span></p>
+<p><span style="color: #0000ff;">　　③ConcreteState：具体<span style="color: #ff0000;"><strong>实现状态处理的类</strong></span>，每个类实现一个跟上下文相关的状态的具体处理。</span></p>
+<p>【编程实验】动态改变交通灯的状态</p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/772759-20160703192559921-1976699893.png" alt=""></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">行为型模式——状态模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">场景：动态改变交通灯的状态</span><span style="color: #008000;">
+/*</span><span style="color: #008000;">
+    使用State模式，一言以蔽之，技术上就是使用委托来动态改变类的
+行为。而语义上就是在运行时改变一个类的状态。面我们使用State模式来
+模拟交通灯的状态变化。交通灯就是有三种的状态变化：红黄绿，而变化
+的循环是：红-&gt;黄-&gt;绿-&gt;黄-&gt;红
+</span><span style="color: #008000;">*/</span><span style="color: #000000;">
+
+#include </span>&lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #0000ff;">class</span> Context; <span style="color: #008000;">//</span><span style="color: #008000;">前向声明
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">********************（State接口）********************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">交通灯</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> LightState
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> run() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">红灯</span>
+<span style="color: #0000ff;">class</span> RedState : <span style="color: #0000ff;">public</span><span style="color: #000000;"> LightState
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> run()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">红</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">黄灯</span>
+<span style="color: #0000ff;">class</span> YellowState : <span style="color: #0000ff;">public</span><span style="color: #000000;"> LightState
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> run()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">黄</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+};
+
+</span><span style="color: #0000ff;">class</span> GreenState : <span style="color: #0000ff;">public</span><span style="color: #000000;"> LightState
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> run()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">绿</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">******************************Context**************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">相当于Context角色</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> TrafficLight
+{
+    LightState</span>* state; <span style="color: #008000;">//</span>
+
+    <span style="color: #008000;">//</span><span style="color: #008000;">当前灯运行次数，任何设备都有消耗，即寿命。</span>
+    <span style="color: #0000ff;">int</span><span style="color: #000000;"> nCnt;
+    </span><span style="color: #0000ff;">int</span> nTotalCnt; <span style="color: #008000;">//</span><span style="color: #008000;">总寿命</span>
+<span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    TrafficLight()
+    {
+        nCnt </span>= <span style="color: #800080;">0</span>; <span style="color: #008000;">//</span><span style="color: #008000;">刚出厂的灯，运行次数为0
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">只能运行100次，质量真差</span>
+        nTotalCnt = <span style="color: #800080;">100</span><span style="color: #000000;">;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">设置状态</span>
+    <span style="color: #0000ff;">void</span> setState(LightState*<span style="color: #000000;"> s)
+    {
+        state </span>=<span style="color: #000000;"> s;
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> run()
+    {
+        state</span>-&gt;<span style="color: #000000;">run();
+        </span>++<span style="color: #000000;">nCnt;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">灯是否坏了</span>
+    <span style="color: #0000ff;">bool</span><span style="color: #000000;"> isBad()
+    {
+        </span><span style="color: #0000ff;">bool</span> bRet = (nCnt &gt;<span style="color: #000000;"> nTotalCnt);
+        </span><span style="color: #0000ff;">if</span><span style="color: #000000;">(bRet)
+        {
+            cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">灯坏了</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+        }
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> bRet;
+    }
+};
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">交通灯</span>
+<span style="color: #000000;">    TrafficLight tl;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">灯的三种状态</span>
+<span style="color: #000000;">    RedState rs;
+    GreenState gs;
+    YellowState ys;
+
+    </span><span style="color: #0000ff;">while</span>(!<span style="color: #000000;"> tl.isBad())
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">控制状态的变化</span>
+        tl.setState(&amp;<span style="color: #000000;">rs);
+        tl.run();
+
+        tl.setState(</span>&amp;<span style="color: #000000;">ys);
+        tl.run();
+
+        tl.setState(</span>&amp;<span style="color: #000000;">gs);
+        tl.run();
+
+    }
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><strong style="line-height: 1.5;">2. </strong><strong style="line-height: 1.5;">思考状态模式</strong></p>
+<p>（1）状态模式的<span style="color: #ff0000;"><strong>本质</strong></span>：根据<span style="color: #ff0000;"><strong>状态来分离和选择行为</strong></span></p>
+<p><strong>（2）状态和行为</strong></p>
+<p>　　①<span style="color: #0000ff;"><strong>状态模式的功能</strong></span>就是把<span style="color: #ff0000;"><strong>状态和状态对应的行为分离出来</strong></span>，每个状态所对应的功能处理封装在一个独立的类里。通过维护状态的变化，来调用不同状态对应的不同功能。</p>
+<p>　　②为了操作不同的状态类，定义一个状态接口来约束它们，这样外部就可以面向这个统一的状态接口编程，而无须关心具体的状态类实现了。</p>
+<p>　　③<span style="color: #ff0000;"><strong>状态和行为是相关联的</strong></span>，它们的关系可以描述为<span style="color: #0000ff;"><strong>状态决定行为</strong></span>。因状态是在运行期被改变，行为也会在运行期根据状态的改变而改变，看起来，同一个对象，在不同的运行时刻，行为是不一样的，就像是类被修改了一样。</p>
+<p><strong>（3）行为的平行性</strong></p>
+<p>　　①<span style="color: #0000ff;"><strong>注意是平行性，而不是平等性</strong></span>。所谓的平行性指的是各个状态的行为所处的层次是一样的，相互独立的、没有关联的，是根据不同的状态来决定到底走平行线的哪一条。因为行为是不同的，当然对应的实现也是不同的，<span style="color: #ff0000;"><strong>相互之间是不可替换的</strong></span>。</p>
+<p align="center"><img src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/772759-20160703133008031-1187376968.jpg" alt="" width="615" height="107">&nbsp;</p>
+<p>　　②<span style="color: #ff0000;"><strong>平等性：强调用的可替换性</strong></span>，大家是同一行为的不同描述或实现，因此在同一个行为发生的时候，可以根据条件挑选任意一个实现来进行相应的处理。</p>
+<p align="center"><img src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/772759-20160703133018312-246463825.jpg" alt="" width="355" height="124">&nbsp;</p>
+<p>　　③状态模式的结构和策略模式的结构完全一样。但是它们的目的、实现、本质却完全不同。还有行为之间的特性也是状态模式和策略模式的一个很重要的区别，<span style="color: #ff0000;"><strong>状态模式的行为是平行性，不可相互替换的</strong></span>；而<span style="color: #0000ff;"><strong>策略模式的行为是平等的，是可以相互替换的</strong></span>。</p>
+<p><strong>（4）Context和state</strong></p>
+<p>　　①在状态模式中，上下文持有state对象，但<span style="color: #0000ff;"><strong>上下文本身并不处理跟状态相关的行为</strong></span>，而是把处理状态的功能<span style="color: #ff0000;"><strong>委托给了状态对应的状态处理类来处理</strong></span>。</p>
+<p>　　②在<span style="color: #ff0000;"><strong>具体的状态处理类</strong></span>中<span style="color: #0000ff;"><strong>经常需要获取上下文自身的数据</strong></span>，甚至在必要的时候回调上下文中的方法。因此，通常<span style="color: #0000ff;"><strong>将上下文自身当作一个参数传递给具体的状态处理类</strong></span>。</p>
+<p>　　③客户端一般只和上下文交互。客户端通常不负责运行期间状态的维护，也不负责决定后续到底使用哪一个具体的状态处理对象，<span style="color: #ff0000;"><strong>这点与策略模式是不同的</strong></span>。</p>
+<p><strong>（5）不完美的OCP体验（开闭原则）</strong></p>
+<p>　　①修改功能：由于每个状态对应的处理己经封装到对应的状态类中了，要修改己有的某个状态的功能，直接进行修改那个类就可以了，对其他程序没有影响。</p>
+<p>　　②添加新的实现类：<span style="color: #ff0000;"><strong>得修改Context中request方法</strong></span>。<span style="color: #0000ff;"><strong>这不完全遵循OCP原则</strong></span>。这要说明一下，设计原则是大家在设计和开发中尽量去遵守的，但不是一定要遵守，尤其是完全遵守。因为实际开发中，完全遵守那些原则几乎是不可能完成的任务。</p>
+<p><strong>（6）创建和销毁状态对象</strong></p>
+<p>　　①如果要<span style="color: #0000ff;"><strong>进入的状态在运行时是不可知的</strong></span>，而且上下文是比较稳定的，不会经常改变状态，而且使用也不频繁的，可以<span style="color: #0000ff;"><strong>在需要状态对象的时候创建，使用完销毁它们</strong></span>。</p>
+<p>　　②如果<span style="color: #ff0000;"><strong>状态改变很频繁</strong></span>，也就是需要频繁的创建状态对象，而且状态对象还存储着大量的数量信息，这种情况可以<span style="color: #ff0000;"><strong>提前创建它们并且始终不销毁</strong></span>。</p>
+<p>　　③如果<span style="color: #0000ff;"><strong>无法确定状态改变是否频繁</strong></span>，而且有些状态对象的数据量大，有些比较小，一切都是未知的，可以<span style="color: #ff0000;"><strong>采用延迟加载和缓存结合的方式</strong></span>，就是当第一次需要使用状态对象时创建，使用完后并不销毁对象，而是把这个对象缓存起来，等待一下次使用，而且在合适的时候，由缓存框架销毁状态对象。在实际工程开发过程中，这个方案是首选，因为它兼顾了前两种方案的优点，又避免了它们的缺点。</p>
+<p>【编程实验】电梯状态的切换</p>
+<p>（1）电梯状态的切换示意图</p>
+<p align="center"><img src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/772759-20160703160442406-244758667.png" alt="">&nbsp;</p>
+<p>（2）UML类图</p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/772759-20160703161142046-960751651.png" alt=""></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">行为型模式——状态模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">场景：电梯状态切换</span>
+<span style="color: #000000;">
+#include </span>&lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #0000ff;">class</span> Context; <span style="color: #008000;">//</span><span style="color: #008000;">前向声明
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">********************（State接口）********************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">抽象电梯状态</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> LiftState
+{
+</span><span style="color: #0000ff;">protected</span><span style="color: #000000;">:
+    Context</span>*<span style="color: #000000;"> context;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span> setContext(Context*<span style="color: #000000;"> context)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;context =<span style="color: #000000;"> context;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">电梯开启动作</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> open() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">电梯关门动作</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> close() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">电梯运行动作</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> run() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">电梯停止动作</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> stop() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">***********************Context环境类*****************************</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Context
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    LiftState</span>*<span style="color: #000000;"> liftState;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">static</span> LiftState*<span style="color: #000000;"> openningState;
+    </span><span style="color: #0000ff;">static</span> LiftState*<span style="color: #000000;"> closingState;
+    </span><span style="color: #0000ff;">static</span> LiftState*<span style="color: #000000;"> runningState;
+    </span><span style="color: #0000ff;">static</span> LiftState*<span style="color: #000000;"> stoppingState;
+
+    LiftState</span>&amp;<span style="color: #000000;"> getLiftState()
+    {
+        </span><span style="color: #0000ff;">return</span> *<span style="color: #000000;">liftState;
+    }
+
+    </span><span style="color: #0000ff;">void</span> setLiftState(LiftState*<span style="color: #000000;"> liftState)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;liftState =<span style="color: #000000;"> liftState;
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">把当前的环境通知到各个实现类中</span>
+        <span style="color: #0000ff;">this</span>-&gt;liftState-&gt;setContext(<span style="color: #0000ff;">this</span><span style="color: #000000;">);
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> open()
+    {
+        liftState</span>-&gt;<span style="color: #000000;">open();
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> close()
+    {
+        liftState</span>-&gt;<span style="color: #000000;">close();
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> run()
+    {
+        liftState</span>-&gt;<span style="color: #000000;">run();
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> stop()
+    {
+        liftState</span>-&gt;<span style="color: #000000;">stop();
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">***************************ConcreteState类********************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">开门状态</span>
+<span style="color: #0000ff;">class</span> OpenningState : <span style="color: #0000ff;">public</span><span style="color: #000000;"> LiftState
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">打开电梯门</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> open()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">电梯门开启...</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">开门状态下，可以按下“关门”按钮</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> close()
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">将当前状态修改为关门状态</span>
+        context-&gt;<span style="color: #000000;">setLiftState(Context::closingState);
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">关门</span>
+        context-&gt;<span style="color: #000000;">getLiftState().close();
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">开门状态下不能运行！</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> run()
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">do nothing;</span>
+<span style="color: #000000;">    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">开门状态下，按停止没效果</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> stop()
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">do nothing</span>
+<span style="color: #000000;">    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">关门状态</span>
+<span style="color: #0000ff;">class</span> ClosingState : <span style="color: #0000ff;">public</span><span style="color: #000000;"> LiftState
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">打开电梯门</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> open()
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">将当前状态修改为开门状态</span>
+        context-&gt;<span style="color: #000000;">setLiftState(Context::openningState);
+        context</span>-&gt;<span style="color: #000000;">getLiftState().open();
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">关门状态</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> close()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">电梯门关闭...</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">关门状态，可以按“运行”按钮</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> run()
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">将当前状态修改为运行状态</span>
+        context-&gt;<span style="color: #000000;">setLiftState(Context::runningState);
+        context</span>-&gt;<span style="color: #000000;">getLiftState().run();
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">关门状态下，可以切换到停止状态</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> stop()
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">将当前状态修改为停止状态</span>
+        context-&gt;<span style="color: #000000;">setLiftState(Context::stoppingState);
+        context</span>-&gt;<span style="color: #000000;">getLiftState().stop();
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">运行状态</span>
+<span style="color: #0000ff;">class</span> RunningState : <span style="color: #0000ff;">public</span><span style="color: #000000;"> LiftState
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">运行状态，按“开门”按钮没效课</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> open()
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">do nothing</span>
+<span style="color: #000000;">    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">运行状态按“关门”按钮没效果</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> close()
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">do nothing;</span>
+<span style="color: #000000;">    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">运行状态</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> run()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">电梯上下运行...</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">运行状态下，可按“停止”</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> stop()
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">将当前状态修改为停止状态</span>
+        context-&gt;<span style="color: #000000;">setLiftState(Context::stoppingState);
+        context</span>-&gt;<span style="color: #000000;">getLiftState().stop();
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">停止状态</span>
+<span style="color: #0000ff;">class</span> StoppingState : <span style="color: #0000ff;">public</span><span style="color: #000000;"> LiftState
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">停止状态，可以打开电梯门</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> open()
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">将当前状态修改为开门状态</span>
+        context-&gt;<span style="color: #000000;">setLiftState(Context::openningState);
+        context</span>-&gt;<span style="color: #000000;">getLiftState().open();
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">停止状态下，可以按下“关门”按钮没效果</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> close()
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">do nothing</span>
+<span style="color: #000000;">    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">关门状态，可以按“运行”按钮！</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> run()
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">将当前状态修改为运行状态</span>
+        context-&gt;<span style="color: #000000;">setLiftState(Context::runningState);
+        context</span>-&gt;<span style="color: #000000;">getLiftState().run();
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">开门状态下，按停止没效果</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> stop()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">电梯停止了...</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+};
+
+LiftState</span>* Context::openningState = <span style="color: #0000ff;">new</span><span style="color: #000000;"> OpenningState();
+LiftState</span>* Context::closingState  = <span style="color: #0000ff;">new</span><span style="color: #000000;"> ClosingState();
+LiftState</span>* Context::runningState  = <span style="color: #0000ff;">new</span><span style="color: #000000;"> RunningState();
+LiftState</span>* Context::stoppingState = <span style="color: #0000ff;">new</span><span style="color: #000000;"> StoppingState();
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    Context context;
+    context.setLiftState(Context::closingState);
+
+    context.open();
+    context.close();
+    context.run();
+    context.stop();
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}
+</span><span style="color: #008000;">/*</span><span style="color: #008000;">输出结果：
+电梯门开启...
+电梯门关闭...
+电梯上下运行...
+电梯停止了...
+</span><span style="color: #008000;">*/</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>【编程实验】在线投票系统</p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/772759-20160703212908734-228851394.png" alt=""></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">行为型模式——状态模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">场景：在线投票系统</span><span style="color: #008000;">
+/*</span><span style="color: #008000;">
+四种状态：
+1.正常投票状态：同一用户只能投一票
+2.重复投票用户：正常投票以后，有意或无意重复投票
+2.恶意投票用户：一个用户反复投票超过5次，判为恶意刷票，取消该用户所有的投票及资格
+4.黑名单用户：超过8次，进黑名单，禁止再登录系统。
+</span><span style="color: #008000;">*/</span><span style="color: #000000;">
+
+#include </span>&lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;">
+#include </span>&lt;map&gt;
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">投票管理类</span>
+<span style="color: #0000ff;">class</span> VoteManager; <span style="color: #008000;">//</span><span style="color: #008000;">前向声明
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">*******************************投票状态********************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">封装一个投票状态相关的行为（相同于State模式的State接口角色）</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> VoteState
+{
+</span><span style="color: #0000ff;">protected</span><span style="color: #000000;">:
+    VoteManager</span>*<span style="color: #000000;"> voteManager;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">设置投票上下文，用来在实现状态对应的功能处理的时候可以
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">回调上下文的数据。</span>
+    <span style="color: #0000ff;">void</span> setVoteManager(VoteManager*<span style="color: #000000;"> value)
+    {
+        voteManager </span>=<span style="color: #000000;"> value;
+    }
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">处理状态对象的行为。user为投票人，voteItem为投票项</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> vote(<span style="color: #0000ff;">string</span> user, <span style="color: #0000ff;">string</span> voteItem) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">投票管理类</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> VoteManager
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    VoteState</span>* state;<span style="color: #008000;">//</span><span style="color: #008000;">持有VoteState的指针
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">记录用户投票的结果key-value为用户名称-投票选项</span>
+    map&lt;<span style="color: #0000ff;">string</span>,<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;"> mapVote;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">记录用户投票的次数:键值对为用户名称-投票次数</span>
+    map&lt;<span style="color: #0000ff;">string</span>,<span style="color: #0000ff;">int</span>&gt;<span style="color: #000000;"> mapVoteCount;
+    </span><span style="color: #0000ff;">static</span> VoteState*<span style="color: #000000;"> normalVoteState;
+    </span><span style="color: #0000ff;">static</span> VoteState*<span style="color: #000000;"> repeatVoteState;
+    </span><span style="color: #0000ff;">static</span> VoteState*<span style="color: #000000;"> spiteVoteState;
+    </span><span style="color: #0000ff;">static</span> VoteState*<span style="color: #000000;"> blackVoteState;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    map</span>&lt;<span style="color: #0000ff;">string</span>,<span style="color: #0000ff;">string</span>&gt;&amp;<span style="color: #000000;"> getMapVote()
+    {
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> mapVote;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">投票</span>
+    <span style="color: #0000ff;">void</span> vote(<span style="color: #0000ff;">string</span> user, <span style="color: #0000ff;">string</span><span style="color: #000000;"> voteItem)
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">1.先为该用户增加设票次数
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">从记录中取出己有的投票次数</span>
+        <span style="color: #0000ff;">int</span> oldVoteCnt =<span style="color: #000000;"> mapVoteCount[user];
+        </span><span style="color: #0000ff;">if</span>(oldVoteCnt &lt;=<span style="color: #800080;">0</span><span style="color: #000000;">)
+            oldVoteCnt </span>= <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+        mapVoteCount[user] </span>= ++<span style="color: #000000;">oldVoteCnt;
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">2.判断该用户投票次数，就相当于判断对应的状态</span>
+        <span style="color: #0000ff;">if</span>(oldVoteCnt == <span style="color: #800080;">1</span><span style="color: #000000;">)
+            state </span>=<span style="color: #000000;"> normalVoteState;
+        </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> ((<span style="color: #800080;">1</span> &lt; oldVoteCnt ) &amp;&amp; (oldVoteCnt &lt;<span style="color: #800080;">5</span><span style="color: #000000;">))
+            state </span>=<span style="color: #000000;"> repeatVoteState;
+        </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> ((<span style="color: #800080;">5</span> &lt;= oldVoteCnt) &amp;&amp; (oldVoteCnt &lt; <span style="color: #800080;">8</span><span style="color: #000000;">))
+            state </span>=<span style="color: #000000;"> spiteVoteState;
+        </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> (oldVoteCnt &gt;= <span style="color: #800080;">8</span><span style="color: #000000;">)
+            state </span>=<span style="color: #000000;"> blackVoteState;
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">3.然后转调状态对象来进行相应的操作</span>
+        state-&gt;setVoteManager(<span style="color: #0000ff;">this</span><span style="color: #000000;">);
+        state</span>-&gt;<span style="color: #000000;">vote(user, voteItem);
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">*******************************具体的状态类**********************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">正常投票状态对应的处理</span>
+<span style="color: #0000ff;">class</span> NormalVoteState : <span style="color: #0000ff;">public</span><span style="color: #000000;"> VoteState
+{
+
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span> vote(<span style="color: #0000ff;">string</span> user, <span style="color: #0000ff;">string</span><span style="color: #000000;"> voteItem)
+    {
+        </span><span style="color: #0000ff;">if</span>(voteManager !=<span style="color: #000000;"> NULL)
+        {
+             </span><span style="color: #008000;">//</span><span style="color: #008000;">正常投票，记录到投票记录中</span>
+             map&lt;<span style="color: #0000ff;">string</span>,<span style="color: #0000ff;">string</span>&gt; &amp;  mapVote = voteManager-&gt;<span style="color: #000000;">getMapVote();
+             mapVote[user] </span>=<span style="color: #000000;"> voteItem;
+             cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">恭喜你投票成功</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+        }
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">重复投票状态对应的处理</span>
+<span style="color: #0000ff;">class</span> RepeatVoteState : <span style="color: #0000ff;">public</span><span style="color: #000000;"> VoteState
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span> vote(<span style="color: #0000ff;">string</span> user, <span style="color: #0000ff;">string</span><span style="color: #000000;"> voteItem)
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">重复投票
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">暂时不做处理</span>
+        cout &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">请不要重复投票</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">恶意投票状态对应的处理</span>
+<span style="color: #0000ff;">class</span> SpiteVoteState : <span style="color: #0000ff;">public</span><span style="color: #000000;"> VoteState
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span> vote(<span style="color: #0000ff;">string</span> user, <span style="color: #0000ff;">string</span><span style="color: #000000;"> voteItem)
+    {
+        </span><span style="color: #0000ff;">if</span>(voteManager !=<span style="color: #000000;"> NULL)
+        {
+             </span><span style="color: #008000;">//</span><span style="color: #008000;">恶意投票，取消用户的投票资格并取消投票记录</span>
+             map&lt;<span style="color: #0000ff;">string</span>,<span style="color: #0000ff;">string</span>&gt; &amp;  mapVote = voteManager-&gt;<span style="color: #000000;">getMapVote();
+             map</span>&lt;<span style="color: #0000ff;">string</span>,<span style="color: #0000ff;">string</span>&gt;::iterator iter =<span style="color: #000000;"> mapVote.find(user);
+
+             </span><span style="color: #0000ff;">if</span>(iter !=<span style="color: #000000;"> mapVote.end())
+                mapVote.erase(iter);
+
+             cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">你有恶意刷票行为，取消投票资格</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+        }
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">黑名单状态对应的处理</span>
+<span style="color: #0000ff;">class</span> BlackVoteState : <span style="color: #0000ff;">public</span><span style="color: #000000;"> VoteState
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span> vote(<span style="color: #0000ff;">string</span> user, <span style="color: #0000ff;">string</span><span style="color: #000000;"> voteItem)
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">黑名单
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">记入黑名单，禁止登录系统</span>
+        cout &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">进入黑名单，将禁止登录和使用本系统</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+};
+
+VoteState</span>* VoteManager::normalVoteState = <span style="color: #0000ff;">new</span><span style="color: #000000;"> NormalVoteState();
+VoteState</span>* VoteManager::repeatVoteState = <span style="color: #0000ff;">new</span><span style="color: #000000;"> RepeatVoteState();
+VoteState</span>* VoteManager::spiteVoteState  = <span style="color: #0000ff;">new</span><span style="color: #000000;"> SpiteVoteState();
+VoteState</span>* VoteManager::blackVoteState  = <span style="color: #0000ff;">new</span><span style="color: #000000;"> BlackVoteState();
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    VoteManager vm;
+    </span><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">int</span> i=<span style="color: #800080;">0</span>; i&lt;<span style="color: #800080;">8</span>; i++<span style="color: #000000;">)
+    {
+        vm.vote(</span><span style="color: #800000;">"</span><span style="color: #800000;">u1</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">A</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    }
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}
+</span><span style="color: #008000;">/*</span><span style="color: #008000;">输出结果
+恭喜你投票成功
+请不要重复投票
+请不要重复投票
+请不要重复投票
+你有恶意刷票行为，取消投票资格
+你有恶意刷票行为，取消投票资格
+你有恶意刷票行为，取消投票资格
+进入黑名单，将禁止登录和使用本系统
+</span><span style="color: #008000;">*/</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><strong style="line-height: 1.5;">3. </strong><strong style="line-height: 1.5;">状态的维护和转换控制</strong></p>
+<p><strong>（1）在上下文中维护</strong></p>
+<p>&nbsp;&nbsp;&nbsp; 因状态本身通常被实现为上下文对象的状态，因此可以在上下文中进行状态进行集中的转换，但这里一般会出现较多的if…else语句。<span style="color: #ff0000;"><strong>这种方法适合那种状态转换的规则是一定的，一般不需要进行什么扩展规则的情况</strong></span>。（如投票管理的例子）</p>
+<p><strong>（2）在状态的处理类中维护</strong></p>
+<p>　　当每个状态处理对象处理完自身状态所对应的功能后，可以根据需要指定后继状态，以便让应用能正确处理后续的请求。这种方法适合<span style="color: #0000ff;"><strong>应用在那种状态的转换取决于前一个状态动态处理的结果，或者依赖于外部数据的情况</strong></span>。（如电梯状态管理的例子）</p>
+<p><strong>4. </strong><strong>状态模式的优缺点</strong></p>
+<p><strong>（1）优点</strong></p>
+<p><strong>　　①简化应用逻辑控制</strong>。因使用单独的类来封装一个状态的处理，使得代码结构化和意图更清晰，从而简化应用的逻辑控制。对于依赖状态的if-else，理论上来说，都可以使用状态模式来实现，把每个if或else块定义一个状态来代表。</p>
+<p><strong>　　②更好地分离状态和行为</strong>。状态模式通过设置所有状态类的公共接口，使得应用程序只需关心状态的切换，而不用关心这个状态对应的真正处理。</p>
+<p><strong>　　③更好的扩展性</strong>。引入状态处理的公共接口后，使得扩展新的状态变得非常容易，只需增加一个实现类即可。</p>
+<p>（2）缺点：<span style="color: #0000ff;"><strong>子类膨胀问题</strong></span>，一个状态对应一个状态处理类，会使得程序引入太多的状态类。</p>
+<p>【编程实验】模拟工作流（请假审批流程）</p>
+<p>//1.请假流程示意图</p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/772759-20160703233304609-681565675.jpg" alt="" width="427" height="311"></p>
+<p>//2.UML类图</p>
+<p style="text-align: center;">&nbsp;<img src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/772759-20160703234623062-1427057766.png" alt=""></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">行为型模式——状态模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">场景：模拟工作流（请假申批流程）</span><span style="color: #008000;">
+/*</span><span style="color: #008000;">
+三种状态：
+1.提交项目经理审核状态：同意(&lt;3天)或不同意.  -&gt;审核结束
+2.提交部门经理审核状态：同意(&gt;3天)或不同意   -&gt;审核结束
+3.审核结束
+</span><span style="color: #008000;">*/</span><span style="color: #000000;">
+
+#include </span>&lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;">
+#include </span>&lt;map&gt;
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+typedef </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> Object;
+
+</span><span style="color: #0000ff;">class</span> State; <span style="color: #008000;">//</span><span style="color: #008000;">前向声明
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">************************辅助类*****************************</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> LeaveRequesModel
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span> user;   <span style="color: #008000;">//</span><span style="color: #008000;">请假人</span>
+    <span style="color: #0000ff;">string</span> beginDate; <span style="color: #008000;">//</span><span style="color: #008000;">请假开始时间</span>
+    <span style="color: #0000ff;">int</span> leaveDays;    <span style="color: #008000;">//</span><span style="color: #008000;">请假天数</span>
+    <span style="color: #0000ff;">string</span> result;  <span style="color: #008000;">//</span><span style="color: #008000;">审核结果</span>
+<span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span>&amp; getUser(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> user;}
+    </span><span style="color: #0000ff;">void</span> setUser(<span style="color: #0000ff;">string</span> value){user =<span style="color: #000000;"> value;}
+
+    </span><span style="color: #0000ff;">string</span>&amp; getBeginDate(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> beginDate;}
+    </span><span style="color: #0000ff;">void</span> setBeginDate(<span style="color: #0000ff;">string</span><span style="color: #000000;"> value)
+    {
+        beginDate </span>=<span style="color: #000000;"> value;
+    }
+
+    </span><span style="color: #0000ff;">int</span>&amp; getLeaveDays(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> leaveDays;}
+    </span><span style="color: #0000ff;">void</span> setLeaveDays(<span style="color: #0000ff;">int</span><span style="color: #000000;"> value)
+    {
+        leaveDays </span>=<span style="color: #000000;"> value;
+    }
+
+    </span><span style="color: #0000ff;">string</span>&amp; getResult(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> result;}
+    </span><span style="color: #0000ff;">void</span> setResult(<span style="color: #0000ff;">string</span><span style="color: #000000;"> value)
+    {
+        result </span>=<span style="color: #000000;"> value;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">***********************状态机(抽象环境类)********************</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> StateMachine
+{
+</span><span style="color: #0000ff;">protected</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">持有一个状态对象</span>
+    State*<span style="color: #000000;"> state;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">包含流程处理需要的业务数据对象，这个对象
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">会被传到具体的状态对象中</span>
+    Object*<span style="color: #000000;"> businessVO;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> doWork() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    State</span>* getState(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> state;}
+    </span><span style="color: #0000ff;">void</span> setState(State*<span style="color: #000000;"> value)
+    {
+        state </span>=<span style="color: #000000;"> value;
+    }
+
+    Object</span>* getBusinessVO(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> businessVO;}
+    </span><span style="color: #0000ff;">void</span> setBusinessVO(Object*<span style="color: #000000;"> value)
+    {
+        businessVO </span>=<span style="color: #000000;"> value;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">*****************************************状态接口********************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">公共状态接口</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> State
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">执行状态对应的功能处理
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">参数为上下文的实例对象</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> doWork(StateMachine* ctx) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">virtual</span> ~<span style="color: #000000;">State(){}
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">请假流程的状态接口</span>
+<span style="color: #0000ff;">class</span> LeaveRequestState : <span style="color: #0000ff;">public</span><span style="color: #000000;"> State
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">这里可以扩展跟自己流程相关的处理</span>
+<span style="color: #000000;">};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">****************************************上下文环境类********************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">处理客户端请求的上下文（相当于Context角色）</span>
+<span style="color: #0000ff;">class</span> LeaveRequesContext : <span style="color: #0000ff;">public</span><span style="color: #000000;"> StateMachine
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> doWork()
+    {
+        state</span>-&gt;doWork(<span style="color: #0000ff;">this</span><span style="color: #000000;">);
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">***************************************具体的状态类**************************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">审核结束状态的类</span>
+<span style="color: #0000ff;">class</span> AuditOverState : <span style="color: #0000ff;">public</span><span style="color: #000000;"> LeaveRequestState
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span> doWork(StateMachine*<span style="color: #000000;"> ctx)
+    {
+        LeaveRequesModel</span>* lrm = (LeaveRequesModel*)(ctx-&gt;<span style="color: #000000;">getBusinessVO());
+
+        cout </span>&lt;&lt; lrm-&gt;getUser() &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">，你的请假申请己经审核结束，结果是：</span><span style="color: #800000;">"</span>
+             &lt;&lt; lrm-&gt;getResult() &lt;&lt;<span style="color: #000000;"> endl;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">部门经理审核的状态类</span>
+<span style="color: #0000ff;">class</span> DepManagerState : <span style="color: #0000ff;">public</span><span style="color: #000000;"> LeaveRequestState
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    LeaveRequestState</span>*<span style="color: #000000;"> auditOverState;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    DepManagerState()
+    {
+        auditOverState </span>=  <span style="color: #0000ff;">new</span><span style="color: #000000;"> AuditOverState();
+    }
+
+    </span>~<span style="color: #000000;">DepManagerState()
+    {
+        </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> auditOverState;
+    }
+
+    </span><span style="color: #0000ff;">void</span> doWork(StateMachine*<span style="color: #000000;"> ctx)
+    {
+        LeaveRequesModel</span>* lrm = (LeaveRequesModel*)(ctx-&gt;<span style="color: #000000;">getBusinessVO());
+
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">部门经理审核中，请稍候...</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">模拟用户处理界面，通过控制台来读取数据</span>
+        cout &lt;&lt;lrm-&gt;getUser() &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">申请从</span><span style="color: #800000;">"</span> &lt;&lt; lrm-&gt;<span style="color: #000000;">getBeginDate()
+             </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">开始请假</span><span style="color: #800000;">"</span> &lt;&lt; lrm-&gt;<span style="color: #000000;">getLeaveDays()
+             </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">天，请部门经理审核（1为同意，2为不同意）</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;">endl;
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">读取控制台输入的数据</span>
+        <span style="color: #0000ff;">int</span> a =<span style="color: #800080;">0</span><span style="color: #000000;">;
+        cin </span>&gt;&gt;<span style="color: #000000;"> a;
+        </span><span style="color: #0000ff;">string</span> result = (a ==<span style="color: #800080;">1</span>)?<span style="color: #800000;">"</span><span style="color: #800000;">同意</span><span style="color: #800000;">"</span>:<span style="color: #800000;">"</span><span style="color: #800000;">不同意</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+        lrm</span>-&gt;setResult(<span style="color: #800000;">"</span><span style="color: #800000;">部门经理审核结果：</span><span style="color: #800000;">"</span> +<span style="color: #000000;"> result);
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">由项目经理审核以后，转向审核结束状态</span>
+        ctx-&gt;<span style="color: #000000;">setState(auditOverState);
+        ctx</span>-&gt;<span style="color: #000000;">doWork();
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">项目经理的审核类，处理后可能是部门经理
+</span><span style="color: #008000;">//</span><span style="color: #008000;">审核 或审核结束之中的一种。</span>
+<span style="color: #0000ff;">class</span> ProjectManagerState : <span style="color: #0000ff;">public</span><span style="color: #000000;"> LeaveRequestState
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    LeaveRequestState</span>*<span style="color: #000000;"> depState;
+    LeaveRequestState</span>*<span style="color: #000000;"> auditOverState;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    ProjectManagerState()
+    {
+        depState </span>=  <span style="color: #0000ff;">new</span><span style="color: #000000;"> DepManagerState();
+        auditOverState </span>= <span style="color: #0000ff;">new</span><span style="color: #000000;"> AuditOverState();
+    }
+
+    </span>~<span style="color: #000000;">ProjectManagerState()
+    {
+        </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> depState;
+        </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> auditOverState;
+    }
+
+    </span><span style="color: #0000ff;">void</span> doWork(StateMachine*<span style="color: #000000;"> ctx)
+    {
+        LeaveRequesModel</span>* lrm = (LeaveRequesModel*)(ctx-&gt;<span style="color: #000000;">getBusinessVO());
+
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">项目经理审核中，请稍候...</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">模拟用户处理界面，通过控制台来读取数据</span>
+        cout &lt;&lt;lrm-&gt;getUser() &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">申请从</span><span style="color: #800000;">"</span> &lt;&lt; lrm-&gt;<span style="color: #000000;">getBeginDate()
+             </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">开始请假</span><span style="color: #800000;">"</span> &lt;&lt; lrm-&gt;<span style="color: #000000;">getLeaveDays()
+             </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">天，请项目经理审核（1为同意，2为不同意）</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;">endl;
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">读取控制台输入的数据</span>
+        <span style="color: #0000ff;">int</span> a =<span style="color: #800080;">0</span><span style="color: #000000;">;
+        cin </span>&gt;&gt;<span style="color: #000000;"> a;
+        </span><span style="color: #0000ff;">string</span> result = (a ==<span style="color: #800080;">1</span>)?<span style="color: #800000;">"</span><span style="color: #800000;">同意</span><span style="color: #800000;">"</span>:<span style="color: #800000;">"</span><span style="color: #800000;">不同意</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+        lrm</span>-&gt;setResult(<span style="color: #800000;">"</span><span style="color: #800000;">项目经理审核结果：</span><span style="color: #800000;">"</span> +<span style="color: #000000;"> result);
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">根据选择的结果和条件来设置一下步</span>
+         <span style="color: #0000ff;">if</span> (a == <span style="color: #800080;">1</span><span style="color: #000000;">)
+         {
+            </span><span style="color: #0000ff;">if</span>(lrm-&gt;getLeaveDays() &gt; <span style="color: #800080;">3</span><span style="color: #000000;">)
+            {
+                </span><span style="color: #008000;">//</span><span style="color: #008000;">如果请假天数大于3天，而且项目经理同意了，就提交
+                </span><span style="color: #008000;">//</span><span style="color: #008000;">给部门经理。</span>
+                ctx-&gt;<span style="color: #000000;">setState(depState);
+                ctx</span>-&gt;doWork(); <span style="color: #008000;">//</span><span style="color: #008000;">继续执行下一步工作</span>
+<span style="color: #000000;">
+            }
+            </span><span style="color: #0000ff;">else</span><span style="color: #000000;">
+            {
+                </span><span style="color: #008000;">//</span><span style="color: #008000;">请假在3天以内的，由项目经理做主，转向审核结束状态</span>
+                ctx-&gt;<span style="color: #000000;">setState(auditOverState);
+                ctx</span>-&gt;<span style="color: #000000;">doWork();
+            }
+         }
+         </span><span style="color: #0000ff;">else</span><span style="color: #000000;">
+         {
+                </span><span style="color: #008000;">//</span><span style="color: #008000;">由项目经理不同意，转向审核结束状态</span>
+                ctx-&gt;<span style="color: #000000;">setState(auditOverState);
+                ctx</span>-&gt;<span style="color: #000000;">doWork();
+         }
+    }
+};
+
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">创建业务对象，并设置业务数据</span>
+<span style="color: #000000;">    LeaveRequesModel lrm;
+    lrm.setUser(</span><span style="color: #800000;">"</span><span style="color: #800000;">小李</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    lrm.setBeginDate(</span><span style="color: #800000;">"</span><span style="color: #800000;">2016-07-03</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    lrm.setLeaveDays(</span><span style="color: #800080;">5</span><span style="color: #000000;">);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">创建上下文对象</span>
+<span style="color: #000000;">    LeaveRequesContext ctx;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">为上下文对象设置业务数据对象</span>
+    ctx.setBusinessVO(&amp;<span style="color: #000000;">lrm);
+    ProjectManagerState pms;
+    ctx.setState(</span>&amp;pms);  <span style="color: #008000;">//</span><span style="color: #008000;">向项目经理请假
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">请求上下文，让上下文开始处理工作</span>
+<span style="color: #000000;">    ctx.doWork();
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}
+</span><span style="color: #008000;">/*</span><span style="color: #008000;">输出结果
+项目经理审核中，请稍候...
+小李申请从2016-07-03开始请假5天，请项目经理审核（1为同意，2为不同意）
+1
+部门经理审核中，请稍候...
+小李申请从2016-07-03开始请假5天，请部门经理审核（1为同意，2为不同意）
+1
+小李，你的请假申请己经审核结束，结果是：部门经理审核结果：同意
+</span><span style="color: #008000;">*/</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><strong>5. </strong><strong>状态模式的使用场景</strong></p>
+<p>（1）<span style="color: #ff0000;"><strong>条件、分支判断语句的替代者</strong></span>。如果一个操作中含有庞大的if-else分支语句时，而且这些分支依赖于该对象的状态可以考虑使用状态模式。</p>
+<p>（2）<span style="color: #ff0000;"><strong>行为随状态改变而改变的场景</strong></span>。这也是状态模式的根本出发点，例如权限设计，人员的状态不同即使执行相同的行为结果也会不同，在这种情况下可以考虑使用状态模式。</p>
+<p><strong>6. </strong><strong>相关模式</strong></p>
+<p><strong>（1）状态模式和策略模式</strong></p>
+<p>　　留在策略模式一章去讲。可见后面的章节。</p>
+<p><strong>（2）状态模式和观察者模式</strong></p>
+<p>　　①这两个模式都是在状态发生改变时触发行为，只不过<span style="color: #ff0000;"><strong>观察者模式的行为是固定的，那就是通知所有的观察者</strong></span>；<span style="color: #0000ff;"><strong>状态模式是根据状态来选择不同的处理</strong></span>。</p>
+<p>　　②观察者模式是当被观察者对象的状态发生改变的时候，触发观察者联动，具体如何处理观察者模式是不管的。而状态模式的主要目的是在于根据状态和选择行为。</p>
+<p>　　③<span style="color: #ff0000;"><strong>这两个模式可以结合使用</strong></span>，比如在观察者模式的观察者部分，当被观察对象的状态发生了改变，触发通知了所有观察者后，观察者可以使用状态模式，也根据通知过来的状态选择相应的处理。</p>
+<p><strong>（3）状态模式和单例模式（或享元模式）</strong></p>
+<p>　　①这两者可结合使用，把状态模式中的状态处理类实现成单例，</p>
+<p>　　②也可以结合享元模式使用，由于状态模式把状态对应的行为分散到多个状态对象中，会造成很多细粒度的状态，可以把这些状态处理对象通过享元模式来共享，从而节省资源。</p>
+</div>
+<div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block"><div id="BlogPostCategory">
+    分类: 
+            <a href="https://www.cnblogs.com/5iedu/category/825371.html" target="_blank">设计模式</a></div>
+
+
+    <div id="blog_post_info">
+<div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(5637909,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+        <a id="green_channel_follow" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/5iedu/" target="_blank"><img src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/20150610151331.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/5iedu/">浅墨浓香</a><br>
+            <a href="https://home.cnblogs.com/u/5iedu/followees/">关注 - 0</a><br>
+            <a href="https://home.cnblogs.com/u/5iedu/followers/">粉丝 - 149</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(5637909,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(5637909,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+    <div class="clear"></div>
+    <div id="post_next_prev">
+
+    <a href="https://www.cnblogs.com/5iedu/p/5636272.html" class="p_n_p_prefix">« </a> 上一篇：    <a href="https://www.cnblogs.com/5iedu/p/5636272.html" title="发布于 2016-07-02 23:12">第62课 单例类模板</a>
+    <br>
+    <a href="https://www.cnblogs.com/5iedu/p/5639626.html" class="p_n_p_prefix">» </a> 下一篇：    <a href="https://www.cnblogs.com/5iedu/p/5639626.html" title="发布于 2016-07-04 10:14">第23章 行为型模式—策略模式</a>
+
+</div>
+</div></div>
+	</div>
+<script src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/highlight.min.js.下载"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 231128, cb_blogApp = '5iedu', cb_blogUserGuid = '41562de4-020f-e511-b908-9dcfd8948a71';
+    var cb_entryId = 5637909, cb_entryCreatedDate = '2016-07-03 13:30', cb_postType = 1; 
+    loadViewCount(cb_entryId);
+</script><a name="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<script>
+    var commentManager = new blogCommentManager();
+    commentManager.renderComments(0);
+</script>
+
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/5iedu/p/5637909.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/5iedu/p/5637909.html#top">返回顶部</a></div>
+    <div id="comment_form_container"><div class="login_tips">
+    注册用户登录后才能发表评论，请 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a>
+     或 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，
+    <a href="https://www.cnblogs.com/">访问</a> 网站首页。
+</div></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"><a href="https://cloud.tencent.com/act/pro/overseas?fromSource=gwzcw.3090393.3090393.3090393&amp;utm_medium=cpc&amp;utm_id=gwzcw.3090393.3090393.3090393" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-腾讯云&#39;)">【推荐】腾讯云海外1核2G云服务器低至2折，半价续费券限量免费领取！</a><br><a href="http://click.aliyun.com/m/1000081987/" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-阿里云&#39;)">【推荐】阿里云双11返场来袭，热门产品低至一折等你来抢！</a><br><a href="http://www.ucancode.com/index.htm" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-工控&#39;)">【推荐】超50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://group.cnblogs.com/topic/90800.html?800019197" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-马士兵&#39;)">【提升】这个价值 50W 年薪的问题，终于被马老师说明白啦...</a><br><a href="https://www.ctyun.cn/activity/20191111?hmsr=%E7%9C%8B%E7%9C%8B-%E5%8D%9A%E5%AE%A2%E5%9B%AD-%E5%8F%8C11-1106&amp;hmpl=&amp;hmcu=&amp;hmkw=&amp;hmci=" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-天翼云&#39;)">【推荐】天翼云双十一翼降到底，云主机11.11元起，抽奖送大礼</a><br><a href="https://www.cnblogs.com/enjoyedu/p/11905399.html?800019191" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-享学&#39;)">【提升】Java程序员年薪40W，他1年走了别人5年的学习之路</a><br><a href="https://www.uibot.com.cn/sem/bky.html" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-uibot_T2&#39;)">【推荐】流程自动化专家UiBot，体系化教程成就高薪RPA工程师</a><br></div>
+    <div id="opt_under_post"></div>
+    <script async="async" src="./第22章 行为型模式—状态模式 - 浅墨浓香 - 博客园_files/gpt.js.下载"></script>
+    <script>
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+    </script>
+    <script>
+        googletag.cmd.push(function () {
+            googletag.defineSlot("/1090369/C1", [300, 250], "div-gpt-ad-1546353474406-0").addService(googletag.pubads());
+            googletag.defineSlot("/1090369/C2", [468, 60], "div-gpt-ad-1539008685004-0").addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    </script>
+    <div id="cnblogs_c1" class="c_ad_block" style="">
+        <div id="div-gpt-ad-1546353474406-0" style="height: 250px; width: 300px;"><div id="google_ads_iframe_/1090369/C1_0__container__" style="border: 0pt none; width: 300px; height: 250px;"></div></div>
+    </div>
+    <div id="under_post_news"><div class="recomm-block"><b>相关博文：</b><br>·  <a title="设计模式(20)--State(状态模式)--行为型" href="https://www.cnblogs.com/yysbolg/p/7560671.html" target="_blank" onclick="clickRecomItmem(7560671)">设计模式(20)--State(状态模式)--行为型</a><br>·  <a title="状态模式-对象行为型" href="https://www.cnblogs.com/wade-luffy/p/5812672.html" target="_blank" onclick="clickRecomItmem(5812672)">状态模式-对象行为型</a><br>·  <a title="行为模式之状态模式" href="https://www.cnblogs.com/yewen1234/p/10063113.html" target="_blank" onclick="clickRecomItmem(10063113)">行为模式之状态模式</a><br>·  <a title="第23章 行为型模式—策略模式" href="https://www.cnblogs.com/5iedu/p/5639626.html" target="_blank" onclick="clickRecomItmem(5639626)">第23章 行为型模式—策略模式</a><br>·  <a title="设计模式笔记(22)---状态模式（行为型）" href="https://www.cnblogs.com/oec2003/archive/2010/01/28/1658871.html" target="_blank" onclick="clickRecomItmem(1658871)">设计模式笔记(22)---状态模式（行为型）</a><br>»  <a target="_blank" href="https://recomm.cnblogs.com/blogpost/5637909">更多推荐...</a></div></div>
+    <div id="cnblogs_c2" class="c_ad_block" style="">
+        <div id="div-gpt-ad-1539008685004-0" style="height: 60px; width: 468px;">
+            <script>
+                if (new Date() >= new Date(2018, 9, 13)) {
+                    googletag.cmd.push(function () { googletag.display("div-gpt-ad-1539008685004-0"); });
+                }
+            </script>
+        <div id="google_ads_iframe_/1090369/C2_0__container__" style="border: 0pt none; width: 468px; height: 60px;"></div></div>
+    </div>
+    <div id="under_post_kb">
+<div class="itnews c_ad_block">
+    <b>最新 IT 新闻</b>:
+    <br>
+ ·              <a href="https://news.cnblogs.com/n/649969/" target="_blank">改变销售人员的CRM交互方式，Salesforce推出AI语音助手及开发套件</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649968/" target="_blank">“基因剪刀”治疗地中海贫血效果初现</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649967/" target="_blank">14nm 5GHz或成CPU绝唱 7/5nm多核容易高频难</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649966/" target="_blank">HTTPZ，将 HTTP 链接转到 HTTPS 的 Firefox 插件</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649965/" target="_blank">4个在2020年持续发展的数据中心冷却趋势</a>
+            <br>
+    » <a href="https://news.cnblogs.com/" title="IT 新闻" target="_blank">更多新闻...</a>
+</div></div>
+    <div id="HistoryToday" class="c_ad_block"></div>
+    <script type="text/javascript">
+        fixPostBody();
+        setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+        deliverAdT2();
+        deliverAdC1();
+        deliverAdC2();
+        loadNewsAndKb();
+        loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+        loadOptUnderPost();
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div></div>
+
+
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="FooterCell">
+			<p id="footer">
+	Powered by: 
+	<br>
+	
+	
+<a href="https://www.cnblogs.com/" id="Footer1_Hyperlink3" style="font-size: 12px; font-family: Verdana">博客园</a>
+	<br>
+	Copyright © 2019 浅墨浓香
+<br><span id="poweredby">Powered by .NET Core 3.0.0 on Linux</span>
+
+</p>
+
+
+		</td>
+	</tr>
+</tbody></table>
+
+
+
+    
+
+
+</body></html>

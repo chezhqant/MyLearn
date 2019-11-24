@@ -1,0 +1,2428 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)https://www.cnblogs.com/5iedu/p/5578970.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin">
+    <meta property="og:description" content="1. 命令模式（Command Pattern）的定义 （1）定义 将一个请求封装为一个对象，从而使你可用不同的请求对客户进行参数化；对请求排队或记录请求日志，以及支持可撤销的操作。 ①封装请求：抽象">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园</title>
+    
+    <link rel="stylesheet" href="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/blog-common.min.css">
+    <link id="MainCss" rel="stylesheet" href="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/bundle-habahaba.min.css">
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/bundle-habahaba-mobile.min.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/5iedu/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/5iedu/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/5iedu/wlwmanifest.xml">
+    <script src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/pubads_impl_rendering_2019111801.js.下载"></script><script async="" src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/analytics.js.下载"></script><script type="text/javascript" src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/encoder.js.下载"></script><script src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+    <script src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/blog-common.min.js.下载"></script>
+    <script>
+        var currentBlogId = 231128;
+        var currentBlogApp = '5iedu';
+        var cb_enable_mathjax = true;
+        var isLogined = false;
+    </script>
+    <script type="text/x-mathjax-config;executed=true">
+        MathJax.Hub.Config({
+        tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']], processClass: 'math', processEscapes: true },
+        TeX: {
+        equationNumbers: { autoNumber: ['AMS'], useLabelIds: true },
+        extensions: ['extpfeil.js', 'mediawiki-texvc.js'],
+        Macros: {bm: "\\boldsymbol"}
+        },
+        'HTML-CSS': { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+        });
+    </script>
+    <script src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/MathJax.js.下载"></script>
+    
+<style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover, .MJXp-munder {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > *, .MJXp-munder > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><link rel="preload" href="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/f.txt" as="script"><script type="text/javascript" src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/f.txt"></script><script src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/pubads_impl_2019111801.js.下载" async=""></script><link rel="prefetch" href="https://tpc.googlesyndication.com/safeframe/1-0-36/html/container.html"></head>
+<body><div id="MathJax_Message" style="display: none;"></div>
+    <a name="top"></a>
+    
+    <table width="100%" class="Framework" cellspacing="0" cellpadding="0">
+	<tbody><tr>
+		<td colspan="2">
+			
+<div id="top">
+<table width="100%" cellpadding="8" cellspacing="0">
+	<tbody><tr>
+		<td nowrap="">
+			<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/5iedu/">浅墨浓香</a>
+</h1>
+			
+想要天亮进城，就得天黑赶路。
+
+		</td>
+	</tr>
+</tbody></table>
+</div>
+<div id="sub"><div class="BlogStats">posts - 
+690, comments - 
+52, trackbacks - 
+0, articles - 
+16</div>
+
+</div>
+
+
+
+</td>
+	</tr>
+	<tr>
+		<td class="LeftCell">
+            <div id="leftmenu">
+                
+<h3>导航</h3>
+<ul>
+	<li>
+		<a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+	<li>
+		
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/5iedu/">
+首页</a>
+</li>
+	<li>
+		
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+	<li>
+		
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E6%B5%85%E5%A2%A8%E6%B5%93%E9%A6%99">
+联系</a></li>
+	<li>
+		
+<a id="blog_nav_rss" class="menu" href="https://www.cnblogs.com/5iedu/rss/">
+订阅</a></li>
+	<li>
+		
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+                
+<div id="sidebar_news" class="newsItem"><h3>公告</h3>
+<div id="news">
+	
+<div id="blog-news">
+    
+    <div id="profile_block">
+        昵称：
+        <a href="https://home.cnblogs.com/u/5iedu/">
+            浅墨浓香
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/5iedu/" title="入园时间：2015-06-10">
+            4年5个月
+        </a>
+        <br>
+        粉丝：
+        <a href="https://home.cnblogs.com/u/5iedu/followers/">
+            149
+        </a>
+        <br>
+        关注：
+        <a href="https://home.cnblogs.com/u/5iedu/followees/">
+            0
+        </a>
+        <div id="p_b_follow">
+<a href="javascript:void(0)" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;)">+加关注</a></div>
+        <script>getFollowStatus('41562de4-020f-e511-b908-9dcfd8948a71');</script>
+    </div>
+</div>
+</div>
+
+</div>
+
+                <div id="blog-calendar" style="">
+
+<table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar" border="0">
+    <tbody>
+        <tr>
+            <td colspan="7">
+                <table class="CalTitle" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/10/24&#39;); return false;">&lt;</a>
+                            </td>
+                            <td align="center">2019年11月</td>
+                            <td align="right" class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/12/24&#39;); return false;">&gt;</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+                    <th class="CalDayHeader" align="center" abbr="日" scope="col">日</th>
+                    <th class="CalDayHeader" align="center" abbr="一" scope="col">一</th>
+                    <th class="CalDayHeader" align="center" abbr="二" scope="col">二</th>
+                    <th class="CalDayHeader" align="center" abbr="三" scope="col">三</th>
+                    <th class="CalDayHeader" align="center" abbr="四" scope="col">四</th>
+                    <th class="CalDayHeader" align="center" abbr="五" scope="col">五</th>
+                    <th class="CalDayHeader" align="center" abbr="六" scope="col">六</th>
+        </tr>
+            <tr>
+                            <td class="CalOtherMonthDay" align="center">27</td>
+                            <td class="CalOtherMonthDay" align="center">28</td>
+                            <td class="CalOtherMonthDay" align="center">29</td>
+                            <td class="CalOtherMonthDay" align="center">30</td>
+                            <td class="CalOtherMonthDay" align="center">31</td>
+                        <td class="" align="center">
+                            1
+                        </td>
+                    <td class="CalWeekendDay" align="center">
+                        2
+                    </td>
+            </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            3
+                        </td>
+                            <td class="" align="center">
+                                4
+                            </td>
+                            <td class="" align="center">
+                                5
+                            </td>
+                            <td class="" align="center">
+                                6
+                            </td>
+                            <td class="" align="center">
+                                <a href="https://www.cnblogs.com/5iedu/archive/2019/11/07.html"><u>7</u></a>
+                            </td>
+                            <td class="" align="center">
+                                8
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            9
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            10
+                        </td>
+                            <td class="" align="center">
+                                11
+                            </td>
+                            <td class="" align="center">
+                                12
+                            </td>
+                            <td class="" align="center">
+                                13
+                            </td>
+                            <td class="" align="center">
+                                14
+                            </td>
+                            <td class="" align="center">
+                                15
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            16
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            <a href="https://www.cnblogs.com/5iedu/archive/2019/11/17.html"><u>17</u></a>
+                        </td>
+                            <td class="" align="center">
+                                18
+                            </td>
+                            <td class="" align="center">
+                                19
+                            </td>
+                            <td class="" align="center">
+                                <a href="https://www.cnblogs.com/5iedu/archive/2019/11/20.html"><u>20</u></a>
+                            </td>
+                            <td class="" align="center">
+                                21
+                            </td>
+                            <td class="" align="center">
+                                22
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            23
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalTodayDay" align="center">
+                            24
+                        </td>
+                            <td class="" align="center">
+                                25
+                            </td>
+                            <td class="" align="center">
+                                26
+                            </td>
+                            <td class="" align="center">
+                                27
+                            </td>
+                            <td class="" align="center">
+                                28
+                            </td>
+                            <td class="" align="center">
+                                29
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            30
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalOtherMonthDay" align="center">
+                            1
+                        </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                2
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                3
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                4
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                5
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                6
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            7
+                        </td>
+                </tr>
+    </tbody>
+</table></div>
+                <script>loadBlogDefaultCalendar();</script>
+                <div id="blog-sidecolumn">
+<!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    <div id="sidebar_search" class="mySearch">
+        <h3 class="catListTitle">搜索</h3>
+        <div id="sidebar_search_box">
+            <div id="widget_my_zzk" class="div_my_zzk">
+                <input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk">
+            </div>
+            <div id="widget_my_google" class="div_my_zzk">
+                <input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 常用链接 -->
+<div id="sidebar_shortcut" class="sidebar-block">
+    
+<h3 class="catListTitle">
+常用链接
+</h3>
+<ul>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/p/" title="我的博客的随笔列表">我的随笔</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/MyComments.html" title="我的发表过的评论列表">我的评论</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/OtherPosts.html" title="我评论过的随笔列表">我的参与</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/RecentComments.html" title="我的博客的评论列表">最新评论</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/tag/" title="我的博客的标签列表">我的标签</a>
+</li>
+</ul>
+
+<!-- TODO: 检查是否有使用这一部分的控件，如果没有则应该删除。 -->
+<div id="itemListLin_con" style="display:none">
+    <ul>
+
+    </ul>
+</div>
+
+</div>
+
+<!-- 最新随笔 -->
+
+
+
+<!-- 我的标签 -->
+<div id="sidebar_toptags" class="sidebar-block">
+    
+</div>
+
+<!-- 积分与排名 -->
+
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+    
+		<h3>
+
+随笔分类
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/811805.html" rel="" target="">
+    C++深度解析(73)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/804081.html" rel="" target="">
+    C语言进阶剖析(48)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/911906.html" rel="" target="">
+    Linux基础与系统管理(35)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/937714.html" rel="" target="">
+    Linux应用与网络编程(64)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1005833.html" rel="" target="">
+    lua(3)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1005832.html" rel="" target="">
+    makefile(10)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1503320.html" rel="" target="">
+    Modern C++ 11/14(30)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/819307.html" rel="" target="">
+    QT实验分析教程(85)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/699743.html" rel="" target="">
+    Windows程序设计(58)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/699744.html" rel="" target="">
+    Windows核心编程(57)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/994985.html" rel="" target="">
+    计算机网络原理(54)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/825371.html" rel="" target="">
+    设计模式(41)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1007185.html" rel="" target="">
+    深入应用C++11(27)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/911523.html" rel="" target="">
+    数据结构实战分析(79)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/888633.html" rel="" target="">
+    重构(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/963515.html" rel="" target="">
+    专业嵌入式软件开发(15)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+随笔档案
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/11.html" rel="" target="">
+    2019年11月(3)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/10.html" rel="" target="">
+    2019年10月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/09.html" rel="" target="">
+    2019年9月(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/08.html" rel="" target="">
+    2019年8月(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/07.html" rel="" target="">
+    2019年7月(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/12.html" rel="" target="">
+    2017年12月(13)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/11.html" rel="" target="">
+    2017年11月(23)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/10.html" rel="" target="">
+    2017年10月(21)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/09.html" rel="" target="">
+    2017年9月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/08.html" rel="" target="">
+    2017年8月(22)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/07.html" rel="" target="">
+    2017年7月(27)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/06.html" rel="" target="">
+    2017年6月(21)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/05.html" rel="" target="">
+    2017年5月(35)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/04.html" rel="" target="">
+    2017年4月(19)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/03.html" rel="" target="">
+    2017年3月(28)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/02.html" rel="" target="">
+    2017年2月(15)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/01.html" rel="" target="">
+    2017年1月(51)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/12.html" rel="" target="">
+    2016年12月(26)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/11.html" rel="" target="">
+    2016年11月(20)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/10.html" rel="" target="">
+    2016年10月(13)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/09.html" rel="" target="">
+    2016年9月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/08.html" rel="" target="">
+    2016年8月(11)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/07.html" rel="" target="">
+    2016年7月(24)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/06.html" rel="" target="">
+    2016年6月(26)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/05.html" rel="" target="">
+    2016年5月(34)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/04.html" rel="" target="">
+    2016年4月(73)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/03.html" rel="" target="">
+    2016年3月(33)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/02.html" rel="" target="">
+    2016年2月(7)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/12.html" rel="" target="">
+    2015年12月(2)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/11.html" rel="" target="">
+    2015年11月(4)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/10.html" rel="" target="">
+    2015年10月(7)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/09.html" rel="" target="">
+    2015年9月(6)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/08.html" rel="" target="">
+    2015年8月(54)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/07.html" rel="" target="">
+    2015年7月(25)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/06.html" rel="" target="">
+    2015年6月(4)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+文章分类
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/715136.html" rel="" target="">
+    Windows内核(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/729402.html" rel="" target="">
+    编程经验(12)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/812154.html" rel="" target="">
+    常用代码(2)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/954364.html" rel="" target="">
+    综合案例(1)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+相册
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/gallery/718135.html" rel="nofollow noopener noreferrer" target="">
+    笔记插图
+</a>
+
+</li>
+			
+				</ul>
+
+
+</div>
+
+<!-- 最新评论 -->
+<div id="sidebar_recentcomments" class="sidebar-block">
+    <div id="recent_comments_wrap" class="RecentComment">
+    <h3 class="catListTitle">最新评论</h3>
+    <div class="RecentCommentBlock">
+        <ul>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/11390495.html#4344239">1. Re:第18课 捕获机制及陷阱</a></li>
+                    <li class="recent_comment_body">博主不仅高产，而且文章质量都挺好</li>
+                    <li class="recent_comment_author">--YaphetS嘟嘟</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4315939">2. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">博主你好，觉得你的博客特别受用，可以告知一下其他博客的密码吗</li>
+                    <li class="recent_comment_author">--cp2018</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/7040429.html#4294675">3. Re:第5章 IP地址和子网划分（2）_IP地址分类和NAT技术</a></li>
+                    <li class="recent_comment_body">像icmp这种没有端口的不知道是如何实现NAT转换的？</li>
+                    <li class="recent_comment_author">--Eagle-jie</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4280947">4. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">同问</li>
+                    <li class="recent_comment_author">--tiger_wangsir</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4237914">5. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">博主你好，觉得你的博客特别受用，可以告知一下其他博客的密码吗</li>
+                    <li class="recent_comment_author">--胡瑶co</li>
+        </ul>
+    </div>
+</div>
+</div>
+
+
+
+<!-- 阅读排行榜 -->
+<div id="sidebar_topviewedposts" class="sidebar-block">
+    
+<div id="topview_posts_wrap">
+    <h3 class="catListTitle">阅读排行榜</h3>
+    <div id="TopViewPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5595153.html">
+                            1. 第17章 行为型模式—解释器模式(6762)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7376543.html">
+                            2. 第11章 拾遗1：网络地址转换(NAT)和端口映射(4936)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7095041.html">
+                            3. 第6章 静态路由和动态路由（4）_OSPF动态路由协议(3791)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/4899791.html">
+                            4. 第17章 内存映射文件（1）_内存映射文件简介(3741)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7742589.html">
+                            5. 第16课 右值引用（3）_std::forward与完美转发(3730)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- 评论排行榜 -->
+<div id="sidebar_topcommentedposts" class="sidebar-block">
+    
+<div id="topfeedback_posts_wrap">
+    <h3 class="catListTitle">评论排行榜</h3>
+    <div id="TopFeedbackPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/6498326.html">
+                            1. 第83课 另一种创建线程的方式(9)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5325466.html">
+                            2. 第20课 链接过程简介(5)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5429059.html">
+                            3. 第7课 Qt中的坐标系统(4)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5835715.html">
+                            4. 第37课 深度解析QMap与QHash(3)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5617055.html">
+                            5. 第56课 函数模板的概念和意义(2)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- 推荐排行榜 -->
+<div id="sidebar_topdiggedposts" class="sidebar-block">
+    
+<div id="topdigg_posts_wrap">
+    <div class="catListView">
+        <h3 class="catListTitle">推荐排行榜</h3>
+        <div id="TopDiggPostsBlock">
+            <ul style="word-break: break-all">
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/4812259.html">
+                                1. 第11章 Windows线程池（2）_Win2008及以上的新线程池(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/5363054.html">
+                                2. 第1课 学习 C++ 的意义(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/5367317.html">
+                                3. 第5课 引用的本质分析(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/6800234.html">
+                                4. 第1章 计算机网络和协议（1）_网络的概念(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/6829593.html">
+                                5. 第1章 计算机网络和协议（3）_TCP/IP协议(1)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div></div>
+                <script>loadBlogSideColumn();</script>
+            </div>
+		</td>
+		<td class="MainCell" width="100%">
+			<div id="main">
+				<div id="post_detail">
+	<div class="post">
+		<div class="posthead">
+			<h2>
+				
+<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/5iedu/p/5578970.html">第16章 行为型模式—命令模式</a>
+
+			</h2>
+ 			Posted on 
+<span id="post-date">2016-06-12 22:15</span>&nbsp;<a href="https://www.cnblogs.com/5iedu/">浅墨浓香</a> 阅读(<span id="post_view_count">859</span>) 评论(<span id="post_comment_count">0</span>) <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5578970" rel="nofollow"> 编辑</a> <a href="javascript:void(0)" onclick="AddToWz(5578970); return false;">收藏</a>
+
+			
+			
+		</div>
+		<div class="postbody">
+<div id="cnblogs_post_body" class="blogpost-body ">
+    <p style="text-align: left;" align="center"><strong style="line-height: 1.5;">1. </strong><strong style="line-height: 1.5;">命令模式（Command Pattern）的定义</strong></p>
+<p><strong>（1）定义</strong></p>
+<p>　　将一个<span style="color: #ff0000;"><strong>请求封装为一个对象</strong></span>，从而使你可用不同的请求对客户进行<span style="color: #ff0000;"><strong>参数化</strong></span>；对请求<span style="color: #0000ff;"><strong>排队</strong></span>或<span style="color: #0000ff;"><strong>记录请求日志</strong></span>，以及支持<span style="color: #0000ff;"><strong>可撤销</strong></span>的操作。</p>
+<p>　　①封装请求：抽象出需要执行的动作，封装成对象（有统一的接口）。</p>
+<p>　　②参数化：可以用不同的命令对象，去参数化配置客户的请求。（即，将命令对象作为参数去供Invoker调用）。</p>
+<p><strong>（2）命令模式的结构和说明</strong></p>
+<p align="center"><img src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/772759-20160612221715105-224434379.png" alt="">&nbsp;</p>
+<p>　　①<span style="color: #0000ff;"><strong>Command</strong></span>：定义命令的接口，声明执行的方法</p>
+<p>　　②ConcreteCommand：命令接口实现对象，是<span style="color: #ff0000;"><strong>“虚”的实现</strong></span>，通常会<span style="color: #ff0000;"><strong>持有接收者</strong></span>并<span style="color: #0000ff;"><strong>调用接收者的功能</strong></span>来完成命令要执行的操作</p>
+<p>　　③<span style="color: #0000ff;"><strong>Receiver</strong></span>：接收者，<span style="color: #ff0000;"><strong>真正执行命令的对象</strong></span>。任何类都可能成为一个接收者，只要它能够实现命令要求实现的相应功能。</p>
+<p>　　④<span style="color: #0000ff;"><strong>Invoker</strong></span>：要求命令对象执行请求，通常会<span style="color: #ff0000;"><strong>持有命令对象</strong></span>，可以持有很多的命令对象。这个是客户端真正触发命令并要求命令执行相应操作的地方，也就是说相当于使用命令对象的入口。</p>
+<p>　　⑤<strong>Client</strong>：创建具体的命令对象，并且设置命令对象的接收者。注意，这个<span style="color: #ff0000;"><strong>不是我们常规意义上的客户端</strong></span>，而是<strong>在<span style="color: #ff0000;">组装命令对象和接收者</span></strong>。或许，把这个Client称为装配者会更好，因为真正使用命令的客户端是从Invoker来触发执行。</p>
+<p>【编程实验】打飞机游戏</p>
+<p>&nbsp;<img src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/772759-20160612221746918-54738253.png" alt=""></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">行为型模式：命令模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">场景：打飞机游戏
+</span><span style="color: #008000;">//</span><span style="color: #008000;">角色控制器（如玩家）的主要操作：用导弹攻击、炸弹攻击来打飞机以及4个方向移动</span>
+<span style="color: #000000;">
+#include </span>&lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;">
+#include </span>&lt;vector&gt;
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+</span><span style="color: #008000;">//</span><span style="color: #008000;">***********************************************抽象命令接口***********************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">Command</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> FighterCommand
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> execute() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">*************************************************接收者**************************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">Receiver</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Fighter
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> missile()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">用导弹攻击！</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> bomb()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">用炸弹攻击！</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+
+    </span><span style="color: #0000ff;">void</span> move (<span style="color: #0000ff;">int</span><span style="color: #000000;"> direction)
+    {
+        </span><span style="color: #0000ff;">switch</span><span style="color: #000000;">(direction)
+        {
+        </span><span style="color: #0000ff;">case</span> <span style="color: #800080;">1</span><span style="color: #000000;">:
+            cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">向上移动！</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+            </span><span style="color: #0000ff;">break</span><span style="color: #000000;">;
+        </span><span style="color: #0000ff;">case</span> <span style="color: #800080;">2</span><span style="color: #000000;">:
+            cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">向下移动！</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;">endl;
+            </span><span style="color: #0000ff;">break</span><span style="color: #000000;">;
+        </span><span style="color: #0000ff;">case</span> <span style="color: #800080;">3</span><span style="color: #000000;">:
+            cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">向左移动！</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+            </span><span style="color: #0000ff;">break</span><span style="color: #000000;">;
+        </span><span style="color: #0000ff;">case</span> <span style="color: #800080;">4</span><span style="color: #000000;">:
+            cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">向右移动！</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;">endl;
+            </span><span style="color: #0000ff;">break</span><span style="color: #000000;">;
+        </span><span style="color: #0000ff;">default</span><span style="color: #000000;">:
+            cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">不移动！</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+        }
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">*************************************ConcreteCommand***************************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">导弹攻击命令</span>
+<span style="color: #0000ff;">class</span> MissileCommand : <span style="color: #0000ff;">public</span><span style="color: #000000;"> FighterCommand
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    Fighter</span>*<span style="color: #000000;"> fighter;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    MissileCommand(Fighter</span>*<span style="color: #000000;"> fighter)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;fighter =<span style="color: #000000;"> fighter;
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> execute()
+    {
+        fighter</span>-&gt;<span style="color: #000000;">missile();
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">炸弹攻击命令</span>
+<span style="color: #0000ff;">class</span> BombCommand : <span style="color: #0000ff;">public</span><span style="color: #000000;"> FighterCommand
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    Fighter</span>*<span style="color: #000000;"> fighter;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    BombCommand(Fighter</span>*<span style="color: #000000;"> fighter)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;fighter =<span style="color: #000000;"> fighter;
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> execute()
+    {
+        fighter</span>-&gt;<span style="color: #000000;">bomb();
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">移动命令</span>
+<span style="color: #0000ff;">class</span> MoveCommand : <span style="color: #0000ff;">public</span><span style="color: #000000;"> FighterCommand
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    Fighter</span>*<span style="color: #000000;"> fighter;
+    </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> direction;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    MoveCommand(Fighter</span>* fighter, <span style="color: #0000ff;">int</span><span style="color: #000000;"> direction)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;fighter =<span style="color: #000000;"> fighter;
+        </span><span style="color: #0000ff;">this</span>-&gt;direction =<span style="color: #000000;"> direction;
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> execute()
+    {
+        fighter</span>-&gt;<span style="color: #000000;">move(direction);
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">***********************************************Invoker***********************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">请求者</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Controller
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    FighterCommand</span>*<span style="color: #000000;"> cmdMissible;
+    FighterCommand</span>*<span style="color: #000000;"> cmdBomb;
+    FighterCommand</span>*<span style="color: #000000;"> cmdMoveLeft;
+    FighterCommand</span>*<span style="color: #000000;"> cmdMoveRight;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    Controller(FighterCommand</span>* missible, FighterCommand*<span style="color: #000000;"> bomb,
+               FighterCommand</span>* left,     FighterCommand*<span style="color: #000000;"> right)
+    {
+        cmdMissible  </span>=<span style="color: #000000;"> missible;
+        cmdBomb      </span>=<span style="color: #000000;"> bomb;
+        cmdMoveLeft  </span>=<span style="color: #000000;"> left;
+        cmdMoveRight </span>=<span style="color: #000000;"> right;
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> missible()
+    {
+        cmdMissible</span>-&gt;<span style="color: #000000;">execute();
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> bomb()
+    {
+        cmdBomb</span>-&gt;<span style="color: #000000;">execute();
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> moveLeft()
+    {
+        cmdMoveLeft</span>-&gt;<span style="color: #000000;">execute();
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> moveRight()
+    {
+        cmdMoveRight</span>-&gt;<span style="color: #000000;">execute();
+    }
+};
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    Fighter fighter; </span><span style="color: #008000;">//</span><span style="color: #008000;">战士（命令接收者）
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">命令对象</span>
+    FighterCommand* cmdMissible  = <span style="color: #0000ff;">new</span> MissileCommand(&amp;<span style="color: #000000;">fighter);
+    FighterCommand</span>* cmdBomb      = <span style="color: #0000ff;">new</span> BombCommand(&amp;<span style="color: #000000;">fighter);
+    FighterCommand</span>* cmdMoveLeft  = <span style="color: #0000ff;">new</span> MoveCommand(&amp;fighter, <span style="color: #800080;">3</span><span style="color: #000000;">);
+    FighterCommand</span>* cmdMoveRight = <span style="color: #0000ff;">new</span> MoveCommand(&amp;fighter, <span style="color: #800080;">4</span><span style="color: #000000;">);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">玩家（命令发出者）
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">参数化：将命令对象作为参数传入Invoker</span>
+<span style="color: #000000;">    Controller player(cmdMissible, cmdBomb, cmdMoveLeft, cmdMoveRight);
+
+    player.bomb();
+    player.missible();
+    player.moveLeft();
+    player.moveRight();
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">为什么不直接fighter.bomb()之类的呢?
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">有时当发出命令后，我们只关心任务是否完成？但任务具体由哪个Fighter执行
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">并不是我们关心的.如果直接调用，意味着命令的发出者直接叫某个具体的Fighter去做
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">这样两者的耦合太紧.利用命令模式可以将两者解耦。</span>
+
+    <span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><strong>（3）思考命令模式</strong></p>
+<p>　　①命令模式的<span style="color: #ff0000;"><strong>本质</strong></span>：<strong>封装请求</strong>。这是也命令模式的关键。把<span style="color: #0000ff;"><strong>请求封装成对象</strong></span>，也就是命令对象，并定义了统一的执行操作的接口。这个命令对象可以被存储、转发、记录、处理、撤销等。整个命令模式都是围绕这个对象进行的。</p>
+<p>　　②命令模式的<span style="color: #ff0000;"><strong>动机</strong></span>：在软件构建过程中，<span style="color: #0000ff;"><strong>“行为请求者”与“行为实现者”通常呈现一种“紧耦合”</strong></span>。但在某些场合——比如需要对行为进行“记录、撤销/重做”、事务”等处理，这种无法抵御变化的紧耦合是不合适的，命令模式的动机就是将一组行为抽象为对象，可以实现二者之间的构耦合。</p>
+<p><strong>　　③命令模式的组装和调用</strong></p>
+<p><strong>　　<span style="color: #0000ff;">命令的组装者</span>：</strong>用它<span style="color: #ff0000;"><strong>维护命令的“虚”实现和真实实现之间的关系</strong></span>。（即下图中的Client，但将之定义成组装者更合适。真正的Client是通过Invoker来触发命令的）</p>
+<p><strong>　　④<span style="color: #ff0000;">命令的接收者</span>：<span style="color: #0000ff;">可以是任意的类</span></strong>，对它没有特殊要求。一个接收者可以处理多个命令，接收者提供的方法个数、名称、功能和命令对象中的可以不一样，只要能够通过调用接收者的方法来实现命令对应的功能就可以了。</p>
+<p>　　⑤智能命令：在标准的命令模式中，命令的实现类是没有真正实现命令要求的功能的，真正执行命令的功能的是接收者。如果命令对象自己实现了命令要求的功能，而不再需要调用接收者，那这种情况称为智能命令。也有半智能的命令，即命令对象实现一部分，其他的还是需要调用接收者来完成，也就是说命令的功能由命令对象和接收者共同来完成。</p>
+<p>【编程实验】菜单项命令</p>
+<p style="text-align: center;">&nbsp;<img src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/772759-20160612221824183-2121641198.png" alt=""></p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;26729839-da87-44f1-b399-89934fd44232&#39;)"><img id="code_img_closed_26729839-da87-44f1-b399-89934fd44232" class="code_img_closed" src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/ContractedBlock.gif" alt=""><img id="code_img_opened_26729839-da87-44f1-b399-89934fd44232" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide(&#39;26729839-da87-44f1-b399-89934fd44232&#39;,event)" src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_26729839-da87-44f1-b399-89934fd44232" class="cnblogs_code_hide">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">行为型模式：命令模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">场景：菜单项命令</span><span style="color: #008000;">
+/*</span><span style="color: #008000;">
+要求：某软件公司欲开发一个基于Windows平台的公告板系统。系统提供一个主菜单(Menu)，
+在主菜单中包含了一些菜单项(MenuItem)，可以通过Menu类的addMenuItem()方法增加
+菜单项。菜单项的主要方法是click()，每一个菜单项包含一个抽象命令类，具体命令
+类包括OpenCommand（打开命令），CreateCommand（新建命令），EditCommand（编辑命令）
+等，命令类具有一个execute()方法，用于调用公告板系统界面类(Board)的open()、
+create()、edit()等方法。试使用命令模式设计该系统，使得MenuItem类与Board类
+的耦合度降低，绘制类图并编程模拟实现。
+</span><span style="color: #008000;">*/</span><span style="color: #000000;">
+
+#include </span>&lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;">
+#include </span>&lt;map&gt;
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+</span><span style="color: #008000;">//</span><span style="color: #008000;">******************************Receiver********************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">Board(公告板)</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Board
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> open()
+    {
+        cout </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">Board opened!</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> create()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">Board create!</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> edit()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">Board edit!</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">****************************Command************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">Command命令接口</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Command
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> execute() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">CreateCommand(“新建”)</span>
+<span style="color: #0000ff;">class</span> CreateCommand : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Command
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    Board</span>*<span style="color: #000000;"> board;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    CreateCommand(Board</span>*<span style="color: #000000;"> board)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;board =<span style="color: #000000;"> board;
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> execute()
+    {
+        board</span>-&gt;<span style="color: #000000;">create();
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">OpenCommand(“打开”)</span>
+<span style="color: #0000ff;">class</span> OpenCommand : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Command
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    Board</span>*<span style="color: #000000;"> board;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    OpenCommand(Board</span>*<span style="color: #000000;"> board)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;board =<span style="color: #000000;"> board;
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> execute()
+    {
+        board</span>-&gt;<span style="color: #000000;">open();
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">EditCommand(“编辑”)</span>
+<span style="color: #0000ff;">class</span> EditCommand : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Command
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    Board</span>*<span style="color: #000000;"> board;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    EditCommand(Board</span>*<span style="color: #000000;"> board)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;board =<span style="color: #000000;"> board;
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> execute()
+    {
+        board</span>-&gt;<span style="color: #000000;">edit();
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">*****************************Invoker****************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">MenuItem(菜单项)</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> MenuItem
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span><span style="color: #000000;"> itemName;
+    Command</span>*<span style="color: #000000;"> command;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    MenuItem(</span><span style="color: #0000ff;">string</span> name,Command*<span style="color: #000000;"> command)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;command =<span style="color: #000000;"> command;
+        </span><span style="color: #0000ff;">this</span>-&gt;itemName =<span style="color: #000000;"> name;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">单击事件</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> click()
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">因菜单项(命令发送者)与具体的消息接收者（如board）的解耦
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">因此，对于不同的菜单项，这里都可以像如下那样处理。（简洁、灵活！）</span>
+        command-&gt;<span style="color: #000000;">execute();
+    }
+
+    </span><span style="color: #0000ff;">string</span>&amp;<span style="color: #000000;"> getItemName()
+    {
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> itemName;
+    }
+
+    </span><span style="color: #0000ff;">void</span> setItemName(<span style="color: #0000ff;">string</span><span style="color: #000000;"> name)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;itemName =<span style="color: #000000;"> name;
+    }
+
+    Command</span>*<span style="color: #000000;"> getCommand()
+    {
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> command;
+    }
+
+    </span><span style="color: #0000ff;">void</span> setCommand(Command*<span style="color: #000000;"> newCommand)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;command =<span style="color: #000000;"> newCommand;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">Menu(菜单)</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Menu
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    map</span>&lt;<span style="color: #0000ff;">string</span>,MenuItem*&gt;<span style="color: #000000;"> items;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span> addMenuItem(MenuItem*<span style="color: #000000;"> item)
+    {
+        items[item</span>-&gt;getItemName()] =<span style="color: #000000;"> item;
+    }
+
+    MenuItem</span>* getMenuItemByName(<span style="color: #0000ff;">string</span><span style="color: #000000;"> name)
+    {
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> items[name];
+    }
+};
+
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">创建公告板(命令接收者)</span>
+<span style="color: #000000;">    Board board;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">创建3个命令对象并与board组装起来</span>
+    CreateCommand createCmd(&amp;<span style="color: #000000;">board);
+    OpenCommand openCmd(</span>&amp;<span style="color: #000000;">board);
+    EditCommand editCmd(</span>&amp;<span style="color: #000000;">board);
+
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">创建主菜单及菜单项</span>
+<span style="color: #000000;">    Menu menu;
+    MenuItem</span>* open = <span style="color: #0000ff;">new</span> MenuItem(<span style="color: #800000;">"</span><span style="color: #800000;">open</span><span style="color: #800000;">"</span>,&amp;<span style="color: #000000;">openCmd);
+    MenuItem</span>* create = <span style="color: #0000ff;">new</span> MenuItem(<span style="color: #800000;">"</span><span style="color: #800000;">create</span><span style="color: #800000;">"</span>, &amp;<span style="color: #000000;">createCmd);
+    MenuItem</span>* edit = <span style="color: #0000ff;">new</span> MenuItem(<span style="color: #800000;">"</span><span style="color: #800000;">edit</span><span style="color: #800000;">"</span>, &amp;<span style="color: #000000;">editCmd);
+
+    menu.addMenuItem(open);
+    menu.addMenuItem(create);
+    menu.addMenuItem(edit);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">测试
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">单击“创建公告板”菜单项</span>
+    menu.getMenuItemByName(<span style="color: #800000;">"</span><span style="color: #800000;">create</span><span style="color: #800000;">"</span>)-&gt;<span style="color: #000000;">click();
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">单击“打开公告板”菜单项</span>
+    menu.getMenuItemByName(<span style="color: #800000;">"</span><span style="color: #800000;">open</span><span style="color: #800000;">"</span>)-&gt;<span style="color: #000000;">click();
+     </span><span style="color: #008000;">//</span><span style="color: #008000;">单击“编辑公告板”菜单项</span>
+    menu.getMenuItemByName(<span style="color: #800000;">"</span><span style="color: #800000;">edit</span><span style="color: #800000;">"</span>)-&gt;<span style="color: #000000;">click();
+
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> open;
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> create;
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> edit;
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p style="text-align: left;"><strong style="line-height: 1.5;">2. </strong><strong style="line-height: 1.5;">深度理解命令模式</strong></p>
+<p>（1）<span style="color: #ff0000;"><strong>参数化配置</strong></span>：用不同的命令对象，去参数化配置客户的请求。</p>
+<p>（2）<span style="color: #ff0000;"><strong>可撤销</strong></span>的操作：</p>
+<p>　　①补偿式（反操作式）：如被撤销的操作是加的功能，那么反操作就是减的功能。</p>
+<p>　　②存储恢复式：把操作前的状态记录下来，然后要撤销操作时就直接恢复回去就可以了。（该种方式会放到备忘录模式中进行讲解）</p>
+<p>【编程实验】可撤销/恢复操作的计算器</p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/772759-20160614222525338-1529202800.png" alt=""></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">行为型模式：命令模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">场景：计算器(可撤销的计算)</span>
+<span style="color: #000000;">
+#include </span>&lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;">
+#include </span>&lt;list&gt;
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">***************************************Receiver*******************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">操作运算的接口</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> OperationApi
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">获取计算完成后的结果</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">int</span> getResult() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">设计开始计算的初始值</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> setResult(<span style="color: #0000ff;">int</span> result) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">加法</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> add(<span style="color: #0000ff;">int</span> num)=<span style="color: #800080;">0</span><span style="color: #000000;">;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">减法</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> substract(<span style="color: #0000ff;">int</span> num) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">运算类，真正实现加减法运算（具体的接收者）</span>
+<span style="color: #0000ff;">class</span> Operation : <span style="color: #0000ff;">public</span><span style="color: #000000;"> OperationApi
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> result;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> getResult()
+    {
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> result;
+    }
+
+    </span><span style="color: #0000ff;">void</span> setResult(<span style="color: #0000ff;">int</span><span style="color: #000000;"> result)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;result =<span style="color: #000000;"> result;
+    }
+
+    </span><span style="color: #0000ff;">void</span> add(<span style="color: #0000ff;">int</span><span style="color: #000000;"> num)
+    {
+        result </span>+=<span style="color: #000000;">num;
+    }
+
+    </span><span style="color: #0000ff;">void</span> substract(<span style="color: #0000ff;">int</span><span style="color: #000000;"> num)
+    {
+        result </span>-=<span style="color: #000000;"> num;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">*************************Command***********************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">命令接口，支持可撤销操作</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Command
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">执行命令的操作</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> execute() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">执行撤销的操作</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> undo() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">具体的加法命令</span>
+<span style="color: #0000ff;">class</span> AddCommand : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Command
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">持有具体执行计算的对象（命令的接收者）</span>
+    OperationApi*<span style="color: #000000;"> operation;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">要加上的数据</span>
+    <span style="color: #0000ff;">int</span><span style="color: #000000;"> opeNum;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    AddCommand(OperationApi</span>* operation, <span style="color: #0000ff;">int</span><span style="color: #000000;"> opeNum)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;opeNum =<span style="color: #000000;"> opeNum;
+        </span><span style="color: #0000ff;">this</span>-&gt;operation =<span style="color: #000000;"> operation;
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> execute()
+    {
+        operation</span>-&gt;<span style="color: #000000;">add(opeNum);
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> undo()
+    {
+        operation</span>-&gt;<span style="color: #000000;">substract(opeNum);
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">具体的减法命令</span>
+<span style="color: #0000ff;">class</span> SubstractCommand : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Command
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">持有具体执行计算的对象（命令的接收者）</span>
+    OperationApi*<span style="color: #000000;"> operation;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">要减去的数据</span>
+    <span style="color: #0000ff;">int</span><span style="color: #000000;"> opeNum;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    SubstractCommand(OperationApi</span>* operation, <span style="color: #0000ff;">int</span><span style="color: #000000;"> opeNum)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;opeNum =<span style="color: #000000;"> opeNum;
+        </span><span style="color: #0000ff;">this</span>-&gt;operation =<span style="color: #000000;"> operation;
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> execute()
+    {
+        operation</span>-&gt;<span style="color: #000000;">substract(opeNum);
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> undo()
+    {
+        operation</span>-&gt;<span style="color: #000000;">add(opeNum);
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">*****************************Invoker************************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">计算器类，计算器上有加法按钮和减法按钮</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Calculator
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    Command</span>* addCmd; <span style="color: #008000;">//</span><span style="color: #008000;">加法命令对象</span>
+    Command* substractCmd; <span style="color: #008000;">//</span><span style="color: #008000;">减法命令对象
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">命令的操作历史记录，在撤销的时候用</span>
+    list&lt;Command*&gt;<span style="color: #000000;"> undoCmds;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">命令被撤销的历史记录，在恢复时使用</span>
+    list&lt;Command*&gt;<span style="color: #000000;"> redoCmds;
+
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span> setAddCmd(Command*<span style="color: #000000;"> addCmd)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;addCmd =<span style="color: #000000;"> addCmd;
+    }
+
+    </span><span style="color: #0000ff;">void</span> setSubstractCmd(Command*<span style="color: #000000;"> subCmd)
+    {
+        </span><span style="color: #0000ff;">this</span> -&gt;substractCmd =<span style="color: #000000;"> subCmd;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">提供给客户使用，执行加法功能</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> addPressed()
+    {
+        addCmd</span>-&gt;<span style="color: #000000;">execute();
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">把操作记录到历史记录里面</span>
+<span style="color: #000000;">        undoCmds.push_back(addCmd);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">提供给客户使用，执行减法功能</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> substractPressed()
+    {
+        substractCmd</span>-&gt;<span style="color: #000000;">execute();
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">把操作记录到历史记录里面</span>
+<span style="color: #000000;">        undoCmds.push_back(substractCmd);
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> undoPressed()
+    {
+        </span><span style="color: #0000ff;">if</span>(undoCmds.size() &gt; <span style="color: #800080;">0</span><span style="color: #000000;">)
+        {
+            </span><span style="color: #008000;">//</span><span style="color: #008000;">取出最后一个命令来撤销</span>
+            Command* cmd =<span style="color: #000000;"> undoCmds.back();
+            cmd</span>-&gt;<span style="color: #000000;">undo();
+
+            </span><span style="color: #008000;">//</span><span style="color: #008000;">如果还有恢复功能，那就把这个命令记录到恢复历史列表中</span>
+<span style="color: #000000;">            redoCmds.push_back(cmd);
+
+            </span><span style="color: #008000;">//</span><span style="color: #008000;">然后把最后一个命令删除掉</span>
+<span style="color: #000000;">            undoCmds.pop_back();
+        }
+        </span><span style="color: #0000ff;">else</span><span style="color: #000000;">
+        {
+            cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">Sorry, nothing to undo()</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+        }
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> redoPressed()
+    {
+        </span><span style="color: #0000ff;">if</span>(redoCmds.size() &gt; <span style="color: #800080;">0</span><span style="color: #000000;">)
+        {
+            </span><span style="color: #008000;">//</span><span style="color: #008000;">取出最后一个命令来重做</span>
+            Command* cmd =<span style="color: #000000;"> redoCmds.back();
+            cmd</span>-&gt;<span style="color: #000000;">execute();
+
+            </span><span style="color: #008000;">//</span><span style="color: #008000;">把这个命令记录到可撤销的历史记录里面</span>
+<span style="color: #000000;">            undoCmds.push_back(cmd);
+
+            </span><span style="color: #008000;">//</span><span style="color: #008000;">然后把最后一个命令删除掉</span>
+<span style="color: #000000;">            redoCmds.pop_back();
+        }
+        </span><span style="color: #0000ff;">else</span><span style="color: #000000;">
+        {
+            cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">Sorry, nothing to redo()</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+        }
+    }
+};
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">客户端
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">1.组装命令和接收者
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">创建接收者</span>
+    OperationApi* operation = <span style="color: #0000ff;">new</span><span style="color: #000000;"> Operation();
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">创建命令对象，并组装命令和接收者</span>
+    AddCommand addCmd(operation, <span style="color: #800080;">5</span><span style="color: #000000;">);
+    SubstractCommand subCmd(operation, </span><span style="color: #800080;">3</span><span style="color: #000000;">);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">2.把命令设置到持有者，也就是计算器里面</span>
+<span style="color: #000000;">    Calculator calculator;
+    calculator.setAddCmd(</span>&amp;<span style="color: #000000;">addCmd);
+    calculator.setSubstractCmd(</span>&amp;<span style="color: #000000;">subCmd);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">3. 模拟按下按钮，测试一下</span>
+<span style="color: #000000;">    calculator.addPressed();
+    cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">一次加法运算后的结果为:</span><span style="color: #800000;">"</span> &lt;&lt; operation-&gt;getResult() &lt;&lt;<span style="color: #000000;"> endl;
+
+    calculator.substractPressed();
+    cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">一次减法运算后的结果为:</span><span style="color: #800000;">"</span> &lt;&lt; operation-&gt;getResult() &lt;&lt;<span style="color: #000000;"> endl;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">测试撤销</span>
+<span style="color: #000000;">    calculator.undoPressed();
+    cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">撤销一次后的结果为:</span><span style="color: #800000;">"</span> &lt;&lt; operation-&gt;getResult() &lt;&lt;<span style="color: #000000;"> endl;
+    calculator.undoPressed();
+    cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">再次撤销一次后的结果为:</span><span style="color: #800000;">"</span> &lt;&lt; operation-&gt;getResult() &lt;&lt;<span style="color: #000000;"> endl;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">测试恢复</span>
+<span style="color: #000000;">    calculator.redoPressed();
+    cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">恢复操作一次后的结果为:</span><span style="color: #800000;">"</span> &lt;&lt; operation-&gt;getResult() &lt;&lt;<span style="color: #000000;"> endl;
+    calculator.redoPressed();
+    cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">再次恢复操作一次后的结果为:</span><span style="color: #800000;">"</span> &lt;&lt; operation-&gt;getResult() &lt;&lt;<span style="color: #000000;"> endl;
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>（3）宏命令</p>
+<p align="center"><img src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/772759-20160614224105479-1747421014.jpg" alt="">&nbsp;</p>
+<p>　　①<span style="color: #ff0000;"><strong>宏命令(Macro Command)</strong></span>又称为组合命令，它是<span style="color: #ff0000;"><strong>组合模式和命令模式</strong></span>联用的产物。宏命令是一个<span style="color: #0000ff;"><strong>具体命令类</strong></span>，它拥有一个集合属性，在该集合中包含了对其他命令对象的引用。</p>
+<p>　　②通常宏命令不直接与请求接收者交互，而是通过它的成员来调用接收者的方法。<span style="color: #0000ff;"><strong>当调用宏命令的execute()方法时</strong></span>，将<span style="color: #0000ff;"><strong>递归调用它所包含的每个成员命令的execute()方法</strong></span>，一个宏命令的成员可以是简单命令，还可以继续是宏命令。</p>
+<p>　　③执行一个宏命令<span style="color: #ff0000;"><strong>将触发多个具体命令的执行</strong></span>，从而实现对命令的<span style="color: #ff0000;"><strong>批处理</strong></span></p>
+<p>【编程实验】餐馆点菜</p>
+<p style="text-align: center;"><img src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/772759-20160615175840135-333078764.png" alt=""></p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;0351d6e4-5eb0-4f11-a536-31279c657509&#39;)"><img id="code_img_closed_0351d6e4-5eb0-4f11-a536-31279c657509" class="code_img_closed" src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/ContractedBlock.gif" alt=""><img id="code_img_opened_0351d6e4-5eb0-4f11-a536-31279c657509" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide(&#39;0351d6e4-5eb0-4f11-a536-31279c657509&#39;,event)" src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_0351d6e4-5eb0-4f11-a536-31279c657509" class="cnblogs_code_hide">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">行为型模式：命令模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">场景：餐馆点菜
+</span><span style="color: #008000;">//</span><span style="color: #008000;">角色：
+</span><span style="color: #008000;">//</span><span style="color: #008000;">1.接收者：厨师，是命令的真正执行者。本例分为两种：做热菜的厨师和做凉菜的厨师
+</span><span style="color: #008000;">//</span><span style="color: #008000;">2.服务员：负责命令和接收者的组装，并持有命令对象（菜单）
+</span><span style="color: #008000;">//</span><span style="color: #008000;">          最后启动命令的也是服务员
+</span><span style="color: #008000;">//</span><span style="color: #008000;">3.命令对象：A、每一道菜是个命令对象；B、菜单（组合对象，由多道菜组成）</span>
+<span style="color: #000000;">
+#include </span>&lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;">
+#include </span>&lt;list&gt;<span style="color: #000000;">
+#include </span>&lt;typeinfo&gt;
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">***************************************Receiver*******************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">接收者：两种：做热菜的厨师和做凉菜的厨师
+</span><span style="color: #008000;">//</span><span style="color: #008000;">厨师的接口</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> CookApi
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">做菜的方法
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">参数：菜名</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> cook(<span style="color: #0000ff;">string</span> name) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">做热菜的厨师</span>
+<span style="color: #0000ff;">class</span> HotCook : <span style="color: #0000ff;">public</span><span style="color: #000000;"> CookApi
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span> cook(<span style="color: #0000ff;">string</span><span style="color: #000000;"> name)
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">本厨师正在做: </span><span style="color: #800000;">"</span> &lt;&lt; name &lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">(热菜)</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">做凉菜的厨师</span>
+<span style="color: #0000ff;">class</span> CoolCook : <span style="color: #0000ff;">public</span><span style="color: #000000;"> CookApi
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span> cook(<span style="color: #0000ff;">string</span><span style="color: #000000;"> name)
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">凉菜</span><span style="color: #800000;">"</span> &lt;&lt; name &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">己经做好了，本厨师正在装盘。</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;"> endl;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">************************************Command**************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">命令接口，声明执行的操作</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Command
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> execute() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">具体的命令对象（三道菜）：
+</span><span style="color: #008000;">//</span><span style="color: #008000;">两道热菜：北京烤鸭、绿豆排骨煲
+</span><span style="color: #008000;">//</span><span style="color: #008000;">一道凉菜：蒜泥白肉
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">1.命令对象：北京烤鸭</span>
+<span style="color: #0000ff;">class</span> DuckCommand: <span style="color: #0000ff;">public</span><span style="color: #000000;"> Command
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">持有具体做菜的厨师的对象</span>
+    CookApi*<span style="color: #000000;"> cookApi;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span> setCookApi(CookApi*<span style="color: #000000;"> cookApi)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;cookApi =<span style="color: #000000;"> cookApi;
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> execute()
+    {
+        cookApi</span>-&gt;cook(<span style="color: #800000;">"</span><span style="color: #800000;">北京烤鸭</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">2. 命令对象：绿豆排骨煲</span>
+<span style="color: #0000ff;">class</span> ChopCommand: <span style="color: #0000ff;">public</span><span style="color: #000000;"> Command
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">持有具体做菜的厨师的对象</span>
+    CookApi*<span style="color: #000000;"> cookApi;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span> setCookApi(CookApi*<span style="color: #000000;"> cookApi)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;cookApi =<span style="color: #000000;"> cookApi;
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> execute()
+    {
+        cookApi</span>-&gt;cook(<span style="color: #800000;">"</span><span style="color: #800000;">绿豆排骨煲</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">3.命令对象：蒜泥白肉</span>
+<span style="color: #0000ff;">class</span> PorkCommand: <span style="color: #0000ff;">public</span><span style="color: #000000;"> Command
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">持有具体做菜的厨师的对象</span>
+    CookApi*<span style="color: #000000;"> cookApi;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span> setCookApi(CookApi*<span style="color: #000000;"> cookApi)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;cookApi =<span style="color: #000000;"> cookApi;
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> execute()
+    {
+        cookApi</span>-&gt;cook(<span style="color: #800000;">"</span><span style="color: #800000;">蒜泥白肉</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">4. 菜单对象，是个宏命令对象
+</span><span style="color: #008000;">//</span><span style="color: #008000;">A、本质上还是一个命令，要继承自Command
+</span><span style="color: #008000;">//</span><span style="color: #008000;">B、与普通命令不同，宏命令是多个命令的组合
+</span><span style="color: #008000;">//</span><span style="color: #008000;">C、执行宏命令相当于依次执行宏命令中包含的多个命令对象</span>
+<span style="color: #0000ff;">class</span> MenuCommand : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Command
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">用来记录组合本菜单的多道菜品，也就是多个命令对象</span>
+    list&lt;Command*&gt;<span style="color: #000000;"> lstCmds;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">点菜，把菜品加入到菜单中
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">参数为客户点的菜</span>
+    <span style="color: #0000ff;">void</span> addCommand(Command*<span style="color: #000000;"> cmd)
+    {
+        lstCmds.push_back(cmd);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">执行菜单，其实就是循环执行菜单里面的每个菜</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> execute()
+    {
+        list</span>&lt;Command*&gt;::iterator iter =<span style="color: #000000;"> lstCmds.begin();
+        </span><span style="color: #0000ff;">while</span>( iter !=<span style="color: #000000;"> lstCmds.end())
+        {
+            (</span>*iter)-&gt;<span style="color: #000000;">execute();
+            </span>++<span style="color: #000000;">iter;
+        }
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">**************************************Invoker + Client*******************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">服务员</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Waiter
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">持有一个宏命令对象(菜单)</span>
+<span style="color: #000000;">    MenuCommand menuCmd;
+
+    </span><span style="color: #008000;">//
+</span><span style="color: #000000;">    HotCook hotCook;
+    CoolCook coolCook;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">客户点菜
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">参数客户点的菜，每道菜是一个命令对象</span>
+    <span style="color: #0000ff;">void</span> orderDish(Command*<span style="color: #000000;"> cmd)
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">客户传过来的命令对象
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">在这里进行组装
+
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">判断到底是热菜还是凉菜</span>
+        <span style="color: #0000ff;">if</span>(typeid(*cmd) ==<span style="color: #000000;"> typeid(DuckCommand))
+        {
+             </span><span style="color: #008000;">//</span><span style="color: #008000;">交给热菜师傅</span>
+            ((DuckCommand*)cmd)-&gt;setCookApi(&amp;<span style="color: #000000;">hotCook);
+        }
+        </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span>(typeid(*cmd) ==<span style="color: #000000;"> typeid(ChopCommand))
+        {
+            </span><span style="color: #008000;">//</span><span style="color: #008000;">交给热菜师傅</span>
+            ((ChopCommand*)cmd)-&gt;setCookApi(&amp;<span style="color: #000000;">hotCook);
+        }
+        </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span>(typeid(*cmd) ==<span style="color: #000000;"> typeid(PorkCommand))
+        {
+            </span><span style="color: #008000;">//</span><span style="color: #008000;">交给凉菜师傅</span>
+            ((PorkCommand*)cmd)-&gt;setCookApi(&amp;<span style="color: #000000;">coolCook);
+        }
+
+        menuCmd.addCommand(cmd);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">客户点菜完毕，表示要执行命令了，这里就是执行菜单
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">这个组合命令了</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> orderOver()
+    {
+        menuCmd.execute();
+    }
+};
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">客户端
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">客户只负责向服务员点菜就好了
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">创建服务员</span>
+<span style="color: #000000;">    Waiter waiter;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">创建命令对象，就是要点的菜</span>
+    Command* chop = <span style="color: #0000ff;">new</span><span style="color: #000000;"> ChopCommand();
+    Command</span>* duck = <span style="color: #0000ff;">new</span><span style="color: #000000;"> DuckCommand();
+    Command</span>* pork = <span style="color: #0000ff;">new</span><span style="color: #000000;"> PorkCommand();
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">点菜，就是服务员记录下来</span>
+<span style="color: #000000;">    waiter.orderDish(chop);
+    waiter.orderDish(duck);
+    waiter.orderDish(pork);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">点菜完毕</span>
+<span style="color: #000000;">    waiter.orderOver();
+
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> chop;
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> duck;
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> pork;
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}
+</span><span style="color: #008000;">/*</span><span style="color: #008000;">输出结果：
+本厨师正在做: 绿豆排骨煲(热菜)
+本厨师正在做: 北京烤鸭(热菜)
+凉菜蒜泥白肉己经做好了，本厨师正在装盘。
+</span><span style="color: #008000;">*/</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p>（4）队列请求</p>
+<p style="text-align: center;"><img src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/772759-20160615175954792-826933073.png" alt=""></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">行为型模式：命令模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">场景：餐馆点菜（队列）
+</span><span style="color: #008000;">//</span><span style="color: #008000;">角色：
+</span><span style="color: #008000;">//</span><span style="color: #008000;">1.接收者：厨师，是命令的真正执行者。
+</span><span style="color: #008000;">//</span><span style="color: #008000;">2.服务员：负责命令和接收者的组装，并持有命令对象（菜单）
+</span><span style="color: #008000;">//</span><span style="color: #008000;">          最后启动命令的也是服务员
+</span><span style="color: #008000;">//</span><span style="color: #008000;">3.命令对象：A、每一道菜是个命令对象；B、菜单（组合对象，由多道菜组成）
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> * 编译命令：
+</span><span style="color: #008000;">//</span><span style="color: #008000;">*       g++ main.cpp -std=c++11</span>
+<span style="color: #000000;">
+#include </span>&lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;">
+#include </span>&lt;list&gt;<span style="color: #000000;">
+#include </span>&lt;thread&gt; <span style="color: #008000;">//</span><span style="color: #008000;">C++ 11</span>
+#include &lt;mutex&gt;
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">同步对象</span>
+<span style="color: #0000ff;">static</span> mutex g_mutex;     <span style="color: #008000;">//</span><span style="color: #008000;">对队列进行同步</span>
+<span style="color: #0000ff;">static</span> mutex g_PrintMutex;<span style="color: #008000;">//</span><span style="color: #008000;">对控制台输出同步</span>
+
+<span style="color: #0000ff;">class</span> CookApi; <span style="color: #008000;">//</span><span style="color: #008000;">前向声明
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">************************************Command**************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">命令接口，声明执行的操作</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Command
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">执行命令对应的操作</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> execute() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">设置命令的接收者</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> setCookApi(CookApi* cooker) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">获取点菜的桌号</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">int</span> getTableNum() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">命令队列类</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> CommandQueue
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">用来存储命令对象的队列</span>
+    <span style="color: #0000ff;">static</span> list&lt;Command*&gt;<span style="color: #000000;"> cmds;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">服务员传过来一个新的菜单，需要同步
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">同时，会有很多服务员传入菜单，而同时又有很多厨师从这个
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">队列中取值</span>
+    <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">void</span> addMenu(list&lt;Command*&gt;&amp;<span style="color: #000000;"> menu)
+    {
+        g_mutex.</span><span style="color: #0000ff;">lock</span><span style="color: #000000;">();
+        list</span>&lt;Command*&gt;::iterator iter =<span style="color: #000000;"> menu.begin();
+        </span><span style="color: #0000ff;">while</span> (iter !=<span style="color: #000000;"> menu.end())
+        {
+            cmds.push_back((</span>*<span style="color: #000000;">iter));
+            </span>++<span style="color: #000000;">iter;
+        }
+        g_mutex.unlock();
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">厨师从命令队列里面获取命令对象进行处理(需要同步)</span>
+    <span style="color: #0000ff;">static</span> Command*<span style="color: #000000;"> getOneCommand()
+    {
+        Command</span>* ret =<span style="color: #000000;"> NULL;
+
+        g_mutex.</span><span style="color: #0000ff;">lock</span><span style="color: #000000;">();
+
+        </span><span style="color: #0000ff;">if</span> (cmds.size() &gt; <span style="color: #800080;">0</span><span style="color: #000000;">)
+        {
+            </span><span style="color: #008000;">//</span><span style="color: #008000;">取出队列的第一个，因为是约定的按照加入的先后来处理</span>
+            ret =<span style="color: #000000;"> cmds.front();
+            </span><span style="color: #008000;">//</span><span style="color: #008000;">同时从队列里面取掉这个命令对象</span>
+<span style="color: #000000;">            cmds.pop_front();
+        }
+
+        g_mutex.unlock();
+
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> ret;
+    }
+};
+
+list</span>&lt;Command*&gt;<span style="color: #000000;"> CommandQueue::cmds;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">***************************************Receiver*******************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">接收者：两种：做热菜的厨师和做凉菜的厨师
+</span><span style="color: #008000;">//</span><span style="color: #008000;">厨师的接口</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> CookApi
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">做菜的方法
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">参数：tableName-点菜的桌名,name-菜名</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> cook(<span style="color: #0000ff;">int</span> tableNum, <span style="color: #0000ff;">string</span> name) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">做热菜的厨师</span>
+<span style="color: #0000ff;">class</span> HotCook : <span style="color: #0000ff;">public</span><span style="color: #000000;"> CookApi
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">string</span> name; <span style="color: #008000;">//</span><span style="color: #008000;">厨师的名字</span>
+<span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    HotCook(</span><span style="color: #0000ff;">string</span><span style="color: #000000;"> name)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;name =<span style="color: #000000;"> name;
+    }
+
+    </span><span style="color: #0000ff;">void</span> cook(<span style="color: #0000ff;">int</span> tableNum, <span style="color: #0000ff;">string</span><span style="color: #000000;"> name)
+    {
+        g_PrintMutex.</span><span style="color: #0000ff;">lock</span><span style="color: #000000;">();
+        cout </span>&lt;&lt; <span style="color: #0000ff;">this</span>-&gt;name &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">厨师正在为</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;">tableNum
+             </span>&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">号桌做：</span><span style="color: #800000;">"</span>&lt;&lt; name &lt;&lt;<span style="color: #000000;"> endl;
+
+       </span><span style="color: #0000ff;">int</span> cookTime = rand() % <span style="color: #800080;">5</span><span style="color: #000000;">;
+
+       this_thread::sleep_for(chrono::seconds(cookTime));
+
+       cout </span>&lt;&lt; <span style="color: #0000ff;">this</span>-&gt;name &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">厨师为</span><span style="color: #800000;">"</span>&lt;&lt; tableNum &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">号桌做好了：</span><span style="color: #800000;">"</span>
+            &lt;&lt; name &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">,共计耗时=</span><span style="color: #800000;">"</span> &lt;&lt; cookTime &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">秒</span><span style="color: #800000;">"</span> &lt;&lt;<span style="color: #000000;">endl;
+
+       g_PrintMutex.unlock();
+    }
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> startWork()
+    {
+        </span><span style="color: #0000ff;">while</span> (<span style="color: #0000ff;">true</span><span style="color: #000000;">)
+        {
+            </span><span style="color: #008000;">//</span><span style="color: #008000;">不断从命令队列里面获取命令对象</span>
+            Command* cmd =<span style="color: #000000;"> CommandQueue::getOneCommand();
+            </span><span style="color: #0000ff;">if</span> (cmd !=<span style="color: #000000;"> NULL)
+            {
+                </span><span style="color: #008000;">//</span><span style="color: #008000;">说明取到命令对象了，这个命令对象还没有设置接收者
+                </span><span style="color: #008000;">//</span><span style="color: #008000;">因为前面都还不知道到底哪一个厨师来真正执行这个命令
+                </span><span style="color: #008000;">//</span><span style="color: #008000;">现在知道了，就是当前厨师实例，设置到命令对象里面</span>
+                cmd-&gt;setCookApi(<span style="color: #0000ff;">this</span><span style="color: #000000;">);
+                </span><span style="color: #008000;">//</span><span style="color: #008000;">然后真正执行这个命令</span>
+                cmd-&gt;<span style="color: #000000;">execute();
+            }
+
+            </span><span style="color: #008000;">//</span><span style="color: #008000;">体息一下</span>
+            this_thread::sleep_for(chrono::milliseconds(<span style="color: #800080;">1000</span><span style="color: #000000;">));
+        }
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">****************************************具体命令对象*******************************************************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">具体的命令对象（三道菜）：北京烤鸭、绿豆排骨煲、蒜泥白肉
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">1.命令对象：北京烤鸭</span>
+<span style="color: #0000ff;">class</span> DuckCommand: <span style="color: #0000ff;">public</span><span style="color: #000000;"> Command
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">持有具体做菜的厨师的对象</span>
+    CookApi*<span style="color: #000000;"> cookApi;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">点菜的桌号</span>
+    <span style="color: #0000ff;">int</span><span style="color: #000000;"> tableNum;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    DuckCommand(</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> tableNum)
+    {
+        </span><span style="color: #0000ff;">this</span> -&gt; tableNum =<span style="color: #000000;"> tableNum;
+    }
+
+    </span><span style="color: #0000ff;">void</span> setCookApi(CookApi*<span style="color: #000000;"> cookApi)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;cookApi =<span style="color: #000000;"> cookApi;
+    }
+
+    </span><span style="color: #0000ff;">int</span> getTableNum(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> tableNum;}
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> execute()
+    {
+        cookApi</span>-&gt;cook(tableNum, <span style="color: #800000;">"</span><span style="color: #800000;">北京烤鸭</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">2. 命令对象：绿豆排骨煲</span>
+<span style="color: #0000ff;">class</span> ChopCommand: <span style="color: #0000ff;">public</span><span style="color: #000000;"> Command
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">持有具体做菜的厨师的对象</span>
+    CookApi*<span style="color: #000000;"> cookApi;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">点菜的桌号</span>
+    <span style="color: #0000ff;">int</span><span style="color: #000000;"> tableNum;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    ChopCommand(</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> tableNum)
+    {
+        </span><span style="color: #0000ff;">this</span> -&gt; tableNum =<span style="color: #000000;"> tableNum;
+    }
+
+    </span><span style="color: #0000ff;">void</span> setCookApi(CookApi*<span style="color: #000000;"> cookApi)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;cookApi =<span style="color: #000000;"> cookApi;
+    }
+
+    </span><span style="color: #0000ff;">int</span> getTableNum(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> tableNum;}
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> execute()
+    {
+        cookApi</span>-&gt;cook(tableNum, <span style="color: #800000;">"</span><span style="color: #800000;">绿豆排骨煲</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">3.命令对象：蒜泥白肉</span>
+<span style="color: #0000ff;">class</span> PorkCommand: <span style="color: #0000ff;">public</span><span style="color: #000000;"> Command
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">持有具体做菜的厨师的对象</span>
+    CookApi*<span style="color: #000000;"> cookApi;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">点菜的桌号</span>
+    <span style="color: #0000ff;">int</span><span style="color: #000000;"> tableNum;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    PorkCommand(</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> tableNum)
+    {
+        </span><span style="color: #0000ff;">this</span> -&gt; tableNum =<span style="color: #000000;"> tableNum;
+    }
+
+    </span><span style="color: #0000ff;">void</span> setCookApi(CookApi*<span style="color: #000000;"> cookApi)
+    {
+        </span><span style="color: #0000ff;">this</span>-&gt;cookApi =<span style="color: #000000;"> cookApi;
+    }
+
+    </span><span style="color: #0000ff;">int</span> getTableNum(){<span style="color: #0000ff;">return</span><span style="color: #000000;"> tableNum;}
+
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> execute()
+    {
+        cookApi</span>-&gt;cook(tableNum, <span style="color: #800000;">"</span><span style="color: #800000;">蒜泥白肉</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">4. 菜单对象，是个宏命令对象
+</span><span style="color: #008000;">//</span><span style="color: #008000;">A、本质上还是一个命令，要继承自Command
+</span><span style="color: #008000;">//</span><span style="color: #008000;">B、与普通命令不同，宏命令是多个命令的组合
+</span><span style="color: #008000;">//</span><span style="color: #008000;">C、执行宏命令相当于依次执行宏命令中包含的多个命令对象</span>
+<span style="color: #0000ff;">class</span> MenuCommand : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Command
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">用来记录组合本菜单的多道菜品，也就是多个命令对象</span>
+    list&lt;Command*&gt;<span style="color: #000000;"> lstCmds;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">点菜，把菜品加入到菜单中
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">参数为客户点的菜</span>
+    <span style="color: #0000ff;">void</span> addCommand(Command*<span style="color: #000000;"> cmd)
+    {
+        lstCmds.push_back(cmd);
+    }
+
+    </span><span style="color: #0000ff;">void</span> setCookApi(CookApi*<span style="color: #000000;"> cooker)
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">什么都不做，这个方法对组合命令对象的菜单没有意义</span>
+<span style="color: #000000;">    }
+
+    </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> getTableNum()
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">什么都不做，这个方法对组合命令对象的菜单没有意义</span>
+        <span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+    }
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">执行菜单</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> execute()
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">这里与之前的例子不同，把菜单传给队列</span>
+<span style="color: #000000;">        CommandQueue::addMenu(lstCmds);
+    }
+
+    list</span>&lt;Command*&gt;&amp;<span style="color: #000000;"> getCommands()
+    {
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> lstCmds;
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">**************************************Invoker + Client*******************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">服务员</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Waiter
+{
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">持有一个宏命令对象(菜单)</span>
+<span style="color: #000000;">    MenuCommand menuCmd;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">客户点菜
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">参数客户点的菜，每道菜是一个命令对象</span>
+    <span style="color: #0000ff;">void</span> orderDish(Command*<span style="color: #000000;"> cmd)
+    {
+        menuCmd.addCommand(cmd);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">客户点菜完毕，表示要执行命令了，这里就是执行菜单
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">这个组合命令了</span>
+    <span style="color: #0000ff;">void</span><span style="color: #000000;"> orderOver()
+    {
+        menuCmd.execute();
+    }
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">线程函数</span>
+<span style="color: #0000ff;">void</span> thread_entry(HotCook*<span style="color: #000000;"> cooker)
+{
+    cooker</span>-&gt;<span style="color: #000000;">startWork();
+}
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">客户端</span>
+<span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+    srand( time(NULL) );
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">创建三位厨师</span>
+    HotCook cook1(<span style="color: #800000;">"</span><span style="color: #800000;">张三</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    HotCook cook2(</span><span style="color: #800000;">"</span><span style="color: #800000;">李四</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    HotCook cook3(</span><span style="color: #800000;">"</span><span style="color: #800000;">王五</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">启动3个工作线程</span>
+    thread t1(thread_entry,&amp;<span style="color: #000000;">cook1);
+    thread t2(thread_entry,</span>&amp;<span style="color: #000000;">cook2);
+    thread t3(thread_entry,</span>&amp;<span style="color: #000000;">cook3);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">为了简单，直接用循环模拟多个桌号点菜
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">创建服务员</span>
+    <span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">int</span> i = <span style="color: #800080;">0</span>; i &lt; <span style="color: #800080;">5</span>; i++<span style="color: #000000;">)
+    {
+        Waiter</span>* waiter = <span style="color: #0000ff;">new</span><span style="color: #000000;"> Waiter();
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">创建命令对象，就是要点的菜</span>
+        Command* chop = <span style="color: #0000ff;">new</span><span style="color: #000000;"> ChopCommand(i);
+        Command</span>* duck = <span style="color: #0000ff;">new</span><span style="color: #000000;"> DuckCommand(i);
+        Command</span>* pork = <span style="color: #0000ff;">new</span><span style="color: #000000;"> PorkCommand(i);
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">点菜，就是服务员记录下来</span>
+        waiter-&gt;<span style="color: #000000;">orderDish(chop);
+        waiter</span>-&gt;<span style="color: #000000;">orderDish(duck);
+        waiter</span>-&gt;<span style="color: #000000;">orderDish(pork);
+
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">点菜完毕</span>
+        waiter-&gt;<span style="color: #000000;">orderOver();
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">为简化，这里省略了对Waiter、Commands对象的释放。。。</span>
+<span style="color: #000000;">
+    t1.join();
+    t2.join();
+    t3.join();
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>（5）日志请求</p>
+<p>　　①概念：把<span style="color: #ff0000;"><strong>请求的历史记录</strong></span>保存下来，一般采用<span style="color: #0000ff;"><strong>永久存储方式</strong></span>。如果在运行请求中，系统崩溃了，那么当再次运行时，就可以从保存的历史记录中获取日志请求，并重新执行命令。</p>
+<p>　　②实现方法：在<span style="color: #ff0000;"><strong>命令对象</strong></span>中<span style="color: #0000ff;"><strong>添加上存储和装载</strong></span>的方法，其实就是让命令对象自己实现类似序列化的功能。</p>
+<p><strong>3. </strong><strong>命令模式的优缺点</strong></p>
+<p>（1）优点：</p>
+<p>　　①更松散的耦合：<span style="color: #0000ff;"><strong>命令的发起者</strong></span>和具体实现命令的对象（<span style="color: #0000ff;"><strong>接收者完全解耦</strong></span>）。也就是说发送者完全不知道具体实现对象是谁。</p>
+<p>　　②更动态的控制：把<span style="color: #ff0000;"><strong>请求封装起来</strong></span>，可以动态地对它<span style="color: #ff0000;"><strong>进行参数化</strong></span>、队列化和日志化。</p>
+<p>　　③很自然的<span style="color: #ff0000;"><strong>复合命令</strong></span>：命令模式能够很容易地组合成复合命令，也就是<span style="color: #ff0000;"><strong>宏命令</strong></span>，从而使系统操作更简单，功能更强大。</p>
+<p>　　④更好的扩展性：扩展命令很容易，只需要实现新的命令对象，然后装配就可以使用，己有的实现完全不用变化。</p>
+<p>（2）缺点： 如果有N个命令，则Command的子类就需要N个，这会造成<span style="color: #0000ff;"><strong>子类的膨胀</strong></span>。</p>
+<p><strong>4. </strong><strong>应用场景</strong></p>
+<p>（1）需要<span style="color: #0000ff;"><strong>抽象出执行的动作</strong></span>，并<span style="color: #0000ff;"><strong>参数化</strong></span>这些对象时可选用命令模式</p>
+<p>（2）需要不同的时刻指定、排列和执行请求，可将请求封装成为命令对象，然后实现将请求队列化。</p>
+<p>（3）需要<span style="color: #ff0000;"><strong>支持取消操作</strong></span>，可通过管理命令对象，能很容易实现命令的恢复和重做功能。</p>
+<p>（4）在需要<span style="color: #ff0000;"><strong>事务</strong></span>的系统中，可选用命令模式，它提供了对事务进行建模的方法。</p>
+<p><strong>5. </strong><strong>相关模式</strong></p>
+<p>（1）命令模式和组合模式</p>
+<p>命令模式中，宏命令可使用组合模式.（但注意，之前的例子没有使用组合模式）</p>
+<p>（2）命令模式与备忘录模式</p>
+<p>　　①命令模式中，实现可撤销功能时，有两种实现方法，其中一种是保存命令执行前的状态，撤销时把状态恢复。也可以考虑使用备忘录模式</p>
+<p>　　②如果状态存储在命令对象中，也可以使用原型模式，把命令对象当作原型来克隆一个新的对象，然后将克隆出来的对象通过备忘录模式存放。</p>
+<p>&nbsp;</p>
+</div>
+<div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block"><div id="BlogPostCategory">
+    分类: 
+            <a href="https://www.cnblogs.com/5iedu/category/825371.html" target="_blank">设计模式</a></div>
+
+
+    <div id="blog_post_info">
+<div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(5578970,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+        <a id="green_channel_follow" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/5iedu/" target="_blank"><img src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/20150610151331.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/5iedu/">浅墨浓香</a><br>
+            <a href="https://home.cnblogs.com/u/5iedu/followees/">关注 - 0</a><br>
+            <a href="https://home.cnblogs.com/u/5iedu/followers/">粉丝 - 149</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(5578970,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(5578970,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+    <div class="clear"></div>
+    <div id="post_next_prev">
+
+    <a href="https://www.cnblogs.com/5iedu/p/5573318.html" class="p_n_p_prefix">« </a> 上一篇：    <a href="https://www.cnblogs.com/5iedu/p/5573318.html" title="发布于 2016-06-10 10:17">第15章 行为型模式—职责链模式</a>
+    <br>
+    <a href="https://www.cnblogs.com/5iedu/p/5582971.html" class="p_n_p_prefix">» </a> 下一篇：    <a href="https://www.cnblogs.com/5iedu/p/5582971.html" title="发布于 2016-06-14 09:56">第49课 多态的概念和意义</a>
+
+</div>
+</div></div>
+	</div>
+<script src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/highlight.min.js.下载"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 231128, cb_blogApp = '5iedu', cb_blogUserGuid = '41562de4-020f-e511-b908-9dcfd8948a71';
+    var cb_entryId = 5578970, cb_entryCreatedDate = '2016-06-12 22:15', cb_postType = 1; 
+    loadViewCount(cb_entryId);
+</script><a name="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<script>
+    var commentManager = new blogCommentManager();
+    commentManager.renderComments(0);
+</script>
+
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/5iedu/p/5578970.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/5iedu/p/5578970.html#top">返回顶部</a></div>
+    <div id="comment_form_container"><div class="login_tips">
+    注册用户登录后才能发表评论，请 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a>
+     或 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，
+    <a href="https://www.cnblogs.com/">访问</a> 网站首页。
+</div></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"><a href="https://cloud.tencent.com/act/pro/overseas?fromSource=gwzcw.3090393.3090393.3090393&amp;utm_medium=cpc&amp;utm_id=gwzcw.3090393.3090393.3090393" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-腾讯云&#39;)">【推荐】腾讯云海外1核2G云服务器低至2折，半价续费券限量免费领取！</a><br><a href="http://click.aliyun.com/m/1000081987/" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-阿里云&#39;)">【推荐】阿里云双11返场来袭，热门产品低至一折等你来抢！</a><br><a href="http://www.ucancode.com/index.htm" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-工控&#39;)">【推荐】超50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://group.cnblogs.com/topic/90800.html?800019197" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-马士兵&#39;)">【提升】这个价值 50W 年薪的问题，终于被马老师说明白啦...</a><br><a href="https://www.ctyun.cn/activity/20191111?hmsr=%E7%9C%8B%E7%9C%8B-%E5%8D%9A%E5%AE%A2%E5%9B%AD-%E5%8F%8C11-1106&amp;hmpl=&amp;hmcu=&amp;hmkw=&amp;hmci=" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-天翼云&#39;)">【推荐】天翼云双十一翼降到底，云主机11.11元起，抽奖送大礼</a><br><a href="https://www.cnblogs.com/enjoyedu/p/11905399.html?800019191" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-享学&#39;)">【提升】Java程序员年薪40W，他1年走了别人5年的学习之路</a><br><a href="https://www.uibot.com.cn/sem/bky.html" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-uibot_T2&#39;)">【推荐】流程自动化专家UiBot，体系化教程成就高薪RPA工程师</a><br></div>
+    <div id="opt_under_post"></div>
+    <script async="async" src="./第16章 行为型模式—命令模式 - 浅墨浓香 - 博客园_files/gpt.js.下载"></script>
+    <script>
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+    </script>
+    <script>
+        googletag.cmd.push(function () {
+            googletag.defineSlot("/1090369/C1", [300, 250], "div-gpt-ad-1546353474406-0").addService(googletag.pubads());
+            googletag.defineSlot("/1090369/C2", [468, 60], "div-gpt-ad-1539008685004-0").addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    </script>
+    <div id="cnblogs_c1" class="c_ad_block" style="">
+        <div id="div-gpt-ad-1546353474406-0" style="height: 250px; width: 300px;"><div id="google_ads_iframe_/1090369/C1_0__container__" style="border: 0pt none; width: 300px; height: 250px;"></div></div>
+    </div>
+    <div id="under_post_news"><div class="recomm-block"><b>相关博文：</b><br>·  <a title="设计模式 ( 十三 ) 命令模式Command（对象行为型）" href="https://www.cnblogs.com/iplus/archive/2012/05/09/4490224.html" target="_blank" onclick="clickRecomItmem(4490224)">设计模式 ( 十三 ) 命令模式Command（对象行为型）</a><br>·  <a title="命令模式-对象行为型" href="https://www.cnblogs.com/wade-luffy/p/5812399.html" target="_blank" onclick="clickRecomItmem(5812399)">命令模式-对象行为型</a><br>·  <a title="设计模式14---设计模式之命令模式（Command）（行为型）" href="https://www.cnblogs.com/dyllove98/p/3221787.html" target="_blank" onclick="clickRecomItmem(3221787)">设计模式14---设计模式之命令模式（Command）（行为型）</a><br>·  <a title="设计模式-命令模式" href="https://www.cnblogs.com/caibi/p/6319555.html" target="_blank" onclick="clickRecomItmem(6319555)">设计模式-命令模式</a><br>·  <a title="设计模式-命令模式" href="https://www.cnblogs.com/fengsehng/p/6048660.html" target="_blank" onclick="clickRecomItmem(6048660)">设计模式-命令模式</a><br>»  <a target="_blank" href="https://recomm.cnblogs.com/blogpost/5578970">更多推荐...</a></div></div>
+    <div id="cnblogs_c2" class="c_ad_block" style="">
+        <div id="div-gpt-ad-1539008685004-0" style="height: 60px; width: 468px;">
+            <script>
+                if (new Date() >= new Date(2018, 9, 13)) {
+                    googletag.cmd.push(function () { googletag.display("div-gpt-ad-1539008685004-0"); });
+                }
+            </script>
+        <div id="google_ads_iframe_/1090369/C2_0__container__" style="border: 0pt none; width: 468px; height: 60px;"></div></div>
+    </div>
+    <div id="under_post_kb">
+<div class="itnews c_ad_block">
+    <b>最新 IT 新闻</b>:
+    <br>
+ ·              <a href="https://news.cnblogs.com/n/649969/" target="_blank">改变销售人员的CRM交互方式，Salesforce推出AI语音助手及开发套件</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649968/" target="_blank">“基因剪刀”治疗地中海贫血效果初现</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649967/" target="_blank">14nm 5GHz或成CPU绝唱 7/5nm多核容易高频难</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649966/" target="_blank">HTTPZ，将 HTTP 链接转到 HTTPS 的 Firefox 插件</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649965/" target="_blank">4个在2020年持续发展的数据中心冷却趋势</a>
+            <br>
+    » <a href="https://news.cnblogs.com/" title="IT 新闻" target="_blank">更多新闻...</a>
+</div></div>
+    <div id="HistoryToday" class="c_ad_block"></div>
+    <script type="text/javascript">
+        fixPostBody();
+        setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+        deliverAdT2();
+        deliverAdC1();
+        deliverAdC2();
+        loadNewsAndKb();
+        loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+        loadOptUnderPost();
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div></div>
+
+
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="FooterCell">
+			<p id="footer">
+	Powered by: 
+	<br>
+	
+	
+<a href="https://www.cnblogs.com/" id="Footer1_Hyperlink3" style="font-size: 12px; font-family: Verdana">博客园</a>
+	<br>
+	Copyright © 2019 浅墨浓香
+<br><span id="poweredby">Powered by .NET Core 3.0.0 on Linux</span>
+
+</p>
+
+
+		</td>
+	</tr>
+</tbody></table>
+
+
+
+    
+
+
+</body></html>

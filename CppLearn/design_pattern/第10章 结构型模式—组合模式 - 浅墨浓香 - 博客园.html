@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)https://www.cnblogs.com/5iedu/p/5526625.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin">
+    <meta property="og:description" content="1. 组合模式（Composite Pattern）的定义 （1）将对象组合成树型结构以表示“部分-整体”的层次结构。组合模式使得用户对单个对象和组合对象的使用具有一致性。 （2）组合模式的结构和说明">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园</title>
+    
+    <link rel="stylesheet" href="./第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园_files/blog-common.min.css">
+    <link id="MainCss" rel="stylesheet" href="./第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园_files/bundle-habahaba.min.css">
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园_files/bundle-habahaba-mobile.min.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/5iedu/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/5iedu/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/5iedu/wlwmanifest.xml">
+    <script src="./第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园_files/pubads_impl_rendering_2019111801.js.下载"></script><script async="" src="./第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园_files/analytics.js.下载"></script><script type="text/javascript" src="./第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园_files/encoder.js.下载"></script><script src="./第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+    <script src="./第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园_files/blog-common.min.js.下载"></script>
+    <script>
+        var currentBlogId = 231128;
+        var currentBlogApp = '5iedu';
+        var cb_enable_mathjax = true;
+        var isLogined = false;
+    </script>
+    <script type="text/x-mathjax-config;executed=true">
+        MathJax.Hub.Config({
+        tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']], processClass: 'math', processEscapes: true },
+        TeX: {
+        equationNumbers: { autoNumber: ['AMS'], useLabelIds: true },
+        extensions: ['extpfeil.js', 'mediawiki-texvc.js'],
+        Macros: {bm: "\\boldsymbol"}
+        },
+        'HTML-CSS': { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+        });
+    </script>
+    <script src="./第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园_files/MathJax.js.下载"></script>
+    
+<link rel="preload" href="./第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园_files/f.txt" as="script"><script type="text/javascript" src="./第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园_files/f.txt"></script><script src="./第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园_files/pubads_impl_2019111801.js.下载" async=""></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover, .MJXp-munder {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > *, .MJXp-munder > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><link rel="prefetch" href="https://tpc.googlesyndication.com/safeframe/1-0-36/html/container.html"></head>
+<body><div id="MathJax_Message" style="display: none;"></div>
+    <a name="top"></a>
+    
+    <table width="100%" class="Framework" cellspacing="0" cellpadding="0">
+	<tbody><tr>
+		<td colspan="2">
+			
+<div id="top">
+<table width="100%" cellpadding="8" cellspacing="0">
+	<tbody><tr>
+		<td nowrap="">
+			<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/5iedu/">浅墨浓香</a>
+</h1>
+			
+想要天亮进城，就得天黑赶路。
+
+		</td>
+	</tr>
+</tbody></table>
+</div>
+<div id="sub"><div class="BlogStats">posts - 
+690, comments - 
+52, trackbacks - 
+0, articles - 
+16</div>
+
+</div>
+
+
+
+</td>
+	</tr>
+	<tr>
+		<td class="LeftCell">
+            <div id="leftmenu">
+                
+<h3>导航</h3>
+<ul>
+	<li>
+		<a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+	<li>
+		
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/5iedu/">
+首页</a>
+</li>
+	<li>
+		
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+	<li>
+		
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E6%B5%85%E5%A2%A8%E6%B5%93%E9%A6%99">
+联系</a></li>
+	<li>
+		
+<a id="blog_nav_rss" class="menu" href="https://www.cnblogs.com/5iedu/rss/">
+订阅</a></li>
+	<li>
+		
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+                
+<div id="sidebar_news" class="newsItem"><h3>公告</h3>
+<div id="news">
+	
+<div id="blog-news">
+    
+    <div id="profile_block">
+        昵称：
+        <a href="https://home.cnblogs.com/u/5iedu/">
+            浅墨浓香
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/5iedu/" title="入园时间：2015-06-10">
+            4年5个月
+        </a>
+        <br>
+        粉丝：
+        <a href="https://home.cnblogs.com/u/5iedu/followers/">
+            149
+        </a>
+        <br>
+        关注：
+        <a href="https://home.cnblogs.com/u/5iedu/followees/">
+            0
+        </a>
+        <div id="p_b_follow">
+<a href="javascript:void(0)" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;)">+加关注</a></div>
+        <script>getFollowStatus('41562de4-020f-e511-b908-9dcfd8948a71');</script>
+    </div>
+</div>
+</div>
+
+</div>
+
+                <div id="blog-calendar" style="">
+
+<table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar" border="0">
+    <tbody>
+        <tr>
+            <td colspan="7">
+                <table class="CalTitle" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/10/24&#39;); return false;">&lt;</a>
+                            </td>
+                            <td align="center">2019年11月</td>
+                            <td align="right" class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2019/12/24&#39;); return false;">&gt;</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+                    <th class="CalDayHeader" align="center" abbr="日" scope="col">日</th>
+                    <th class="CalDayHeader" align="center" abbr="一" scope="col">一</th>
+                    <th class="CalDayHeader" align="center" abbr="二" scope="col">二</th>
+                    <th class="CalDayHeader" align="center" abbr="三" scope="col">三</th>
+                    <th class="CalDayHeader" align="center" abbr="四" scope="col">四</th>
+                    <th class="CalDayHeader" align="center" abbr="五" scope="col">五</th>
+                    <th class="CalDayHeader" align="center" abbr="六" scope="col">六</th>
+        </tr>
+            <tr>
+                            <td class="CalOtherMonthDay" align="center">27</td>
+                            <td class="CalOtherMonthDay" align="center">28</td>
+                            <td class="CalOtherMonthDay" align="center">29</td>
+                            <td class="CalOtherMonthDay" align="center">30</td>
+                            <td class="CalOtherMonthDay" align="center">31</td>
+                        <td class="" align="center">
+                            1
+                        </td>
+                    <td class="CalWeekendDay" align="center">
+                        2
+                    </td>
+            </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            3
+                        </td>
+                            <td class="" align="center">
+                                4
+                            </td>
+                            <td class="" align="center">
+                                5
+                            </td>
+                            <td class="" align="center">
+                                6
+                            </td>
+                            <td class="" align="center">
+                                <a href="https://www.cnblogs.com/5iedu/archive/2019/11/07.html"><u>7</u></a>
+                            </td>
+                            <td class="" align="center">
+                                8
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            9
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            10
+                        </td>
+                            <td class="" align="center">
+                                11
+                            </td>
+                            <td class="" align="center">
+                                12
+                            </td>
+                            <td class="" align="center">
+                                13
+                            </td>
+                            <td class="" align="center">
+                                14
+                            </td>
+                            <td class="" align="center">
+                                15
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            16
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            <a href="https://www.cnblogs.com/5iedu/archive/2019/11/17.html"><u>17</u></a>
+                        </td>
+                            <td class="" align="center">
+                                18
+                            </td>
+                            <td class="" align="center">
+                                19
+                            </td>
+                            <td class="" align="center">
+                                <a href="https://www.cnblogs.com/5iedu/archive/2019/11/20.html"><u>20</u></a>
+                            </td>
+                            <td class="" align="center">
+                                21
+                            </td>
+                            <td class="" align="center">
+                                22
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            23
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalTodayDay" align="center">
+                            24
+                        </td>
+                            <td class="" align="center">
+                                25
+                            </td>
+                            <td class="" align="center">
+                                26
+                            </td>
+                            <td class="" align="center">
+                                27
+                            </td>
+                            <td class="" align="center">
+                                28
+                            </td>
+                            <td class="" align="center">
+                                29
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            30
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalOtherMonthDay" align="center">
+                            1
+                        </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                2
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                3
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                4
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                5
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                6
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            7
+                        </td>
+                </tr>
+    </tbody>
+</table></div>
+                <script>loadBlogDefaultCalendar();</script>
+                <div id="blog-sidecolumn">
+<!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    <div id="sidebar_search" class="mySearch">
+        <h3 class="catListTitle">搜索</h3>
+        <div id="sidebar_search_box">
+            <div id="widget_my_zzk" class="div_my_zzk">
+                <input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk">
+            </div>
+            <div id="widget_my_google" class="div_my_zzk">
+                <input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 常用链接 -->
+<div id="sidebar_shortcut" class="sidebar-block">
+    
+<h3 class="catListTitle">
+常用链接
+</h3>
+<ul>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/p/" title="我的博客的随笔列表">我的随笔</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/MyComments.html" title="我的发表过的评论列表">我的评论</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/OtherPosts.html" title="我评论过的随笔列表">我的参与</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/RecentComments.html" title="我的博客的评论列表">最新评论</a>
+</li>
+        <li>
+
+<a href="https://www.cnblogs.com/5iedu/tag/" title="我的博客的标签列表">我的标签</a>
+</li>
+</ul>
+
+<!-- TODO: 检查是否有使用这一部分的控件，如果没有则应该删除。 -->
+<div id="itemListLin_con" style="display:none">
+    <ul>
+
+    </ul>
+</div>
+
+</div>
+
+<!-- 最新随笔 -->
+
+
+
+<!-- 我的标签 -->
+<div id="sidebar_toptags" class="sidebar-block">
+    
+</div>
+
+<!-- 积分与排名 -->
+
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+    
+		<h3>
+
+随笔分类
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/811805.html" rel="" target="">
+    C++深度解析(73)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/804081.html" rel="" target="">
+    C语言进阶剖析(48)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/911906.html" rel="" target="">
+    Linux基础与系统管理(35)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/937714.html" rel="" target="">
+    Linux应用与网络编程(64)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1005833.html" rel="" target="">
+    lua(3)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1005832.html" rel="" target="">
+    makefile(10)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1503320.html" rel="" target="">
+    Modern C++ 11/14(30)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/819307.html" rel="" target="">
+    QT实验分析教程(85)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/699743.html" rel="" target="">
+    Windows程序设计(58)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/699744.html" rel="" target="">
+    Windows核心编程(57)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/994985.html" rel="" target="">
+    计算机网络原理(54)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/825371.html" rel="" target="">
+    设计模式(41)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/1007185.html" rel="" target="">
+    深入应用C++11(27)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/911523.html" rel="" target="">
+    数据结构实战分析(79)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/888633.html" rel="" target="">
+    重构(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/963515.html" rel="" target="">
+    专业嵌入式软件开发(15)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+随笔档案
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/11.html" rel="" target="">
+    2019年11月(3)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/10.html" rel="" target="">
+    2019年10月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/09.html" rel="" target="">
+    2019年9月(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/08.html" rel="" target="">
+    2019年8月(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2019/07.html" rel="" target="">
+    2019年7月(9)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/12.html" rel="" target="">
+    2017年12月(13)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/11.html" rel="" target="">
+    2017年11月(23)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/10.html" rel="" target="">
+    2017年10月(21)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/09.html" rel="" target="">
+    2017年9月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/08.html" rel="" target="">
+    2017年8月(22)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/07.html" rel="" target="">
+    2017年7月(27)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/06.html" rel="" target="">
+    2017年6月(21)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/05.html" rel="" target="">
+    2017年5月(35)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/04.html" rel="" target="">
+    2017年4月(19)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/03.html" rel="" target="">
+    2017年3月(28)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/02.html" rel="" target="">
+    2017年2月(15)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2017/01.html" rel="" target="">
+    2017年1月(51)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/12.html" rel="" target="">
+    2016年12月(26)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/11.html" rel="" target="">
+    2016年11月(20)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/10.html" rel="" target="">
+    2016年10月(13)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/09.html" rel="" target="">
+    2016年9月(8)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/08.html" rel="" target="">
+    2016年8月(11)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/07.html" rel="" target="">
+    2016年7月(24)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/06.html" rel="" target="">
+    2016年6月(26)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/05.html" rel="" target="">
+    2016年5月(34)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/04.html" rel="" target="">
+    2016年4月(73)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/03.html" rel="" target="">
+    2016年3月(33)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2016/02.html" rel="" target="">
+    2016年2月(7)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/12.html" rel="" target="">
+    2015年12月(2)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/11.html" rel="" target="">
+    2015年11月(4)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/10.html" rel="" target="">
+    2015年10月(7)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/09.html" rel="" target="">
+    2015年9月(6)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/08.html" rel="" target="">
+    2015年8月(54)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/07.html" rel="" target="">
+    2015年7月(25)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/archive/2015/06.html" rel="" target="">
+    2015年6月(4)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+文章分类
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/715136.html" rel="" target="">
+    Windows内核(1)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/729402.html" rel="" target="">
+    编程经验(12)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/812154.html" rel="" target="">
+    常用代码(2)
+</a>
+
+</li>
+				<li>
+<a href="https://www.cnblogs.com/5iedu/category/954364.html" rel="" target="">
+    综合案例(1)
+</a>
+
+</li>
+			
+				</ul>
+		<h3>
+
+相册
+
+
+</h3>
+				<ul>
+			
+				<li>
+<a href="https://www.cnblogs.com/5iedu/gallery/718135.html" rel="nofollow noopener noreferrer" target="">
+    笔记插图
+</a>
+
+</li>
+			
+				</ul>
+
+
+</div>
+
+<!-- 最新评论 -->
+<div id="sidebar_recentcomments" class="sidebar-block">
+    <div id="recent_comments_wrap" class="RecentComment">
+    <h3 class="catListTitle">最新评论</h3>
+    <div class="RecentCommentBlock">
+        <ul>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/11390495.html#4344239">1. Re:第18课 捕获机制及陷阱</a></li>
+                    <li class="recent_comment_body">博主不仅高产，而且文章质量都挺好</li>
+                    <li class="recent_comment_author">--YaphetS嘟嘟</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4315939">2. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">博主你好，觉得你的博客特别受用，可以告知一下其他博客的密码吗</li>
+                    <li class="recent_comment_author">--cp2018</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/7040429.html#4294675">3. Re:第5章 IP地址和子网划分（2）_IP地址分类和NAT技术</a></li>
+                    <li class="recent_comment_body">像icmp这种没有端口的不知道是如何实现NAT转换的？</li>
+                    <li class="recent_comment_author">--Eagle-jie</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4280947">4. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">同问</li>
+                    <li class="recent_comment_author">--tiger_wangsir</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/5iedu/p/5325466.html#4237914">5. Re:第20课 链接过程简介</a></li>
+                    <li class="recent_comment_body">博主你好，觉得你的博客特别受用，可以告知一下其他博客的密码吗</li>
+                    <li class="recent_comment_author">--胡瑶co</li>
+        </ul>
+    </div>
+</div>
+</div>
+
+
+
+<!-- 阅读排行榜 -->
+<div id="sidebar_topviewedposts" class="sidebar-block">
+    
+<div id="topview_posts_wrap">
+    <h3 class="catListTitle">阅读排行榜</h3>
+    <div id="TopViewPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5595153.html">
+                            1. 第17章 行为型模式—解释器模式(6762)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7376543.html">
+                            2. 第11章 拾遗1：网络地址转换(NAT)和端口映射(4936)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7095041.html">
+                            3. 第6章 静态路由和动态路由（4）_OSPF动态路由协议(3791)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/4899791.html">
+                            4. 第17章 内存映射文件（1）_内存映射文件简介(3741)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/7742589.html">
+                            5. 第16课 右值引用（3）_std::forward与完美转发(3730)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- 评论排行榜 -->
+<div id="sidebar_topcommentedposts" class="sidebar-block">
+    
+<div id="topfeedback_posts_wrap">
+    <h3 class="catListTitle">评论排行榜</h3>
+    <div id="TopFeedbackPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/6498326.html">
+                            1. 第83课 另一种创建线程的方式(9)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5325466.html">
+                            2. 第20课 链接过程简介(5)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5429059.html">
+                            3. 第7课 Qt中的坐标系统(4)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5835715.html">
+                            4. 第37课 深度解析QMap与QHash(3)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/5iedu/p/5617055.html">
+                            5. 第56课 函数模板的概念和意义(2)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- 推荐排行榜 -->
+<div id="sidebar_topdiggedposts" class="sidebar-block">
+    
+<div id="topdigg_posts_wrap">
+    <div class="catListView">
+        <h3 class="catListTitle">推荐排行榜</h3>
+        <div id="TopDiggPostsBlock">
+            <ul style="word-break: break-all">
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/4812259.html">
+                                1. 第11章 Windows线程池（2）_Win2008及以上的新线程池(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/5363054.html">
+                                2. 第1课 学习 C++ 的意义(3)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/5367317.html">
+                                3. 第5课 引用的本质分析(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/6800234.html">
+                                4. 第1章 计算机网络和协议（1）_网络的概念(2)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/5iedu/p/6829593.html">
+                                5. 第1章 计算机网络和协议（3）_TCP/IP协议(1)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div></div>
+                <script>loadBlogSideColumn();</script>
+            </div>
+		</td>
+		<td class="MainCell" width="100%">
+			<div id="main">
+				<div id="post_detail">
+	<div class="post">
+		<div class="posthead">
+			<h2>
+				
+<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/5iedu/p/5526625.html">第10章 结构型模式—组合模式</a>
+
+			</h2>
+ 			Posted on 
+<span id="post-date">2016-05-25 13:00</span>&nbsp;<a href="https://www.cnblogs.com/5iedu/">浅墨浓香</a> 阅读(<span id="post_view_count">241</span>) 评论(<span id="post_comment_count">0</span>) <a href="https://i.cnblogs.com/EditPosts.aspx?postid=5526625" rel="nofollow"> 编辑</a> <a href="javascript:void(0)" onclick="AddToWz(5526625); return false;">收藏</a>
+
+			
+			
+		</div>
+		<div class="postbody">
+<div id="cnblogs_post_body" class="blogpost-body ">
+    <p style="text-align: left;" align="center"><strong style="line-height: 1.5;">1. </strong><strong style="line-height: 1.5;">组合模式（Composite Pattern）的定义</strong></p>
+<p>（1）将对象组合成<span style="color: #ff0000;"><strong>树型结构</strong></span>以表示“部分-整体”的层次结构。组合模式使得用户<span style="color: #ff0000;"><strong>对单个对象和组合对象的使用具有一致性</strong></span>。</p>
+<p>（2）组合模式的结构和说明</p>
+<p align="center"><img src="./第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园_files/772759-20160525125910631-1482898996.png" alt="">&nbsp;</p>
+<p><span style="color: #0000ff;">　　①Component：抽象的组件对象，为组合中的对象<span style="color: #ff0000;"><strong>声明接口</strong></span>，让客户端可以通过这个接口来访问和管理整个对象结构，可以在里面为定义的功能提供缺省的实现。</span></p>
+<p><span style="color: #0000ff;">　　②Leaf：叶子节点对象，定义和实现叶子对象的行为，<span style="color: #ff0000;"><strong>不再包含其他子节点对象</strong></span>。</span></p>
+<p><span style="color: #0000ff;">　　③Composite：组合对象，通常会<span style="color: #ff0000;"><strong>存储子组件</strong></span>，定义包含子组件的那些组件的行为，并实现在组件接口中定义的与子组件有关的操作。(注意：<strong><span style="color: #ff0000;">Composite类也是继承自Component</span></strong>，这样的好处是让组合对象和Leaf对象一样，<span style="color: #ff0000;"><strong>也可以加入到另一组合对象中</strong></span>，形成一个<strong><span style="color: #ff0000;">更复杂的复合对象</span></strong>！）</span></p>
+<p><span style="color: #0000ff;">　　④Client：客户端，通过组件接口来操作组合结构里面的组件对象。</span></p>
+<p>（3）典型的Composite组合对象的结构</p>
+<p align="center"><img src="./第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园_files/772759-20160525125950944-2030940145.jpg" alt="">&nbsp;</p>
+<p>（4）组合模式的思考</p>
+<p>　　①组合模式的<span style="color: #ff0000;"><strong>本质</strong></span>：<span style="color: #0000ff;"><strong>统一叶子对象和组合对象</strong></span>。它把叶子对象和组合对象都当成Component对象，有机地统一了叶子对象和组合对象。</p>
+<p>　　②组合模式的<span style="color: #ff0000;"><strong>目的</strong></span>：<span style="color: #0000ff;"><strong>让客户端不用区分操作的是组合对象还是叶子对象</strong></span>，而是以统一的方式来操作。</p>
+<p>　　③组合模式中<span style="color: #ff0000;"><strong>存在天然的递归</strong></span>，这里所说的递归不是常说的“方法调用自己”的递归。而是指<span style="color: #0000ff;"><strong>对象的递归组合</strong></span>。</p>
+<p><strong>2. </strong><strong>安全性和透明性——到底在Component接口还是Composite类中定义子组件操作方法？</strong></p>
+<p><span style="color: #ff0000;"><strong>（1）透明性的实现（建议使用的方式！）</strong></span></p>
+<p>　　①把<span style="color: #ff0000;"><strong>子组件的操作定义在Component中</strong></span>，那么客户端只需要面对Component，而无须关心具体的组件类型，这种实现方法就是透明性的实现。（见前面的类图结构）</p>
+<p>　　②这种透明性是<span style="color: #0000ff;"><strong>以安全性为代价</strong></span>的，因为Component中定义的一些方法，对于叶子对象来说没有意义，如增加、删除子组件对象。而客户端不知道这些区别，因为对客户来说是透明的，而客户端调用这些方法是不安全的。</p>
+<p>　　③以防止客户端调用这些方法出现安全问题，<span style="color: #0000ff;"><strong>一般在Component中为这些方法提供默认的实现，通常是抛出一个异常</strong></span>，来表示不支持这个功能。</p>
+<p><strong>（2）安全性的实现</strong></p>
+<p>　　①把<span style="color: #ff0000;"><strong>管理子组件的操作定义在Composite中</strong></span>，那么客户端在使用叶子对象时，因为没有这个的操作可供调用，所以是安全的。</p>
+<p>　　②但带来的问题是客户端在使用的时候<strong>，<span style="color: #0000ff;">必须区分到底使用的是Composite还是Leaf的对象</span></strong></p>
+<p align="center"><img src="./第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园_files/772759-20160525125925444-910850459.png" alt="">&nbsp;</p>
+<p><strong>（3）两种实现方式的选择</strong></p>
+<p>　　①对于组合模式而言，在安全性和透明性上，会更看重透明性，毕竟组合模式的功能就是要让用户对叶子对象和组合对象的使用具有一致性。</p>
+<p>　　②对于安全性的实现，需要区分是组合对象还是叶子对象。有时需要进行强制类型转换，但这本身就是不安全的，所以在Component中，<span style="color: #0000ff;"><strong>一般会定义一个getComposite方法来判断是叶子对象还是组合对象</strong></span>，这样在使用前先判断，再转换才不会出现安全问题。</p>
+<p>【编程实验】Windows资源管理器</p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="./第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园_files/772759-20160527221859834-1768934695.png" alt=""></p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;71cad409-936a-42a3-81ea-38e8ad94504f&#39;)"><img id="code_img_closed_71cad409-936a-42a3-81ea-38e8ad94504f" class="code_img_closed" src="./第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园_files/ContractedBlock.gif" alt=""><img id="code_img_opened_71cad409-936a-42a3-81ea-38e8ad94504f" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide(&#39;71cad409-936a-42a3-81ea-38e8ad94504f&#39;,event)" src="./第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_71cad409-936a-42a3-81ea-38e8ad94504f" class="cnblogs_code_hide">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">结构型模式：组合模式
+</span><span style="color: #008000;">//</span><span style="color: #008000;">场景：Windows资源管理</span>
+<span style="color: #000000;">
+#include </span>&lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;">
+#include </span>&lt;list&gt;
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">************************抽象组件类******************</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> AbstractFile
+{
+</span><span style="color: #0000ff;">protected</span><span style="color: #000000;">:
+   </span><span style="color: #0000ff;">string</span> name;   <span style="color: #008000;">/*</span><span style="color: #008000;">文件或目录名</span><span style="color: #008000;">*/</span>
+<span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">显示文件名或目录名</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> display() {cout  &lt;&lt; name &lt;&lt;<span style="color: #000000;"> endl;} 
+    
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">判断是文件还是目录</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">bool</span> isFolder() = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">添加子目录或文件</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">bool</span> addChild(AbstractFile* file) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">删除子目录或文件</span>
+    <span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">bool</span> removeChild(AbstractFile* file) = <span style="color: #800080;">0</span><span style="color: #000000;">;
+    
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">获得子节点</span>
+    <span style="color: #0000ff;">virtual</span> list&lt;AbstractFile*&gt;* getChildren() = <span style="color: #800080;">0</span><span style="color: #000000;">;  
+    
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">***********************具体组件角色*******************</span>
+<span style="color: #0000ff;">class</span> File : <span style="color: #0000ff;">public</span><span style="color: #000000;"> AbstractFile
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    File(</span><span style="color: #0000ff;">string</span> name){<span style="color: #0000ff;">this</span>-&gt;name =<span style="color: #000000;"> name;}
+    
+    list</span>&lt;AbstractFile*&gt;*<span style="color: #000000;"> getChildren()
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">对于文件（叶子节点），无子结点
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">这里可以抛出异常</span>
+        <span style="color: #0000ff;">return</span><span style="color: #000000;"> NULL;
+    }
+    
+    </span><span style="color: #0000ff;">bool</span> addChild(AbstractFile*<span style="color: #000000;"> file)
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">叶子结点无子结点，可抛异常</span>
+        <span style="color: #0000ff;">return</span> <span style="color: #0000ff;">false</span><span style="color: #000000;">;
+    }
+    </span><span style="color: #0000ff;">bool</span> removeChild(AbstractFile*<span style="color: #000000;"> file)
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">叶子结点无子结点，可抛异常</span>
+        <span style="color: #0000ff;">return</span> <span style="color: #0000ff;">false</span><span style="color: #000000;">;        
+    }    
+    
+    </span><span style="color: #0000ff;">bool</span> isFolder() {<span style="color: #0000ff;">return</span> <span style="color: #0000ff;">false</span><span style="color: #000000;">;}
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">*****************************组合组件对象**********************</span>
+<span style="color: #0000ff;">class</span> Folder : <span style="color: #0000ff;">public</span><span style="color: #000000;"> AbstractFile
+{
+    list</span>&lt;AbstractFile*&gt;<span style="color: #000000;"> childList;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    Folder(</span><span style="color: #0000ff;">string</span> name){<span style="color: #0000ff;">this</span>-&gt;name =<span style="color: #000000;"> name;}
+    
+    list</span>&lt;AbstractFile*&gt;*<span style="color: #000000;"> getChildren()
+    {
+        </span><span style="color: #0000ff;">return</span> &amp;<span style="color: #000000;">childList;
+    }
+    
+    </span><span style="color: #0000ff;">bool</span> addChild(AbstractFile*<span style="color: #000000;"> file)
+    {
+        childList.push_back(file);
+        </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">true</span><span style="color: #000000;">;
+    }
+    </span><span style="color: #0000ff;">bool</span> removeChild(AbstractFile*<span style="color: #000000;"> file)
+    {
+        childList.remove(file);
+        </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">true</span><span style="color: #000000;">;        
+    }  
+    
+    </span><span style="color: #0000ff;">bool</span> isFolder(){ <span style="color: #0000ff;">return</span> <span style="color: #0000ff;">true</span><span style="color: #000000;">;}      
+};
+
+</span><span style="color: #0000ff;">void</span> displayTree(AbstractFile* root,<span style="color: #0000ff;">int</span> deep = <span style="color: #800080;">0</span><span style="color: #000000;">)
+{
+    </span><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">int</span> i = <span style="color: #800080;">0</span>; i&lt; deep; i++<span style="color: #000000;">)
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">--</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+    }
+    
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">显示自身名称</span>
+    root-&gt;<span style="color: #000000;">display();
+    
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">获取子目录</span>
+    list&lt;AbstractFile*&gt;* childList = root-&gt;<span style="color: #000000;">getChildren();
+    </span><span style="color: #0000ff;">if</span>(childList !=<span style="color: #000000;"> NULL)
+    {
+        list</span>&lt;AbstractFile*&gt;::iterator iter = childList-&gt;<span style="color: #000000;">begin();
+        </span><span style="color: #0000ff;">while</span> (iter != childList-&gt;<span style="color: #000000;">end())
+        {
+            </span><span style="color: #0000ff;">if</span>((*iter)-&gt;<span style="color: #000000;">isFolder())
+            {
+               displayTree(</span>*iter, deep + <span style="color: #800080;">1</span><span style="color: #000000;">);
+            }
+            </span><span style="color: #0000ff;">else</span><span style="color: #000000;"> 
+            {
+                </span><span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">int</span> i=<span style="color: #800080;">0</span>;i&lt;=deep;i++<span style="color: #000000;">)
+                    cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">--</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+                  
+                (</span>*iter)-&gt;<span style="color: #000000;">display();                
+            }
+            
+             </span>++<span style="color: #000000;">iter;
+        }         
+    }
+}
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{ 
+    AbstractFile</span>* rootFolder = <span style="color: #0000ff;">new</span> Folder(<span style="color: #800000;">"</span><span style="color: #800000;">C:\\</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    AbstractFile</span>* compositeFolder = <span style="color: #0000ff;">new</span> Folder(<span style="color: #800000;">"</span><span style="color: #800000;">Composite</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    AbstractFile</span>* windowsFolder = <span style="color: #0000ff;">new</span> Folder(<span style="color: #800000;">"</span><span style="color: #800000;">Windows</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    AbstractFile</span>* file = <span style="color: #0000ff;">new</span> File(<span style="color: #800000;">"</span><span style="color: #800000;">Test.cpp</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">组织成树状结构</span>
+    rootFolder-&gt;<span style="color: #000000;">addChild(compositeFolder);
+    rootFolder</span>-&gt;<span style="color: #000000;">addChild(windowsFolder);
+    compositeFolder</span>-&gt;<span style="color: #000000;">addChild(file);
+    
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">显示根目录及其子目录（或文件）</span>
+    displayTree(rootFolder, <span style="color: #800080;">0</span><span style="color: #000000;">);
+    
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> rootFolder;
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> compositeFolder;
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> windowsFolder;
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> file;
+    
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p><strong>3. </strong><strong>父组件和环状引用问题</strong></p>
+<p><strong>3.1 </strong><strong>父组件的引用：在子组件对象中保存有父组件对象的引用</strong></p>
+<p>（1）使用场景：如删除某个商品类型A，但如果它有子类型B，这时会涉及到子类型的处理，是连带全部删除，还是子类型上移一层，即成为B.setParent(A.parent);</p>
+<p>（2）引用的<span style="color: #ff0000;"><strong>定义</strong></span>：<span style="color: #0000ff;"><strong>通常会在Component中定义对父组件的引用</strong></span>。组合对象和叶子对象都可以继承这个引用。</p>
+<p>（3）引用的<span style="color: #ff0000;"><strong>维护</strong></span>：在Composite的实现中，当组合对象<span style="color: #ff0000;"><strong>添加子组件对象时</strong></span>设置其父对象，<span style="color: #ff0000;"><strong>删除子组件对象时</strong></span>重新设置父组件的引用（可能被删除组件的子组件对象涉及到上移一层问题）。</p>
+<p><strong>3.2 </strong><strong>环状引用</strong></p>
+<p><strong>（1）概念</strong>：在对象结构中，某个对象包含的子对象，或子对象的子对象，或子对象的子对象的子对象……如此经过N层后，出现所包含的子对象中有这个对象本身，从而构成了环状引用。比如，A包含B，B包含C，而C又包含A，就构成了环状引用。</p>
+<p><strong>（2）组合模式</strong>一般是当用<strong>构建树状结构</strong>的，通常要<span style="color: #ff0000;"><strong>避免环状引用的出现</strong></span>（当然有些特殊需求，也需要环状引用），否则很容易造引起死循环。</p>
+<p><span style="color: #0000ff;"><strong>（3）检测和处理环状引用的方法：</strong></span></p>
+<p>　　①记录下每个组件从根节点开始的路径，在这条路径上，某个对象出现两次，就会构成环状引用。</p>
+<p>　　②先在Component中设置一个字段，专门用来记录本组件从根结点开始到Component本身的路径。</p>
+<p>　　③当Composite对象的添加子组件方法中，先检测要添加的子组件是否出现在上面所说的路径中，如果出现环状引用，则抛出异常。</p>
+<p>（4）说明：</p>
+<p>　　①上面的环路检测方法很简单，但没考虑到如果删除了某个路径上的某个组件对象，那么所有该组件对象的子组件对象所记录的路径都要更新。</p>
+<p>　　②可以考虑<span style="color: #ff0000;"><strong>动态计算路径</strong></span>的方式，每次添加一个组件的时候，动态的递归寻找父组件，然后父组件再找父组件，直到根组件。这样就能避免某个组件被删除后，路径发生了变化而需修改所有相关路径记录的情况。</p>
+<p><strong>4. </strong><strong>使用时的注意事项</strong></p>
+<p>（1）子组件列表(list&lt;Component*&gt;)应放在Component接口还是Composite类中？</p>
+<p>　　①大多数情况下，一个Composite对象会持有子节点集合。因为叶子节点是没有子组件的。</p>
+<p>　　②但是<span style="color: #ff0000;"><strong>也可以将子组件列表放在Component接口中定义</strong></span>（aps.net的容器类，就是这样定义的），这可以简单叶子结点的操作。但对于叶子节点来说，<span style="color: #ff0000;"><strong>会导致空间的浪费</strong></span>，因为叶子节点本身不需要子节点，因此只有当组合结构中的叶子对象数目较少的时候，才使用这种方法。</p>
+<p>（2）最大化Component定义</p>
+<p><strong>Component</strong><strong>中的方法是两种对象对外方法之和</strong>，换句话说，有点大杂烩的意思，组件里面既有叶子对象需要的方法，也有组合对象需要的方法。这会造成“<strong>接口污染</strong>”，也与类的设计原则相冲突。</p>
+<p><strong>（3）子组件排序</strong></p>
+<p>　　①当需要按照一定的顺序来使用子组件对象时（如分析语法树时），设计时需要把组件对象的索引考虑进去，并设计对子节点的访问和管理接口。</p>
+<p>　　②通常会结合Iterator模式来实现按照顺序来访问组件对象。</p>
+<p><strong>5. </strong><strong>组合模式的优缺点</strong></p>
+<p>（1）优点：</p>
+<p>　　①高层模式调用简单，因为统一了叶子对象和组合对象的操作。</p>
+<p>　　②节点自由增加，只要找到它的父节点，就很容易扩展，符合开闭原则。</p>
+<p>　　③可以组合成复杂的对象，从而构成一个统一的组合对象的类层次结构</p>
+<p>（2）缺点</p>
+<p>很难限制组合中的组件类型，需要检测组件类型时，不能依靠编译期的类型来约束，必须在运行期间动态检测。</p>
+<p><strong>6.</strong><strong>组合模式的使用场景</strong></p>
+<p>（1）通常，组合模式会组合出树型结构来，这意味着所有可以使用<span style="color: #ff0000;"><strong>对象树</strong></span>来描述或操作的功能，都可以考虑使用组合模式，如<span style="color: #ff0000;"><strong>UI界面设计中的容器对象、读取XML或对语句进行语法分析、OA系统中组织结构的处理、操作系统的资源管理器</strong></span>等。</p>
+<p>（2）如果想表示对象的部分——整体层次结构，把整体和部分的操作统一起来，使得层次结构实现更简单，从外部来使用这个层次结构也容易。</p>
+<p>（3）如果希望统一地使用组合结构中的所有对象，可以选用组合模式。</p>
+<p>【编程实验】绘制基本图形和复合图形对象</p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="./第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园_files/772759-20160527230448006-1513986336.png" alt=""></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">结构型模式：组合模式（安全型）
+</span><span style="color: #008000;">//</span><span style="color: #008000;">场景：绘图（基本图形和复合图形）</span>
+<span style="color: #000000;">
+#include </span>&lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;">
+#include </span>&lt;list&gt;
+
+<span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">************************抽象组件类******************</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> Graphics
+{
+</span><span style="color: #0000ff;">protected</span><span style="color: #000000;">:
+   </span><span style="color: #0000ff;">string</span> name;   <span style="color: #008000;">/*</span><span style="color: #008000;">名称</span><span style="color: #008000;">*/</span>
+<span style="color: #0000ff;">public</span><span style="color: #000000;">:
+   </span><span style="color: #0000ff;">virtual</span> <span style="color: #0000ff;">void</span> draw() = <span style="color: #800080;">0</span>; <span style="color: #008000;">//</span><span style="color: #008000;">绘图</span>
+<span style="color: #000000;">};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">***********************具体组件角色*******************
+</span><span style="color: #008000;">//</span><span style="color: #008000;">线</span>
+<span style="color: #0000ff;">class</span> Line : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Graphics  
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    Line(</span><span style="color: #0000ff;">string</span> name){<span style="color: #0000ff;">this</span>-&gt;name =<span style="color: #000000;"> name;}
+    
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> draw()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">draw a </span><span style="color: #800000;">"</span> &lt;&lt; name &lt;&lt;<span style="color: #000000;"> endl;
+    }   
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">圆</span>
+<span style="color: #0000ff;">class</span> Circle : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Graphics  
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    Circle(</span><span style="color: #0000ff;">string</span> name){<span style="color: #0000ff;">this</span>-&gt;name =<span style="color: #000000;"> name;}
+    
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> draw()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">draw a </span><span style="color: #800000;">"</span> &lt;&lt; name &lt;&lt;<span style="color: #000000;"> endl;
+    }     
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">矩形</span>
+<span style="color: #0000ff;">class</span> Rectangle : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Graphics  
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    Rectangle(</span><span style="color: #0000ff;">string</span> name){<span style="color: #0000ff;">this</span>-&gt;name =<span style="color: #000000;"> name;}
+    
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> draw()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">draw a </span><span style="color: #800000;">"</span> &lt;&lt; name &lt;&lt;<span style="color: #000000;"> endl;
+    }   
+};
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">*****************************组合组件对象**********************</span>
+<span style="color: #0000ff;">class</span> Picture : <span style="color: #0000ff;">public</span><span style="color: #000000;"> Graphics
+{
+    list</span>&lt;Graphics*&gt;<span style="color: #000000;"> childList;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    Picture(</span><span style="color: #0000ff;">string</span> name){<span style="color: #0000ff;">this</span>-&gt;name =<span style="color: #000000;"> name;}
+    
+    list</span>&lt;Graphics*&gt;*<span style="color: #000000;"> getChildren()
+    {
+        </span><span style="color: #0000ff;">return</span> &amp;<span style="color: #000000;">childList;
+    }
+    
+    </span><span style="color: #0000ff;">bool</span> addChild(Graphics*<span style="color: #000000;"> file)
+    {
+        childList.push_back(file);
+        </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">true</span><span style="color: #000000;">;
+    }
+    </span><span style="color: #0000ff;">bool</span> removeChild(Graphics*<span style="color: #000000;"> file)
+    {
+        childList.remove(file);
+        </span><span style="color: #0000ff;">return</span> <span style="color: #0000ff;">true</span><span style="color: #000000;">;        
+    }  
+    
+    </span><span style="color: #0000ff;">void</span><span style="color: #000000;"> draw()
+    {
+        cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">draw Composite Object: </span><span style="color: #800000;">"</span> &lt;&lt; name &lt;&lt;<span style="color: #000000;"> endl;
+        
+        list</span>&lt;Graphics*&gt;::iterator iter =<span style="color: #000000;"> childList.begin();
+        </span><span style="color: #0000ff;">while</span>(iter !=<span style="color: #000000;"> childList.end())
+        {
+            (</span>*iter)-&gt;<span style="color: #000000;">draw();
+            </span>++<span style="color: #000000;">iter;
+        }
+    }
+};
+
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{ 
+    Picture</span>* root = <span style="color: #0000ff;">new</span> Picture(<span style="color: #800000;">"</span><span style="color: #800000;">Root</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    
+    Graphics</span>* line = <span style="color: #0000ff;">new</span> Line(<span style="color: #800000;">"</span><span style="color: #800000;">Line</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    Graphics</span>* circle = <span style="color: #0000ff;">new</span> Circle(<span style="color: #800000;">"</span><span style="color: #800000;">Circle</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    Graphics</span>* rectangle = <span style="color: #0000ff;">new</span> Rectangle(<span style="color: #800000;">"</span><span style="color: #800000;">Rectangle</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    
+    root</span>-&gt;<span style="color: #000000;">addChild(line);
+    root</span>-&gt;<span style="color: #000000;">addChild(circle);
+    root</span>-&gt;<span style="color: #000000;">addChild(rectangle);
+    
+    root</span>-&gt;<span style="color: #000000;">draw();
+    
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> line;
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> circle;
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> rectangle;
+    </span><span style="color: #0000ff;">delete</span><span style="color: #000000;"> root;
+    
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+</div>
+<div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block"><div id="BlogPostCategory">
+    分类: 
+            <a href="https://www.cnblogs.com/5iedu/category/825371.html" target="_blank">设计模式</a></div>
+
+
+    <div id="blog_post_info">
+<div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(5526625,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+        <a id="green_channel_follow" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/5iedu/" target="_blank"><img src="./第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园_files/20150610151331.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/5iedu/">浅墨浓香</a><br>
+            <a href="https://home.cnblogs.com/u/5iedu/followees/">关注 - 0</a><br>
+            <a href="https://home.cnblogs.com/u/5iedu/followers/">粉丝 - 149</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;41562de4-020f-e511-b908-9dcfd8948a71&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(5526625,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(5526625,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+    <div class="clear"></div>
+    <div id="post_next_prev">
+
+    <a href="https://www.cnblogs.com/5iedu/p/5521590.html" class="p_n_p_prefix">« </a> 上一篇：    <a href="https://www.cnblogs.com/5iedu/p/5521590.html" title="发布于 2016-05-23 22:00">第9章 结构型模式—桥接模式</a>
+    <br>
+    <a href="https://www.cnblogs.com/5iedu/p/5538182.html" class="p_n_p_prefix">» </a> 下一篇：    <a href="https://www.cnblogs.com/5iedu/p/5538182.html" title="发布于 2016-05-28 19:48">第11章 结构型模式—装饰模式</a>
+
+</div>
+</div></div>
+	</div>
+<script src="./第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园_files/highlight.min.js.下载"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 231128, cb_blogApp = '5iedu', cb_blogUserGuid = '41562de4-020f-e511-b908-9dcfd8948a71';
+    var cb_entryId = 5526625, cb_entryCreatedDate = '2016-05-25 13:00', cb_postType = 1; 
+    loadViewCount(cb_entryId);
+</script><a name="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<script>
+    var commentManager = new blogCommentManager();
+    commentManager.renderComments(0);
+</script>
+
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/5iedu/p/5526625.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/5iedu/p/5526625.html#top">返回顶部</a></div>
+    <div id="comment_form_container"><div class="login_tips">
+    注册用户登录后才能发表评论，请 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a>
+     或 
+    <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，
+    <a href="https://www.cnblogs.com/">访问</a> 网站首页。
+</div></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"><a href="https://cloud.tencent.com/act/pro/overseas?fromSource=gwzcw.3090393.3090393.3090393&amp;utm_medium=cpc&amp;utm_id=gwzcw.3090393.3090393.3090393" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-腾讯云&#39;)">【推荐】腾讯云海外1核2G云服务器低至2折，半价续费券限量免费领取！</a><br><a href="http://click.aliyun.com/m/1000081987/" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-阿里云&#39;)">【推荐】阿里云双11返场来袭，热门产品低至一折等你来抢！</a><br><a href="http://www.ucancode.com/index.htm" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-工控&#39;)">【推荐】超50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://group.cnblogs.com/topic/90800.html?800019197" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-马士兵&#39;)">【提升】这个价值 50W 年薪的问题，终于被马老师说明白啦...</a><br><a href="https://www.ctyun.cn/activity/20191111?hmsr=%E7%9C%8B%E7%9C%8B-%E5%8D%9A%E5%AE%A2%E5%9B%AD-%E5%8F%8C11-1106&amp;hmpl=&amp;hmcu=&amp;hmkw=&amp;hmci=" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-天翼云&#39;)">【推荐】天翼云双十一翼降到底，云主机11.11元起，抽奖送大礼</a><br><a href="https://www.cnblogs.com/enjoyedu/p/11905399.html?800019191" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-享学&#39;)">【提升】Java程序员年薪40W，他1年走了别人5年的学习之路</a><br><a href="https://www.uibot.com.cn/sem/bky.html" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-uibot_T2&#39;)">【推荐】流程自动化专家UiBot，体系化教程成就高薪RPA工程师</a><br></div>
+    <div id="opt_under_post"></div>
+    <script async="async" src="./第10章 结构型模式—组合模式 - 浅墨浓香 - 博客园_files/gpt.js.下载"></script>
+    <script>
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+    </script>
+    <script>
+        googletag.cmd.push(function () {
+            googletag.defineSlot("/1090369/C1", [300, 250], "div-gpt-ad-1546353474406-0").addService(googletag.pubads());
+            googletag.defineSlot("/1090369/C2", [468, 60], "div-gpt-ad-1539008685004-0").addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    </script>
+    <div id="cnblogs_c1" class="c_ad_block" style="">
+        <div id="div-gpt-ad-1546353474406-0" style="height: 250px; width: 300px;"><div id="google_ads_iframe_/1090369/C1_0__container__" style="border: 0pt none; width: 300px; height: 250px;"></div></div>
+    </div>
+    <div id="under_post_news"><div class="recomm-block"><b>相关博文：</b><br>·  <a title="组合模式" href="https://www.cnblogs.com/yanlong300/p/8423546.html" target="_blank" onclick="clickRecomItmem(8423546)">组合模式</a><br>·  <a title="组合模式" href="https://www.cnblogs.com/haoxiaozi/p/6318373.html" target="_blank" onclick="clickRecomItmem(6318373)">组合模式</a><br>·  <a title="组合模式" href="https://www.cnblogs.com/xiaozz/p/6449970.html" target="_blank" onclick="clickRecomItmem(6449970)">组合模式</a><br>·  <a title="设计模式学习总结-组合模式（Composite Method)" href="https://www.cnblogs.com/ejiyuan/archive/2012/07/24/2606927.html" target="_blank" onclick="clickRecomItmem(2606927)">设计模式学习总结-组合模式（Composite Method)</a><br>·  <a title="9.组合模式（Composite Pattern）" href="https://www.cnblogs.com/1285026182YUAN/p/5157352.html" target="_blank" onclick="clickRecomItmem(5157352)">9.组合模式（Composite Pattern）</a><br>»  <a target="_blank" href="https://recomm.cnblogs.com/blogpost/5526625">更多推荐...</a></div></div>
+    <div id="cnblogs_c2" class="c_ad_block" style="">
+        <div id="div-gpt-ad-1539008685004-0" style="height: 60px; width: 468px;">
+            <script>
+                if (new Date() >= new Date(2018, 9, 13)) {
+                    googletag.cmd.push(function () { googletag.display("div-gpt-ad-1539008685004-0"); });
+                }
+            </script>
+        <div id="google_ads_iframe_/1090369/C2_0__container__" style="border: 0pt none; width: 468px; height: 60px;"></div></div>
+    </div>
+    <div id="under_post_kb">
+<div class="itnews c_ad_block">
+    <b>最新 IT 新闻</b>:
+    <br>
+ ·              <a href="https://news.cnblogs.com/n/649969/" target="_blank">改变销售人员的CRM交互方式，Salesforce推出AI语音助手及开发套件</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649968/" target="_blank">“基因剪刀”治疗地中海贫血效果初现</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649967/" target="_blank">14nm 5GHz或成CPU绝唱 7/5nm多核容易高频难</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649966/" target="_blank">HTTPZ，将 HTTP 链接转到 HTTPS 的 Firefox 插件</a>
+            <br>
+ ·              <a href="https://news.cnblogs.com/n/649965/" target="_blank">4个在2020年持续发展的数据中心冷却趋势</a>
+            <br>
+    » <a href="https://news.cnblogs.com/" title="IT 新闻" target="_blank">更多新闻...</a>
+</div></div>
+    <div id="HistoryToday" class="c_ad_block"></div>
+    <script type="text/javascript">
+        fixPostBody();
+        setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+        deliverAdT2();
+        deliverAdC1();
+        deliverAdC2();
+        loadNewsAndKb();
+        loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+        loadOptUnderPost();
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div></div>
+
+
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="FooterCell">
+			<p id="footer">
+	Powered by: 
+	<br>
+	
+	
+<a href="https://www.cnblogs.com/" id="Footer1_Hyperlink3" style="font-size: 12px; font-family: Verdana">博客园</a>
+	<br>
+	Copyright © 2019 浅墨浓香
+<br><span id="poweredby">Powered by .NET Core 3.0.0 on Linux</span>
+
+</p>
+
+
+		</td>
+	</tr>
+</tbody></table>
+
+
+
+    
+
+
+</body></html>
