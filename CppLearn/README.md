@@ -202,6 +202,9 @@ const int& x = 666; // OK
 ## [可重入和不可重入函数](https://murphypei.github.io/blog/2019/07/thread-safe-reentrant-function)   
 ## 记录的一些知识点   
 1. 对象构造要做到线程安全，唯一的要求是在构造期间不要泄露this指针。    
+    1. 不要在构造函数中注册任何回调。    
+    2. 也不要在构造函数中把this传给跨线程的对象。   
+    3. 几遍在构造函数的最后一行也不能泄露this指针。    
 
 
 # Makefile    
