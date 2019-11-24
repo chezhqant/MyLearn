@@ -2,34 +2,21 @@ ___this file is my knowledge about <linux多线程服务端编程>___
 
 
 1. mutex并不是多线程的办法。mutex只能保证函数一个接一个的执行。考虑以下代码：   
+	//
+Foo::~Foo()
+{
+    MutexLockGuard lock(mutex_);
+    //free internal state (1)
+}
 
-	//
-	Foo::~Foo()
-	{
-	    MutexLockGuard lock(mutex_);
-	    //free internal state (1)
-	}
-	
-	//
-	void Foo::update()
-	{
-	    MutexLockGuard lock(mutex_)// (2)
-	    // make use of internal state
-	}
+//
+void Foo::update()
+{
+    MutexLockGuard lock(mutex_)// (2)
+    // make use of internal state
+}
 
 此时A/B两个线程都能看到Foo对象x，线程A即将销毁x，而线程B正准备调用`x->update()`。   
-
-	extern Foo *x;//visible by all threads
-	
-	//thread A
-	delete x;
-	x = NULL;//helpless
-	
-	//thread B
-	if (x)
-	{
-	    x->update();
-	}
 
 尽管线程A在销毁独享之后把指针置为NULL，尽管线程B在调用x的成员函数之前检查了指针x的值，但是还是无法避免一种竞态条件.   
     1. 线程A执行到了析构函数的(1)处，已经持有了互斥锁，即将向下执行。   
