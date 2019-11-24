@@ -1,7 +1,7 @@
 ___this file is my knowledge about <linux多线程服务端编程>___
 
 
-1. 对象要做到线程安全，唯一的要求就是在构造期间不要泄露this指针，即   
+- 1. 对象要做到线程安全，唯一的要求就是在构造期间不要泄露this指针，即   
 
 ```
 hehe
