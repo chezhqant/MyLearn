@@ -45,6 +45,7 @@
         * [typename](#typename)
         * [使用using代替typedef](#使用using代替typedef)
         * [mutable](#mutable)
+        * [另一个mutable](#另一个mutable)
     * [stl](#stl)
         * [仿函数和适配器](#仿函数和适配器)
         * [匿名函数](#匿名函数)
@@ -58,6 +59,9 @@
 * [C++多线程\_多进程](#c多线程_多进程)
     * [初步了解](#初步了解)
     * [死锁简单理解](#死锁简单理解)
+    * [临界区](#临界区)
+    * [可重入和不可重入函数](#可重入和不可重入函数)
+    * [[记录的一些知识点]](#记录的一些知识点)
 * [Makefile](#makefile)
 * [Shell](#shell)
 * [设计模式](#设计模式)
@@ -111,7 +115,7 @@
 <!-- vim-markdown-toc -->
 
 # C基本知识
-## [二维数组指针](https://blog.csdn.net/nice__xixi/article/details/82081595)   
+## [二维数组指针](https://blog.csdn.net/nice_\_xixi/article/details/82081595)   
 ## [float存储方式](http://blog.sina.com.cn/s/blog_973657a00102x2do.html)    
 ## [小数表示](https://blog.csdn.net/github_33873969/article/details/78040129)   
 ## [VLA](https://www.cnblogs.com/Suzzz/p/4117431.html)   
@@ -166,6 +170,7 @@ const int& x = 666; // OK
 ### [typename](http://feihu.me/blog/2014/the-origin-and-usage-of-typename/)    
 ### [使用using代替typedef]( https://blog.csdn.net/big_yellow_duck/article/details/52224068)   
 ### [mutable](https://blog.csdn.net/aaa123524457/article/details/80967330)    
+### [另一个mutable](https://liam.page/2017/05/25/the-mutable-keyword-in-Cxx/)    
 
 
 
@@ -193,6 +198,10 @@ const int& x = 666; // OK
 # C++多线程\_多进程    
 ## [初步了解](https://segmentfault.com/u/zhuyuqing)    
 ## [死锁简单理解](https://www.cnblogs.com/eilearn/p/9414962.html)   
+## [临界区](https://www.cnblogs.com/xiaochi/p/8029087.html)    
+## [可重入和不可重入函数](https://murphypei.github.io/blog/2019/07/thread-safe-reentrant-function)   
+## [记录的一些知识点]   
+    1. 对象构造要做到线程安全，唯一的要求是在构造期间不要泄露this指针。    
 
 
 # Makefile    
