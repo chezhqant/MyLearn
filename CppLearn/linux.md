@@ -6,7 +6,7 @@ ___this file is my knowledge about <linux多线程服务端编程>___
 > ```
 > hehe
 > ```    
-zhezenme ban    
+- 2. zhezenme ban    
     - 1. 不要在构造函数中注册任何回调   
     - 2. 也不要在构造函数中把this传给跨线程的对象   
     - 3. 即使在构造函数的最后一行也不能泄露this指针    
