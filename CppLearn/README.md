@@ -61,7 +61,7 @@
     * [死锁简单理解](#死锁简单理解)
     * [临界区](#临界区)
     * [可重入和不可重入函数](#可重入和不可重入函数)
-    * [[记录的一些知识点]](#记录的一些知识点)
+    * [记录的一些知识点](#记录的一些知识点)
 * [Makefile](#makefile)
 * [Shell](#shell)
 * [设计模式](#设计模式)
@@ -200,8 +200,8 @@ const int& x = 666; // OK
 ## [死锁简单理解](https://www.cnblogs.com/eilearn/p/9414962.html)   
 ## [临界区](https://www.cnblogs.com/xiaochi/p/8029087.html)    
 ## [可重入和不可重入函数](https://murphypei.github.io/blog/2019/07/thread-safe-reentrant-function)   
-## [记录的一些知识点]   
-    1. 对象构造要做到线程安全，唯一的要求是在构造期间不要泄露this指针。    
+## 记录的一些知识点   
+1. 对象构造要做到线程安全，唯一的要求是在构造期间不要泄露this指针。    
 
 
 # Makefile    
