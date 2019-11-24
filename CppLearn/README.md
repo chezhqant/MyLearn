@@ -46,6 +46,7 @@
         * [使用using代替typedef](#使用using代替typedef)
         * [mutable](#mutable)
         * [另一个mutable](#另一个mutable)
+        * [boost::noncopyable](#boostnoncopyable)
     * [stl](#stl)
         * [仿函数和适配器](#仿函数和适配器)
         * [匿名函数](#匿名函数)
@@ -171,6 +172,7 @@ const int& x = 666; // OK
 ### [使用using代替typedef]( https://blog.csdn.net/big_yellow_duck/article/details/52224068)   
 ### [mutable](https://blog.csdn.net/aaa123524457/article/details/80967330)    
 ### [另一个mutable](https://liam.page/2017/05/25/the-mutable-keyword-in-Cxx/)    
+### [boost::noncopyable](https://fzheng.me/2016/11/20/cpp_noncopyable_class/)     
 
 
 
@@ -210,9 +212,7 @@ const int& x = 666; // OK
 
 
 # 设计模式    
-1. [观察者模式](https://www.jianshu.com/p/4b0aee15cdb8)   
-2. [代理模式](https://blog.csdn.net/a369189453/article/details/81275740)    
-3. [设计模式](https://www.cnblogs.com/5iedu/category/825371.html)    
+1. [设计模式](https://www.cnblogs.com/5iedu/category/825371.html)    
 
 
 # 异常   
