@@ -6,7 +6,7 @@ ___this file is my knowledge about <linux多线程服务端编程>___
     2. 也不要在构造函数中把this传给跨线程的对象   
     3. 即使在构造函数的最后一行也不能泄露this指针    
 之所以这么规定，是因为在构造函数执行期间对象还没有完成初始化，如果this被泄露给了其他对象(其自身创建的子对象除外)，那么别的线程访问这个半成品对象，那么别的线程有可能访问这个半成品对象，这会造成难以预料的结果。   
-
+    ```
 	// 不能这么做
 	class Foo : public Observer
 	{
@@ -36,6 +36,7 @@ ___this file is my knowledge about <linux多线程服务端编程>___
 	Foo *pFoo = new Foo;
 	Observable *s = getSubject();
 	pFoo->observe(s);// 二段式构造，或者直接写s->register_(pFoo)
+    ```
 
 这说明，二段式构造--即构造函数+initialize()，有时候这是一个好办法，这虽然不符合C++教条，但是多线程下别无选择。另外，既然允许二段式构造，哪儿构造函数不必主动抛出异常，调用方法仍然是靠initialize()的返回值来判断对象是否构造成功，这能简化错误的处理。   
 即使构造函数的最后一行也不要泄露this，因为Foo有可能是个基类，基类先于派生类构造，执行完Foo::Foo()的最后一行代码还会继续执行派生类的构造函数，这时候most-derived class的对象还处于构造中，仍然不安全。    
@@ -43,7 +44,7 @@ ___this file is my knowledge about <linux多线程服务端编程>___
 2. 对象析构，单线程不是问题，最多需要避免空悬指针和野指针。对一般成员函数而言，做到线程安全的办法是让他们顺序执行，而不要并发执行(关键是不要同时读写共享状态)，也就是让每个成员函数的临界区不重叠。   
 3. 成员函数用来保护临界区的互斥器本身必须是有效的。而析构函数破坏了这一假设，他会把mutex成员变量销毁掉。      
 4. mutex并不是多线程的办法。mutex只能保证函数一个接一个的执行。考虑以下代码：   
-
+    ```
 	//
 	Foo::~Foo()
 	{
@@ -57,9 +58,10 @@ ___this file is my knowledge about <linux多线程服务端编程>___
 	    MutexLockGuard lock(mutex_)// (2)
 	    // make use of internal state
 	}
+    ```
 
 此时A/B两个线程都能看到Foo对象x，线程A即将销毁x，而线程B正准备调用`x->update()`。   
-
+    ```
 	extern Foo *x;//visible by all threads
 	
 	//thread A
@@ -71,6 +73,7 @@ ___this file is my knowledge about <linux多线程服务端编程>___
 	{
 	    x->update();
 	}
+    ```
 
 尽管线程A在销毁独享之后把指针置为NULL，尽管线程B在调用x的成员函数之前检查了指针x的值，但是还是无法避免一种竞态条件.   
     1. 线程A执行到了析构函数的(1)处，已经持有了互斥锁，即将向下执行。   
