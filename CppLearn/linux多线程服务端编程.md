@@ -62,6 +62,7 @@ ___this file is my knowledge about <linux多线程服务端编程>___
     ```
 
 此时A/B两个线程都能看到Foo对象x，线程A即将销毁x，而线程B正准备调用`x->update()`。   
+
     ```
 	extern Foo *x;//visible by all threads
 	
