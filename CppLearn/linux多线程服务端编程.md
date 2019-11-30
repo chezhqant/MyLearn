@@ -200,7 +200,7 @@ ___this file is my knowledge about <linux多线程服务端编程>___
 
 10.  上面Observer模式的竞态条件用下面的代码解决:   
 
-    ```
+     ```
     class Observable
     {
     public:
@@ -233,7 +233,7 @@ ___this file is my knowledge about <linux多线程服务端编程>___
             }
         }
     }
-    ```
+     ```
 
     虽然上面的部分解决了线程安全问题，但还有以下几个一点：
     1.  __侵入性__: 强制要求Observer必须以shared\_ptr来管理。  
