@@ -285,4 +285,53 @@ ___this file is my knowledge about <linux多线程服务端编程>___
     ```
 
     注意到上面的read()和write()在临界区外都没有再访问globalPtr，而是使用了一个指向同一个Foo对象那个的栈上shared\_ptr local copy，只要有这么个存在，shared\_ptr作为参数传递时不必复制，用const引用作为参数即可。另外上面的new Foo是在临界区之外执行的。这种写法通常比在临界区诶写globalPtr.reset(new Foo)要好，因为缩短了临界区的长度。  
-12.  __shared\_ptr 意外延长了对象那个的生命周期__
+12.  __shared\_ptr 意外延长了对象那个的生命周期__, 只要指向x对象的shared\_ptr存在，那么该对象就不会析构掉。另外一个出错的地方可能是boost::bind， 因为boost::bind会把实参拷贝一份，如果参数是一个shared\_ptr，那么对象那个的生命周期就不会短于boost::function对象：
+
+    ```
+    class Foo
+    {
+        void doit();
+    };
+
+    shared_ptr pFoo(new Foo);
+    boost::functioni<void()> func = boost::bind(&Foo::doit, pFoo); 延长了foo的生存期限 
+    ```
+
+    这里的func对象持有了shared\_ptr的一份拷贝，有可能在不经意期间延长了倒数第二行创建的Foo对象的生命周期。  
+    __函数参数__：因为要修改引用计数(而且拷贝的时候通常要加锁)，shanred\_ptr的拷贝开销被拷贝原始指针要搞，但是需要拷贝的时候并不多，多数情况下可以使用const引用方式，一个线程只需要在最外层函数有一个实体对象，之后都可以用const引用的方式来使用这个shared\_ptr：
+
+    ```
+    void save(const shared_ptr<Foo> &pFoo);
+    void validateAccount(const Foo &foo);
+
+    bool validate(const shared_ptr<Foo> &pFoo)
+    {
+        if (validate(pFoo)) //没有拷贝pFoo
+        {
+            save(pFoo); //没有拷贝pFoo
+        }
+    }
+
+    那么通常，我们可以传入常引用
+    void onMessage(const string &msg)
+    {
+        shared_ptr<Foo> pFoo(new Foo(msg)); //只要在最外层持有一个实体，安全不成问题
+        
+        if (validate(pFoo)) //没有拷贝pFoo
+        {
+            save(pFoo); //没有拷贝pFoo
+        }
+    }
+    ```
+
+    遵照这个规则，基本上不会遇到反复拷贝shared\_ptr导致的性能问题，因为pFoo是栈上面的对象，不可能被别的线程看到，那么读取始终是线程安全的。   
+    __析构动作在创建时被捕获__: 这意味着：   
+    1.  虚析构不再是必须的
+    2.  shared\_ptr<void>可以持有任何对象，而且能够安全的释放
+    3.  shared\_ptr对象可以安全的扩月模块的边界，比如从DLL里返回，而不会造成从模块A分配的内存在模块B里被释放这种错误。
+    4.  二进制的兼容性，几遍Foo对象的大小变了，那么旧的客户代码仍然可以使用新的动态库，而无需重新编译。前提是Foo的头文件中不出现访问对象的成员的inline函数，并且Foo对象由动态库中的Factory构造，返回其shared\_ptr。
+    5.  析构动作可以定制，因为shared\_ptr<T>只有一个模板参数，而析构行为可以是函数指针、仿函数或者其他什么东西，这是泛型编程和面向对象编程的一次完美结合。
+    __析构所在的线程__: 对象的析构是同步的，当最后一个指向x的shared\_ptr离开其作用域的时候x会同时在同一个线程析构，这个线程不一定是对象诞生的线程，这个特性是把双刃剑；如果对象的析构比较耗时，那么可能会拖慢关键线程的速度(如果最后一个shared\_ptr引发的析构发生在关键线程)；同时，我们可以用一个单独的线程来专门做析构，通过一个`BlockingQueue<shared_ptr<void>>`把对象的析构都转移到那个专用的线程，从而解放关键线程。
+    __RAII__:shared\_ptr是管理共享资源的利器，需要注意避免循环引用，通常的做法是owner持有指向child的shared\_ptr，child持有指向owner的weak_ptr。  
+
+13.  对象池  
