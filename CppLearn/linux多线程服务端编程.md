@@ -198,7 +198,7 @@ ___this file is my knowledge about <linux多线程服务端编程>___
 
     还要注意，如果这几种智能指针是对象x的数据成员，而它的模板参数T是incoplete类型，那么x的析构函数不能是默认的或者内联的，必须在.cpp中显式定义，否则会出现编译或者运行出错。   
 
-1.  上面Observer模式的竞态条件用下面的代码解决:   
+0.  上面Observer模式的竞态条件用下面的代码解决:   
 
     ```
     class Observable
@@ -241,7 +241,7 @@ ___this file is my knowledge about <linux多线程服务端编程>___
     3.  __锁征用__: 即Observable的三个成员函数都用了互斥器同步，这会造成Register()和Unregister()等待NotifyObservers(), 而后者的执行时间是无线的，因为他同步回调了用户提供的Update()函数。我们希望Register()和Unregister()的执行时间不会超过某个固定的上限。
     4.  万一 `obj->Update()` 虚函数中调用了(un)register函数呢？如果mutex\_ 是不可重入的，那么会死锁；如果mutex\_是可重入的，程序会绵连迭代器失效。因为vector observers\_在遍历期间被意外的修改了。但是我觉得mutex最好是不可重入的。
 
-11.  share\_ptr本身不是100%线程安全的。它的引用计数本身是安全且无锁的，但是对象的读写不是，因为shared\_ptr又两个数据成员，读写操作不能原子化。shared\_ptr的线程安全级别和内建类型、标准库容器、std::string一样，即： 
+1.  share\_ptr本身不是100%线程安全的。它的引用计数本身是安全且无锁的，但是对象的读写不是，因为shared\_ptr又两个数据成员，读写操作不能原子化。shared\_ptr的线程安全级别和内建类型、标准库容器、std::string一样，即： 
     1.  一个shared\_ptr对象实体可被多个线程同时读取
     2.  两个shared\_ptr对象实体可以被两个线程同时写入，“析构”算是写操作。  
     3.  如果要从多个线程读写同一个share\_ptr对象，那么需要加锁。
@@ -285,7 +285,7 @@ ___this file is my knowledge about <linux多线程服务端编程>___
     ```
 
     注意到上面的read()和write()在临界区外都没有再访问globalPtr，而是使用了一个指向同一个Foo对象那个的栈上shared\_ptr local copy，只要有这么个存在，shared\_ptr作为参数传递时不必复制，用const引用作为参数即可。另外上面的new Foo是在临界区之外执行的。这种写法通常比在临界区诶写globalPtr.reset(new Foo)要好，因为缩短了临界区的长度。  
-12.  __shared\_ptr 意外延长了对象那个的生命周期__, 只要指向x对象的shared\_ptr存在，那么该对象就不会析构掉。另外一个出错的地方可能是boost::bind， 因为boost::bind会把实参拷贝一份，如果参数是一个shared\_ptr，那么对象那个的生命周期就不会短于boost::function对象：
+2.  __shared\_ptr 意外延长了对象那个的生命周期__, 只要指向x对象的shared\_ptr存在，那么该对象就不会析构掉。另外一个出错的地方可能是boost::bind， 因为boost::bind会把实参拷贝一份，如果参数是一个shared\_ptr，那么对象那个的生命周期就不会短于boost::function对象：
 
     ```
     class Foo
@@ -334,4 +334,4 @@ ___this file is my knowledge about <linux多线程服务端编程>___
     __析构所在的线程__: 对象的析构是同步的，当最后一个指向x的shared\_ptr离开其作用域的时候x会同时在同一个线程析构，这个线程不一定是对象诞生的线程，这个特性是把双刃剑；如果对象的析构比较耗时，那么可能会拖慢关键线程的速度(如果最后一个shared\_ptr引发的析构发生在关键线程)；同时，我们可以用一个单独的线程来专门做析构，通过一个`BlockingQueue<shared_ptr<void>>`把对象的析构都转移到那个专用的线程，从而解放关键线程。
     __RAII__:shared\_ptr是管理共享资源的利器，需要注意避免循环引用，通常的做法是owner持有指向child的shared\_ptr，child持有指向owner的weak_ptr。  
 
-13.  对象池  
+3.  对象池  
