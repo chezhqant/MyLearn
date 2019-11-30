@@ -198,48 +198,48 @@ ___this file is my knowledge about <linux多线程服务端编程>___
 
     还要注意，如果这几种智能指针是对象x的数据成员，而它的模板参数T是incoplete类型，那么x的析构函数不能是默认的或者内联的，必须在.cpp中显式定义，否则会出现编译或者运行出错。   
 
-10.  上面Observer模式的竞态条件用下面的代码解决:   
+1.  上面Observer模式的竞态条件用下面的代码解决:   
 
-     ```
-     class Observable
-     {
-     public:
-         void Register_(weak_ptr<Observer> x);
-         void NotifyObservers();
+    ```
+    class Observable
+    {
+    public:
+        void Register_(weak_ptr<Observer> x);
+        void NotifyObservers();
 
-     private:
-         mutable MutexLock mutex_;
-         std::vector<weak_ptr<Observer> observers_;
-         typedef std::vector<weak_ptr<Observer> >::iterator Iterator;
-     };
+    private:
+        mutable MutexLock mutex_;
+        std::vector<weak_ptr<Observer> observers_;
+        typedef std::vector<weak_ptr<Observer> >::iterator Iterator;
+    };
 
-     void Observable::NotifyObservers()
-     {
-         MutexLockGuard lock(mutex_);
-         Iterator it = observers_.begin();
+    void Observable::NotifyObservers()
+    {
+        MutexLockGuard lock(mutex_);
+        Iterator it = observers_.begin();
 
-         while (it != observers_.end())
-         {
-             shared_ptr<Observer> obj(it->lock());
+        while (it != observers_.end())
+        {
+            shared_ptr<Observer> obj(it->lock());
 
-             if (obj)
-             {
-                 obj->Update(); //现在的引用计数值至少为2，而且没有竞态条件，因为obj在栈上，对象不可能在本作用域内被销毁。 
-                 ++it;
-             }
-             else
-             {
-                 it = observers_.erase(it); //对象以销毁，从容器中拿掉weak_ptr
-             }
-         }
-     }
-     ```
+            if (obj)
+            {
+                obj->Update(); //现在的引用计数值至少为2，而且没有竞态条件，因为obj在栈上，对象不可能在本作用域内被销毁。 
+                ++it;
+            }
+            else
+            {
+                it = observers_.erase(it); //对象以销毁，从容器中拿掉weak_ptr
+            }
+        }
+    }
+    ```
 
-     虽然上面的部分解决了线程安全问题，但还有以下几个一点：
-     1.  __侵入性__: 强制要求Observer必须以shared\_ptr来管理。  
-     2. __不是完全线程安全__: Observer的析构函数会调用`subject_->Unregister(this)`，万一subject\_已经不复存在了呢？为了解决它，又要求Observable本身是用shared\_ptr管理的，并且subject\_ 多半是个weak\_ptr<Observable>.  
-     3.  __锁征用__: 即Observable的三个成员函数都用了互斥器同步，这会造成Register()和Unregister()等待NotifyObservers(), 而后者的执行时间是无线的，因为他同步回调了用户提供的Update()函数。我们希望Register()和Unregister()的执行时间不会超过某个固定的上限。
-     4.  万一 `obj->Update()` 虚函数中调用了(un)register函数呢？如果mutex\_ 是不可重入的，那么会死锁；如果mutex\_是可重入的，程序会绵连迭代器失效。因为vector observers\_在遍历期间被意外的修改了。但是我觉得mutex最好是不可重入的。
+    虽然上面的部分解决了线程安全问题，但还有以下几个一点：
+    1.  __侵入性__: 强制要求Observer必须以shared\_ptr来管理。  
+    2. __不是完全线程安全__: Observer的析构函数会调用`subject_->Unregister(this)`，万一subject\_已经不复存在了呢？为了解决它，又要求Observable本身是用shared\_ptr管理的，并且subject\_ 多半是个weak\_ptr<Observable>.  
+    3.  __锁征用__: 即Observable的三个成员函数都用了互斥器同步，这会造成Register()和Unregister()等待NotifyObservers(), 而后者的执行时间是无线的，因为他同步回调了用户提供的Update()函数。我们希望Register()和Unregister()的执行时间不会超过某个固定的上限。
+    4.  万一 `obj->Update()` 虚函数中调用了(un)register函数呢？如果mutex\_ 是不可重入的，那么会死锁；如果mutex\_是可重入的，程序会绵连迭代器失效。因为vector observers\_在遍历期间被意外的修改了。但是我觉得mutex最好是不可重入的。
 
 11.  share\_ptr本身不是100%线程安全的。它的引用计数本身是安全且无锁的，但是对象的读写不是，因为shared\_ptr又两个数据成员，读写操作不能原子化。shared\_ptr的线程安全级别和内建类型、标准库容器、std::string一样，即： 
     1.  一个shared\_ptr对象实体可被多个线程同时读取
