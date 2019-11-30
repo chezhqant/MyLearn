@@ -201,38 +201,38 @@ ___this file is my knowledge about <linux多线程服务端编程>___
 10.  上面Observer模式的竞态条件用下面的代码解决:   
 
      ```
-    class Observable
-    {
-    public:
-        void Register_(weak_ptr<Observer> x);
-        void NotifyObservers();
+     class Observable
+     {
+     public:
+         void Register_(weak_ptr<Observer> x);
+         void NotifyObservers();
 
-    private:
-        mutable MutexLock mutex_;
-        std::vector<weak_ptr<Observer> observers_;
-        typedef std::vector<weak_ptr<Observer> >::iterator Iterator;
-    };
+     private:
+         mutable MutexLock mutex_;
+         std::vector<weak_ptr<Observer> observers_;
+         typedef std::vector<weak_ptr<Observer> >::iterator Iterator;
+     };
 
-    void Observable::NotifyObservers()
-    {
-        MutexLockGuard lock(mutex_);
-        Iterator it = observers_.begin();
+     void Observable::NotifyObservers()
+     {
+         MutexLockGuard lock(mutex_);
+         Iterator it = observers_.begin();
 
-        while (it != observers_.end())
-        {
-            shared_ptr<Observer> obj(it->lock());
+         while (it != observers_.end())
+         {
+             shared_ptr<Observer> obj(it->lock());
 
-            if (obj)
-            {
-                obj->Update(); //现在的引用计数值至少为2，而且没有竞态条件，因为obj在栈上，对象不可能在本作用域内被销毁。 
-                ++it;
-            }
-            else
-            {
-                it = observers_.erase(it); //对象以销毁，从容器中拿掉weak_ptr
-            }
-        }
-    }
+             if (obj)
+             {
+                 obj->Update(); //现在的引用计数值至少为2，而且没有竞态条件，因为obj在栈上，对象不可能在本作用域内被销毁。 
+                 ++it;
+             }
+             else
+             {
+                 it = observers_.erase(it); //对象以销毁，从容器中拿掉weak_ptr
+             }
+         }
+     }
      ```
 
     虽然上面的部分解决了线程安全问题，但还有以下几个一点：
