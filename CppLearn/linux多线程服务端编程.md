@@ -120,3 +120,169 @@ ___this file is my knowledge about <linux多线程服务端编程>___
     3.  如果共享对象的类型不止一种，那么是重复实现对象池还是使用类模板？   
     4.  会不会造成内存泄露与分片？因为对象池占用的内存只增不减，而且多个对象池不能共享内存。    
     如果对象x注册了任何非静态成员函数回调，那么必然会在某处持有了指向x的指针，这就暴露在竞态条件之下。    
+
+6.  一个典型的场景是观察着模式：   
+
+    ```
+    class Observer // : boost::noncopyable
+    {
+    public:
+        virtual ~Observer();
+        virtual void Update();
+
+        //...
+    };
+
+    class Observable // : boost::noncopyable
+    {
+    pulic:
+        void Register_(Observer *x);
+        void Unregister(Observer *x);
+
+        void NotifyObersers()
+        {
+            for (Oberver *x : observer_)
+            {
+                x->update();
+            }
+        }
+
+    private:
+        std::verctor<Observers*> observers_;
+    };
+    ```
+
+    上面的代码中，在Observable通知每个Observer时，它从何得知Observer对象x还活着？
+    
+    ```    
+    class Observer
+    {
+        void Observe(Observable *s)
+        {
+            s->Register_(this);
+        }
+
+        virtual ~Observer()
+        {
+            subject_->Unregister(this);
+        }
+
+        Observable *subject_;
+    };
+    ```
+
+    这段代码中，让Observer的析构函数去调用Unregister(this), 这里有两个竞态条件。其一：`subject_->Unregister(this)`中，如果知道subject_还活着？其二：就算subjects_是永久存在的对象，还存在两个问题：
+    1.  线程A执行到`subject_->Unregister(this)`之前，还没有来得及Unregiser本对象。  
+    2.  线程B执行到`x->Update()`，x正好指向`subject_->Unregister(this)`中正在析构的对象。  
+    这时候x所指向的Observer对象正在西沟，调用它的任何非京台成员函数都是不安全的，何况虚函数。更糟糕的是Observer是个基类，执行到 `subject_->Unregister` 的时候，派生类对象已经析构掉了。
+
+7.  原始指针在多线程的时候不要使用。  
+8.  shared\_ptr和weak\_ptr：  
+    1.  shared\_ptr控制对象的生命期，shared\_ptr是强引用，只要有一个指向x对象的shared\_ptr存在，该x对象就不会析构。当指向对象x的最后一个shared\_ptr析构活着reset()的时候，x保证会被销毁。
+    2.  weak\_ptr不控制对象的生命期，但是他知道对象是否活着。如果对象还活着，那么他可以提升为有效的shared\_ptr；如果对象已经死了，提升会失败，返回一个空的share\_ptr，"提升/lock()"行为是线程安全的。  
+    3.  shared\_ptr/weak\_ptr的“计数”在主流平台是原子操作。 
+    4.  shared\_ptr/weak\_ptr的线程安全级别与std::string和STL容器一样。  
+9.  C++里面可能出现的内存问题大致有以下几个方面：
+    1.  缓冲区溢出, 用std::vector<char>/std::string或者自己编写的buffer class来管理缓冲区，自动基础缓冲区的长度，并通过成员函数而不是裸指针来修改缓冲区。    
+    2.  空悬指针/野指针，用shared\_ptr/weak\_ptr  
+    3.  重复释放， 用scoped\_ptr，只在对象析构的时候释放一次 
+    4.  内存释放， 用scoped\_ptr, 对象析构的时候自动释放内存  
+    5.  不配对的new[]/delete，把new[]统统替换为std::vector/scoped\_array  
+    6.  内存碎片   
+    正确使用智能指针能轻易解决前面5个问题。
+    需要注意：scoped\_ptr/shared\_ptr/weak_ptr都是值语意，要么是栈上面的对象，要么是其他对象的直接数据成员，或者是标准库容器里的元素，几乎不会出现下面的用法：
+
+    ```
+    shared_ptr<Foo> *Foo = new shared_ptr<Foo>(new Foo);
+    ```
+
+    还要注意，如果这几种智能指针是对象x的数据成员，而它的模板参数T是incoplete类型，那么x的析构函数不能是默认的或者内联的，必须在.cpp中显式定义，否则会出现编译或者运行出错。   
+
+10.  上面Observer模式的竞态条件用下面的代码解决：
+
+    ```
+    class Observable
+    {
+    public:
+        void Register_(weak_ptr<Observer> x);
+        void NotifyObservers();
+
+    private:
+        mutable MutexLock mutex_;
+        std::vector<weak_ptr<Observer> observers_;
+        typedef std::vector<weak_ptr<Observer> >::iterator Iterator;
+    };
+
+    void Observable::NotifyObservers()
+    {
+        MutexLockGuard lock(mutex_);
+        Iterator it = observers_.begin();
+
+        while (it != observers_.end())
+        {
+            shared_ptr<Observer> obj(it->lock());
+
+            if (obj)
+            {
+                obj->Update(); //现在的引用计数值至少为2，而且没有竞态条件，因为obj在栈上，对象不可能在本作用域内被销毁。 
+                ++it;
+            }
+            else
+            {
+                it = observers_.erase(it); //对象以销毁，从容器中拿掉weak_ptr
+            }
+        }
+    }
+    ```
+
+    虽然上面的部分解决了线程安全问题，但还有以下几个一点：
+    1.  __侵入性__: 强制要求Observer必须以shared\_ptr来管理。  
+    2. __不是完全线程安全__: Observer的析构函数会调用`subject_->Unregister(this)`，万一subject\_已经不复存在了呢？为了解决它，又要求Observable本身是用shared\_ptr管理的，并且subject\_ 多半是个weak\_ptr<Observable>.  
+    3.  __锁征用__: 即Observable的三个成员函数都用了互斥器同步，这会造成Register()和Unregister()等待NotifyObservers(), 而后者的执行时间是无线的，因为他同步回调了用户提供的Update()函数。我们希望Register()和Unregister()的执行时间不会超过某个固定的上限。
+    4.  万一 `obj->Update()` 虚函数中调用了(un)register函数呢？如果mutex\_ 是不可重入的，那么会死锁；如果mutex\_是可重入的，程序会绵连迭代器失效。因为vector observers\_在遍历期间被意外的修改了。但是我觉得mutex最好是不可重入的。
+
+11.  share\_ptr本身不是100%线程安全的。它的引用计数本身是安全且无锁的，但是对象的读写不是，因为shared\_ptr又两个数据成员，读写操作不能原子化。shared\_ptr的线程安全级别和内建类型、标准库容器、std::string一样，即： 
+    1.  一个shared\_ptr对象实体可被多个线程同时读取
+    2.  两个shared\_ptr对象实体可以被两个线程同时写入，“析构”算是写操作。  
+    3.  如果要从多个线程读写同一个share\_ptr对象，那么需要加锁。
+    以上仅仅是share\_ptr对象本身的线程安全级别，不是它管理的对象那个的线程安全级别。
+    要在多个线程同时访问同一个shared\_ptr，正确的做法是用mutex保护：
+
+    ```
+    MutexLoc mutex; //不需要读写锁
+    shared_ptr<Foo> globalPtr;
+
+    void diit(const shared_ptr<Foo> &pFoo); //把globalPtr安全的传给doit()
+    ```
+
+    globalPtr能够被多个线程看到，那么它的读写需要加锁，我们不必使用读写锁，而是使用最简单的互斥锁。因为临界区非常小，用互斥锁也不会阻塞并发读。  
+    
+    ```
+    为了拷贝globalPtr，需要在读取他的时候加锁，即： 
+    void read()
+    {
+        shared_ptr<Foo> localPtr;
+        
+        {
+            MutexLockGuard lock(mutex);
+            localPtr = globalPtr; //read globalPtr
+        } 
+
+        doit(localPtr); //user local Ptr since here
+    }
+
+    void write()
+    {
+        shared_ptr<Foo> newPtr(new Foo); //对象的创建在临界区之外
+    
+        {
+            MutexLockGuard lock(mutex);
+            globalPtr = newPtr; //write to globalPtr
+        
+            doit(newPtr); //use newPtr since here, 无需加锁
+        }
+    }      
+    ```
+
+    注意到上面的read()和write()在临界区外都没有再访问globalPtr，而是使用了一个指向同一个Foo对象那个的栈上shared\_ptr local copy，只要有这么个存在，shared\_ptr作为参数传递时不必复制，用const引用作为参数即可。另外上面的new Foo是在临界区之外执行的。这种写法通常比在临界区诶写globalPtr.reset(new Foo)要好，因为缩短了临界区的长度。  
+12.  __shared\_ptr 意外延长了对象那个的生命周期__
