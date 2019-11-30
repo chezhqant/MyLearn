@@ -192,9 +192,9 @@ ___this file is my knowledge about <linux多线程服务端编程>___
     正确使用智能指针能轻易解决前面5个问题。
     需要注意：scoped\_ptr/shared\_ptr/weak_ptr都是值语意，要么是栈上面的对象，要么是其他对象的直接数据成员，或者是标准库容器里的元素，几乎不会出现下面的用法：
 
-    ```
-    shared_ptr<Foo> *Foo = new shared_ptr<Foo>(new Foo);
-    ```
+        ```
+        shared_ptr<Foo> *Foo = new shared_ptr<Foo>(new Foo);
+        ```
 
     还要注意，如果这几种智能指针是对象x的数据成员，而它的模板参数T是incoplete类型，那么x的析构函数不能是默认的或者内联的，必须在.cpp中显式定义，否则会出现编译或者运行出错。   
 
