@@ -198,7 +198,7 @@ ___this file is my knowledge about <linux多线程服务端编程>___
 
     还要注意，如果这几种智能指针是对象x的数据成员，而它的模板参数T是incoplete类型，那么x的析构函数不能是默认的或者内联的，必须在.cpp中显式定义，否则会出现编译或者运行出错。   
 
-10.  上面Observer模式的竞态条件用下面的代码解决：
+10.  上面Observer模式的竞态条件用下面的代码解决:   
 
     ```
     class Observable
