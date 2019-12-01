@@ -42,14 +42,16 @@
 2.  [\_\_call\_\_](https://www.cnblogs.com/superxuezhazha/p/5793536.html) </br>
 3.  [\_\_getattr\_\_\/\_\_setattr\_\_\/\_\_getitem\_\_\/\_\_setitem\_\_](https://blog.csdn.net/chituozha5528/article/details/78355216) </br>
 4.  [python类的专有方法](https://segmentfault.com/a/1190000007256392) </br>
+0.  [python类的魔术方法](https://pyzh.readthedocs.io/en/latest/python-magic-methods-guide.html)   
 5.  [\_\_file\_\_](https://www.cnblogs.com/ajaxa/p/9016475.html)</br>
 6.  [\_\_dict\_\_](https://www.cnblogs.com/alvin2010/p/9102344.html)</br>
 7.  [\_\_getattr\_\_](https://www.jianshu.com/p/dec562715df6)</br>
 9.  [\_\_enter\_\_\/\_\_exit\_\_](https://www.cnblogs.com/lipijin/p/4460487.html)   
-1.  [\_\_dict\_\_](https://www.cnblogs.https://www.cnblogs.com/lipijin/p/4460487.html)
-2.  [\_\_dict\_\_](https://www.cnblogs.com/alvin2010/p/9102344.html)
-3.  [\_\_name\_\_](https://www.cnblogs.com/1204guo/p/7966461.html)
-4.  [\_\_glob\_\_](https://www.jianshu.com/p/32e3364b22ee)
+1.  [\_\_dict\_\_](https://www.cnblogs.https://www.cnblogs.com/lipijin/p/4460487.html)  
+2.  [\_\_dict\_\_](https://www.cnblogs.com/alvin2010/p/9102344.html)  
+3.  [\_\_name\_\_](https://www.cnblogs.com/1204guo/p/7966461.html)  
+4.  [\_\_glob\_\_](https://www.jianshu.com/p/32e3364b22ee)   
+5.  [\_\_getitem\_\_](__https://zhuanlan.zhihu.com/p/27661382)  
 
 ### 1.2 [MRO](https://www.cnblogs.com/ssyfj/p/9017280.html) </br>
 ### 1.3 [super函数](https://www.imooc.com/article/50836) </br>
@@ -62,12 +64,13 @@
 1.  [为什么类的变量是定义在类方法内的?](https://www.cnblogs.com/chownjy/p/8663024.html)
 
 ## 2. Functions </br>
-### 2.1 [重构](https://blog.csdn.net/liuwei_q/article/details/83032297)  
-### 2.2 [lambda/filter/reduce/map](https://www.cnblogs.com/kaituorensheng/p/5300340.html)  
-### [with](https://www.jianshu.com/p/5b01fb36fd4c) </br>
-### [闭包](https://blog.csdn.net/weixin_44141532/article/details/87116038) </br>
-### [yield](https://www.ibm.com/developerworks/cn/opensource/os-cn-python-yield/index.html) </br>
-### [del](https://blog.csdn.net/weihongxu2222/article/details/51320006)
+1.  [重构](https://blog.csdn.net/liuwei\_q/article/details/83032297)  
+2.  [lambda/filter/reduce/map](https://www.cnblogs.com/kaituorensheng/p/5300340.html)  
+3.  [with](https://www.jianshu.com/p/5b01fb36fd4c) </br>
+4.  [闭包](https://blog.csdn.net/weixin_44141532/article/details/87116038) </br>
+5.  [yield](https://www.ibm.com/developerworks/cn/opensource/os-cn-python-yield/index.html) </br>
+6.  [del](https://blog.csdn.net/weihongxu2222/article/details/51320006)   
+7.  [iter](https://docs.python.org/zh-cn/3/library/functions.html]   
 
 ## 3. Packages
 ### 3.1. [csv](https://www.cnblogs.com/wuxunyan/p/10442444.html)</br>
@@ -122,5 +125,11 @@
 ### 6.5 [一些包的特殊用法]
 1.  [matplotlib.plot画多张图，在一张图上画多个函数](https://blog.csdn.net/haikuotiankong7/article/details/90551841)    
 2.  [matplotlib.plot的颜色和线条、线条的形状](https://www.cnblogs.com/zoe-chang/p/11269780.html)    
-### 6.5 [pyton编码](https://www.cnblogs.com/jessonluo/p/4801580.html)
-1.  [pyhon编码的第二个解释](https://www.cnblogs.com/busui/p/9340339.html)
+### 6.6 pyton编码
+1.  [python编码的第一个解释](https://www.cnblogs.com/jessonluo/p/4801580.html)
+2.  [pyhon编码的第二个解释](https://www.cnblogs.com/busui/p/9340339.html)
+### 6.7 python的理解
+1.  python的对象是引用  
+    1.  [解释](https://blog.csdn.net/weihongxu2222/article/details/51320006)  
+2.  [iterable和iterator](https://zhuanlan.zhihu.com/p/32162554)   
+3.  [python程序怎么执行的?](https://www.jianshu.com/p/03af86845c95)   

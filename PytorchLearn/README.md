@@ -22,6 +22,7 @@
 * [2.  bottleneck](#2-bottleneck)
 * [3.  详解PyTorch中的ModuleList和Sequential](#3-详解pytorch中的modulelist和sequential)
 * [4.  torch的一些方法&&类](#4-torch的一些方法类)
+* [5.  senet](#5-senet)
 
 <!-- vim-markdown-toc -->
 ---
@@ -178,4 +179,8 @@ const int& x = 666; // OK
 ## 3.  [详解PyTorch中的ModuleList和Sequential](https://zhuanlan.zhihu.com/p/75206669)
 ## 4.  torch的一些方法&&类  
 1.  多维度的shape怎么看  
-    ![shape](./pictures/1.jpg "shape" "80%")
+    ![shape](./pictures/1.jpg "shape")
+    像上面的那个图形，从内层往外看，维度分别是3,4,2; 分别对应着的维度为从右至左。     
+2.  [dataloader(后期需要详细了解)](https://www.cnblogs.com/marsggbo/p/11308889.html)   
+## 5.  [senet](https://blog.csdn.net/u014380165/article/details/78006626)
+1.  [第二种解释](https://zhuanlan.zhihu.com/p/32702350)  
