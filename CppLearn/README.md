@@ -209,6 +209,8 @@ const int& x = 666; // OK
 3.  [各种锁](https://www.dazhuanlan.com/2019/10/11/5d9f5a7b0f5bd/)    
 ## [可重入和不可重入函数](https://murphypei.github.io/blog/2019/07/thread-safe-reentrant-function)   
 ## [linux多线程服务端编程](./linux多线程服务端编程.md)   
+1.  [伪共享](https://www.cnblogs.com/cyfonly/p/5800758.html)   
+2.  [虚假唤醒](https://www.zhihu.com/question/271521213)   
 
 # Makefile    
 

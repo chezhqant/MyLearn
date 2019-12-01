@@ -719,3 +719,94 @@ ___this file is my knowledge about <linux多线程服务端编程>___
         ![core](./pictures/2.jpg "core")  
         注意到main()线程是先调用Inventory::printAll()再调用Request::print()，而threadFunc()线程是先调用`Request::~Request()`再调用Inventory::remove()。这两个调用序列对两个mutex的加锁顺序正好相反，于是造成了经典的死锁。如下图，Inventory class的临界区由灰底表示，Request class的mutex的临界区由斜纹表示。一旦main()线程中的printAll()在另一个线程的~Request()和remove()之间开始执行，死锁已不可避免。如下：   
         ![死锁](./pictures/3.jpg "死锁")  
+        这里也出现了对象析构的竞态条件，即一个线程正在析构对象，另一个线程却在调用它的成员函数。解决方法很简单，要么把print()溢出printAll()的临界区，要么把remove()溢出`~Request()`的临界区。当然这仍然没有解决对象析构的竞态条件。   
+    3.  __条件变量__  
+        互斥器是加锁原语，用来排他性的访问共享数据，它不是等待原语。在使用的时候，我们一般都期望加锁不要阻塞，总能够立刻拿到锁。然后尽快访问数据，用完之后尽快解锁，这样才能不影响并发性和性能。  如果需要等待某个条件成立，我们应该使用条件变量。条件变量是一个或者多个线程等待某个布尔表达式为真，即等待别的线程“唤醒”它。条件变量的学名叫做管程。条件变量只有一种正确的使用方式，几乎不可能出错，对于wait端：  
+        1.  必须与mutex一起使用，该布尔表达式的读写需要受此mutex保护。   
+        2.  在mutex已经上锁的时候才能调用wait()。  
+        3.  把判断布尔条件和wait()放到while循环中。  
+        写成代码是：   
+        ```
+        muduo::MutexLock mutex;
+        muduo::Condition cond(mutex);
+        std::deque<int> queue;
+
+        int dequeue()
+        {
+            MutexLockGuard lock(mutex);
+
+            while (queue.empty())
+            {
+                cond.wait();//这一步是会原子地unlock mutex并进入等待，不会与enqueue死锁，wait()执行完毕后会自动重新加锁
+            }
+
+            assert(!queue.empty());
+            int top = queue.front();
+            queue.pop_front();
+
+            return top;
+        }
+        ```
+
+        上面的代码必须用while循环来等待条件变量，而不能用if语句，原因是“虚假唤醒”。对于signal/broadcast端：  
+        1.  不一定要在mutex已经上锁的情况下调用signal(理论上)。
+        2.  在signal之前一般要修改布尔表达式。  
+        3.  修改布尔表达式通常要用mutex保护(至少用作full memory barrier)。  
+        4.  注意区分signal和broadcast: broadcast通常用于表明状态变化，singal通常用于表示资源可用。 
+        写成代码是：   
+
+        ```
+        void enqueue(int x)
+        {
+            MutexLockGuard lock(mutex);
+            queue.push_back(x);
+
+            cond.notify(); // 可以移出临界区外
+        }
+        ```   
+
+        上面的dequeue()/enqueue()实际上实现了一个简单的容量无限的BlockingQueue. 
+        条件变狼是非常底层的同步原语，很少直接使用，一般都是用它来实现高层的同步措施，如BlockingQueue<T>或者CountDownLatch。  
+        倒计时(CountDownLatch)是一种常用且易用的同步手段，主要有两种用途：  
+        1.  主线程发起多个子线程，等这些子线程各自都完成了一定的任务之后，主线程彩继续执行，通常用于主线程等待多个子线程完成初始化。   
+        2.  主线程发起多个子线程，子线程都等待主线程，主线程完成其他一些任务之后通知所有子线程开始执行。通常用于多个子线程等待主线程发起“起跑”命令。   
+        当然我们可以直接用条件变量实现以上两步。不过如果使用了CountDownLatch的话，程序逻辑更加清晰。
+
+        ```
+        class CountDownLatch : boost::noncopyable
+        {
+        public:
+            explicit CountDownLatch(int count); //倒数几次
+            void wait(); //等待计数值变为0
+            void countDown(); //计数值减一
+
+        private:
+            mutable MutexLock mutex_;
+            Condition condition_;
+            int count_;
+        };
+
+        CountDownLatch的实现同样简单
+        void CountDownLatch::wait()
+        {
+            MutexLockGuard lock(mutex_);
+
+            while (count_ > 0)
+            {
+                condition_.wait();
+            }
+        }
+
+        void CountDownLatch::countDown()
+        {
+            MutexLockGuard lock(mutex_);
+            --count_;
+
+            if (count_ == 0)
+            {
+                condition_.notifyAll();
+            }
+        }
+        ```
+
+        注意到CountDowLatch::countDown()使用的是Condition::notifyAll()，而前面此处的enqueue()使用的是Condition::notify。互斥器和条件变量构成了多线程编程的全部必备同步原语，用他们即可完成任何多线程同步任务，二者不可相互替代。   

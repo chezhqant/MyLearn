@@ -1,60 +1,34 @@
-#include <iostream>
-
-class Request
+class CountDownLatch : boost::noncopyable
 {
 public:
-    void process() // __attribute__((noinline))
-    {
-        muduo::MutexLockGuard lock(mutex_);
-        g_inventory.add(this);
-        // ...
-        
-        print();
-    }
-
-    ~Request() __attribute__ ((noinline))
-    {
-        muduo::MutexLockGuard lock(mutex_);
-        sleep(1);
-        g_inventory.remove(this);
-    }
-
-    void print() const // __attribute__((noinline))
-    {
-        muduo::MutexLockGuard lock(mutex_);
-        // ...
-    }
+    explicit CountDownLatch(int count); //倒数几次
+    void wait(); //等待计数值变为0
+    void countDown(); //计数值减一
 
 private:
-    mutable mmuduo::MutexLockGuard mutex_;
+    mutable MutexLock mutex_;
+    Condition condition_;
+    int count_;
 };
 
-int main()
+CountDownLatch的实现同样简单
+void CountDownLatch::wait()
 {
-    Request req;
-    req.process();
+    MutexLockGuard lock(mutex_);
+
+    while (count_ > 0)
+    {
+        condition_.wait();
+    }
 }
 
-class Inventory
+void CountDownLatch::countDown()
 {
-public:
-    void add(Request *req)
+    MutexLockGuard lock(mutex_);
+    --count_;
+
+    if (count_ == 0)
     {
-        muduo::MutexLockGuard lock(mutex_);
-        requests_.insert(req);
+        condition_.notifyAll();
     }
-
-    void remove(Request *req) // __attribute__ ((noinline))
-    {
-        muduo::MutexLockGuard lock(mutex_);
-        requests_.erase(req);
-    }
-
-    void printAll() const;
-
-private:
-    mutable muduo::MutexLock mutex_;
-    std::set<request*> requests_;
-};
-
-Inventory g_inventory;
+}
