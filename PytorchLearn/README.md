@@ -178,4 +178,4 @@ const int& x = 666; // OK
 ## 3.  [详解PyTorch中的ModuleList和Sequential](https://zhuanlan.zhihu.com/p/75206669)
 ## 4.  torch的一些方法&&类  
 1.  多维度的shape怎么看  
-    ![shape](./pictures/1.jpg "shape" width="80%")
+    ![shape](./pictures/1.jpg "shape" "80%")
