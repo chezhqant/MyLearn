@@ -501,7 +501,7 @@ ___this file is my knowledge about <linux多线程服务端编程>___
 
         这下，无论Stock和StockFactory谁先挂掉都不会硬性程序的正确运行。这里使用shared\_ptr和weak\_ptr完美解决了两个对象相互引用的问题。
 
-4.  替代方案，除了使用shared\_ptr/weak\_ptr, 要想在C++里做到线程安全的对象那个回调和析构，可能的方案有以下：
+4.  __替代方案__ 除了使用shared\_ptr/weak\_ptr, 要想在C++里做到线程安全的对象那个回调和析构，可能的方案有以下：
     1.  用一个全局的Facade来代理Foo类型对象访问，所有的Foo对象回调和析构都通过facade来做，也就是把指针替换为objId/handle，每次都要调用对象的成员函数的时候先check-out，用完之后再check-in。这样理论上能够避免竞态条件，但是代价太大。因为要想把这个facade做成线程安全的，就必然要用到互斥锁。这样一来，从两个线程访问两个不同的Foo对象也会用到同一个锁，让本来能够并行执行的函数编程了串行，没能发挥多核的有事。当然，可以向Java的ConcurrentHashMap那样用多个buckets，每个bucket分别加锁，以降低contention。  
     2.  自己编写引用计数的只能指针。   
     3.  将来在C++11里面有unique\_ptr，能避免引用计数的开销，或许能够在某些场合替换shared\_ptr。  
