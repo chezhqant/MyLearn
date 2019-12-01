@@ -716,6 +716,6 @@ ___this file is my knowledge about <linux多线程服务端编程>___
         ```
 
         通过gdb查看两个线程的函数调用栈，我们发现两个线程都等在mutex上，估计是发生了死锁。如下图所示：   
-        ![core](./pictures/2.jpg "core")
+        ![core](./pictures/2.jpg "core")  
         注意到main()线程是先调用Inventory::printAll()再调用Request::print()，而threadFunc()线程是先调用`Request::~Request()`再调用Inventory::remove()。这两个调用序列对两个mutex的加锁顺序正好相反，于是造成了经典的死锁。如下图，Inventory class的临界区由灰底表示，Request class的mutex的临界区由斜纹表示。一旦main()线程中的printAll()在另一个线程的~Request()和remove()之间开始执行，死锁已不可避免。如下：   
-        ![死锁](./pictures/3.jpg "死锁")
+        ![死锁](./pictures/3.jpg "死锁")  
