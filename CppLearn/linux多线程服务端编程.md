@@ -586,3 +586,137 @@ ___this file is my knowledge about <linux多线程服务端编程>___
         ```
 
     2.  ___死锁___  
+
+        ```
+        class Request
+        {
+        public:
+            void process() // __attribute__((noinline))
+            {
+                muduo::MutexLockGuard lock(mutex_);
+
+                // ...
+
+                print();
+            }
+
+            void print() const // __attribute__((noinline))
+            {
+                muduo::MutexLockGuard lock(mutex_);
+                // ...
+            }
+
+        private:
+            mutable mmuduo::MutexLockGuard mutex_;
+        };
+
+        int main()
+        {
+            Request req;
+            req.process();
+        }
+        ```
+
+        在上面的例子中，如果没有执行`print()`，程序还没有问题，如果执行了`print()`，程序立即出现了死锁。调试这个错误的话，只要把函数栈打印出来，我们会发现第6帧的Request::process()和第5帧Request::print()先后对同一个mutex上锁，引发了死锁：   
+        ![core](./pictures/1.jpg "core")
+        要修复这个错误也很容易，按照前面的办法，从Request::print()抽取出Request::printWithLockHold(), 病让Request::print()和Request::process()都调用它即可。   
+        再来看两个线程死锁的例子：   
+        有一个Inventory class记录当前Request对象那个。下面这个Inventory class的add()和remove()成员函数都是线程安全的，它使用了mutex来保护共享数据request\_。  
+
+        ```
+        class Inventory
+        {
+        public:
+            void add(Request *req)
+            {
+                muduo::MutexLockGuard lock(mutex_);
+                requests_.insert(req);
+            }
+
+            void remove(Request *req) // __attribute__ ((noinline))
+            {
+                muduo::MutexLockGuard lock(mutex_);
+                requests_.erase(req);
+            }
+
+            void printAll() const;
+
+        private:
+            mutable muduo::MutexLock mutex_;
+            std::set<request*> requests_;
+        };
+
+        Inventory g_inventory;
+        ```
+
+        Request class与Inventory class的交互逻辑很简单，在处理(process)请求的时候，往g_inventory中添加自己。在析构的时候，从g_inventory中移除自己。目前看来整个程序还是很安全的。   
+        ```
+        class Request
+        {
+        public:
+            void process() // __attribute__((noinline))
+            {
+                muduo::MutexLockGuard lock(mutex_);
+                g_inventory.add(this);
+                // ...
+
+                print();
+            }
+
+            ~Request() __attribute__ ((noinline))
+            {
+                muduo::MutexLockGuard lock(mutex_);
+                sleep(1);
+                g_inventory.remove(this);
+            }
+
+            void print() const // __attribute__((noinline))
+            {
+                muduo::MutexLockGuard lock(mutex_);
+                // ...
+            }
+
+        private:
+            mutable mmuduo::MutexLockGuard mutex_;
+        };
+        ``` 
+
+        Inventory class 还有一个功能是打印全部一致的Request对象。Inventory::printAll()里的逻辑单独看是没有问题的，但是他有可能会引发死锁。  
+
+        ```
+        void Inventory::printAll() const
+        {
+            muduo::MutexLockGuard lock(mutex_);
+            sleep(1);
+        }
+
+        for (std::set<Request*>::const_iterator it = requests_.begin(); 
+             it != requests_.end(); ++it)
+        {
+            (*it)->print();
+        }
+
+        下面的程序运行起来会发生死锁：  
+        void threadFunc()
+        {
+            Request *req = new Request;
+            req->process();
+            
+            delete req;
+        }
+
+        int main()
+        {
+            muduo::Thread thread(threadFunc);
+            thread.start();
+            usleep(500*1000);  //为了让另一个线程等在前面的sleep上
+            g_inventory.printAll();
+            thread.join();
+        }
+        ```
+
+        通过gdb查看两个线程的函数调用栈，我们发现两个线程都等在mutex上，估计是发生了死锁。如下图所示：   
+        ![core](./pictures/2.jpg "core")
+        注意到main()线程是先调用Inventory::printAll()再调用Request::print()，而threadFunc()线程是先调用Request::~Request()再调用Inventory::remove()。这两个调用序列对两个mutex的加锁顺序正好相反，于是造成了经典的死锁。如下图，Inventory class的临界区由灰底表示，Request class的mutex的临界区由斜纹表示。一旦main()线程中的printAll()在另一个线程的~Request()和remove()之间开始执行，死锁已不可避免。如下：   
+        ![死锁](./pictures/3.jpg "死锁")
+
