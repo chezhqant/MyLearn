@@ -335,3 +335,173 @@ ___this file is my knowledge about <linux多线程服务端编程>___
     __RAII__:shared\_ptr是管理共享资源的利器，需要注意避免循环引用，通常的做法是owner持有指向child的shared\_ptr，child持有指向owner的weak_ptr。  
 
 3.  对象池  
+    假设有一个Stock类，代表一只股票的价格，每只股票只有一个唯一的字符串的表示，为了节省系统资源，同一个程序里面每只股票只有一个Stock对象，如果多出用到同一只股票，那么Stock对象应该被共享。如果某一只股票没有再在任何地方用到，其对应的Stock对象应该析构，以释放资源，这隐含了“引用计数”。  
+    为了实现以上，设计了一个StockFactory：根据key返回Stock对象。
+
+    ```
+    //有问题的代码
+    class StockFactory : boost::noncopyable
+    {
+    public:
+        shared_ptr<Sotck> get(const string &key);
+
+    private:
+        mutable MutexLock mutex_;
+        std::map<string, shared_ptr<Stock> > stock_;
+    };
+
+    ```
+
+    此处代码的问题是，Stock对象永远不会被销毁，因为map里面存的是shared\_ptr，那么shared\_ptr替换为weak\_ptr呢？
+
+    ```
+        shared_ptr<Stock> StockFactory::get(const string &key)
+    {
+        shared_ptr<Stock> p_Stock;
+        MutexLockGuard lock(mutex_);
+        weak_ptr<Stock> &wk_Stock = stock_[key]; //如果key不存在，会默认创建一个
+        p_Stock = wk_Stock.lock();
+
+        if (!p_Stock)
+        {
+            p_Stock.reset(new Sotck(key));
+            wk_Stock = p_Stock; //这里更新了stock_[key], wk_Stock是个引用
+        }
+
+        return p_Stock;
+    }
+
+    ```
+
+    这么做固然Stock对象时销毁了，但是程序却出现了轻微的内存泄露，为什么？因为stocks\_只增不减，stock\_.size()是曾经存活过的SOT查看对象那个的总数，即便获得Stock对象数目将为0.或许有人认为不算泄露，因为内存并不是彻底遗失不能访问了，而是别某个标准库容器占用了。(___不是太懂___)  
+    解决办法是，利用shared\_ptr的定制析构功能。shared\_ptr的构造函数可以有一个额外的模板类型参数，传入一个函数指针或者仿函数d，在析构对象时执行d(ptr)，其中ptr时shared\_ptr保存的对象指针。shared\_ptr这么设计不是多余的，因为反正要在创建独享时捕获释放动作，始终需要一个bridge。   
+
+    ```
+    template<class Y, class D> shared_ptr::shared_ptr(Y *p, D d);
+    template<class Y, class D> void shared_ptr::reset(Y *p, D d);
+    ```
+
+    只需要利用这一点，在析构Stock对象的同时清理stock\_。  
+
+    ```
+    class StockFactory : boost::noncopyable
+    {
+    public:
+        shared_ptr<Sotck> get(const string &key);
+
+    private:
+        mutable MutexLock mutex_;
+        std::map<string, weak_ptr<Stock> > stocks_;
+
+        void deleteStock(Stock *stock)
+        {
+            if (stock)
+            {
+                MutexLockGuard lock(mutex_);
+                stocks_.erase(stock->key());
+            }
+
+            delete stock;
+        }
+    };
+
+    shared_ptr<Stock> StockFactory::get(const string &key)
+    {
+        shared_ptr<Stock> p_Stock;
+        MutexLockGuard lock(mutex_);
+        weak_ptr<Stock> &wk_Stock = stock_[key]; //如果key不存在，会默认创建一个
+        p_Stock = wk_Stock.lock();
+
+        if (!p_Stock)
+        {
+            p_Stock.reset(new Sotck(key), boost::bind(&StockFactory::deleteStock, this, _1));
+            wk_Stock = p_Stock; //这里更新了stock_[key], wk_Stock是个引用
+        }
+
+        return p_Stock;
+    }
+    ```
+    这里在析构Stock *p(指代的是模板里面的Y *p)时，调用本StockFactory对象的deleteStock成员函数。这里仍然有问题，那就是我们将一个原始的StockFactory this指针保存在了boost::function中，这里就会出现线程安全问题，如果这个StockFactory先于Stock对象析构，那么就会出席那core dump。解决这个问题的方法是弱回调技术。   
+    1.  enable\_shared\_from\_this   StockFactory::get()把原始指针this保存到了boost::function中，如果StockFactory的生命周期比Stock段，那么Stock析构时去回调StockFactory就会core dump。似乎我们应该使用shared\_ptr来解决生命周期问题，但是StockFactory本身是个成员函数，如何获得一个指向当前对象的shared\_ptr<StockFactory>对象呢？就是使用enable\_shared\_from\_this。这是一个以其派生类为模板类型实参的鸡肋模板，继承他，this指针就能变身为shared\_ptr。 
+
+        ```
+        class StockFactory : public boost::enable_shared_from_this<StockFactory>, boost::noncopyable
+        {};
+        ```
+
+        为了使用shared\_from\_this(), StockFactory不能使stack object, 必须是heap object且由shared\_ptr管理其生命期，即：
+
+        ```
+        sahred_ptr<StockFactory> stockFactory(new StockFactory);
+        ```
+
+        最新的版本为：
+        
+        ```
+        shared_ptr<Stock> StockFactoy::get(const string &key)
+        {       
+            p_Stock.reset(new Stock(key), boost::bind(&StockFactory::deleteStock, shared_from_this(), _1)); 
+        }       
+        ```
+
+        这样一来boost::function里面保存了一份shared\_ptr<StockFactory>，可以保证调用StockFactory::deleteStock()的时候那个StockFactory对象还活着。shared\_from\_this不能再构造函数里调用，因为在构造StockFactory的时候，他还没有被交给sahred\_ptr接管。然后，StockFactory的生命期被意外延长了。   
+    2.  弱回调  
+        把shared\_ptr绑到boost::function(boost::bind)里，那么回调的时候StockFactory对象始终存在，是安全的。这同时延长了对象的生命期，使之不短于绑定的boost::function对象。然后我们可以把weak_ptr绑到boost::functioni里，这样对象的生命期就不会被延长，然后回调的时候先尝试提升shared\_ptr，如果提升成功，说明接受回调的对象还健在，那么执行回调。   
+        使用这一技术的完整StockFactory代码如下：   
+        ```
+        class StoryFactory : public boost::enable_shared_from_this<StoryFactory>, boost::noncopyable
+        {
+        public:
+            shared_ptr<Stock> get(const string &key)
+            {
+                shared_ptr<Stock> p_Stock;
+                MutexLockGuard lock(mutex_);
+                weak_ptr<Stock> &wk_Stock = stocks_[key];
+                p_Stock = wk_Stock.lock();
+
+                if (!p_Stock)
+                {
+                    p_Stock.reset(new Stock(key),
+                                  boost::bind(&StoryFactory::weakDeleteCallback,
+                                              boost::weak_ptr<StoryFactory>(shared_from_this)), _1);
+
+                    //上面必须强制将shared_from_this() 转型为weak_ptr，才不会延长生命期，因为boost::bind拷贝的是实参类型，不是形参类型
+                    wk_Stock = p_Stock;
+                }
+
+                return p_Stock;
+            }
+
+        private:
+            static void weakDeleteCallback(const boost::weak_ptr<StoryFactory> &wk_wk_Factory, Stock *stock)
+            {
+                shared_ptr<StockFactory> factory(wk_Factory.lock());
+
+                if (factory)
+                {
+                    factory->removeStock(stock);
+                }
+                delete stock;
+            }
+
+            void removeStock(Stock *stock)
+            {
+                if (stock)
+                {
+                    MutexLockGuard lock(mutex_);
+                    stocks_.erase(stock->key());
+                }
+            }
+
+        private:
+            mutable MutexLock mutex_;
+            std::map<string, weak_ptr<Stock> > stock_;
+        };
+        ```
+
+        这下，无论Stock和StockFactory谁先挂掉都不会硬性程序的正确运行。这里使用shared\_ptr和weak\_ptr完美解决了两个对象相互引用的问题。
+
+4.  替代方案，除了使用shared\_ptr/weak\_ptr, 要想在C++里做到线程安全的对象那个回调和析构，可能的方案有以下：
+    1.  用一个全局的Facade来代理Foo类型对象访问，所有的Foo对象回调和析构都通过facade来做，也就是把指针替换为objId/handle，每次都要调用对象的成员函数的时候先check-out，用完之后再check-in。这样理论上能够避免竞态条件，但是代价太大。因为要想把这个facade做成线程安全的，就必然要用到互斥锁。这样一来，从两个线程访问两个不同的Foo对象也会用到同一个锁，让本来能够并行执行的函数编程了串行，没能发挥多核的有事。当然，可以向Java的ConcurrentHashMap那样用多个buckets，每个bucket分别加锁，以降低contention。  
+    2.  自己编写引用计数的只能指针。   
+    3.  将来在C++11里面有unique\_ptr，能避免引用计数的开销，或许能够在某些场合替换shared\_ptr。  
