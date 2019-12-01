@@ -88,3 +88,4 @@
 
 3.  shell的一些命令   
     1.  [tmux](http://www.ruanyifeng.com/blog/2019/10/tmux.html)    
+    2.  [shell正则表达式]**(https://man.linuxde.net/docs/shell\_regex.html) 
