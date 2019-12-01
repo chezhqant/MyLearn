@@ -177,5 +177,5 @@ const int& x = 666; // OK
 ## 2.  [bottleneck](https://www.zhihu.com/question/285578426)
 ## 3.  [详解PyTorch中的ModuleList和Sequential](https://zhuanlan.zhihu.com/p/75206669)
 ## 4.  torch的一些方法&&类  
-0.  多维度的shape怎么看  
-    ![shape](./pictures/1.jpg "shape")
+1.  多维度的shape怎么看  
+    ![shape](./pictures/1.jpg title="shape" width="50%", length="50%")
