@@ -505,3 +505,84 @@ ___this file is my knowledge about <linux多线程服务端编程>___
     1.  用一个全局的Facade来代理Foo类型对象访问，所有的Foo对象回调和析构都通过facade来做，也就是把指针替换为objId/handle，每次都要调用对象的成员函数的时候先check-out，用完之后再check-in。这样理论上能够避免竞态条件，但是代价太大。因为要想把这个facade做成线程安全的，就必然要用到互斥锁。这样一来，从两个线程访问两个不同的Foo对象也会用到同一个锁，让本来能够并行执行的函数编程了串行，没能发挥多核的有事。当然，可以向Java的ConcurrentHashMap那样用多个buckets，每个bucket分别加锁，以降低contention。  
     2.  自己编写引用计数的只能指针。   
     3.  将来在C++11里面有unique\_ptr，能避免引用计数的开销，或许能够在某些场合替换shared\_ptr。  
+
+5.  线程同步的思想原则，按重要性排列：   
+    1.  首要原则是尽量最低限度的共享对象，减少需要同步的场合。一个对象能不暴露给别的线程就不要暴露，如果要暴露，有限考虑immutable对象。实在不行才暴露可修改的对象，病用同步措施来充分保护它。   
+    2.  其次是使用高级的并发编程够将，如TaskQueue、Producer-Consumer Queue，CountDownLatch等等。   
+    3.  最后不得已必须使用底层同步原语时，只用非递归的互斥器和条件变量，慎用读写锁，不要用信号量。   
+    4.  除了使用atomic整数外，不自己编写lock-free代码，也不要用内核级同步原语，不凭空猜测那种做法性能更好，比如spin lock vs mutex。   
+6.  ___互斥器___ 它保护临界区，任何时刻最多只能有一个线程在此mutex划出的临界区活动。单独使用的mutex时，我们主要为了保护共享数据，张硕的原则是：
+    1.  用RAII手法封装mutex的创建、销毁、加锁、解锁这四个操作。用RAII封装这几个操作是通行的做法，这几乎是C++标注你时间。即保证锁的生效期间等于一个作用域，不会因为一场忘记解锁。 
+    2.  只用非递归的mutex(即不可重入的mutex)。   
+    3.  布手工调用lock()和unlock()函数，一切交给栈上的Guard对象的构造和析构函数负责。Guard对象的生命期正好等于临界区这样我们保证始终在同一个函数同一个scope里对某个mutex加锁和解锁。避免在foo()里加锁，然后跑到bar()里解锁。也避免在不同的语句分之中分别加锁、解锁。这种做法叫做Scoped Locking。   
+    4.  在每次过早Guard对象的时候，思考一路上(调用栈上)已经持有的锁，防止加锁顺序不同而导致死锁。有余Guard对象时栈上对象，看函数调用栈就能分析用锁的情况。   
+    ___次要原则___    
+    5.  不要跨进程使用mutex，进程通信只用TCP sockets。  
+    6.  加锁、解锁在同一个线程，线程a不能去unlock线程b已经锁住的mutex(RAII自动保证)。   
+    7.  别忘了解锁(RAII自动保证)。   
+    8.  不重复解锁(RAII自动保证)。   
+    9.  必要的时候可以考虑PTHREAD\_MUTEX\_ERRORCHECK来排错。   
+    按照上面的原则，几乎应该不会出错。   
+    ---
+    1.  ___只是用非递归的mutex___    
+        mutex分为递归和非递归两种，这是POSIX的叫法，另外的名字是可重入与费可重入。这两种mutex作为线程间的同步工具时没有区别，他们的唯一区别在于：同一个线程可以重复对可地柜mutex加锁，但是不能重复对不可递归mutex加锁。
+    首选非递归mutex，不是为了性能，而是为了设计意图。非递归和递归的差别其实不大，因为少了一个计数器，前者略快一点而已。在同一个线程里多次对非递归mutex加锁会立刻导致死锁，这其实是有点，能帮助我们思考代码对锁的期求，帮助我们发现问题。  
+
+        ```
+        MutexLock mutex;
+        std::vector<Foo> foos;
+
+        void post(const Foo &f)
+        {
+            MutexLockGuard lock(mutex);
+            foos.push_back(f);
+        }
+
+        void traverse()
+        {
+            MutexLockGuard lock(mutex);
+
+            for (std::vector<Foo>::const_iterator it = foos.begin(); it!=foos.end(); ++it)
+            {
+                it->doit();
+            }
+        }
+        ```  
+
+        post()加锁，然后修改foos对象；traverse()加锁，然后便利foos向量，这些都是正确的。如果某一天，Foo::doit简介的调用了post()，那么会有这样的结果：  
+            1.  mutex是非递归的，于是死锁了。   
+            2.  mutex是递归的，有余push_back()可能(但不总是)导致vector迭代器失效，程序偶尔会crash。   
+        这时候就能体现出非递归性mutex的优越性：把程序的逻辑错误暴露出来。死锁比较容易debug，把哥哥线程的调用栈打印出来，只要每个函数不是特别长，很容易看出来程序怎么死的。或者使用PTHREAD\_MUTEX\_ERROCHECK一下子就能找到错误。如果确实需要在便利的时候修改vector，有两种做法，意识把修改推后，基础循环中师徒添加或者删除那个元素，等循环结束了再依记录修改foos；二是使用copy-on-write，如果一个函数极可能在一家所的情况下调用，有可能在未加锁的情况下调用，那么久拆成两个函数：  
+            1.  根原来的函数同名，函数加锁，转而调用第二个函数。  
+            2.  给函数名加上WithLockHold，不加锁，把原来的函数体搬过来。   
+        如下：  
+
+        ```
+        MutexLock mutex;
+        std::vector<Foo> foos;
+
+        void post(const Foo &f)
+        {
+            MutexLockGuard lock(mutex);
+            postWitchLockHold(f);
+        }
+
+        void postWithLockHold(const Foo &f)
+        {
+            foos.push_back(f);
+        }
+        ```
+
+        这也可能出现两个可能：  
+            1.  误用了加锁版本，死锁了。   
+            2.  误用了不加锁版本，数据损坏了。  
+        对于上面第一条，可以这样子排错：  
+        
+        ```
+        void postWithLockHold(const Foo &f)
+        {
+            assert(mutex.isLockedByThisThread());
+        }
+        ```
+
+    2.  ___死锁___  
