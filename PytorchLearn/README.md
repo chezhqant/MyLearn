@@ -17,6 +17,11 @@
 * [7. model.train() model.eval()](#7-modeltrain-modeleval)
 * [8. focal loss](#8-focal-loss)
 * [9. torch教程](#9-torch教程)
+* [0.  nvidia-smi](#0-nvidia-smi)
+* [1.  .ini](#1-ini)
+* [2.  bottleneck](#2-bottleneck)
+* [3.  详解PyTorch中的ModuleList和Sequential](#3-详解pytorch中的modulelist和sequential)
+* [4.  torch的一些方法&&类](#4-torch的一些方法类)
 
 <!-- vim-markdown-toc -->
 ---
@@ -167,3 +172,10 @@ const int& x = 666; // OK
 ## 9. torch教程    
 + [torch中文网](https://www.pytorchtutorial.com/)   
 + [torch手册](https://pytorch-cn.readthedocs.io/zh/latest/package\_references/Tensor/#contiguous-tensor)    
+## 0.  [nvidia-smi](https://blog.csdn.net/C\_chuxin/article/details/82993350)  
+## 1.  [.ini](https://www.jianshu.com/p/2f0636e27477)  
+## 2.  [bottleneck](https://www.zhihu.com/question/285578426)
+## 3.  [详解PyTorch中的ModuleList和Sequential](https://zhuanlan.zhihu.com/p/75206669)
+## 4.  torch的一些方法&&类  
+    0.  多维度的shape怎么看  
+        ![shape](./pictures/1.jpg title="shape")
