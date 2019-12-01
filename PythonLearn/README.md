@@ -64,7 +64,7 @@
 1.  [为什么类的变量是定义在类方法内的?](https://www.cnblogs.com/chownjy/p/8663024.html)
 
 ## 2. Functions </br>
-1.  [重构](https://blog.csdn.net/liuwei\_q/article/details/83032297)  
+1.  [重构](https://blog.csdn.net/liuwei_q/article/details/83032297)
 2.  [lambda/filter/reduce/map](https://www.cnblogs.com/kaituorensheng/p/5300340.html)  
 3.  [with](https://www.jianshu.com/p/5b01fb36fd4c) </br>
 4.  [闭包](https://blog.csdn.net/weixin_44141532/article/details/87116038) </br>
