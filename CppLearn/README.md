@@ -26,6 +26,7 @@
         * [this指针](#this指针)
         * [重载、覆盖、隐藏](#重载覆盖隐藏)
         * [const成员函数](#const成员函数)
+        * [类成员变量初始化顺序](#类成员变量初始化顺序)
     * [关键字](#关键字)
         * [decltype](#decltype)
         * [override](#override)
@@ -153,6 +154,7 @@ const int& x = 666; // OK
 ### [this指针](https://www.cnblogs.com/Star-Lit/p/8623050.html)    
 ### [重载、覆盖、隐藏](https://www.cnblogs.com/ZY-Dream/p/10068993.html)    
 ### [const成员函数](https://blog.csdn.net/u011197534/article/details/78385550)    
+### [类成员变量初始化顺序](https://blog.csdn.net/shimadear/article/details/82527442)   
 ## 关键字   
 ### [decltype](https://www.cnblogs.com/QG-whz/p/4952980.html)    
 ### [override](https://blog.csdn.net/jolin678/article/details/63695023)    
@@ -213,7 +215,7 @@ const int& x = 666; // OK
 2.  [虚假唤醒](https://www.zhihu.com/question/271521213)   
 
 # Makefile    
-
+1. [cmake手册](https://www.cnblogs.com/coderfenghc/tag/cmake/)
 
 # Shell   
 1. [shell中的符号](https://www.jb51.net/article/120595.htm)   

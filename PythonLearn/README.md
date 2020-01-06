@@ -82,6 +82,7 @@
 ### 3.7. [shutil](https://www.jb51.net/article/145522.htm) </br>
 ### 3.8. [Python的常用模块](https://www.cnblogs.com/brf-test/p/11241161.html) </br>
 ### 3.9. [os模块](https://www.cnblogs.com/kaituorensheng/archive/2013/03/18/2965766.html) </br>
+    1.  [os.path](https://www.jianshu.com/p/cfa219ff0791?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation)   
 ### 3.10. [pydicm](https://blog.csdn.net/linhai1028/article/details/79551488) </br>
 ### 3.11. [PySimpleGUI](https://linux.cn/article-10027-1.html)</br>
 ### 3.12. [collections](https://www.cnblogs.com/zhizhan/p/5692668.html) </br>
