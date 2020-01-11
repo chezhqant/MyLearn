@@ -221,44 +221,44 @@ ___C++ Template, The Complete Guide___
 
 10.  类模板可以被局部特化：    
 
-    ```
-    template <typename T1, typename T2>
-    class Myclass {};
+     ```
+     template <typename T1, typename T2>
+     class Myclass {};
 
-    有以下几种局部特化：    
-    template <typename T>
-    class Myclass<T, T> {};
+     有以下几种局部特化：    
+     template <typename T>
+     class Myclass<T, T> {};
 
-    template <typename T>
-    class Myclass<T, int> {};
+     template <typename T>
+     class Myclass<T, int> {};
 
-    template<typename T1, typename T2>
-    class Myclass<T1*, T2*>{};
-    ```
+     template<typename T1, typename T2>
+     class Myclass<T1*, T2*>{};
+     ```
 
 11.  对于类模板，你可以为模板参数定义缺省值：这些值就被成为缺省模板实参，而且他们还可以引用之前的模板参数：    
 
-    ```
-    template <typename T, typename CONT = std::vector<T>>
-    class Stack {
-    private:
-      CONT elems;
-    public:
-      void push(T const&);
-      void pop();
-      T top() const;
-      bool empty() const {
-        return elems.empty();
-      }
-    };
+     ```
+     template <typename T, typename CONT = std::vector<T>>
+     class Stack {
+     private:
+       CONT elems;
+     public:
+       void push(T const&);
+       void pop();
+       T top() const;
+       bool empty() const {
+         return elems.empty();
+       }
+     };
 
-    template <typename T, typename CONT>
-    void Stack<T, CONT>::push(T const& elem) {
-      elems.push_back(elem);
-    }
-    ```
+     template <typename T, typename CONT>
+     void Stack<T, CONT>::push(T const& elem) {
+       elems.push_back(elem);
+     }
+     ```
 
-    从上面我们可以看出：类模板含有两个模板参数，因此每个成员函数的定义都必须有两个参数 `template <typename T, typename CONT>`.   
+     从上面我们可以看出：类模板含有两个模板参数，因此每个成员函数的定义都必须有两个参数 `template <typename T, typename CONT>`.   
 
 12.  根据[11](#11)可以定义为：   
      1.  `Stack<int> int_stack;`   
