@@ -261,5 +261,5 @@ ___C++ Template, The Complete Guide___
     从上面我们可以看出：类模板含有两个模板参数，因此每个成员函数的定义都必须有两个参数`template <typename T, typename CONT>`.   
 
 12.  根据[11](#11)可以定义为：   
-    1.  `Stack<int> int_stack;`   
-    2.  `Stack<double, std::deque<double>> dbl_stack; // 可以指定容器类型`        
+     1.  `Stack<int> int_stack;`   
+     2.  `Stack<double, std::deque<double>> dbl_stack; // 可以指定容器类型`        
