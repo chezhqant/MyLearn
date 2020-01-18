@@ -332,7 +332,7 @@ ___C++ Template, The Complete Guide___
     MyClass<s> = x; // OK, 全局字符数组s是由“hello”初始化，是一个外部链接对象。
     ```
 
-#  第五章  
+#  第五章 技巧性知识  
 1.  关键字typename  
     在C++标准化过程中，引入关键字typename是为了说明：模板内部的标识符可以是一个类型。譬如如下例子：    
 
