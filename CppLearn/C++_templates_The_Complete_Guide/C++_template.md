@@ -556,7 +556,6 @@ ___C++ Template, The Complete Guide___
     public:
       MyClass() : x() //确认x已被初始化，内建类型对象也是如此
     };
-    ]
     ```
 
 8.  把字符串传递给函数模板的引用参数会导致意外结果：
