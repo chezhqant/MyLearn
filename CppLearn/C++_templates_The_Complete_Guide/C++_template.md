@@ -758,3 +758,79 @@ ___C++ Template, The Complete Guide___
     对于每个不同的实体，在一个程序中最多只能有一个显式实例化体，换句话说，你可以同时显式实例化`print_typeof<int>`和`print_typeof<double>`, 但在同一个程序中每个指示符都只能够出现一次。  
     +  缺点：必须仔细跟踪每个需要实例化的实体，对于大项目而言，这种跟踪具有很大的负担。   
     +  优点：实例化在需要的时候才进行，这样避免了庞大头文件的开销。   
+
+3.  ___采用包含模型还是显式实例化？___
+    为了能够自由选择包含模型或者显式实例化，我们可以把模板的定义和模板的生命放在两个不同的文件中，这两个文件都以头文件的形式存在。举个例子：    
+
+    ```
+    //stack.hpp
+    #ifndef STACK_HPP
+    #define STACK_HPP
+
+    #include <vector>
+
+    template <typename T>
+    class Stack {
+    private:
+      std::vector<T> elems;
+
+    public:
+      Stack();
+      void push(T const&);
+      void pop();
+      T top() const;
+    };
+
+    #endif //STACK_HPP
+
+
+    //stackdef.hpp
+    #ifndef STACKDEF_HPP
+    #define STACKDEF_HPP
+
+    #include "stack.hpp"
+
+    template <typename T>
+    void Stack<T>::push (T const& elem) {
+      elems.push_back(elem);
+    }
+
+    ...
+
+    #endif //STACKDEF_HPP
+    ```
+
+    现在如果我们希望使用包含模型，那么只要使用`#include "stackdef.hpp"`就可以了；如果想要显式实例化模板，就只是用`#include "stack.hpp"`,然后再提供一个含有所需要显式实例化指示符的“.c”文件：    
+
+    ```
+    //stacktest1.cpp
+    #include "stack.hpp"
+    #include <iostream>
+    #include <string>
+
+    int main() 
+    {
+      Stack<int> int_stack;
+      std::cout << int_stack.top() << std::endl;
+      int_stack.pop();
+
+      Stack<std::string> string_stack;
+      string_stack.push("hello");
+      std::cout << string_stack.top() << std::endl;
+    }
+
+    //stack_inst.cpp
+    #include "stackdef.hpp" //此处不应该是stack.hpp?
+    #include <string>
+
+    //instantiate class Stack<> for int
+    template Stack<int>;
+
+    //instantiate some member functions of Stack<> for strings
+    template Stack<std::string>::Stack();
+    template void Stack<std::string>::push(std::string const&);
+    template std::string Stack<std::string>::top();
+    ```
+
+4.  ___模板和内联___
+    函数模板缺省情况下是内联的，___这句话是错误的！___如果想要编写需要被实现为内联函数的函数模板，牛仍然应该使用inline修饰符(除非这个函数有余在类定义的内部进行实现的，这种情况是默认内联的)。   
