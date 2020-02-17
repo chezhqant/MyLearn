@@ -639,3 +639,52 @@ ___C++ Template, The Complete Guide___
         }
         ```
     5.  强制要求应用程序程序员使用显式类型转换。
+
+#  第六章 模板实战    
+1.  包含模型    
+  1.  链接错误    
+    大多数C或者C++程序员这么写非模板代码：
+    +  类和其他类型都被放在一个头文件中。   
+    +  对于全局变量和函数，只有声明放在头文件中，定义则位于“.c”文件中。   
+    这样所需的类型定义在整个程序都是可见的，链接器也不会给出重复定义的错误。
+    但这种方式并不适用于模板，比如：
+
+      ```
+      //basics/my_first.hpp
+      #ifndef MY_FIRST_HPP
+      #define MY_FIRST_HPP
+
+      //模板声明
+      template <typename T>
+      void print_typeof(T const&);
+
+      #endif
+
+      //basics/my_first.cpp
+      #include <iostream>
+      #include <typeinfo>
+
+      #include "my_first.hpp"
+
+      //模板的实现与定义
+      template <typename T>
+      void print_typeof(T const& x)
+      {
+        std::cout << typeid(x).name() << std::endl;
+      }
+
+
+      //最后在另一个“.c”文件中使用这个模板，并且把模板声明包含在这个文件中
+      ///basics/my_first_main.cpp
+      #include "my_first.hpp"
+
+      int main()
+      {
+        double ice = 3.0;
+        print_typeof(ice);//调用参数类型为double 的函数模板
+
+        return 0;
+      }
+      ```
+    
+    大多数C++编译器会通过这个程序，但是链接器可能会报错，提示找不到函数`print_typeof()`的定义。
