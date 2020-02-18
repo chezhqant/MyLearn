@@ -842,8 +842,169 @@ ___C++ Template, The Complete Guide___
     模板类通常被用于下面几个方面：  
     +  作为类模板的同义词     
     +  从模板产生的类     
-    +  具有一个template-id名称的类
+    +  具有一个template-id名称的类    
     第二个含义和第三个含义区别是细微的，本书不做区分。      
 
 2.  实例化和特化      
+    1.  模板实例化是一个通过使用具体值替换模板实参，从模板产生出普通类、函数或者成员函数的过程。这个过程最后或得的实体(譬如类、函数、成员函数等等)就是我们说的特化。    
+    2.  在C++中，实例化过程并不是产生特化的唯一方式。可以使用其他几只来显式地制定某个声明，该声明对模板参数进行特定的替换，从而产生特化：    
 
+    ```
+    template <typename T1, typename T2> //基本的类模板
+    class MyClass{
+
+    ...
+
+    };
+
+    template <>
+    class MyClass { //显式特化
+
+    ...
+
+    };
+
+
+    template <typename T1, typename T2>
+    class MyClass<bool, T2> {
+
+    ...
+
+    };
+    ```
+
+    当谈及（显式或者隐式）特化的时候，普通模板被称为基本模板。    
+
+3.  一处定义原则(ODR)   
+    1.  和全局变量与静态数据成员一样，在整个程序中，非内联函数和成员函数只能被定义一次。    
+    2.  类类型和内联函数在每个翻译单元中最多只能被定义一次，如果存在多个翻译单元，则其所有的定义都必须是等同的。一个翻译单元是指：预处理一个源文件所获得的结果，就是说它包括#include指示符所包含的内容。    
+
+4.  模板实参和模板参数    
+1.  eg:   
+
+    ```
+    template <typename T, int, N>
+    class ArrayClass {
+    public:
+      T array[N];
+    };
+
+    // 另一个功能相似的普通类
+    class DoubleArrayInClass {
+    public: double array[10];
+    };
+    ```
+
+    如果我们使用double和10分别替换参数T和N，那么这两者本质上是相同的。在C++中，我们把这种替换后的名称表示为：`ArrrayInClass<double, 10>`。紧邻在模板名称ArrayInClass后面的是用一对尖括号包围起来的模板实参列表。
+2.  template-id(它是指紧随其后的尖括号内部的所有实参的组合)   
+    1.  模板参数是指位于模板生命或者定义内部，关键字template后面所列举的名称（譬如我们例子中的T和N）。    
+    2.  模板实参是指用来替换模板参数的各个对象（我们例子中的double和10）。和模板参数不同的是，模板实参可以有不局限于“标识符名称”（就是有多重类型或者值）。    
+    3.  如果使用template-id进行替换，我们就称这种模板实参取代模板参数的替换为显式替换，但还存在有些情况会发生隐式替换（如果用缺省实参来替换模板参数）。    
+    4.  一个基本原则是：模板实参必须是一个可以在便一起建确定的模板实体或者值。这个要求有助于减少模板实体的运行期开销。
+    5.  因为模板参数是编译期实体，所以用他们来生成有效的模板实参：    
+
+    ```
+    template <typename T>
+    class Dozen {
+    public:
+      ArrayInClass<T, 12> contents;
+    };
+    ```
+    在上面的例子中，T及时一个模板参数（第一个T），也是一个模板实参（第二个T）。因此存在一种从简单模板构造出复杂模板的机制。    
+
+# 第八章 深入模板基础   
+1.  参数化声明    
+    1.  eg，它给出了函数模板和类模板，分别作为累成员的声明和普通命名空间的声明：    
+        ```
+        template <typename T>
+        class List { // 作为命名空间作用于的类模板
+        public:
+          template <typename T2> // 成员函数的模板
+          List(List<T2> const&); // 构造函数
+        };
+
+        template <typename T>
+        template <typename T2>
+        List<T>::List(List<T2> const& b) //位于类外部的成员函数模板定义
+        {}
+
+        template <typename T>
+        int length(List<T> const&); //位于外部命名空间作用域的函数模板
+
+        class Collection {
+        template <typename T> // 位于类内部的成员类模板
+        class Node {}; // 该类模板的定义
+
+        template <typename T> // 另一个作为成员(位于外围累的内部)的类模板
+        class Handle; // 该类模板在此处没有定义
+
+        template <typename T> // 位于类内部的成员函数模板的定义
+        T* alloc() {} // 显式内联函数
+        };
+
+        template <typename T> // 一个在累的外部定义的成员类模板
+        class Collection::Handle { // 该类模板的定义
+
+        };
+        ```
+
+        从上面可以看出，在所属外围类的外部进行定义的成圆模板可以具有多个模板参数子句`template<...>`。子句的顺序是从最外围的类模板开始，依次到达每部模板。
+    2.  联合模板也是被允许的：    
+
+        ```
+        template <typename T>
+        union AllocChunk {
+          T object;
+          unsigned char bytes[sizeof(T)];
+        };
+        ```
+
+    3.  函数模板生命也可以具有缺省调用实参：    
+
+      ```
+      template <typename T>
+      void report_top(Stack<T> const&, int number = 10);
+      template <typename T>
+      void fill (Array<T>*, T const& = T()) // 对于基本类型 T() = 0
+      ```
+
+      后面一个声明说明了，缺省调用实参可以依赖于模板参数。当调用fill()函数时，如果提供了第二个函数调用参数的话，就不会实例化这个缺省实参。这同时说明了。即使不能基于特定类型T来实例化缺省调用实参，也可能不会出现错误：   
+
+      ```
+      class Value {
+      public:
+        Value(int); // 不存在缺省构造函数
+      };
+
+      void init (Array<Value>* array) {
+        Value zero(0);
+        fill(array, zero); // 正确，没有使用 = T()
+        fill (array); // 错误：使用了= T()， 但当T=Value时，缺省构造函数无效。
+      }
+      ```
+
+      除了两种基本类型的模板之外，还可以使用相似符号来参数化其他的3种声明。这3种生命分别都有与之对应的类模板成员的定义：     
+      +  类模板的成员函数的定义   
+      +  类模板的潜逃累成员的定义     
+      +  类模板的静态数据成员的定义   
+      尽管也可以对这三者进行参数化，但是他们的定义使用的都不是自身(即第一次使用)的模板，而是外围类模板。他们的参数也double是由外围类模板来决定的：   
+
+      ```
+      template <int I>
+      class CupBoard {
+        void open();
+        class Shelf;
+        static double total_weight;
+      };
+
+      template <int I>
+      void CupBoard<I>::open() {}
+
+      template <int I>
+       class CupBoard<I>::Shelf {};
+
+      template <int I>
+      double CupBoard<I>::total_weight = 0.0;
+      ```
+
+      尽管这种参数化定义通常也被称为模板，但是存在不适用这个概念的情况。    
