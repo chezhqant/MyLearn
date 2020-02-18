@@ -914,7 +914,7 @@ ___C++ Template, The Complete Guide___
 
 # 第八章 深入模板基础   
 1.  参数化声明    
-    1.  eg，它给出了函数模板和类模板，分别作为累成员的声明和普通命名空间的声明：    
+    1.  eg，它给出了函数模板和类模板，分别作为类成员的声明和普通命名空间的声明：    
         ```
         template <typename T>
         class List { // 作为命名空间作用于的类模板
@@ -932,14 +932,14 @@ ___C++ Template, The Complete Guide___
         int length(List<T> const&); //位于外部命名空间作用域的函数模板
 
         class Collection {
-        template <typename T> // 位于类内部的成员类模板
-        class Node {}; // 该类模板的定义
+          template <typename T> // 位于类内部的成员类模板
+          class Node {}; // 该类模板的定义
 
-        template <typename T> // 另一个作为成员(位于外围累的内部)的类模板
-        class Handle; // 该类模板在此处没有定义
+          template <typename T> // 另一个作为成员(位于外围累的内部)的类模板
+          class Handle; // 该类模板在此处没有定义
 
-        template <typename T> // 位于类内部的成员函数模板的定义
-        T* alloc() {} // 显式内联函数
+          template <typename T> // 位于类内部的成员函数模板的定义
+          T* alloc() {} // 显式内联函数
         };
 
         template <typename T> // 一个在累的外部定义的成员类模板
