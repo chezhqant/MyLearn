@@ -51,7 +51,8 @@
 2.  [\_\_dict\_\_](https://www.cnblogs.com/alvin2010/p/9102344.html)  
 3.  [\_\_name\_\_](https://www.cnblogs.com/1204guo/p/7966461.html)  
 4.  [\_\_glob\_\_](https://www.jianshu.com/p/32e3364b22ee)   
-5.  [\_\_getitem\_\_](__https://zhuanlan.zhihu.com/p/27661382)    
+5.  [\_\_del\_\_](http://c.biancheng.net/view/2371.html)
+6.  [\_\_getitem\_\_](__https://zhuanlan.zhihu.com/p/27661382)    
 
 ### 1.2 [MRO](https://www.cnblogs.com/ssyfj/p/9017280.html) </br>
 ### 1.3 [super函数](https://www.imooc.com/article/50836) </br>
@@ -137,4 +138,5 @@
 3.  [python程序怎么执行的?](https://www.jianshu.com/p/03af86845c95)   
 4.  [module和包的区别](https://www.cnblogs.com/JetpropelledSnake/p/8905727.html)    
 5.  [python setup.py](http://blog.konghy.cn/2018/04/29/setup-dot-py/)   
+  1.  [python打包分发工具setuptools](http://www.bjhee.com/setuptools.html)    
 6.  [python os.environ](http://www.shuang0420.com/2017/03/10/Python%20os.environ.get()%20return%20None/)     
