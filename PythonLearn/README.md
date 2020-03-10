@@ -52,6 +52,7 @@
 3.  [\_\_name\_\_](https://www.cnblogs.com/1204guo/p/7966461.html)  
 4.  [\_\_glob\_\_](https://www.jianshu.com/p/32e3364b22ee)   
 5.  [\_\_getitem\_\_](__https://zhuanlan.zhihu.com/p/27661382)  
+6.  [\_\_del\_\_](__http://c.biancheng.net/view/2371.html)    
 
 ### 1.2 [MRO](https://www.cnblogs.com/ssyfj/p/9017280.html) </br>
 ### 1.3 [super函数](https://www.imooc.com/article/50836) </br>
@@ -82,7 +83,8 @@
 ### 3.7. [shutil](https://www.jb51.net/article/145522.htm) </br>
 ### 3.8. [Python的常用模块](https://www.cnblogs.com/brf-test/p/11241161.html) </br>
 ### 3.9. [os模块](https://www.cnblogs.com/kaituorensheng/archive/2013/03/18/2965766.html) </br>
-1.  [os.path](https://www.jianshu.com/p/cfa219ff0791?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation)   
+  1.  [os.path](https://www.jianshu.com/p/cfa219ff0791?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation)   
+  2.  [os.path.realpath(__file__)和os.path.cwd()的区别](https://blog.csdn.net/cityzenoldwang/article/details/78448039)
 ### 3.10. [pydicm](https://blog.csdn.net/linhai1028/article/details/79551488) </br>
 ### 3.11. [PySimpleGUI](https://linux.cn/article-10027-1.html)</br>
 ### 3.12. [collections](https://www.cnblogs.com/zhizhan/p/5692668.html) </br>
@@ -134,3 +136,6 @@
     1.  [解释](https://blog.csdn.net/weihongxu2222/article/details/51320006)  
 2.  [iterable和iterator](https://zhuanlan.zhihu.com/p/32162554)   
 3.  [python程序怎么执行的?](https://www.jianshu.com/p/03af86845c95)   
+4.  [module和包的区别](https://www.cnblogs.com/JetpropelledSnake/p/8905727.html)    
+5.  [python setup.py](http://blog.konghy.cn/2018/04/29/setup-dot-py/)   
+6.  [python os.environ](http://www.shuang0420.com/2017/03/10/Python%20os.environ.get()%20return%20None/)     
