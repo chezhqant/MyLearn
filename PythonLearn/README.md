@@ -138,5 +138,5 @@
 3.  [python程序怎么执行的?](https://www.jianshu.com/p/03af86845c95)   
 4.  [module和包的区别](https://www.cnblogs.com/JetpropelledSnake/p/8905727.html)    
 5.  [python setup.py](http://blog.konghy.cn/2018/04/29/setup-dot-py/)   
-  1.  [python打包分发工具setuptools](http://www.bjhee.com/setuptools.html)    
+    1.  [python打包分发工具setuptools](http://www.bjhee.com/setuptools.html)    
 6.  [python os.environ](http://www.shuang0420.com/2017/03/10/Python%20os.environ.get()%20return%20None/)     
