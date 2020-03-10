@@ -51,8 +51,7 @@
 2.  [\_\_dict\_\_](https://www.cnblogs.com/alvin2010/p/9102344.html)  
 3.  [\_\_name\_\_](https://www.cnblogs.com/1204guo/p/7966461.html)  
 4.  [\_\_glob\_\_](https://www.jianshu.com/p/32e3364b22ee)   
-5.  [\_\_getitem\_\_](__https://zhuanlan.zhihu.com/p/27661382)  
-6.  [\_\_del\_\_](__http://c.biancheng.net/view/2371.html)    
+5.  [\_\_getitem\_\_](__https://zhuanlan.zhihu.com/p/27661382)    
 
 ### 1.2 [MRO](https://www.cnblogs.com/ssyfj/p/9017280.html) </br>
 ### 1.3 [super函数](https://www.imooc.com/article/50836) </br>
