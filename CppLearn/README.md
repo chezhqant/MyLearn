@@ -267,7 +267,7 @@ const int& x = 666; // OK
 # 优化
 ## [simd](https://zhuanlan.zhihu.com/p/55327037)   
 ## [open mp](https://blog.csdn.net/ArrowYL/article/details/81094837)    
-    1.  [open mp英文版](https://bisqwit.iki.fi/story/howto/openmp/)   
+  1.  [open mp英文版](https://bisqwit.iki.fi/story/howto/openmp/)   
 
 
 # C++11
