@@ -1115,3 +1115,15 @@ ___C++ Template, The Complete Guide___
           Container<int> storage; // 隐式等价于Container<int, MyAllocator>
         };
         ```
+
+#  第九章 模板中的名称    
+1.  名称的分类    
+    1.  如果一个名称是用域解析运算符(::)， 或者成员访问运算符(.或者->)来显示指定他所属的作用域，我们就该名称伟受限名称。例如`this->count`就是一个受限名称，而count则不是(即使前面没有符号，count实际上引用的也是一个类成员)。   
+    2.  如果一个名称依赖于模板参数，我们称他为依赖型参数。例如，如果T是一个模板参数，`std::vector<T>::iterator`就是一个依赖型名称，但是如果T是一个已知的typedef（类型定义，例如int）那么，`std::vector<T>::iterator`就不是一个依赖型名称。      
+
+\begin{array}{c|c}
+\hline
+\text{C声明}                & \text{说明和要点} \\\\
+\hline{标识符}              & \text{一个只由字符，下划线和数字组成的不间断字符序列。他不能以数字开始，而且某些标识符也需伟实现所保留。你不能在你的程序中引用他们，另外英避免以下划线开头和是用两个连续的下划线。} \\\\
+\hline
+\end{array}

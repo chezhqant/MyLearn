@@ -216,14 +216,16 @@ const int& x = 666; // OK
 2.  [虚假唤醒](https://www.zhihu.com/question/271521213)   
 
 # Makefile    
-1. [cmake手册](https://www.cnblogs.com/coderfenghc/tag/cmake/)
+1.  [cmake手册](https://www.cnblogs.com/coderfenghc/tag/cmake/)
+  1.  [cmake policy](https://www.cnblogs.com/hustdc/p/6644002.html)   
+  2.  [cmake find\_package](https://www.jianshu.com/p/39fc5e548310)   
 
 # Shell   
-1. [shell中的符号](https://www.jb51.net/article/120595.htm)   
+1.  [shell中的符号](https://www.jb51.net/article/120595.htm)   
 
 
 # 设计模式    
-1. [设计模式](https://www.cnblogs.com/5iedu/category/825371.html)    
+1.  [设计模式](https://www.cnblogs.com/5iedu/category/825371.html)    
 
 
 # 异常   
