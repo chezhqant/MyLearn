@@ -40,6 +40,7 @@
     * [3.21. argparse](#3.21.-argparse)
     * [3.22. configparser](#3.22.-configparser)
     * [3.21. ctypes](#3.21.-ctypes)
+    * [3.22. bututils](#3.22.-bututils)
   * [4. Common Functions](#4.-common-functions)
   * [5. 异常</br>](#5.-异常</br>)
     * [5.1. 基本理解](#5.1.-基本理解)
@@ -155,6 +156,7 @@
 ### 3.21. [argparse](http://blog.xiayf.cn/2013/03/30/argparse/)
 ### 3.22. [configparser](https://www.jianshu.com/p/2f0636e27477)
 ### 3.21. [ctypes](https://cloud.tencent.com/developer/section/1370537#stage-100049081)
+### 3.22. [bututils](https://www.osgeo.cn/cpython/distutils/apiref.html)
 
 ## 4. Common Functions
 1.  [time的相关函数](https://blog.csdn.net/brucewong0516/article/details/79044905)</br>
