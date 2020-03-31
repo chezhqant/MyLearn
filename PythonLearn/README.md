@@ -124,12 +124,12 @@
 4.  [闭包](https://blog.csdn.net/weixin_44141532/article/details/87116038) </br>
 5.  [yield](https://www.ibm.com/developerworks/cn/opensource/os-cn-python-yield/index.html) </br>
 6.  [del](https://blog.csdn.net/weihongxu2222/article/details/51320006)   
-7.  [iter](https://docs.python.org/zh-cn/3/library/functions.html]   
+7.  [iter](https://docs.python.org/zh-cn/3/library/functions.html)   
 
 ## 3. Packages
 ### 3.1. [csv](https://www.cnblogs.com/wuxunyan/p/10442444.html)</br>
 ### 3.2. [sys.module](https://www.cnblogs.com/zhaojingyu/p/9069076.html)</br>
-  1.  sys.argv(https://www.cnblogs.com/aland-1415/p/6613449.html)     
+  1.  [sys.argv](https://www.cnblogs.com/aland-1415/p/6613449.html)     
 ### 3.3. [xml解释器](https://blog.csdn.net/guangmingsky/article/details/77601225)</br>
 ### 3.4. [pika](https://pypi.org/project/pika/)</br>
 ### 3.5. [python导入包](https://blog.csdn.net/chinesepython/article/details/82113575) </br>
