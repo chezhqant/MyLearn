@@ -1,6 +1,59 @@
 ***this file is my learnd python3, and is addtion to [python3教程](https://www.runoob.com/python3/python3-tutorial.html)***
 
 ***[谷歌编写规格指南](https://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/python\_language\_rules/)***
+
+
+
+<!-- vim-markdown-toc Marked -->
+
+* [Contents](#contents)
+  * [1. Class</br>](#1.-class</br>)
+    * [1.1 专有方法 </br>](#1.1-专有方法-</br>)
+    * [1.2 MRO </br>](#1.2-mro-</br>)
+    * [1.3 super函数 </br>](#1.3-super函数-</br>)
+    * [1.4 [@property\/@staticmethod\/@classmethod](https://www.cnblogs.com/wangyongsong/p/6750454.html) </br>](#1.4-[@property\/@staticmethod\/@classmethod](https://www.cnblogs.com/wangyongsong/p/6750454.html)-</br>)
+    * [1.5 python的下划线们</br>](#1.5-python的下划线们</br>)
+    * [1.6 object类 </br>](#1.6-object类-</br>)
+    * [1.7 类变量和实例变量 </br>](#1.7-类变量和实例变量-</br>)
+  * [2. Functions </br>](#2.-functions-</br>)
+  * [3. Packages](#3.-packages)
+    * [3.1. csv</br>](#3.1.-csv</br>)
+    * [3.2. sys.module</br>](#3.2.-sys.module</br>)
+    * [3.3. xml解释器</br>](#3.3.-xml解释器</br>)
+    * [3.4. pika</br>](#3.4.-pika</br>)
+    * [3.5. python导入包 </br>](#3.5.-python导入包-</br>)
+    * [3.6. logging </br>](#3.6.-logging-</br>)
+    * [3.7. shutil </br>](#3.7.-shutil-</br>)
+    * [3.8. Python的常用模块 </br>](#3.8.-python的常用模块-</br>)
+    * [3.9. os模块 </br>](#3.9.-os模块-</br>)
+    * [3.10. pydicm </br>](#3.10.-pydicm-</br>)
+    * [3.11. PySimpleGUI</br>](#3.11.-pysimplegui</br>)
+    * [3.12. collections </br>](#3.12.-collections-</br>)
+    * [3.13. pymysql </br>](#3.13.-pymysql-</br>)
+    * [3.14. multiprocessing </br>](#3.14.-multiprocessing-</br>)
+    * [3.15. python json模块</br>](#3.15.-python-json模块</br>)
+    * [3.16. subprocess](#3.16.-subprocess)
+    * [3.17. configparser](#3.17.-configparser)
+    * [3.18. glob](#3.18.-glob)
+    * [3.19. io.ByteIO](#3.19.-io.byteio)
+    * [3.20. re](#3.20.-re)
+    * [3.21. argparse](#3.21.-argparse)
+    * [3.22. configparser](#3.22.-configparser)
+    * [3.21. ctypes](#3.21.-ctypes)
+  * [4. Common Functions](#4.-common-functions)
+  * [5. 异常</br>](#5.-异常</br>)
+    * [5.1. 基本理解](#5.1.-基本理解)
+  * [6. 杂项 </br>](#6.-杂项-</br>)
+    * [6.1 环境变量 </br>](#6.1-环境变量-</br>)
+    * [6.2 Python字符串前面加u,r,b的含义](#6.2-python字符串前面加u,r,b的含义)
+    * [6.3 [python的\*](https://www.cnblogs.com/jony7/p/8035376.html)](#6.3-[python的\*](https://www.cnblogs.com/jony7/p/8035376.html))
+    * [6.4 基本类型](#6.4-基本类型)
+    * [6.5 [一些包的特殊用法]](#6.5-[一些包的特殊用法])
+    * [6.6 pyton编码](#6.6-pyton编码)
+    * [6.7 python的理解](#6.7-python的理解)
+
+<!-- vim-markdown-toc -->
+
 # Contents
 
 ## 1. Class</br>
@@ -76,6 +129,7 @@
 ## 3. Packages
 ### 3.1. [csv](https://www.cnblogs.com/wuxunyan/p/10442444.html)</br>
 ### 3.2. [sys.module](https://www.cnblogs.com/zhaojingyu/p/9069076.html)</br>
+  1.  sys.argv(https://www.cnblogs.com/aland-1415/p/6613449.html)     
 ### 3.3. [xml解释器](https://blog.csdn.net/guangmingsky/article/details/77601225)</br>
 ### 3.4. [pika](https://pypi.org/project/pika/)</br>
 ### 3.5. [python导入包](https://blog.csdn.net/chinesepython/article/details/82113575) </br>
@@ -83,8 +137,10 @@
 ### 3.7. [shutil](https://www.jb51.net/article/145522.htm) </br>
 ### 3.8. [Python的常用模块](https://www.cnblogs.com/brf-test/p/11241161.html) </br>
 ### 3.9. [os模块](https://www.cnblogs.com/kaituorensheng/archive/2013/03/18/2965766.html) </br>
-  1.  [os.path](https://www.jianshu.com/p/cfa219ff0791?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation)   
-  2.  [os.path.realpath(__file__)和os.path.cwd()的区别](https://blog.csdn.net/cityzenoldwang/article/details/78448039)
+  1.  [os.path](https://www.jianshu.com/p/cfa219ff0791?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation)     
+  2.  [os.path.realpath(__file__)和os.path.cwd()的区别](https://blog.csdn.net/cityzenoldwang/article/details/78448039)    
+  3.  os.getenv   
+      看源代码可以发现，如果key在环境变量里面，返回key在环境变量里面的值，如果不存在，则返回default。     
 ### 3.10. [pydicm](https://blog.csdn.net/linhai1028/article/details/79551488) </br>
 ### 3.11. [PySimpleGUI](https://linux.cn/article-10027-1.html)</br>
 ### 3.12. [collections](https://www.cnblogs.com/zhizhan/p/5692668.html) </br>
