@@ -4,57 +4,6 @@
 
 
 
-<!-- vim-markdown-toc Marked -->
-
-* [Contents](#contents)
-  * [1. Class</br>](#1.-class</br>)
-    * [1.1 专有方法 </br>](#1.1-专有方法-</br>)
-    * [1.2 MRO </br>](#1.2-mro-</br>)
-    * [1.3 super函数 </br>](#1.3-super函数-</br>)
-    * [1.4 [@property\/@staticmethod\/@classmethod](https://www.cnblogs.com/wangyongsong/p/6750454.html) </br>](#1.4-[@property\/@staticmethod\/@classmethod](https://www.cnblogs.com/wangyongsong/p/6750454.html)-</br>)
-    * [1.5 python的下划线们</br>](#1.5-python的下划线们</br>)
-    * [1.6 object类 </br>](#1.6-object类-</br>)
-    * [1.7 类变量和实例变量 </br>](#1.7-类变量和实例变量-</br>)
-  * [2. Functions </br>](#2.-functions-</br>)
-  * [3. Packages](#3.-packages)
-    * [3.1. csv</br>](#3.1.-csv</br>)
-    * [3.2. sys.module</br>](#3.2.-sys.module</br>)
-    * [3.3. xml解释器</br>](#3.3.-xml解释器</br>)
-    * [3.4. pika</br>](#3.4.-pika</br>)
-    * [3.5. python导入包 </br>](#3.5.-python导入包-</br>)
-    * [3.6. logging </br>](#3.6.-logging-</br>)
-    * [3.7. shutil </br>](#3.7.-shutil-</br>)
-    * [3.8. Python的常用模块 </br>](#3.8.-python的常用模块-</br>)
-    * [3.9. os模块 </br>](#3.9.-os模块-</br>)
-    * [3.10. pydicm </br>](#3.10.-pydicm-</br>)
-    * [3.11. PySimpleGUI</br>](#3.11.-pysimplegui</br>)
-    * [3.12. collections </br>](#3.12.-collections-</br>)
-    * [3.13. pymysql </br>](#3.13.-pymysql-</br>)
-    * [3.14. multiprocessing </br>](#3.14.-multiprocessing-</br>)
-    * [3.15. python json模块</br>](#3.15.-python-json模块</br>)
-    * [3.16. subprocess](#3.16.-subprocess)
-    * [3.17. configparser](#3.17.-configparser)
-    * [3.18. glob](#3.18.-glob)
-    * [3.19. io.ByteIO](#3.19.-io.byteio)
-    * [3.20. re](#3.20.-re)
-    * [3.21. argparse](#3.21.-argparse)
-    * [3.22. configparser](#3.22.-configparser)
-    * [3.21. ctypes](#3.21.-ctypes)
-    * [3.22. bututils](#3.22.-bututils)
-  * [4. Common Functions](#4.-common-functions)
-  * [5. 异常</br>](#5.-异常</br>)
-    * [5.1. 基本理解](#5.1.-基本理解)
-  * [6. 杂项 </br>](#6.-杂项-</br>)
-    * [6.1 环境变量 </br>](#6.1-环境变量-</br>)
-    * [6.2 Python字符串前面加u,r,b的含义](#6.2-python字符串前面加u,r,b的含义)
-    * [6.3 [python的\*](https://www.cnblogs.com/jony7/p/8035376.html)](#6.3-[python的\*](https://www.cnblogs.com/jony7/p/8035376.html))
-    * [6.4 基本类型](#6.4-基本类型)
-    * [6.5 [一些包的特殊用法]](#6.5-[一些包的特殊用法])
-    * [6.6 pyton编码](#6.6-pyton编码)
-    * [6.7 python的理解](#6.7-python的理解)
-
-<!-- vim-markdown-toc -->
-
 # Contents
 
 ## 1. Class</br>
@@ -183,7 +132,7 @@
 ### 6.4 基本类型  
 1.  [list]   
     1. [\[list::\]](https://blog.csdn.net/qq\_41940950/article/details/80765674)   
-### 6.5 [一些包的特殊用法]
+### 6.5 一些包的特殊用法
 1.  [matplotlib.plot画多张图，在一张图上画多个函数](https://blog.csdn.net/haikuotiankong7/article/details/90551841)    
 2.  [matplotlib.plot的颜色和线条、线条的形状](https://www.cnblogs.com/zoe-chang/p/11269780.html)    
 ### 6.6 pyton编码
@@ -197,4 +146,4 @@
 4.  [module和包的区别](https://www.cnblogs.com/JetpropelledSnake/p/8905727.html)    
 5.  [python setup.py](http://blog.konghy.cn/2018/04/29/setup-dot-py/)   
     1.  [python打包分发工具setuptools](http://www.bjhee.com/setuptools.html)    
-6.  [python os.environ](http://www.shuang0420.com/2017/03/10/Python%20os.environ.get()%20return%20None/)     
+6.  [python os.environ](http://www.shuang0420.com/2017/03/10/Python%20os.environ.get()%20return%20None/)          
