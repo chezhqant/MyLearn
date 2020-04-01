@@ -87,6 +87,9 @@
     5.  [git submodule](https://segmentfault.com/a/1190000020297996?utm\_source=tag-newest)  
 
 3.  shell的一些命令   
-    1.  [tmux](http://www.ruanyifeng.com/blog/2019/10/tmux.html)    
-    2.  [shell正则表达式](https://man.linuxde.net/docs/shell\_regex.html)
-    3.  [find](https://blog.csdn.net/stepbystepto/article/details/80851466)  
+  1.  [tmux](http://www.ruanyifeng.com/blog/2019/10/tmux.html)    
+  2.  [shell正则表达式](https://man.linuxde.net/docs/shell\_regex.html)
+  3.  [find](https://blog.csdn.net/stepbystepto/article/details/80851466)  
+  4.  [linux查看CPU几核](https://www.cnblogs.com/xd502djj/archive/2011/02/28/1967350.html)    
+  5.  [linux环境变量](https://www.jianshu.com/p/ac2bc0ad3d74)   
+  6.  [tar](http://linux.51yip.com/search/tar)      

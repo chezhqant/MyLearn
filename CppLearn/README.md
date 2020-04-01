@@ -219,6 +219,12 @@ const int& x = 666; // OK
 1.  [cmake手册](https://www.cnblogs.com/coderfenghc/tag/cmake/)
   1.  [cmake policy](https://www.cnblogs.com/hustdc/p/6644002.html)   
   2.  [cmake find\_package](https://www.jianshu.com/p/39fc5e548310)   
+  3.  cmake实践这本书   
+      1.  [excute_process](https://blog.csdn.net/qq_28584889/article/details/97758450)      
+      2.  [option()](https://zhjwpku.com/2019/11/15/cmake-basic-commands-intro.html)      
+      3.  [cmake_dependent_option](http://www.up4dev.com/2019/12/12/cmake_dependent_option/)          
+      4.  [cmake  function() macro()](https://elloop.github.io/tools/2016-04-11/learning-cmake-3-function-macro)        
+  4.  [cmake下载路径](https://cmake.org/files)        
 
 # Shell   
 1.  [shell中的符号](https://www.jb51.net/article/120595.htm)   

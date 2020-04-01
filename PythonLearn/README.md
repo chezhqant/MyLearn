@@ -78,8 +78,9 @@
 
 ## 3. Packages
 ### 3.1. [csv](https://www.cnblogs.com/wuxunyan/p/10442444.html)</br>
-### 3.2. [sys.module](https://www.cnblogs.com/zhaojingyu/p/9069076.html)</br>
-  1.  [sys.argv](https://www.cnblogs.com/aland-1415/p/6613449.html)     
+### 3.2. [sys模块](http://www.ityouknow.com/python/2019/10/09/python-sys-demonstration-028.html)          
+  1.  [sys.module](https://www.cnblogs.com/zhaojingyu/p/9069076.html)
+  2.  [sys.argv](https://www.cnblogs.com/aland-1415/p/6613449.html)     
 ### 3.3. [xml解释器](https://blog.csdn.net/guangmingsky/article/details/77601225)</br>
 ### 3.4. [pika](https://pypi.org/project/pika/)</br>
 ### 3.5. [python导入包](https://blog.csdn.net/chinesepython/article/details/82113575) </br>
@@ -98,6 +99,7 @@
 ### 3.14. [multiprocessing](https://www.osgeo.cn/cpython/library/multiprocessing.html) </br>
 ### 3.15. [python json模块](https://www.runoob.com/python/python-json.html)</br>
 ### 3.16. [subprocess](https://zhuanlan.zhihu.com/p/72829009)   
+  1.  [check_out()](https://python3-cookbook.readthedocs.io/zh_CN/latest/c13/p06_executing_external_command_and_get_its_output.html)      
 ### 3.17. [configparser](https://www.jianshu.com/p/2f0636e27477)    
 ### 3.18. [glob](https://www.jianshu.com/p/32e3364b22ee)   
 ### 3.19. [io.ByteIO](https://www.cnblogs.com/yqpy/p/8556090.html)   
@@ -106,6 +108,7 @@
 ### 3.22. [configparser](https://www.jianshu.com/p/2f0636e27477)
 ### 3.21. [ctypes](https://cloud.tencent.com/developer/section/1370537#stage-100049081)
 ### 3.22. [bututils](https://www.osgeo.cn/cpython/distutils/apiref.html)
+### 3.23. [__future__](https://segmentfault.com/a/1190000010857744)       
 
 ## 4. Common Functions
 1.  [time的相关函数](https://blog.csdn.net/brucewong0516/article/details/79044905)</br>
@@ -120,6 +123,7 @@
     > from A.B import C:此时命名空间只有Cimport A.B.C：此时只会在当前文件的命名空间中导入A的module，其他的不会导入   
     > 但是import A.B.C as D:此时只有D这么一个module，连A也没有   
     > from A.B import C:此时命名空间只有C   
+5.  [globals()](https://www.runoob.com/python/python-func-globals.html)     
 
 ## 5. 异常</br>
 ### 5.1. [基本理解](https://www.jianshu.com/p/66e2e4104e7c)
