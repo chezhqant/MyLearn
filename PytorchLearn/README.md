@@ -1,38 +1,13 @@
 ***a file for learning pytorch, and is a addtion to my knowledge***
 
 # <p align="center"> Catalogs </p>
----
-<!-- vim-markdown-toc GitLab -->
-
-* [1. 自动求导机制](#1-自动求导机制)
-* [2. 锁页内存](#2-锁页内存)
-* [3. `zero_grad()`](#3-zero_grad)
-* [4. 广播机制](#4-广播机制)
-    * [4.1 广播语义](#41-广播语义)
-    * [4.2 一般语义](#42-一般语义)
-    * [4.3 In - place 语义](#43-in-place-语义)
-    * [4.4 向后兼容性](#44-向后兼容性)
-* [5. nn.ModuleList](#5-nnmodulelist)
-* [6. pytorch源代码理解一</br>](#6-pytorch源代码理解一br)
-* [7. model.train() model.eval()](#7-modeltrain-modeleval)
-* [8. focal loss](#8-focal-loss)
-* [9. torch教程](#9-torch教程)
-* [0.  nvidia-smi](#0-nvidia-smi)
-* [1.  .ini](#1-ini)
-* [2.  bottleneck](#2-bottleneck)
-* [3.  详解PyTorch中的ModuleList和Sequential](#3-详解pytorch中的modulelist和sequential)
-* [4.  torch的一些方法&&类](#4-torch的一些方法类)
-* [5.  senet](#5-senet)
-
-<!-- vim-markdown-toc -->
----
 
 
-## 1. [自动求导机制](https://blog.csdn.net/chezhai/article/details/90317222)
+#  pytorch工程
+###  1.  [自动求导机制](https://blog.csdn.net/chezhai/article/details/90317222)
+###  2.  [锁页内存](https://blog.csdn.net/chezhai/article/details/90317699)
 
-## 2. [锁页内存](https://blog.csdn.net/chezhai/article/details/90317699)
-
-## 3. `zero_grad()`
+###  3.  `zero_grad()`
 
 > 这个函数好像很重要，当网络参量进行反馈时，梯度是被积累的而不是被替换掉；但是在每一个batch时毫无疑问并不需要将两个batch的梯度混合起来累积，因此这里就需要每个batch设置一遍`zero_grad`了
 
@@ -47,14 +22,14 @@ $$
 
 > 根据前面公式的理解,当参数更新完之后，是要将学习到的梯度清零的
 
-## 4. 广播机制
-### 4.1 广播语义  
+###  4.  广播机制
+1.  广播语义  
 
 > 许许多多的PyTorch操作都支持[`NumPy Broadcasting Semantics`](https://docs.scipy.org/doc/numpy/user/basics.broadcasting.html#module-numpy.doc.broadcasting "(in NumPy v1.15)")。  
 
 > 简而言之，如果PyTorch操作支持广播，那么它的Tensor参数可以自动扩展为相同的类型大小（不需要复制数据）。  
 
-### 4.2 一般语义  
+2.  一般语义  
 
 如果遵守以下规则，则两个张量是“可广播的”(必须满足两种情况)：  
 
@@ -117,7 +92,7 @@ RuntimeError: The size of tensor a (2) must match the size of tensor b (3) at no
 
 ```  
 
-### 4.3 In - place 语义   
+3.  In - place 语义   
 
 > 一个复杂因素是in-place操作不允许in-place张量像广播那样改变形状。  
 
@@ -137,7 +112,7 @@ RuntimeError: The expanded size of the tensor (1) must match the existing size (
 
 ```  
 
-### 4.4 向后兼容性  
+4.  向后兼容性  
 
 > PyTorch的早期版本允许某些逐点函数在具有不同形状的张量上执行，只要每个张量中的元素数量相等即可。 然后通过将每个张量视为1维来执行逐点运算。PyTorch现在支持广播，并且“1维”逐点行为被认为已弃用，并且在张量不可广播但具有相同数量的元素的情况下将生成Python警告。  
 
@@ -157,30 +132,36 @@ __main__:1: UserWarning: self and other do not have the same shape, but are broa
 Changing behavior in a backwards incompatible manner to broadcasting rather than viewing as 1-dimensional.
 
 ```
-## 5. [nn.ModuleList](https://blog.csdn.net/byron123456sfsfsfa/article/details/89930990) 
+###  5.  [nn.ModuleList](https://blog.csdn.net/byron123456sfsfsfa/article/details/89930990) 
 
-## 6. [pytorch源代码理解一](https://www.52coding.com.cn/2019/05/05/PyTorch1/)</br>
+###  6.  [pytorch源代码理解一](https://www.52coding.com.cn/2019/05/05/PyTorch1/)</br>
 
-## 7. model.train() model.eval()
+###  7.  model.train() model.eval()
 ```
 int& x = 666;       // Error
 const int& x = 666; // OK
 第一个操作是错误的，它是一个使用int类型的右值来初始化non-const的int&类型的非法操作。第二个操作正确，当然，x是一个常量，你不能改变他。（译者按：注意，常量引用只是规定无法通过该引用改变引用的对象，如果该对象有其他非常量引用或者指针，通过这些改变该对象仍然是合法的）
 ```
 
-## 8. [focal loss](https://www.cnblogs.com/king-lps/p/9497836.html)   
-+ [验证gamma和alpha对focal loss的影响](./scripts/plot\_focal\_loss.py)    
-## 9. torch教程    
-+ [torch中文网](https://www.pytorchtutorial.com/)   
-+ [torch手册](https://pytorch-cn.readthedocs.io/zh/latest/package\_references/Tensor/#contiguous-tensor)    
-## 0.  [nvidia-smi](https://blog.csdn.net/C\_chuxin/article/details/82993350)  
-## 1.  [.ini](https://www.jianshu.com/p/2f0636e27477)  
-## 2.  [bottleneck](https://www.zhihu.com/question/285578426)
-## 3.  [详解PyTorch中的ModuleList和Sequential](https://zhuanlan.zhihu.com/p/75206669)
-## 4.  torch的一些方法&&类  
-1.  多维度的shape怎么看  
+###  8.  [详解PyTorch中的ModuleList和Sequential](https://zhuanlan.zhihu.com/p/75206669)
+
+###  9.  多维度的shape怎么看  
     ![shape](./pictures/1.jpg "shape")
     像上面的那个图形，从内层往外看，维度分别是3,4,2; 分别对应着的维度为从右至左。     
-2.  [dataloader(后期需要详细了解)](https://www.cnblogs.com/marsggbo/p/11308889.html)   
-## 5.  [senet](https://blog.csdn.net/u014380165/article/details/78006626)
-1.  [第二种解释](https://zhuanlan.zhihu.com/p/32702350)  
+###  10.  [dataloader(后期需要详细了解)](https://www.cnblogs.com/marsggbo/p/11308889.html)   
+###  11.  [反向传播](http://ddrv.cn/a/586348) 
+
+#  损失函数
+###  1.  [focal loss](https://www.cnblogs.com/king-lps/p/9497836.html)   
++ [验证gamma和alpha对focal loss的影响](./scripts/plot\_focal\_loss.py)    
+###  2.  [bottleneck](https://www.zhihu.com/question/285578426)
++  [第二种解释](https://zhuanlan.zhihu.com/p/32702350)  
+###  3.  [senet](https://blog.csdn.net/u014380165/article/details/78006626)
+
+#  9.  torch教程    
++  [torch中文网](https://www.pytorchtutorial.com/)   
++  [torch手册](https://pytorch-cn.readthedocs.io/zh/latest/package\_references/Tensor/#contiguous-tensor)    
+
+#  有关训练的一切
+###  0.  [nvidia-smi](https://blog.csdn.net/C\_chuxin/article/details/82993350)  
+###  1.  [.ini](https://www.jianshu.com/p/2f0636e27477)  

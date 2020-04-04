@@ -103,12 +103,14 @@
 ### 3.17. [configparser](https://www.jianshu.com/p/2f0636e27477)    
 ### 3.18. [glob](https://www.jianshu.com/p/32e3364b22ee)   
 ### 3.19. [io.ByteIO](https://www.cnblogs.com/yqpy/p/8556090.html)   
-### 3.20. [re](https://docs.python.org/zh-cn/3/library/re.html)    
+### 3.20. [re手册](https://docs.python.org/zh-cn/3/library/re.html)    
+  1.  [博客版本](https://www.cnblogs.com/huxi/archive/2010/07/04/1771073.html)  
 ### 3.21. [argparse](http://blog.xiayf.cn/2013/03/30/argparse/)
 ### 3.22. [configparser](https://www.jianshu.com/p/2f0636e27477)
 ### 3.21. [ctypes](https://cloud.tencent.com/developer/section/1370537#stage-100049081)
 ### 3.22. [bututils](https://www.osgeo.cn/cpython/distutils/apiref.html)
 ### 3.23. [__future__](https://segmentfault.com/a/1190000010857744)       
+### 3.24.  [openpyxl](https://geek-docs.com/python/python-tutorial/python-openpyxl.html)
 
 ## 4. Common Functions
 1.  [time的相关函数](https://blog.csdn.net/brucewong0516/article/details/79044905)</br>
@@ -142,6 +144,7 @@
 ### 6.6 pyton编码
 1.  [python编码的第一个解释](https://www.cnblogs.com/jessonluo/p/4801580.html)
 2.  [pyhon编码的第二个解释](https://www.cnblogs.com/busui/p/9340339.html)
+3.  [str.encode()](http://c.biancheng.net/view/4305.html) 
 ### 6.7 python的理解
 1.  python的对象是引用  
     1.  [解释](https://blog.csdn.net/weihongxu2222/article/details/51320006)  

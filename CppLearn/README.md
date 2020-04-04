@@ -127,10 +127,12 @@
 
 #  Shell  
 1.  [shell中的符号](https://www.jb51.net/article/120595.htm)   
+2.  [批量修改文本的内容](https://blog.csdn.net/qq_21101587/article/details/81203767)
 
 
 #  设计模式    
 1.  [设计模式](https://www.cnblogs.com/5iedu/category/825371.html)    
+2.  [另一个版本的设计模式](https://www.cnblogs.com/WindSun/p/10223126.html)   
 
 
 #  异常   
@@ -173,8 +175,9 @@
 
 #  优化
 ###  1.  [simd](https://zhuanlan.zhihu.com/p/55327037)   
-###  2.  [open mp](https://blog.csdn.net/ArrowYL/article/details/81094837)    
+###  2.  [open mp](https://blog.csdn.net/ArrowYL/article/details/81094837)  
 1.  [open mp英文版](https://bisqwit.iki.fi/story/howto/openmp/)   
+2.  [openmp博客版本](http://www.uml.org.cn/c%2B%2B/201810291.asp) 
 
 
 #  C++11
