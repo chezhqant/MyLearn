@@ -3,145 +3,44 @@
 ***<p align="center"> CONTENT </p>*** </br>
 
 
-<!-- vim-markdown-toc GFM -->
-
-* [C基本知识](#c基本知识)
-  * [二维数组指针](#二维数组指针)
-  * [float存储方式](#float存储方式)
-  * [小数表示](#小数表示)
-  * [VLA](#vla)
-  * [结构体初始化](#结构体初始化)
-* [C++基础知识](#c基础知识)
-  * [C++/C和Python相互调用](#cc和python相互调用)
-  * [C++内存对齐](#c内存对齐)
-  * [RVO和NRVO](#rvo和nrvo)
-  * [常量指针和指针常量](#常量指针和指针常量)
-  * [弱引用的理解](#弱引用的理解)
-  * [强引用与弱引用的比较](#强引用与弱引用的比较)
-  * [左值引用和右值引用](#左值引用和右值引用)
-  * [内联函数(不一定非得跟类有关系)](#内联函数不一定非得跟类有关系)
-  * [内联函数追根究底](#内联函数追根究底)
-  * [使用Valgrind检测C++内存泄露](#使用valgrind检测c内存泄露)
-  * [类](#类)
-    * [this指针](#this指针)
-    * [重载、覆盖、隐藏](#重载覆盖隐藏)
-    * [const成员函数](#const成员函数)
-    * [类成员变量初始化顺序](#类成员变量初始化顺序)
-  * [关键字](#关键字)
-    * [decltype](#decltype)
-    * [override](#override)
-    * [constexptr](#constexptr)
-      * [理解一](#理解一)
-      * [理解二](#理解二)
-      * [理解三](#理解三)
-    * [final关键字](#final关键字)
-    * [=delete和noncopyble](#delete和noncopyble)
-    * [#if defined](#if-defined)
-    * [[\_\_declspec](https://blog.csdn.net/zhaoyin214/article/details/83541613)](#__declspechttpsblogcsdnnetzhaoyin214articledetails83541613)
-    * [[\_\_attribute\_\_](https://www.jianshu.com/p/e2dfccc32c80)](#__attribute__httpswwwjianshucompe2dfccc32c80)
-    * [[\_\_attribute\_\_(visibility)](https://www.jianshu.com/p/e2dfccc32c80)](#__attribute__visibilityhttpswwwjianshucompe2dfccc32c80)
-    * [[\_\_builtin\_expect — 分支预测优化](https://www.cnblogs.com/LubinLew/p/GCC-__builtin_expect.html)](#__builtin_expect--分支预测优化httpswwwcnblogscomlubinlewpgcc-__builtin_expecthtml)
-    * [#pragma once](#pragma-once)
-    * [=default和=deleted](#default和deleted)
-    * [typename](#typename)
-    * [使用using代替typedef](#使用using代替typedef)
-    * [mutable](#mutable)
-    * [另一个mutable](#另一个mutable)
-    * [boost::noncopyable](#boostnoncopyable)
-  * [stl](#stl)
-    * [仿函数和适配器](#仿函数和适配器)
-    * [匿名函数](#匿名函数)
-    * [std::function](#stdfunction)
-      * [理解一](#理解一-1)
-      * [理解二](#理解二-1)
-      * [std::bind](#stdbind)
-    * [可变模板参数](#可变模板参数)
-* [C++网络编程](#c网络编程)
-* [数据库](#数据库)
-* [C++多线程\_多进程](#c多线程_多进程)
-  * [初步了解](#初步了解)
-  * [死锁简单理解](#死锁简单理解)
-  * [临界区](#临界区)
-  * [可重入和不可重入函数](#可重入和不可重入函数)
-  * [linux多线程服务端编程](#linux多线程服务端编程)
-* [Makefile](#makefile)
-* [Shell](#shell)
-* [设计模式](#设计模式)
-* [异常](#异常)
-  * [noexcept](#noexcept)
-* [预处理、编译、汇编、链接](#预处理编译汇编链接)
-  * [[内存映射]](#内存映射)
-    * [理解一](#理解一-2)
-    * [理解二](#理解二-2)
-  * [C语言编程透视](#c语言编程透视)
-  * [预处理](#预处理)
-  * [ELF文件格式](#elf文件格式)
-  * [ELF格式解析](#elf格式解析)
-  * [可重定位文件](#可重定位文件)
-  * [fPIC](#fpic)
-  * [通过GDB调试理解GOT/PLT](#通过gdb调试理解gotplt)
-  * [某些section的作用](#某些section的作用)
-  * [动态库](#动态库)
-  * [[动态链接]](#动态链接)
-    * [理解一](#理解一-3)
-    * [理解二](#理解二-3)
-  * [C++编译器优化](#c编译器优化)
-* [gdb](#gdb)
-  * [一个程序的整体流程](#一个程序的整体流程)
-  * [gdb调试基础](#gdb调试基础)
-  * [100个gdb技巧](#100个gdb技巧)
-  * [gprof](#gprof)
-  * [打印函数栈](#打印函数栈)
-* [汇编](#汇编)
-  * [两种汇编格式](#两种汇编格式)
-  * [rsp和rbp](#rsp和rbp)
-  * [寄存器](#寄存器)
-  * [寻址方式](#寻址方式)
-* [优化](#优化)
-  * [simd](#simd)
-  * [open mp](#open-mp)
-* [C++11](#c11)
-  * [深入理解C++11](#深入理解c11)
-  * [Effective Modern C++(部分翻译)](#effective-modern-c部分翻译)
-  * [另一个完整版本的Effective Modern C++的翻译](#另一个完整版本的effective-modern-c的翻译)
-  * [Effective Modern C++(英文书)](#effective-modern-c英文书)
-* [泛型编程和元编程](#泛型编程和元编程)
-  * [C++ Templates: The Complete Guide (2nd Edition)](#c-templates-the-complete-guide-2nd-edition)
-  * [C++ Template Metaprogramming: Concepts, Tools, and Techniques from Boost and Beyond](#c-template-metaprogramming-concepts-tools-and-techniques-from-boost-and-beyond)
-  * [C++ Concurrency in Action: Practical Multithreading](#c-concurrency-in-action-practical-multithreading)
-* [内核](#内核)
-  * [CPU解释](#cpu解释)
-  * [CPU执行指令](#cpu执行指令)
-  * [操作系统的重点](#操作系统的重点)
-  * [PCB的解释](#pcb的解释)
-* [cuda编程](#cuda编程)
-
-<!-- vim-markdown-toc -->
 
 # C基本知识
-## [二维数组指针](https://blog.csdn.net/nice_\_xixi/article/details/82081595)   
-## [float存储方式](http://blog.sina.com.cn/s/blog_973657a00102x2do.html)    
-## [小数表示](https://blog.csdn.net/github_33873969/article/details/78040129)   
-## [VLA](https://www.cnblogs.com/Suzzz/p/4117431.html)   
-## [结构体初始化](https://www.cnblogs.com/clover-toeic/p/3737189.html)   
+###  1.  指针   
+1.  [指针初级](https://zhuanlan.zhihu.com/p/93449463)   
+2.  [指针高级](https://zhuanlan.zhihu.com/p/94518185)   
+3.  [void指针](https://www.cnblogs.com/wuyudong/p/c-void-point.html)    
+4.  [引用和指针](http://irootlee.com/juicer_pointer_reference/)   
+5.  常量指针和指针常量
 
-
-# [C++基础知识](https://www.runoob.com/cplusplus/cpp-tutorial.html)  
-+ [參考這個](https://github.com/huihut/interview#-cc)   
-+ [protected](https://www.bookstack.cn/read/open-c-book/zh-cha)   
-## C++/C和Python相互调用  
-+ [资料一](https://cloud.tencent.com/developer/article/1174629)   
-+ [LeetCode刷题](../LeetcodeLearn)   
-
-## [C++内存对齐](https://www.cnblogs.com/zhao-zongsheng/p/9099603.html)   
-## [RVO和NRVO](https://www.cnblogs.com/xkfz007/articles/2506022.html)   
-## 常量指针和指针常量
 > 常量指针(const int\*): 该指针指向的那个变量是不可被修改的；但它本身的指向可以被修改。  
 > 指针常量(int \*const 或者 int const\*): 该指针指向的变量是可以被修改的；但它本身的指向是不能被修改的。  
 
-## [弱引用的理解](https://www.cnblogs.com/fengc5/p/5316670.html)    
-## [强引用与弱引用的比较](https://blog.csdn.net/Sun960705/article/details/79099533)   
-## [左值引用和右值引用](https://www.cnblogs.com/KaiMing-Prince/p/9741393.html)   
+###  浮点数表示方式   
+1.  [float存储方式](http://blog.sina.com.cn/s/blog_973657a00102x2do.html) 
+2.  [小数表示](https://blog.csdn.net/github_33873969/article/details/78040129)   
+
+###  [VLA](https://www.cnblogs.com/Suzzz/p/4117431.html)   
+
+###  结构体  
+1.  [结构体初始化](https://www.cnblogs.com/clover-toeic/p/3737189.html)   
+
+
+# [ C++基础知识](https://www.runoob.com/cplusplus/cpp-tutorial.html)  
++  [參考這個](https://github.com/huihut/interview#-cc)   
++   [protected](https://www.bookstack.cn/read/open-c-book/zh-cha)   
+
+###  python/C++交互(pybind11)待完成    
+
+###  [LeetCode刷题](../LeetcodeLearn)   
+
+###  [C++内存对齐](https://www.cnblogs.com/zhao-zongsheng/p/9099603.html)   
+###  [RVO和NRVO](https://www.cnblogs.com/xkfz007/articles/2506022.html)   
+
+###  引用(待规整)   
+1.  [指针和引用](#指针)   
+1. [ 弱引用的理解](https://www.cnblogs.com/fengc5/p/5316670.html)    
+2. [ 强引用与弱引用的比较](https://blog.csdn.net/Sun960705/article/details/79099533)   
+3. [ 左值引用和右值引用](https://www.cnblogs.com/KaiMing-Prince/p/9741393.html)   
 ```
 int& x = 666;       // Error
 const int& x = 666; // OK
@@ -153,7 +52,8 @@ const int& x = 666; // OK
 
 ## 类   
 ### [this指针](https://www.cnblogs.com/Star-Lit/p/8623050.html)    
-### [重载、覆盖、隐藏](https://www.cnblogs.com/ZY-Dream/p/10068993.html)    
+### [重载、覆盖、隐藏](https://www.jianshu.com/p/c5c81ad2e1ce)    
+### [重载操作符](https://www.cnblogs.com/ZY-Dream/p/10068993.html)    
 ### [const成员函数](https://blog.csdn.net/u011197534/article/details/78385550)    
 ### [类成员变量初始化顺序](https://blog.csdn.net/shimadear/article/details/82527442)   
 ## 关键字   
