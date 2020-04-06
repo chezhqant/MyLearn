@@ -3,6 +3,12 @@
 # <p align="center"> Catalogs </p>
 
 
+#  pytorch
+1.  C10   
+    C10，来自于Caffe Tensor Library的缩写。这里存放的都是最基础的Tensor库的代码，可以运行在服务端和移动端。PyTorch目前正在将代码从ATen/core目录下迁移到C10中。C10的代码有一些特殊性，体现在这里的代码除了服务端外还要运行在移动端，因此编译后的二进制文件大小也很关键，因此C10目前存放的都是最核心、精简的、基础的Tensor函数和接口。      
+2.  ATen  
+    ATen，来自于 A TENsor library for C++11的缩写；PyTorch的C++ tensor library。ATen部分有大量的代码是来声明和定义Tensor运算相关的逻辑的，除此之外，PyTorch还使用了aten/src/ATen/gen.py来动态生成一些ATen相关的代码。ATen基于C10.   
+
 #  pytorch工程
 ###  1.  [自动求导机制](https://blog.csdn.net/chezhai/article/details/90317222)
 ###  2.  [锁页内存](https://blog.csdn.net/chezhai/article/details/90317699)
