@@ -71,16 +71,19 @@
 1.  [重构](https://blog.csdn.net/liuwei_q/article/details/83032297)
 2.  [lambda/filter/reduce/map](https://www.cnblogs.com/kaituorensheng/p/5300340.html)  
 3.  [with](https://www.jianshu.com/p/5b01fb36fd4c) </br>
-4.  [闭包](https://blog.csdn.net/weixin_44141532/article/details/87116038) </br>
+4.  [闭包](https://blog.csdn.net/weixin_44141532/article/details/87116038)
+    1.  [理解二](https://www.zhihu.com/question/25950466)
 5.  [yield](https://www.ibm.com/developerworks/cn/opensource/os-cn-python-yield/index.html) </br>
 6.  [del](https://blog.csdn.net/weihongxu2222/article/details/51320006)   
 7.  [iter](https://docs.python.org/zh-cn/3/library/functions.html)   
+8.  [python 生成器、列表/字典/集合解析式区别](https://blog.csdn.net/luckytanggu/article/details/53154063)   
 
 ## 3. Packages
 ### 3.1. [csv](https://www.cnblogs.com/wuxunyan/p/10442444.html)</br>
 ### 3.2. [sys模块](http://www.ityouknow.com/python/2019/10/09/python-sys-demonstration-028.html)          
   1.  [sys.module](https://www.cnblogs.com/zhaojingyu/p/9069076.html)
   2.  [sys.argv](https://www.cnblogs.com/aland-1415/p/6613449.html)     
+  3.  [sys.exit()/os.exit()](https://blog.csdn.net/index20001/article/details/74294945)     
 ### 3.3. [xml解释器](https://blog.csdn.net/guangmingsky/article/details/77601225)</br>
 ### 3.4. [pika](https://pypi.org/project/pika/)</br>
 ### 3.5. [python导入包](https://blog.csdn.net/chinesepython/article/details/82113575) </br>
@@ -88,9 +91,9 @@
 ### 3.7. [shutil](https://www.jb51.net/article/145522.htm) </br>
 ### 3.8. [Python的常用模块](https://www.cnblogs.com/brf-test/p/11241161.html) </br>
 ### 3.9. [os模块](https://www.cnblogs.com/kaituorensheng/archive/2013/03/18/2965766.html) </br>
-  1.  [os.path](https://www.jianshu.com/p/cfa219ff0791?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation)     
-  2.  [os.path.realpath(__file__)和os.path.cwd()的区别](https://blog.csdn.net/cityzenoldwang/article/details/78448039)    
-  3.  os.getenv   
+    1.  [os.path](https://www.jianshu.com/p/cfa219ff0791?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation)     
+    2.  [os.path.realpath(__file__)和os.path.cwd()的区别](https://blog.csdn.net/cityzenoldwang/article/details/78448039)    
+    3.  os.getenv   
       看源代码可以发现，如果key在环境变量里面，返回key在环境变量里面的值，如果不存在，则返回default。     
 ### 3.10. [pydicm](https://blog.csdn.net/linhai1028/article/details/79551488) </br>
 ### 3.11. [PySimpleGUI](https://linux.cn/article-10027-1.html)</br>
@@ -99,18 +102,20 @@
 ### 3.14. [multiprocessing](https://www.osgeo.cn/cpython/library/multiprocessing.html) </br>
 ### 3.15. [python json模块](https://www.runoob.com/python/python-json.html)</br>
 ### 3.16. [subprocess](https://zhuanlan.zhihu.com/p/72829009)   
-  1.  [check_out()](https://python3-cookbook.readthedocs.io/zh_CN/latest/c13/p06_executing_external_command_and_get_its_output.html)      
+    1.  [check_out()](https://python3-cookbook.readthedocs.io/zh_CN/latest/c13/p06_executing_external_command_and_get_its_output.html)      
 ### 3.17. [configparser](https://www.jianshu.com/p/2f0636e27477)    
 ### 3.18. [glob](https://www.jianshu.com/p/32e3364b22ee)   
 ### 3.19. [io.ByteIO](https://www.cnblogs.com/yqpy/p/8556090.html)   
 ### 3.20. [re手册](https://docs.python.org/zh-cn/3/library/re.html)    
-  1.  [博客版本](https://www.cnblogs.com/huxi/archive/2010/07/04/1771073.html)  
-### 3.21. [argparse](http://blog.xiayf.cn/2013/03/30/argparse/)
-### 3.22. [configparser](https://www.jianshu.com/p/2f0636e27477)
-### 3.21. [ctypes](https://cloud.tencent.com/developer/section/1370537#stage-100049081)
-### 3.22. [bututils](https://www.osgeo.cn/cpython/distutils/apiref.html)
-### 3.23. [__future__](https://segmentfault.com/a/1190000010857744)       
-### 3.24.  [openpyxl](https://geek-docs.com/python/python-tutorial/python-openpyxl.html)
+    1.  [博客版本](https://www.cnblogs.com/huxi/archive/2010/07/04/1771073.html)  
+### 3.21. [argparse](http://blog.xiayf.cn/2013/03/30/argparse/)     
+### 3.22. [configparser](https://www.jianshu.com/p/2f0636e27477)        
+### 3.23. [ctypes](https://cloud.tencent.com/developer/section/1370537#stage      -100049081)
+### 3.24. [bututils](https://www.osgeo.cn/cpython/distutils/apiref.html)    
+### 3.25. [__future__](https://segmentfault.com/a/1190000010857744)       
+### 3.26.  [openpyxl](https://geek-docs.com/python/python-tutorial/python-openpyxl.html)      
+### 3.27.  importlib    
+    1.  [importlib.import_module()](https://python3-cookbook.readthedocs.io/zh_CN/latest/c10/p10_import_modules_using_name_given_in_string.html)    
 
 ## 4. Common Functions
 1.  [time的相关函数](https://blog.csdn.net/brucewong0516/article/details/79044905)</br>
@@ -148,6 +153,7 @@
 ### 6.7 python的理解
 1.  python的对象是引用  
     1.  [解释](https://blog.csdn.net/weihongxu2222/article/details/51320006)  
+    2.  [Python中的变量、引用、拷贝和作用域](https://blog.csdn.net/li_101357/article/details/52745661)    
 2.  [iterable和iterator](https://zhuanlan.zhihu.com/p/32162554)   
 3.  [python程序怎么执行的?](https://www.jianshu.com/p/03af86845c95)   
 4.  [module和包的区别](https://www.cnblogs.com/JetpropelledSnake/p/8905727.html)    

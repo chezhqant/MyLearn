@@ -180,6 +180,8 @@
     8.  configure_file(查不到)    
     9.  option    
         [理解](https://www.cnblogs.com/rickyk/p/3872568.html)   
+    10. set   
+        [理解](https://www.cnblogs.com/narjaja/p/8351500.html)    
 6.  变量    
     1.  CMAKE_INSTALL_MESSAGE(查不到)   
     2.  CMAKE_CXX_STANDARD    
