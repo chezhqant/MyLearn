@@ -25,6 +25,14 @@
 ###  4.  结构体  
 1.  [结构体初始化](https://www.cnblogs.com/clover-toeic/p/3737189.html)   
 
+###  #/##   
+1.  #   
+    在使用#define 定义宏中，可使用操作符#在字符串中输出实参，如下:
+    ![#](./pictures/4.jpg "#")    
+2.  ##    
+    操作符## 也可以使用在带参数宏中替换部分内容，该操作符将宏中的两部分连接成一个内容， 比如：（咱不知道如何表示字符串，虽然连接起来是字符串，但是 C 语言中，表示字符串是用“”表示的，但是连接后没有双引号）   
+    [##](./picutres/5.jpg "##")   
+
 
 # [ C++基础知识](https://www.runoob.com/cplusplus/cpp-tutorial.html)  
 +  [參考這個](https://github.com/huihut/interview#-cc)   
@@ -57,6 +65,7 @@
     1.  [重载操作符](https://www.cnblogs.com/ZY-Dream/p/10068993.html)    
 3.  [const成员函数](https://blog.csdn.net/u011197534/article/details/78385550)    
 4.  [类成员变量初始化顺序](https://blog.csdn.net/shimadear/article/details/82527442)   
+5.  [public/private/protected继承](https://www.cnblogs.com/likebeta/archive/2011/10/12/2209044.html)      
 ###  8. 关键字   
 1.  [decltype](https://www.cnblogs.com/QG-whz/p/4952980.html)    
 2.  [override](https://blog.csdn.net/jolin678/article/details/63695023)    
