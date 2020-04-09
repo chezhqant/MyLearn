@@ -37,7 +37,14 @@
 4.  奇技淫巧  
     1.  [do...while(false)](https://blog.csdn.net/this_capslock/article/details/41843371)   
 5.  内建变量  
-    1.  [__func__](https://blog.csdn.net/u011308691/article/details/45015613)     
+    1.  [\_\_func\_\_](https://blog.csdn.net/u011308691/article/details/45015613)     
+        1.  在结构体的构造函数中，初始化成员列表使用`__func__`是可行的，其效果跟在函数中是用一样，不过将`__func__`标识符作为函数参数的默认值是不允许的：    
+
+        ```
+        void func_fail(std::string func_name = __func__) {} //无法通过编译
+        ```
+
+            这是因为在参数声明的时候，`__func`还没有被定义.   
 
 
 # [ C++基础知识](https://www.runoob.com/cplusplus/cpp-tutorial.html)  
