@@ -1,5 +1,8 @@
 ___C++ Template, The Complete Guide___
 
+#  网上找的   
+1.  [模板全特化和模板偏特化](https://harttle.land/2015/10/03/cpp-template.html)     
+
 #  第二章 函数模板   
 1.  在类模板的内部，模板参数T可以像其他任何类型一样，用于声明成员变量和成员函数。
 

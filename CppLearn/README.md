@@ -32,6 +32,12 @@
 2.  ##    
     操作符## 也可以使用在带参数宏中替换部分内容，该操作符将宏中的两部分连接成一个内容， 比如：（咱不知道如何表示字符串，虽然连接起来是字符串，但是 C 语言中，表示字符串是用“”表示的，但是连接后没有双引号）   
     ![##](./pictures/5.jpg "##")    
+3.  [#define目前所知最全的](http://c.biancheng.net/view/446.html)     
+
+4.  奇技淫巧  
+    1.  [do...while(false)](https://blog.csdn.net/this_capslock/article/details/41843371)   
+5.  内建变量  
+    1.  [__func__](https://blog.csdn.net/u011308691/article/details/45015613)     
 
 
 # [ C++基础知识](https://www.runoob.com/cplusplus/cpp-tutorial.html)  
@@ -58,6 +64,9 @@
 ###  6.  [内联函数(不一定非得跟类有关系)](https://www.cnblogs.com/zsq1993/p/5978743.html)    
 1.  [内联函数追根究底](https://zhuanlan.zhihu.com/p/50812510)        
 ###  7.  [使用Valgrind检测C++内存泄露](http://senlinzhan.github.io/page/3/)    
+###  8.  [RTTI](https://www.jianshu.com/p/3b4a80adffa7)     
+###  9.  智能指针     
+1.  [shared_ptr/unique_ptr的deleter初解](https://blog.csdn.net/caroline_wendy/article/details/16938707)       
 
 ## 类   
 1.  [this指针](https://www.cnblogs.com/Star-Lit/p/8623050.html)    
@@ -92,11 +101,13 @@
 ###  10.  stl    
 1.  [仿函数和适配器](https://blog.csdn.net/coolwriter/article/details/81533226)   
 2.  [匿名函数](https://www.cnblogs.com/findumars/p/8062299.html；https://blog.csdn.net/alex1997222/article/details/81154026)   
+    1.  [再解](https://www.jianshu.com/p/923d11151027)      
 3.  std::function
     1. [理解一](https://www.cnblogs.com/diegodu/p/6180350.html)    
     2. [理解二](https://www.cnblogs.com/ph829/p/5162179.html)    
     3. [std::bind](https://www.jianshu.com/p/621fc81a1dc1)   
     4. [可变模板参数](https://www.cnblogs.com/5iedu/p/7787302.html)   
+4.  [std::array初步理解](https://blog.csdn.net/thinkerleo1997/article/details/80415059)       
 
 
 # C++网络编程    
@@ -253,7 +264,7 @@ ___待总结___
 
 
 #  C++11
-###  1.  深入理解C++11   
+###  1.  [深入理解C++11](./深入理解C++11/README.md)            
 ###  2.  [Effective Modern C++(部分翻译)](https://github.com/kelthuzadx/EffectiveModernCppChinese)     
 ###　3.  [另一个完整版本的Effective Modern C++的翻译](https://blog.csdn.net/zhangyifei216/article/details/72868345)    
 ###  4.  [Effective Modern C++(英文书)](./)
