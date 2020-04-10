@@ -48,13 +48,13 @@ ___深入理解C++11___
 3.  宽窄字符串的连接      
     在之前的C++标准中，将窄字符串(char)转换成宽字符串(wchar_t)是未定义的行为。而在C++11标准中，在将窄字符串和宽字符串进行连接时，支持C++11标准的编译器会将窄字符串转换为款字符串，然后再域宽字符串连接。    
 4.  long long整型   
-    long long类型进入了C99标准， 后面也进入了C++11标准。有两种long long: long long 和 unsigned long long，在C++11中，标准要求long long整型可以在不同平台上有不同的长度，但至少也有64位。在写常数字面量时，可以是用LL后缀、ll后缀；或者使用ULL、ull、Ull、uLL表示一个unsigned long long类型的字面量。
+    long long类型进入了C99标准， 后面也进入了C++11标准。有两种long long: long long 和 unsigned long long，在C++11中，标准要求long long整型可以在不同平台上有不同的长度，但至少也有64位。在写常数字面量时，可以是用LL后缀、ll后缀；或者使用ULL、ull、Ull、uLL表示一个unsigned long long类型的字面量。   
     与long long等价的类型：long long、signed long long、long long int、signed long long int; unsigned long long等价的 unsigned long long int。    
     同其他整型一样，要了解平台上long long 大小的方法就是查看<climits> 或者<limits.h>，与long long相关的有三个：LLONG_MIN、LLONG_MAX、ULLONG_MIN，分别代表 最大值，最小值，最大unsigned long long值。        
 5.  C++11一共定义了5中标准的有符号整型：signed char、short int、int、long int、 long long int。   
-    C++规定，扩展的整型必须与标准类型一样，有符号和无符号类型占用同样大小的内存空间。
+    C++规定，扩展的整型必须与标准类型一样，有符号和无符号类型占用同样大小的内存空间。    
     隐式转换规则：    
-    1.  长度相同的情况下，标准整型的等级高于扩展类型，比如long long int和_int64如果都是64位长度，则long long int类型的等级高。  
+    1.  长度相同的情况下，标准整型的等级高于扩展类型，比如long long int和_int64如果都是64位长度，则long long int类型的等级高。      
     2.  长度越大的整型等级越高，比如long long int等级高于int.   
     3.  相同大小的有符号和无符号类型等级相同，比如int, unsigned int等级相同。   
     4.  在进行隐式整型转换的时候，一般都是按照低等级整型转换为高等级整型，有符号转换为无符号。    
@@ -88,7 +88,7 @@ ___深入理解C++11___
         #endif
         ```
         一旦定义了NDEBUG宏，assert宏将被展开为一条无意义的C语句（通常会被编译器优化掉）    
-        \#if 和 #error通常也可以在预处理阶段进行断言。
+        \#if 和 #error通常也可以在预处理阶段进行断言。    
     2.  静态断言与static_assert     
         相交于上面两个运行的阶段来说，有时候我们希望在编译时能够做断言：    
         ```
