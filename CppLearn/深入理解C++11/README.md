@@ -229,3 +229,121 @@ ___深入理解C++11___
      People<int> Pi; //对于int类型模板参数，友元声明被忽略
      ```
      从上面可以看到，在是用内置类型int作为模板参数的时候，People<int>会被实例化为一个普通的没有友元定义的类型。这样以来，我们就可以在模板实例化时才确定一个模板类是否有友元，以及谁是这个模板类的友元。      
+12.  final/override控制     
+     final关键字的作用是使派生类不可覆盖(重写)它所修饰的虚函数。      
+     ```
+     struct Object {
+      virtual void fun() = 0;
+     };
+
+     struct Base: public Object {
+      void fun() final(); //声明为final
+     };
+
+     struct Derived: public Base {
+      void fun(); //无法通过编译
+     };
+     ```
+     派生于Base的Derived类对借口fun的重载会导致编译时错误。但是从接口派生的角度而言，final可以在派生过程中任意的阻止一个接口的可重载性。在C++中重载还有一个特点，就是对于积累声明为virtual的函数，之后的重载版本都不需要再声明该重载函数为virtual。即使再派生类中声明了virtual，该关键字也是编译器可以忽略的。    
+     在C++11中为了帮助程序员写继承结构复杂的类型，引入了虚函数描述符override，如果派生类在虚函数声明时是用了override描述符，那么该函数必须重载其积累中的同名函数，否则代码将无法通过编译。    
+     ```
+     struct Base {
+      virtual void turing() = 0;
+      virtual void dijkstra() = 0;
+      virtual void vneumann(int g) = 0;
+      virtual void dknuth() const;
+      void print();
+     };
+
+     struct DerivedMid: public Base {
+      void vneumann(double g);
+     };
+
+     struct DerivedTop: public DerivedMid {
+      void turing() override;
+      void dikjstra() override; //无法通过编译，拼写错误，并非重载
+      void vneumann(double g) override; //无法通过编译，参数不一致，并非重载
+      void dknuth() override; //无法通过编译，常量性不一致，并非重载
+      void print() override; //无法通过变异，非虚函数重载
+     }
+     ```
+     如果没有`override`修饰符，DerivedTop的作者可能在编译后都没有意识到自己犯了这么多错误。因为编译器对以上的错误不会有任何警示。这里`override`修饰符可以保证编译器辅助地做一些检查。    
+     此外，在C++中，如果一个派生类的编写者自认为新写了一个接口，而实际上却冲在了一个底层的接口，出现这种情况编译器是爱莫能助的。    
+13.  C++98标准不支持函数模版的默认模板参数。不过在C++11中，这一限制已经被解除了。    
+    ```
+    void def_param(int m = 3) {} //c++98编译通过，c++11编译通过
+    template <typename T = int>
+    class DefClass {}; //c++98编译通过，c++11编译通过
+
+    template <typename T = int>
+    void DefTemParam() {} //c++98编译失败，c++11编译通过
+    ```
+    与类模板有些不同的是，在为多个默认模板参数声明指定默认值的时候，程序员必须遵照“从右至左”的规定，而这个条件对函数模板来说并不一定是必须的。    
+    ```
+    template <typename T1, T2 = int>
+    class DefClass1;
+
+    template <typename T1 = int, typename T2>
+    class DefClass2; //无法通过编译
+
+    template<typename T, int i = 0>
+    class DefClass3;
+
+    template<int i = 0, typename T>
+    class DefClass4; //无法通过编译
+
+    template<typename T1 = int, typename T2>
+    void DefFunc1(T1 a, T2 b);
+
+    template <int i = 0, typename T>
+    DefFunc2(T2);
+    ```
+    从上面的代码可以看到，默认模板参数的位置则比较随意。模板函数的默认形参不是模板参数推导的依据，函数模板参数的选择，总是由函数的实参推导而来。      
+14.  外部模板   
+     外部模板是C++11的一个关于模板性能上的改进。    
+     我们在a.c定义一个变量int 9; 而在另一个文件b.c想要是用它，这时候我们可以在b.c中使用`extern int i;`这样的好处是，分别编译两个文件，其生成的a.o和b.o只有i这个符号的一份定义。如果b.c中我们不将i声明为extern的话，那么a.o和b.o会存在两个i的定义。    
+     对于函数模板来说，我们会遇到一模一样的问题，这样的困境是由于模板的实例化带来的。    
+     ```
+     //比如我们在test.c的文件中声明了如下模板函数
+     template <typename T>
+     void fun(T) {}
+     //在第一个test1.cpp文件中，我们定义如下：
+     #include "test.h"
+     void test1() { func(3); }
+     //而在另一个test2.cpp文件中，我们定义如下代码：
+     #include "test.h"
+     void test2() { fun(4); }
+     ```
+     由于两个源代码是用的木板函数的参数类型一致，所以在编译test1.cpp的时候，编译器实例化出了函数`fun<int>(int)`，而当编译test2.cpp的时候，编译器又一次实例化出了函数`fun<int>(int)`。那么在test1.o和test2.o目标文件中，会有两份一模一样的函数`fun<int>(int)`代码。   
+     链接器通过一些编译器辅助的手段将重复的木板函数代码`fun<int>(int)`删除掉，只保留了单个副本。如下图：    
+     ![模板函数的编译和链接](./pictures/1.jpg "模板函数的编译和链接")
+     不过读者注意到了，对于源代码中的每一处模板实例化，编译器都需要做实例化工作，而在链接时，链接器还需要移除重复的实例化代码。解决这个问题的方法基本跟变量共享的思路时一样的，就是是用__外部的__模板。      
+     外部模板的是用实际上依赖与C++98中一个已有的特性，即_显式实例化_：   
+     ```
+     template<typename T>
+     void fun(T) {}
+
+     //我们只需要声明：
+     template void fun<int> (int);
+     ````
+     这就可以使编译器在本编译单元中实例化出一个fun<int>(int)版本的函数（这种做法也被称为强制实例化）。而在C++11标准中，又加入了__外部模板__的声明：      
+     ```
+     extern template void fun<int>(int);
+     ```
+     这样的语法完成一个外部模板的声明。   
+     ```
+     // 在test1.cpp做显示实例化
+     #include "test.h"
+     
+     template void fun<int>(int); //显示地实例化
+
+     void test1() { fun(3); }
+
+     //在test2.cpp中做外部模板声明
+     #include "test.h"
+     extern template void fun<int>(int); //外部模板声明
+     void test1() { fun(3); }
+     ```
+     这样以来，在test2.o中不会再生成fun<int>(int)的示例代码，如下：      
+     ![模板函数的编译、链接(是用外部模板声明)](./pictures/2.jpg "模板函数的编译、链接（是用外部模板声明）")
+
