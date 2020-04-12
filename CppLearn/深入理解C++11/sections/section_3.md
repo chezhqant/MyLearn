@@ -389,7 +389,7 @@
         Destruct:2
         Destruct:3
         ```
-        <img src ="../pictures/3.jpg" alt="图片" width="800" height="600" />
+        <img src ="../pictures/3.jpg" "alt="图片 "width="800 "height="600 />
         <p align =“center”>
         <img src="../pictures/3.jpg" alt="函数返回时的临时变量与拷贝" /> 
         </p>
