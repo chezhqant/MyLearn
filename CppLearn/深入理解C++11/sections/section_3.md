@@ -390,7 +390,7 @@
         Destruct:3
         ```
         <p align ="center">
-        <img src="../pictures/3.jpg" alt="函数返回时的临时变量与拷贝" /> 
+        <img src="../pictures/3.jpg" alt="函数返回时的临时变量与拷贝"> 
         </p>
 
         ![函数返回时的临时变量与拷贝](../pictures/3.jpg "函数返回时的临时变量与拷贝")     
