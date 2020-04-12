@@ -260,7 +260,7 @@
 
      template <typename T = int>
      void DefTemParam() {} //c++98编译失败，c++11编译通过
-    ```
+     ```
      与类模板有些不同的是，在为多个默认模板参数声明指定默认值的时候，程序员必须遵照“从右至左”的规定，而这个条件对函数模板来说并不一定是必须的。    
      ```
      template <typename T1, T2 = int>
