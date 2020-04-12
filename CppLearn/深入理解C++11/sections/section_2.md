@@ -52,7 +52,7 @@
    #endif
    ```
     这种类型的头文件可以被#include到C文件进行编译，也可以被#include到C++文件中进行编译。由于extern "C"可以抑制C++对函数名、变量名等符号进行重整，因此编译出的C目标文件和C++目标文件中的变量、函数名称等符号都是相同的，链接器可以可靠地对两种类型的目标文件进行连接。    
-    程序员可能认为`__cpluscplus`这个宏只有被定义了和未定义两种状态。事实上并非如此`__cplusplus`这个宏通常被定义为一个整型值。而且随着标准变化，`__cplusplus`宏一般会是一个比以往标准更大的值。在C++03它的值为199711L, 在C++11标准中，它的值为201103L。这点变化可以为代码所用，比如程序员想要确定代码是是用C++11编译器进行编译时：
+    程序员可能认为`__cpluscplus`这个宏只有被定义了和未定义两种状态。事实上并非如此`__cplusplus`这个宏通常被定义为一个整型值。而且随着标准变化，`__cplusplus`宏一般会是一个比以往标准更大的值。在C++03它的值为199711L, 在C++11标准中，它的值为201103L。这点变化可以为代码所用，比如程序员想要确定代码是是用C++11编译器进行编译时：   
     ```
     #if __cplusplus < 201103L
     #error "should use C++11 implementation"
@@ -253,35 +253,35 @@
      如果没有`override`修饰符，DerivedTop的作者可能在编译后都没有意识到自己犯了这么多错误。因为编译器对以上的错误不会有任何警示。这里`override`修饰符可以保证编译器辅助地做一些检查。    
      此外，在C++中，如果一个派生类的编写者自认为新写了一个接口，而实际上却冲在了一个底层的接口，出现这种情况编译器是爱莫能助的。    
 13.  C++98标准不支持函数模版的默认模板参数。不过在C++11中，这一限制已经被解除了。    
+      ```
+     void def_param(int m = 3) {} //c++98编译通过，c++11编译通过
+     template <typename T = int>
+     class DefClass {}; //c++98编译通过，c++11编译通过
+
+     template <typename T = int>
+     void DefTemParam() {} //c++98编译失败，c++11编译通过
     ```
-    void def_param(int m = 3) {} //c++98编译通过，c++11编译通过
-    template <typename T = int>
-    class DefClass {}; //c++98编译通过，c++11编译通过
+     与类模板有些不同的是，在为多个默认模板参数声明指定默认值的时候，程序员必须遵照“从右至左”的规定，而这个条件对函数模板来说并不一定是必须的。    
+     ```
+     template <typename T1, T2 = int>
+     class DefClass1;
 
-    template <typename T = int>
-    void DefTemParam() {} //c++98编译失败，c++11编译通过
-    ```
-    与类模板有些不同的是，在为多个默认模板参数声明指定默认值的时候，程序员必须遵照“从右至左”的规定，而这个条件对函数模板来说并不一定是必须的。    
-    ```
-    template <typename T1, T2 = int>
-    class DefClass1;
+     template <typename T1 = int, typename T2>
+     class DefClass2; //无法通过编译
 
-    template <typename T1 = int, typename T2>
-    class DefClass2; //无法通过编译
+     template<typename T, int i = 0>
+     class DefClass3;
 
-    template<typename T, int i = 0>
-    class DefClass3;
+     template<int i = 0, typename T>
+     class DefClass4; //无法通过编译
 
-    template<int i = 0, typename T>
-    class DefClass4; //无法通过编译
+     template<typename T1 = int, typename T2>
+     void DefFunc1(T1 a, T2 b);
 
-    template<typename T1 = int, typename T2>
-    void DefFunc1(T1 a, T2 b);
-
-    template <int i = 0, typename T>
-    DefFunc2(T2);
-    ```
-    从上面的代码可以看到，默认模板参数的位置则比较随意。模板函数的默认形参不是模板参数推导的依据，函数模板参数的选择，总是由函数的实参推导而来。      
+     template <int i = 0, typename T>
+     DefFunc2(T2);
+     ```
+     从上面的代码可以看到，默认模板参数的位置则比较随意。模板函数的默认形参不是模板参数推导的依据，函数模板参数的选择，总是由函数的实参推导而来。      
 14.  外部模板   
      外部模板是C++11的一个关于模板性能上的改进。    
      我们在a.c定义一个变量int 9; 而在另一个文件b.c想要是用它，这时候我们可以在b.c中使用`extern int i;`这样的好处是，分别编译两个文件，其生成的a.o和b.o只有i这个符号的一份定义。如果b.c中我们不将i声明为extern的话，那么a.o和b.o会存在两个i的定义。    
