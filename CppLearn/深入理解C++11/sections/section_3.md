@@ -389,8 +389,10 @@
         Destruct:2
         Destruct:3
         ```
-        <div style: "align"=center>
+        <p align =“center”>
+        <img src =“../pictures/3.jpg"> 
+        </p>
+
         ![函数返回时的临时变量与拷贝](../pictures/3.jpg "函数返回时的临时变量与拷贝")     
-        </div>   
         我们是否可以在临时对象构造a的时候不分配内存，即不适用所谓的拷贝构造语义呢？可以的，在C++11中，我们可以看以下示意图：    
         ![拷贝构造与移动构造](../pictures/4.jpg "拷贝构造与移动构造")        
