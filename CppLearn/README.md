@@ -24,7 +24,7 @@
 
 ###  4.  结构体  
 1.  [结构体初始化](https://www.cnblogs.com/clover-toeic/p/3737189.html)   
-
+    1.  [结构体变量定义](https://www.runoob.com/cprogramming/c-structures.html)       
 ###  #/##   
 1.  #   
     在使用#define 定义宏中，可使用操作符#在字符串中输出实参，如下:
@@ -39,11 +39,9 @@
 5.  内建变量  
     1.  [\_\_func\_\_](https://blog.csdn.net/u011308691/article/details/45015613)     
         1.  在结构体的构造函数中，初始化成员列表使用`__func__`是可行的，其效果跟在函数中是用一样，不过将`__func__`标识符作为函数参数的默认值是不允许的：    
-
-        ```
-        void func_fail(std::string func_name = __func__) {} //无法通过编译
-        ```
-
+            ```
+            void func_fail(std::string func_name = __func__) {} //无法通过编译
+            ```
             这是因为在参数声明的时候，`__func`还没有被定义.   
 
 
