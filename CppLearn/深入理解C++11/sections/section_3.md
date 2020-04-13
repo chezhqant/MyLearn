@@ -464,4 +464,203 @@
         ```
         出现这种情况的原因是，在常量左值引用中，在C++98标准中开始就是个”万能“的引用类型，他可以接受非常量左值、常量左值、右值对其初始化。而且在是用右值对其初始化的时候，常量左值引用还可以像右值以你用一样将右值的生命期延长。不过相比与右值引用所引用的右值，常量左值所引用的右值，在它的”余生“中是只读的。相对地，非常量左值只能接受非常量左值对其进行初始化。    
         ![C++11中引用类型及其可以引用的值类型](../pictures/5.jpg "C++11中引用类型及其可以引用的值类型")   
+        我们可以是用标准库`<type_traits>`头文件中提供了3个模板类：`is_rvalue_reference`、`is_lvalue_reference`、`is_reference`，可以进行判断：    
+        `std::cout << is_rvalue_refence<string&&>::value;` ,我们通过模板类的成员value就可以打印除string&&是否是一个右值引用了，配合第4章中的类型推导操作符decltype，我们甚至还可以对变量的类型进行判断。      
+    3.  std::move 强制转化为右值    
+        在C++11中，标准库`<utility>`中提供了一个`std::move`，实际上它不移动任何东西，它唯一的功能是将一个左值强制转化为右值引用，鸡儿我们可以通过右值引用是用该值。从实现上讲，`std::move`基本等同一个类型转换：`static_cast<T&&>(lvalue)`。值得一提的是，被转化的左值，其声明期并没有随着左右至的转化而改变。      
+        ```
+        #include <iostream>
+
+        class Moveable {
+        public:
+          Moveable(): i(new int(3)) {}
+          ~Moveable() { delete i; }
+          Moveable(const Moveable& m): i(new int(*m.i)) {}
+          Moveable(Moveable&& m): i(m.i) {
+            m.i = nullptr;
+          }
+        };
+
+        int main()
+        {
+          Moveable a;
+          Moveable c(std::move(a)); //会调用移动构造函数
+
+          std::cout << *a.i << std::endl; //运行时错误
+        }
+        ```
+        在调用`Moveable c(std::move(a));`这样的语句之后，左值变量a已被转换为右值。a.i就被c的移动构造函数设置为指针控制。由于a的生命期实际上要到main函数结束才会结束，那么随后对a.i进行计算的时候，就会发生严重的运行时错误。
+    5.  移动语义的一些其他问题    
+        移动语义一定是要修改临时变量的值。那么，如果这样：    
+        ```
+        moveable(const Moveable&&);
+        //或者
+        const Moveable return_val();
+        ```
+        都睡使得临时变量常量化，成为一个常量右值，那么临时变量的引用也就无法修改，从而导致无法实现移动语义。因此程序员在实现移动语义一定要注意排除不必要的const关键字。   
+        在C++11中，拷贝、移动构造函数实际上有以下三个版本：   
+        ```
+        T object(T&);
+        T object(const T&);
+        T object(T&&)；
+        ```
+        其中常量左值引用的版本是一个拷贝构造版本，而右值引用版本是一个移动构造版本。默认情况下，编译器回味程序员隐式地生成一个（隐式表示如果不被是用则不生成）移动构造函数。不过如果程序员声明了自定义的拷贝构造函数、拷贝赋值函数、移动复制函数、析构函数中的一个或者多个，编译器都不会再为程序员生成默认版本。默认的移动构造函数实际上跟默认的考本构造函数一样，只能做一些按位拷贝的工作，这对实现移动寓意是不够的。通常情况下，如果需要移动语义，需要自定义移动构造函数。
+        只有移动语义表明该类型的变量所有用的资源只能被移动，而不能被拷贝。那么这样的资源必须是唯一的。因此，只有移动语义构造的类型往往都是资源型的类型，比如说智能指针，文件流等等。    
+        在标准库的头文件`<type_traits>`里面，我们可以使用模板类来判断一个类型是否是可以移动的：`is_move_constructible、is_trivially_move_constructible、is_nothrow_move_constructible`，使用方法仍然是使用其成员value：    
+        `cout << is_move_constructible<UnknownType>::value;`就可以打印出`UnknownType`是否可以移动。而有了移动语义，还可以使用高性能的置换函数：      
+        ```
+        template<typename T>
+        void swap(T& a, T& b)
+        {
+          T tmp(std::move(a));
+          a = std::move(b);
+          b = std::move(tmp);
+        }
+        ```
+        如果T是可以移动的，那么移动构造和移动复制将会被用于这个置换。整个过程，代码都只会按照移动语义进行指针交换，不会有资源的释放与申请。而如果T不可移动却是可以拷贝的，那么拷贝语义会被用来进行置换。    
+        另一个关于移动构造的话题是异常。    
+        对于移动构造函数来说，跑出异常有时候是件危险的事情，因为可能移动语义还没有完成，一个异常却跑出来了，这就会导致一些指针称为悬挂指针。一般来说可以为其添加一个noexcept关键字，可以保证移动构造函数中抛出来的异常会直接调用terminate程序种植运行。而标准库中，我们可以用一个std::move_if_noexcept的模板函数替代move函数。该函数在类的移动构造函数没有noexcept关键字修饰时返回一个左值引用从而使变量可以是用拷贝语义，而在类的移动构造函数有noexcept关键字时，返回一个右值引用，从而使变量可以是用移动语义。    
+        ```
+        #include <iostream>
+        #include <utility>
+
+        struct MayThrow {
+          MayThrow() {}
+          MayThrow(const MayThrow&) {
+            std::cout << "MayThrow copy constructor." << std::endl;
+          }
+
+          MayThrow(MayThrow&&) {
+            std::cout << "MayThrow move constructor." << std::endl;
+          }
+        };
+
+        struct NoThrow {
+          NoThrow() {}
+          NoThrow(NoThrow&&) noexcept {
+            std::cout << "NoThrow move constructor." << std::endl;
+          }
+          NoThrow(const NoThrow&) {
+            std::cout << "NoThrow move constructor." << std::endl;
+          }
+        }
+
+        int main()
+        {
+          MayThrow m;
+          NoThrow n;
+
+          MayThrow mt = move_if_noexcept(m); //MayThrow copy constructor
+          NoThrow nt = move_if_noexcept(n); //NoThrow move constructor
+
+          return 0;
+        }
+        ```
+        可以看到上面的效果，事实上，`move_if_noexcept`是以牺牲性能保证安全的做法，而且要求类的开发者对移动构造函数是用noexcept进行描述，否则就会损失更多性能。      
+        另一个与移动语义有关的是___编译器中被称为RVO/NRVO的优化___(返回值优化)。这个选项可以关闭。     
+    6.  完美转发      
+        所谓完美转发，是指在函数模板中，完全依照模板的参数类型，讲参数传递给函数模板中调用的另外一个函数：    
+        ```
+        template<typename T>
+        void IamForwarding(T t) {
+          IrunCodeActually(t);
+        }
+        ```
+        这个例子中，IamForwarding是一个转发函数模板。而函数IrunCodeActually则是真正执行代码的目标函数。对于目标函数而言，他总是希望转发函数将参数按照传入IamForwarding时的类型传递（即传入IamForwarding的是左值对象，IrunCodeActually就能获得左值对象，即传入IamForwarding的是右值对象，IrunCodeActually就能获得右值对象），而不产生额外的开销，就好像转发者不存在一样。      
+        上面的代码虽然是产生了左值对象，但是会产生一次额外的临时对象拷贝。因此这样的转发只能称为正确的转发，不能说是完美的转发。    
+        所以通常程序员需要的时引用类型，引用类型不会有拷贝开销。而且还需要考虑转发函数对类型的接受能力。因此目标函数可能需要能够既能接受左值饮用，又能接受右值引用，是用左值引用是不行的：      
+        ```
+        void IrunCodeActually(int t) {}
+        template <typename T>
+        void IamForwarding(const T& t) {
+          IrunCodeActually(t); //这里接收的时非常量左值类型，但是传进来的时常量左值类型
+        }
+        ```
+        所以上面不是完美转发。虽然可以通过重载常量引用和非常量引用函数达到目的，这样在函数参数较多的情况下，就会造成代码冗余。如果目标寒素的参数是个右值引用的话，同样无法接受任何左值类型作为参数。也就导致无法使用移动语义。    
+        C++通过___引用折叠___的新规则，并结合新的模板推导规则来完成完美转发。    
+        ```
+        typedef const int T;
+        typedef T& TR;
+        TR& v = 1; //该声明在C++98中会导致编译错误
+        ```
+        在C++11中出现这样的表达式，就会发生引用折叠，即 将复杂的未知表达式折叠为已知的简单表达式：    
+        ![C++11中引用折叠规则](../pictures/6.jpg "C++11中的引用折叠规则")      
+        这个规则并不难记忆，因为一旦定义中出现了左值引用，引用折叠总是优先将其折叠为左值引用。当转发函数的实参是类型X的一个左值引用，那么模板参数被推导为X&类型，而转发函数的实参是类型X的一个右值引用的话，那么模板的参数被推导为X&&类型：      
+        ```
+        template<typename T>
+        void IamForwarding(T&& t) {
+          IrunCodeActually(static_cast<T&&>(t));
+        }
+        ```
+        对于完美转发而言，右值引用并非“天生神力”，只是C++11新引用了右值，因此为其定义下的引用折叠的规则，以满足完美转发的需求。    
+        我们不仅在参数部分是用了T&&这样的标识，在目标函数传参的强制类型转换中也是用了这样的形式。比如我们调用转发函数时传入了一个X类型的左值引用：   
+        ```
+        void IamForwarding(X&& &t) {
+          IrunCodeActually(static_cast<X&&&>(t));
+        }
+        ```
+        应用上引用折叠规则：      
+        ```
+        void IamForwarding(X& t) {
+          IrunCodeActually(static_cast<X&>(t));
+        }
+        ```
+        这样以来，我们的左值传递就毫无问题了，实际上是用的时候，IrunCodeActually如果接受左值引用的话，就可以直接调用转发函数。不过可以发现，这里调用前的static_cast没有什么作用，事实上，这里的static_cast是留给传递右值的。     
+       ```
+        void IamForwarding(X&&&&t) {
+          IrunCodeActually(static_cast<X&&&&>(t));
+        }
+        ```
+        应用上引用折叠规则：      
+        ```
+        void IamForwarding(X&& t) {
+          IrunCodeActually(static_cast<X&&>(t));
+        }
+        ```
+        在C++11中，用于完美转发的函数却不是move，而是forward：      
+        ````
+        template<typename T>
+        void IamForwarding(T&& t) {
+          IrunCodeActually(forward(t));
+        }
+        ````
+        move和forward在实际上差别不大：   
+        ```
+        #include <iostream>
+
+        void run_code(int&& m)
+        {
+          std::cout << "right value ref" << std::endl;
+        }
+        void run_code(int& m)
+        {
+          std::cout << "left value ref" << std::endl;
+        }
+        void run_code(const int&& m)
+        {
+          std::cout << "const right value ref" << std::endl;
+        }
+        void run_code(const int& m)
+        {
+          std::cout << "const left value ref" << std::endl;
+        }
+
+        template <typename T>
+        void perfect_forward(T&& t)
+        {
+          run_code(forward<T>(t));
+        }
+
+        int main()
+        {
+          int a;
+          int b;
+          const int c = 1;
+          const int d = 0;
+          perfect_forward(a); //left value ref
+          perfect_forward(move(b)); //right value ref
+          perfect_forward(c); // const left value ref
+          perfect_forward(move(d)); //const right value ref
+        }
+        ```
 
