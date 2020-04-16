@@ -664,3 +664,151 @@
         }
         ```
 4.  显示转换操作符    
+    ```
+    #include <iostream>
+
+    struct Rational1 {
+      Rational1(int n = 0, int d = 1): num(n), den(d) {
+        std::cout << __func__ << "(" << num << "/" << den << ")" << std::endl;
+      }
+
+      int num; //被除数
+      int den; //除数
+    };
+
+    struct Rational2 {
+      explicit Rational2(int n = 0, int d = 1): num(n), den(d)
+      {
+        std::cout << __func__ << "(" << num << "/" << den << ")" << std::endl;
+      }
+
+      int num;
+      int den;
+    };
+
+    void display1(Rational1 ra)
+    {
+      std::cout << "被除数：" << ra.num << "除数：" << ra.den << std::endl;
+    }
+
+    void display2(Rational2 ra)
+    {
+      std::cout << "被除数：" << ra.num << "除数：" << ra.den << std::endl;
+    }
+
+    int main()
+    {
+      Rational1 r1_1 = 11; //Rational1(11/1)
+      Rational1 r1_2 = 12; //Rational1(12/1)
+      Rational2 r2_1 = 21; //无法通过编译
+      Rational2 r2_2(22); //Rational2(22/1)
+
+      display1(1); //Rational1(1/1)
+      display2(2); //无法通过编译
+      display2(Rational2(2)); //Rational2(2/1)
+
+      return 0;
+    }
+    ```
+    上面代码中，没有`explicit`关键字修饰的函数，意味着该构造函数可以被隐式的调用。   
+    ```
+    #include <iostream>
+
+    template<typename T>
+    class Ptr {
+    public:
+      Ptr(T* p): _p(p) {}
+      operator bool() const {
+        if (_p != 0)
+          return true;
+        else
+          return false;
+      }
+
+    private:
+      T* _p;
+    };
+
+    int main()
+    {
+      int a;
+      Ptr<int> p(&a);
+
+      if (p) //自动转换为bool类型，没有问题
+        std::cout << "valid pointer" << std::endl;
+      else
+        std::cout << "invalid pointer" << std::endl;
+
+      Ptr<double> pd(0);
+      std::cout << p + pd << std::endl; //1，相加，语义上没有意义
+    }
+    ```
+    定义了一个指针模板类型。为了方便判断指针是否有效，我们为指针编写了自定义类型转换到bool类型的函数。这样以来，我们就可以是用`if(p)`这样的边大事来轻松地判断指针是否有效，不过这样的转换使得`Ptr<int>`和`Ptr<double>`两个指针的加法运算或得了语法的允许。不过很明显没有意义。    
+    在C++11中，标准将explicit的是用范围扩展到了自定义的类型转换操作符上，以支持所谓的“显示类型转换”。explicit关键字作用域类型转换操作符上，意味着只有在直接构造目标类型或者显示类型转换的时候可以是用该类型。   
+    ```
+    class ConvertTo{};
+    class Convertable {
+    public:
+      explicit operator ConvertTo() const { return ConvertTo(); }
+    };
+
+    void func(ConvertTo ct) {}
+    void test() {
+      Convertable c;
+      ConverTo ct(c); //直接初始化，通过
+      ConverTo ct2 = c; //拷贝构造初始化，编译失败
+      ConvertTo ct3 = static_cast<ConvertTo>(c); //强制转化，通过
+      func(c); //拷贝构造初始化，编译失败
+    }
+    ````
+    在代码中，我们定义了两个类类型。Convertable定义了一个显示转换到ConvertTo类型的类型转换符，那么对于main中的ConvertTo类型的ct变量而言，由于其直接初始化构造于Convertable变量c，所以可以编译通过。而做强制类型转换的ct3同样通过了编译。而ct2由于需要从c中拷贝构造，因而不能通过变异。此外，我们使用c也会导致参数的拷贝构造。因此也不能通过编译。   
+    再上面的例子中，如果是用explicit，if(p)可以通过编译，因为可以通过p直接构造出bool类型的变量，而p+pd这样的语句就无法通过变异，这是由于全局的operator+并不接受bool类型变量为参数。而Converable也不能直接构造出适用于operator+的int类型的变量造成的。所谓的显示类型转换并没有完全禁止从源类型到目标类型的转换。不过由于此时拷贝构造和非显示类型转换不被允许，那么我们通常就不能通过赋值表达式或者函数参数的方式来产生这样一个目标类型。通常通过赋值表达式，和函数参数进行的转换有可能是程序员的疏忽，并非本意，那么是用了显示类型转换就会暴漏除问题出来。      
+
+1.  继承构造函数    
+    以前我们这样使用：    
+    ```
+    struct A {
+      A(int i) {}
+      A(double d, int i) {}
+
+      A(float f, int i, const char* c) {}
+    };
+
+    struct B: public A{
+      B(int i) : A(i) {}
+      B(double d, int i): A(d, i) {}
+      B(float f, int i, const char* c): A(f, i, c) {}
+    std::vector<int> c{1, 3, 5}; //C++98失败，C++11通过
+
+    std::map<int, float> d = { {1, 1.}, {2, 2.}, {5, 3.2} }; //C++98失败，C++11通过
+    ```
+    上面中通过的代码，初始化效果与不带使用等号的初始化相同。这样，程序员可以使用以下几种形式完成初始化：   
+    +  "="加上复制表达式，比如int a = 3 + 4;
+    +  “=”加上花括号式的初始化列表，比如int a = {3,4};
+    +  圆括号式的表达式列表，比如int a(3+4);
+    +  花括号式的初始化列表，比如int a {3+4};     
+    后面两种形式也用于new：   
+    +  `int* i = new int(1);`
+    +  `double* d = new double{1.f}`
+    使用初始化列表可以对vector、map等非内置的、复杂的数据类型进行初始化也是可以的，但是是否初始化列表是专属于内置类型、数组、标准模板库中容器的功能呢？在C++11中，标准模板库中容器对初始化列表的支持源自于`<initializer_list>`这个头文件`initialize_list`类模板的支持。程序员只要声明包含这个头文件，并且声明一个以`initialize_list<T>`模板类为参数的构造函数，同样可以使得自定义的类是用列表初始化：      
+    ```
+    #include <iostream>
+    #include <vector>
+
+    enum Gender {boy, girl};
+
+    class People {
+    public:
+      People(initializer_list<pair<string, Gender> > l) { //initializer_list的构造函数
+        auto i = l.begin();
+        for (; i != l.end(); ++i)
+          data.push_back(*i);
+      }
+
+    private:
+      std::vector<pair<string, Gender> > data;
+    };
+
+    People ship2012 = {{"Garfield", boy}, "HelloKitty", girl};
+    ```
+    上面代码中，我们是为类People定义了一个实用`initializer_list<pair<string, Gender>>`模板类作为参数的构造函数。由于该构造函数的存在，ship2012声明就可以是用列表初始化了。      
