@@ -227,8 +227,8 @@
       void fun(); //无法通过编译
      };
      ```
-     派生于Base的Derived类对借口fun的重载会导致编译时错误。但是从接口派生的角度而言，final可以在派生过程中任意的阻止一个接口的可重载性。在C++中重载还有一个特点，就是对于积累声明为virtual的函数，之后的重载版本都不需要再声明该重载函数为virtual。即使再派生类中声明了virtual，该关键字也是编译器可以忽略的。    
-     在C++11中为了帮助程序员写继承结构复杂的类型，引入了虚函数描述符override，如果派生类在虚函数声明时是用了override描述符，那么该函数必须重载其积累中的同名函数，否则代码将无法通过编译。    
+     派生于Base的Derived类对接口fun的重写会导致编译时错误。但是从接口派生的角度而言，final可以在派生过程中任意的阻止一个接口的可重写性。在C++中重写还有一个特点，就是对于积累声明为virtual的函数，之后的重写版本都不需要再声明该重写函数为virtual。即使再派生类中声明了virtual，该关键字也是编译器可以忽略的。    
+     在C++11中为了帮助程序员写继承结构复杂的类型，引入了虚函数描述符override，如果派生类在虚函数声明时是用了override描述符，那么该函数必须重其积累中的同名函数，否则代码将无法通过编译。    
      ```
      struct Base {
       virtual void turing() = 0;
@@ -244,10 +244,10 @@
 
      struct DerivedTop: public DerivedMid {
       void turing() override;
-      void dikjstra() override; //无法通过编译，拼写错误，并非重载
-      void vneumann(double g) override; //无法通过编译，参数不一致，并非重载
-      void dknuth() override; //无法通过编译，常量性不一致，并非重载
-      void print() override; //无法通过变异，非虚函数重载
+      void dikjstra() override; //无法通过编译，拼写错误，并非重写
+      void vneumann(double g) override; //无法通过编译，参数不一致，并非重写
+      void dknuth() override; //无法通过编译，常量性不一致，并非重写
+      void print() override; //无法通过变异，非虚函数重写
      }
      ```
      如果没有`override`修饰符，DerivedTop的作者可能在编译后都没有意识到自己犯了这么多错误。因为编译器对以上的错误不会有任何警示。这里`override`修饰符可以保证编译器辅助地做一些检查。    

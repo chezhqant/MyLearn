@@ -183,6 +183,7 @@
 ###  3.  [100个gdb技巧](https://www.kancloud.cn/itfanr/i-100-gdb-tips/81888)   
 ###  4.  [gprof](https://www.cnblogs.com/feisky/archive/2010/03/09/1681997.html)   
 ###  5.  [打印函数栈](https://ivanzz1001.github.io/records/post/cplusplus/2018/11/08/cpluscplus-gdbusage_part4)
+###  6.  [gdb python调用C/C++](https://meteorix.github.io/2019/04/30/pytorch-coredump/)     
 
 
 #  汇编   
