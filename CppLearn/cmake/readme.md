@@ -23,10 +23,17 @@ ___cmake 总结___
 1.  [cmake手册](https://www.cnblogs.com/coderfenghc/tag/cmake/)
   1.  [cmake policy](https://www.cnblogs.com/hustdc/p/6644002.html)   
   2.  [cmake find\_package](https://www.jianshu.com/p/39fc5e548310)   
-  3.  [excute_process](https://blog.csdn.net/qq_28584889/article/details/97758450)
-  4.  [option()](https://zhjwpku.com/2019/11/15/cmake-basic-commands-intro.html)
-  5.  [cmake_dependent_option](http://www.up4dev.com/2019/12/12/cmake_dependent_option/)
-  6.  [cmake  function() macro()](https://elloop.github.io/tools/2016-04-11/learning-cmake-3-function-macro)
+      [第二次理解](https://blog.csdn.net/dbzhang800/article/details/6329314)    
+      [第三次理解](https://dawnarc.com/2018/04/buildcmake%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE%E9%A1%B9/)    
+  3.  [excute_process](https://blog.csdn.net/qq_28584889/article/details/97758450)    
+  4.  [option()](https://zhjwpku.com/2019/11/15/cmake-basic-commands-intro.html)    
+  5.  [cmake_dependent_option](http://www.up4dev.com/2019/12/12/cmake_dependent_option/)    
+  6.  [cmake  function() macro()](https://elloop.github.io/tools/2016-04-11/learning-cmake-3-function-macro)      
+  7.  [set](https://www.cnblogs.com/narjaja/p/8351500.html)     
+  8.  [execute_process](https://blog.csdn.net/qq_28584889/article/details/97758450)   
+  9.  [include](https://blog.csdn.net/liitdar/article/details/81144461)   
+      [再解include](https://blog.csdn.net/qq_38410730/article/details/102677143)    
+  10. [string](https://www.sunxidong.com/340.html)    
 2.  cmake实践这本书   
 3.  [cmake下载路径](https://cmake.org/files)  
 4.  cmake 构建选项
@@ -70,7 +77,15 @@ ___cmake 总结___
     10. set   
         [理解](https://www.cnblogs.com/narjaja/p/8351500.html)    
 6.  变量    
-    1.  CMAKE_INSTALL_MESSAGE(查不到)   
-    2.  CMAKE_CXX_STANDARD    
+    1. [CMAKE_INSTALL_MESSAGE](https://cmake.org/cmake/help/v3.1/variable/CMAKE_INSTALL_MESSAGE.html)   
+    2.  [CMAKE_CXX_STANDARD](https://kheresy.wordpress.com/2017/08/28/abi-incompatible-of-g/)    
         C++11标准   
+    3.  [CXX_STANDARD_REQUIRED](https://cmake.org/cmake/help/v3.1/prop_tgt/CXX_STANDARD_REQUIRED.html)      
+    4.  CMAKE_CXX_FLAGS   
+        + [解释一](https://blog.csdn.net/10km/article/details/51    731959)     
+        + [解释二](https://www.jianshu.com/p/e9b1e9e833b2)      
+    5.  [-D_GLIBCXX_USE_CXX11_ABI](https://my.oschina.net/tigerBin/blog/2049922)    
+    6.  [CMAKE_EXPORT_COMPILE_COMMANDS](https://ihuifeng.cc/2019/08/10/C-C-%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0%E7%B2%BE%E5%87%86%E7%9A%84%E8%AF%AD%E4%B9%89%E7%BA%A7%E8%A1%A5%E5%85%A8/)   
+
+7.  [另一个比较全面的博客](http://ijinjay.github.io/blog/2017-04/CMake%E4%BD%BF%E7%94%A8.html)     
 ___待总结___
