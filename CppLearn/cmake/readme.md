@@ -86,6 +86,11 @@ ___cmake 总结___
         + [解释二](https://www.jianshu.com/p/e9b1e9e833b2)      
     5.  [-D_GLIBCXX_USE_CXX11_ABI](https://my.oschina.net/tigerBin/blog/2049922)    
     6.  [CMAKE_EXPORT_COMPILE_COMMANDS](https://ihuifeng.cc/2019/08/10/C-C-%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0%E7%B2%BE%E5%87%86%E7%9A%84%E8%AF%AD%E4%B9%89%E7%BA%A7%E8%A1%A5%E5%85%A8/)   
+    7.  [cmake默认编译、链接选项](https://blog.csdn.net/icbm/article/details/52336497)    
+    8.  [ENV](https://blog.csdn.net/10km/article/details/51769633)    
 
 7.  [另一个比较全面的博客](http://ijinjay.github.io/blog/2017-04/CMake%E4%BD%BF%E7%94%A8.html)     
+
+9.  [cmake将变量传递给代码](https://www.coder.work/article/1206996)   
+10.  [在各级子项目(目录)之间共享变量](https://blog.csdn.net/10km/article/details/50508184)    
 ___待总结___

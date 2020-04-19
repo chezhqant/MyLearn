@@ -11,7 +11,8 @@
 3.  [void指针](https://www.cnblogs.com/wuyudong/p/c-void-point.html)    
     <span id="jump1">~~jump there~~</span>
 4.  [引用和指针](http://irootlee.com/juicer_pointer_reference/)   
-5.  常量指针和指针常量
+5.  常量指针和指针常量    
+6.  函数名即是函数首地址，可以是用&   
 
 > 常量指针(const int\*): 该指针指向的那个变量是不可被修改的；但它本身的指向可以被修改。  
 > 指针常量(int \*const 或者 int const\*): 该指针指向的变量是可以被修改的；但它本身的指向是不能被修改的。  
@@ -50,6 +51,8 @@
 +  [protected](https://www.bookstack.cn/read/open-c-book/zh-cha)   
 +  [转换构造函数](http://blog.guorongfei.com/2016/03/09/cppx-list-initilization/)       
 +  [类型转换函数](http://c.biancheng.net/cpp/biancheng/view/222.html)   
++  [explicit](http://ttshun.com/2018/05/09/C++%E5%AD%A6%E4%B9%A0%E4%B9%8Bexplicit%E5%85%B3%E9%94%AE%E5%AD%97%E8%AF%A6%E8%A7%A3/)    
++  [:/::的用法](http://www.360doc.com/content/13/0605/11/3373961_290615318.shtml)   
 
 ###  1.  python/C++交互(pybind11)待完成    
 
@@ -63,6 +66,7 @@
 1. [ 弱引用的理解](https://www.cnblogs.com/fengc5/p/5316670.html)    
 2. [ 强引用与弱引用的比较](https://blog.csdn.net/Sun960705/article/details/79099533)   
 3. [ 左值引用和右值引用](https://www.cnblogs.com/KaiMing-Prince/p/9741393.html)   
+4.  [移动语义和完美转发](https://codinfox.github.io/dev/2014/06/03/move-semantic-perfect-forward/)      
 ```
     int& x = 666;       // Error
     const int& x = 666; // OK
@@ -162,6 +166,7 @@
 ###  1.  [内存映射]   
 1.  [理解一](https://www.bookstack.cn/read/think-os-zh/ch3.md)   
 2.  [理解二](https://blog.csdn.net/williamgavin/article/details/83240402)    
+3.  [C++新特性：预处理](https://www.cnblogs.com/sjjg/p/10556015.html)     
 ###  2.  [C语言编程透视](https://www.bookstack.cn/read/open-c-book/zh-chapters-02-chapter2.markdown#toc\_27212\_14734\_2)
 ###  3.  [预处理](./程序怎么运行的/README.md)    
 ###  4.  [ELF文件格式](https://luomuxiaoxiao.com/?p=139)   
