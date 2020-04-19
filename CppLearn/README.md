@@ -49,8 +49,6 @@
 # [ C++基础知识](https://www.runoob.com/cplusplus/cpp-tutorial.html)  
 +  [參考這個](https://github.com/huihut/interview#-cc)   
 +  [protected](https://www.bookstack.cn/read/open-c-book/zh-cha)   
-+  [转换构造函数](http://blog.guorongfei.com/2016/03/09/cppx-list-initilization/)       
-+  [类型转换函数](http://c.biancheng.net/cpp/biancheng/view/222.html)   
 +  [explicit](http://ttshun.com/2018/05/09/C++%E5%AD%A6%E4%B9%A0%E4%B9%8Bexplicit%E5%85%B3%E9%94%AE%E5%AD%97%E8%AF%A6%E8%A7%A3/)    
 +  [:/::的用法](http://www.360doc.com/content/13/0605/11/3373961_290615318.shtml)   
 
@@ -86,6 +84,8 @@
 3.  [const成员函数](https://blog.csdn.net/u011197534/article/details/78385550)    
 4.  [类成员变量初始化顺序](https://blog.csdn.net/shimadear/article/details/82527442)   
 5.  [public/private/protected继承](https://www.cnblogs.com/likebeta/archive/2011/10/12/2209044.html)      
+6.  [转换构造函数](http://blog.guorongfei.com/2016/03/09/cppx-list-initilization/)       
+7.  [类型转换函数](http://c.biancheng.net/cpp/biancheng/view/222.html)   
 ###  8. 关键字   
 1.  [decltype](https://www.cnblogs.com/QG-whz/p/4952980.html)    
 2.  [override](https://blog.csdn.net/jolin678/article/details/63695023)    
