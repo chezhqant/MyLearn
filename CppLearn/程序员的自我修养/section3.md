@@ -7,7 +7,7 @@
     + Linux的ELF    
     他们都是COFF格式的变种，目标文件就是源代码编译后但未进行连接的哪些中间文件。
 3.  不光是可执行文件按照可执行文件格式存储。动态链接库、静态链接库文件都是按照可执行文件格式存储。静态链接库稍有各不同，他是把很多目标文件捆绑在一起形成一个文件，再加上一些索引，你可以简单的把它理解为一个包含有很多目标文件的文件包。    
-		![../pictures/2.jpg](../pictures/2.jpg)		
+		![../pictures/2.jpg](./pictures/2.jpg)		
 		在linux下是用file命令来查看相应文件格式：		    
-		![../pictures/3.jpg](../pictures/3.jpg)		
+		![../pictures/3.jpg](./pictures/3.jpg)		
 
