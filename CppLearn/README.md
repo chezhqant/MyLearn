@@ -35,7 +35,7 @@
     ![##](./pictures/5.jpg "##")    
 3.  [#define目前所知最全的](http://c.biancheng.net/view/446.html)     
 
-4.  奇技淫巧  
+###  奇技淫巧  
     1.  [do...while(false)](https://blog.csdn.net/this_capslock/article/details/41843371)   
 5.  内建变量  
     1.  [\_\_func\_\_](https://blog.csdn.net/u011308691/article/details/45015613)     
@@ -44,6 +44,8 @@
             void func_fail(std::string func_name = __func__) {} //无法通过编译
             ```
             这是因为在参数声明的时候，`__func`还没有被定义.   
+    2.  [__VA_ARGS__， \_\_FILE\_\_， \_\_FUNCTION\_\_](https://blog.csdn.net/yiya1989/article/details/7849588)   
+    3.  [\_\_COUNTER\_\_](https://zhuanlan.zhihu.com/p/64479211)    
 
 
 # [ C++基础知识](https://www.runoob.com/cplusplus/cpp-tutorial.html)  
@@ -112,6 +114,7 @@
 ###  10.  stl    
 1.  [仿函数和适配器](https://blog.csdn.net/coolwriter/article/details/81533226)   
 2.  [匿名函数](https://www.cnblogs.com/findumars/p/8062299.html；https://blog.csdn.net/alex1997222/article/details/81154026)   
+3.  [std::accumulate()](https://www.cnblogs.com/heyonggang/p/3241878.html)    
     1.  [再解](https://www.jianshu.com/p/923d11151027)      
 3.  std::function
     1. [理解一](https://www.cnblogs.com/diegodu/p/6180350.html)    
@@ -160,6 +163,7 @@
 
 #  异常   
 1.  [noexcept](https://www.cnblogs.com/sword03/p/10020344.html)    
+2.  [try/throw/catch](https://www.zfl9.com/cpp-exception.html)    
 
 
 #  预处理、编译、汇编、链接    
