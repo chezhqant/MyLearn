@@ -51,10 +51,12 @@
 # [ C++基础知识](https://www.runoob.com/cplusplus/cpp-tutorial.html)  
 +  [參考這個](https://github.com/huihut/interview#-cc)   
 +  [protected](https://www.bookstack.cn/read/open-c-book/zh-cha)   
++  [protected成员](https://blog.csdn.net/feiyinzilgd/article/details/6226348)   
 +  [explicit](http://ttshun.com/2018/05/09/C++%E5%AD%A6%E4%B9%A0%E4%B9%8Bexplicit%E5%85%B3%E9%94%AE%E5%AD%97%E8%AF%A6%E8%A7%A3/)    
 +  [:/::的用法](http://www.360doc.com/content/13/0605/11/3373961_290615318.shtml)   
 
 ###  1.  python/C++交互(pybind11)待完成    
+1.  [pybind11中文翻译，翻译的不好的](https://s0pybind110readthedocs0io.icopy.site/en/master/compiling.html#building-manually)   
 
 ###  [2.  LeetCode刷题](../LeetcodeLearn)   
 
@@ -75,6 +77,8 @@
 ###  6.  [内联函数(不一定非得跟类有关系)](https://www.cnblogs.com/zsq1993/p/5978743.html)    
 1.  [内联函数追根究底](https://zhuanlan.zhihu.com/p/50812510)        
 ###  7.  [使用Valgrind检测C++内存泄露](http://senlinzhan.github.io/page/3/)    
+1.  [再解](https://phenix3443.github.io/notebook/software-engineering/debug/valgrind-practices.html)    
+2.  [三解](http://sunny90.com/a/server/2014/0905/108.html)      
 ###  8.  [RTTI](https://www.jianshu.com/p/3b4a80adffa7)     
 ###  9.  智能指针     
 1.  [shared_ptr/unique_ptr的deleter初解](https://blog.csdn.net/caroline_wendy/article/details/16938707)       
@@ -88,6 +92,9 @@
 5.  [public/private/protected继承](https://www.cnblogs.com/likebeta/archive/2011/10/12/2209044.html)      
 6.  [转换构造函数](http://blog.guorongfei.com/2016/03/09/cppx-list-initilization/)       
 7.  [类型转换函数](http://c.biancheng.net/cpp/biancheng/view/222.html)   
+8.  [嵌套类和外围类](https://blog.csdn.net/u013476464/article/details/42738789)   
+9.  [不要显式调用析构函数](http://www.cppblog.com/lf426/archive/2008/04/12/46909.html)    
+    1.  [私有析构函数](https://www.cnblogs.com/wkfvawl/p/10620639.html)   
 ###  8. 关键字   
 1.  [decltype](https://www.cnblogs.com/QG-whz/p/4952980.html)    
 2.  [override](https://blog.csdn.net/jolin678/article/details/63695023)    
@@ -193,6 +200,7 @@
 ###  4.  [gprof](https://www.cnblogs.com/feisky/archive/2010/03/09/1681997.html)   
 ###  5.  [打印函数栈](https://ivanzz1001.github.io/records/post/cplusplus/2018/11/08/cpluscplus-gdbusage_part4)
 ###  6.  [gdb python调用C/C++](https://meteorix.github.io/2019/04/30/pytorch-coredump/)     
+###  7.  [gdb的一些命令](https://deepzz.com/post/gdb-debug.html)        
 
 
 #  汇编   
@@ -230,3 +238,14 @@
 #  cuda编程
 +  [cuda C++ best practices guide](https://s0docs0nvidia0com.icopy.site/cuda/cuda-c-best-practices-guide/index.html#what-is-this-document)   
 +  [threadIdx/blockIdx/blockDim/gridDim](https://www.cnblogs.com/rainbow70626/p/6498738.html)    
+   +  [cuda的grid/block/thread](https://blog.csdn.net/xuhang0910/article/details/46972919)    
+   +  [再解](https://blog.csdn.net/dcrmg/article/details/54867507)    
+
+#  模板   
+1.  [特化和偏特化](https://harttle.land/2015/10/03/cpp-template.html)   
+
+#  [VTK](https://www.cnblogs.com/liangliangh/p/3209995.html)    
+1.  [HSV](https://blog.csdn.net/carson2005/article/details/6243892)   
+2.  [VTK坐标系统](https://www.cnblogs.com/ghjnwk/p/10305796.html)   
+3.  [z-buffer](https://blog.csdn.net/Jane_yuhui/article/details/52608119)   
+4.  [vtk入门教程](https://blog.csdn.net/www_doling_net/article/details/8763686)   

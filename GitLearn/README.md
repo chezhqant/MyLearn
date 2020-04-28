@@ -85,6 +85,13 @@
     3.  [分支](https://git-scm.com/book/zh/v1/Git-%E5%88%86%E6%94%AF)   
     4.  [git reset](https://blog.csdn.net/y491887095/article/details/79486328)
     5.  [git submodule](https://segmentfault.com/a/1190000020297996?utm\_source=tag-newest)  
+        1.  [再解](https://blog.phpgao.com/git_submodule.html)    
+    6.  [git rebase](http://jartto.wang/2018/12/11/git-rebase/)   
+    7.  [git的HEAD](https://www.jianshu.com/p/4419f6a76005)   
+        0.  [git的相对引用](https://blog.csdn.net/m0_38022029/article/details/79058105)   
+        1.  [移动HEAD指针](https://blog.csdn.net/claroja/article/details/78857853)    
+        2.  [git 理解 Head指针&Branch指针](https://blog.csdn.net/claroja/article/details/78858533)    
+    8.  [重命名远程分支](https://blog.csdn.net/u013276277/article/details/81975713)   
 
 3.  shell的一些命令   
   1.  [tmux](http://www.ruanyifeng.com/blog/2019/10/tmux.html)    
@@ -93,3 +100,4 @@
   4.  [linux查看CPU几核](https://www.cnblogs.com/xd502djj/archive/2011/02/28/1967350.html)    
   5.  [linux环境变量](https://www.jianshu.com/p/ac2bc0ad3d74)   
   6.  [tar](http://linux.51yip.com/search/tar)      
+  7.  [linux的一些工具]( https://linuxtools-rst.readthedocs.io/zh_CN/latest/base/index.html)    
