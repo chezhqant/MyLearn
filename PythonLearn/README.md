@@ -66,6 +66,9 @@
 ### 1.6 [object类](https://blog.csdn.net/DeepOscar/article/details/80947155) </br>
 ### 1.7 [类变量和实例变量](https://www.cnblogs.com/crazyrunning/p/6945183.html) </br>
 1.  [为什么类的变量是定义在类方法内的?](https://www.cnblogs.com/chownjy/p/8663024.html)
+### 1.8 [python 包、模块的区别](https://blog.csdn.net/ityard/article/details/103502449)   
+### 1.9 [python的protected](https://blog.csdn.net/c_base_jin/article/details/88778553)   
+### 2.0 [python的搜索路径](https://blog.csdn.net/Charles5101/article/details/89951747)    
 
 ## 2. Functions </br>
 1.  [重构](https://blog.csdn.net/liuwei_q/article/details/83032297)
@@ -77,6 +80,8 @@
 6.  [del](https://blog.csdn.net/weihongxu2222/article/details/51320006)   
 7.  [iter](https://docs.python.org/zh-cn/3/library/functions.html)   
 8.  [python 生成器、列表/字典/集合解析式区别](https://blog.csdn.net/luckytanggu/article/details/53154063)   
+9.  [装饰器简述](https://www.runoob.com/w3cnote/python-func-decorators.html)    
+10.  [python函数传递参数是传引用还是传值？](https://blog.csdn.net/duan20140614/article/details/85382955)    
 
 ## 3. Packages
 ### 3.1. [csv](https://www.cnblogs.com/wuxunyan/p/10442444.html)</br>
@@ -114,8 +119,7 @@
 ### 3.24. [bututils](https://www.osgeo.cn/cpython/distutils/apiref.html)    
 ### 3.25. [__future__](https://segmentfault.com/a/1190000010857744)       
 ### 3.26.  [openpyxl](https://geek-docs.com/python/python-tutorial/python-openpyxl.html)      
-### 3.27.  importlib    
-    1.  [importlib.import_module()](https://python3-cookbook.readthedocs.io/zh_CN/latest/c10/p10_import_modules_using_name_given_in_string.html)    
+### 3.27.  [importlib](https://www.cnblogs.com/zhbzz2007/p/6715516.html)    
 
 ## 4. Common Functions
 1.  [time的相关函数](https://blog.csdn.net/brucewong0516/article/details/79044905)</br>
@@ -138,11 +142,13 @@
 
 ## 6. 杂项 </br>
 ### 6.1 [环境变量](https://blog.csdn.net/v_xchen_v/article/details/80393967) </br>
+1.  [python的搜索路径](https://blog.csdn.net/Charles5101/article/details/89951747)    
 ### 6.2 [Python字符串前面加u,r,b的含义](https://www.cnblogs.com/liangmingshen/p/9274021.html)
 ### 6.3 [python的\*](https://www.cnblogs.com/jony7/p/8035376.html)
 ### 6.4 基本类型  
 1.  [list]   
     1. [\[list::\]](https://blog.csdn.net/qq\_41940950/article/details/80765674)   
+2.  [enum](https://www.cnblogs.com/ucos/p/5896861.html)   
 ### 6.5 一些包的特殊用法
 1.  [matplotlib.plot画多张图，在一张图上画多个函数](https://blog.csdn.net/haikuotiankong7/article/details/90551841)    
 2.  [matplotlib.plot的颜色和线条、线条的形状](https://www.cnblogs.com/zoe-chang/p/11269780.html)    
@@ -159,4 +165,4 @@
 4.  [module和包的区别](https://www.cnblogs.com/JetpropelledSnake/p/8905727.html)    
 5.  [python setup.py](http://blog.konghy.cn/2018/04/29/setup-dot-py/)   
     1.  [python打包分发工具setuptools](http://www.bjhee.com/setuptools.html)    
-6.  [python os.environ](http://www.shuang0420.com/2017/03/10/Python%20os.environ.get()%20return%20None/)          
+6.  [python os.environ](http://www.shuang0420.com/2017/03/10/Python%20os.environ.get()%20return%20None/)

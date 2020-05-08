@@ -51,8 +51,12 @@
 # [ C++基础知识](https://www.runoob.com/cplusplus/cpp-tutorial.html)  
 +  [參考這個](https://github.com/huihut/interview#-cc)   
 +  [protected](https://www.bookstack.cn/read/open-c-book/zh-cha)   
-+  [protected成员](https://blog.csdn.net/feiyinzilgd/article/details/6226348)   
+   +  [protected成员](https://blog.csdn.net/feiyinzilgd/article/details/6226348)   
 +  [explicit](http://ttshun.com/2018/05/09/C++%E5%AD%A6%E4%B9%A0%E4%B9%8Bexplicit%E5%85%B3%E9%94%AE%E5%AD%97%E8%AF%A6%E8%A7%A3/)    
++  private  
+   +  [父类中的私有成员可以通过地址访问吗？](https://blog.csdn.net/shanghx_123/article/details/89758003?utm_medium=distribute.pc_relevant.none-task-blog-baidujs-7)   
+   +  [C++ 只在堆上或者只在栈上创建对象](https://segmentfault.com/a/1190000009023942)    
+   +  [详解C++中如何将构造函数或析构函数的访问权限定为private](https://www.ctolib.com/topics-55958.html)   
 +  [:/::的用法](http://www.360doc.com/content/13/0605/11/3373961_290615318.shtml)   
 
 ###  1.  python/C++交互(pybind11)待完成    
@@ -61,6 +65,8 @@
 ###  [2.  LeetCode刷题](../LeetcodeLearn)   
 
 ###  [3.  C++内存对齐](https://www.cnblogs.com/zhao-zongsheng/p/9099603.html)   
+1.  [C++对象内存布局](https://blog.twofei.com/496/)   
+2.  [再谈C++对象内存布局](https://www.cnblogs.com/findumars/p/5353535.html)   
 ###  [4.  RVO和NRVO](https://www.cnblogs.com/xkfz007/articles/2506022.html)   
 
 ###  5.  引用(待规整)   
@@ -137,6 +143,7 @@
     1.2. [解析二](https://blog.csdn.net/taotongning/article/details/81352985)    
 2. [计算机网络编程](https://www.cnblogs.com/5iedu/category/937714.html)     
 3. [计算机网络原理](https://www.cnblogs.com/5iedu/category/994985.html)    
+4. [socket](http://c.biancheng.net/view/2123.html)    
 
 
 #  数据库(待完善)
@@ -191,6 +198,7 @@
 1.  [理解一](https://www.jianshu.com/p/5deed1bf82b4)   
 2.  [理解二](https://github.com/tinyclub/open-c-book/blob/master/zh/chapters/02-chapter4.markdown)     
 ###  12.  [C++编译器优化](https://www.agner.org/optimize/#manuals)   
+1.  [vs编译器选项](https://www.cnblogs.com/csdreamer/articles/3094029.html)   
 
 
 #  gdb    
@@ -244,8 +252,19 @@
 #  模板   
 1.  [特化和偏特化](https://harttle.land/2015/10/03/cpp-template.html)   
 
+#  服务器   
+1.  [twisted](https://www.cnblogs.com/suke99/p/5358221.html)      
+2.  [apache待完善]()    
+3.  [npm](https://www.jianshu.com/p/4643a8e43b79)   
+
 #  [VTK](https://www.cnblogs.com/liangliangh/p/3209995.html)    
 1.  [HSV](https://blog.csdn.net/carson2005/article/details/6243892)   
 2.  [VTK坐标系统](https://www.cnblogs.com/ghjnwk/p/10305796.html)   
 3.  [z-buffer](https://blog.csdn.net/Jane_yuhui/article/details/52608119)   
 4.  [vtk入门教程](https://blog.csdn.net/www_doling_net/article/details/8763686)   
+    1.  [认识VTK工作原理（包括各个模块作用、数据流等）](https://my.oschina.net/wangsifangyuan/blog/857243)    
+5.  [vtk翻译版pdf](./vtk翻译版.pdf)   
+6.  [vtk代码手册C++](https://vtk.org/doc/nightly/html/index.html)   
+7.  数学基础    
+    1.  [点积和叉积](https://blog.csdn.net/dcrmg/article/details/52416832)      
+    2.  [3D绕着任意轴旋转](https://krasjet.github.io/quaternion/quaternion.pdf)   
