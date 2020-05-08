@@ -96,10 +96,10 @@
 ### 3.7. [shutil](https://www.jb51.net/article/145522.htm) </br>
 ### 3.8. [Python的常用模块](https://www.cnblogs.com/brf-test/p/11241161.html) </br>
 ### 3.9. [os模块](https://www.cnblogs.com/kaituorensheng/archive/2013/03/18/2965766.html) </br>
-    1.  [os.path](https://www.jianshu.com/p/cfa219ff0791?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation)     
-    2.  [os.path.realpath(__file__)和os.path.cwd()的区别](https://blog.csdn.net/cityzenoldwang/article/details/78448039)    
-    3.  os.getenv   
-      看源代码可以发现，如果key在环境变量里面，返回key在环境变量里面的值，如果不存在，则返回default。     
+1.  [os.path](https://www.jianshu.com/p/cfa219ff0791?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation)     
+2.  [os.path.realpath(__file__)和os.path.cwd()的区别](https://blog.csdn.net/cityzenoldwang/article/details/78448039)    
+3.  os.getenv   
+    看源代码可以发现，如果key在环境变量里面，返回key在环境变量里面的值，如果不存在，则返回default。     
 ### 3.10. [pydicm](https://blog.csdn.net/linhai1028/article/details/79551488) </br>
 ### 3.11. [PySimpleGUI](https://linux.cn/article-10027-1.html)</br>
 ### 3.12. [collections](https://www.cnblogs.com/zhizhan/p/5692668.html) </br>
@@ -107,7 +107,7 @@
 ### 3.14. [multiprocessing](https://www.osgeo.cn/cpython/library/multiprocessing.html) </br>
 ### 3.15. [python json模块](https://www.runoob.com/python/python-json.html)</br>
 ### 3.16. [subprocess](https://zhuanlan.zhihu.com/p/72829009)   
-    1.  [check_out()](https://python3-cookbook.readthedocs.io/zh_CN/latest/c13/p06_executing_external_command_and_get_its_output.html)      
+1.  [check_out()](https://python3-cookbook.readthedocs.io/zh_CN/latest/c13/p06_executing_external_command_and_get_its_output.html)      
 ### 3.17. [configparser](https://www.jianshu.com/p/2f0636e27477)    
 ### 3.18. [glob](https://www.jianshu.com/p/32e3364b22ee)   
 ### 3.19. [io.ByteIO](https://www.cnblogs.com/yqpy/p/8556090.html)   
