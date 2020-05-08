@@ -4,6 +4,8 @@
 
 ***another [online tool](http://mahua.jser.me/)***
 
+___a web can learn git command liking [playing game](https://learngitbranching.js.org/?locale=zh_CN).___
+
 # <p align="center"> Catalogs </p> 
 
 
