@@ -69,6 +69,7 @@
 ### 1.8 [python 包、模块的区别](https://blog.csdn.net/ityard/article/details/103502449)   
 ### 1.9 [python的protected](https://blog.csdn.net/c_base_jin/article/details/88778553)   
 ### 2.0 [python的搜索路径](https://blog.csdn.net/Charles5101/article/details/89951747)    
+### 2.1 [@dataclass](https://toutiao.io/posts/fvnzri/preview)   
 
 ## 2. Functions </br>
 1.  [重构](https://blog.csdn.net/liuwei_q/article/details/83032297)
@@ -89,7 +90,8 @@
   1.  [sys.module](https://www.cnblogs.com/zhaojingyu/p/9069076.html)
   2.  [sys.argv](https://www.cnblogs.com/aland-1415/p/6613449.html)     
   3.  [sys.exit()/os.exit()](https://blog.csdn.net/index20001/article/details/74294945)     
-### 3.3. [xml解释器](https://blog.csdn.net/guangmingsky/article/details/77601225)</br>
+### 3.3. [xml sax](https://blog.csdn.net/guangmingsky/article/details/77601225)</br>
+1.  [xml dom](https://www.cnblogs.com/xieshengsen/p/6738777.html)   
 ### 3.4. [pika](https://pypi.org/project/pika/)</br>
 ### 3.5. [python导入包](https://blog.csdn.net/chinesepython/article/details/82113575) </br>
 ### 3.6. [logging](https://www.cnblogs.com/Nicholas0707/p/9021672.html) </br>
