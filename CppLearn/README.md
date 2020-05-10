@@ -5,7 +5,7 @@
 
 #  [c基础知识](./MDs/c_language.md)     
 
-#  [c++基础知识](./MDs/c++language.md)    
+#  [c++基础知识](./MDs/c++_language.md)   
 
 #  [net programming](./MDs/net_programming.md)    
 
