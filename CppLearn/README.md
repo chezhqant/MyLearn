@@ -28,4 +28,4 @@
 
 #  [服务器](./MDs/server_programming.md)       
 
-#  [medical related](./MDs/medical_related)   
+#  [medical related](./MDs/medical_related.md)    
