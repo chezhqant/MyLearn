@@ -50,3 +50,13 @@ ___this file is for learning to going depp!___
 ###  4.  [PCB的解释](https://zhuanlan.zhihu.com/p/32341542)  
 ###  5.  [ComputerSystems_深入理解计算机系统](./MDs/ComputerSystems_深入理解计算机系统.md)   
 ###  6.  [蜗窝科技](http://www.wowotech.net/)   
+###  7.  detals   
+1.  namespace   
+    据说跟docker有关系，先放一放，回头再看。    
+2.  [process credentials](http://www.wowotech.net/process_management/19.html)   
+3.  [process identification](http://www.wowotech.net/process_management/process_identification.html)  
+4.  process id    
+    1.  [解释1](http://www.wowotech.net/process_management/pid.html)    
+    2.  [解释2](https://www.cnblogs.com/hazir/p/linux_kernel_pid.html)    
+    3.  [解释3](https://vvl.me/2018/09/linux-task-relationship/)    
+    4.  [container_of](https://lp007819.wordpress.com/2010/09/19/container_of-%E5%AE%8F%E5%88%86%E6%9E%90/)   

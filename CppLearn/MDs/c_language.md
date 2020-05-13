@@ -22,6 +22,7 @@ ___this file is for learning c language___
 ###  4.  结构体  
 1.  [结构体初始化](https://www.cnblogs.com/clover-toeic/p/3737189.html)   
     1.  [结构体变量定义](https://www.runoob.com/cprogramming/c-structures.html)       
+    2.  [特定初始化，就是成员变量加了个"."](https://blog.csdn.net/comwise/article/details/9087279)   
 
 ###  #/##   
 1.  #   
