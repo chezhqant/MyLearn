@@ -40,7 +40,7 @@
         #a()
         a.f3()
         #print(a.result)
-    ```
+   ```
 
 2.  [\_\_call\_\_](https://www.cnblogs.com/superxuezhazha/p/5793536.html) </br>
 3.  [\_\_getattr\_\_\/\_\_setattr\_\_\/\_\_getitem\_\_\/\_\_setitem\_\_](https://blog.csdn.net/chituozha5528/article/details/78355216) </br>
@@ -55,13 +55,14 @@
 3.  [\_\_name\_\_](https://www.cnblogs.com/1204guo/p/7966461.html)  
 4.  [\_\_glob\_\_](https://www.jianshu.com/p/32e3364b22ee)   
 5.  [\_\_del\_\_](http://c.biancheng.net/view/2371.html)
-6.  [\_\_getitem\_\_](__https://zhuanlan.zhihu.com/p/27661382)    
+6.  [\_\_getitem\_\_](__https://zhuanlan.zhihu.com/p/27661382)   
 
 ### 1.2 [MRO](https://www.cnblogs.com/ssyfj/p/9017280.html) </br>
 ### 1.3 [super函数](https://www.imooc.com/article/50836) </br>
-### 1.4 [@property\/@staticmethod\/@classmethod](https://www.cnblogs.com/wangyongsong/p/6750454.html) </br>
+### 1.4 [@property\/@staticmethod\/@classmethod](https://www.cnblogs.com/wangyongsong/p/6750454.html)   
 1.  [@classmethod 的使用场合](https://blog.csdn.net/dyh4201/article/details/78336529) </br>
 2.  [@classmethod和@staticmethod的再次理解](https://eclipsesv.com/page/2/) </br>
+3.  [class method vs static method](http://net-informations.com/python/iq/method.htm)   
 ### 1.5 [python的下划线们](https://blog.csdn.net/lcczzu/article/details/84819587)</br>
 ### 1.6 [object类](https://blog.csdn.net/DeepOscar/article/details/80947155) </br>
 ### 1.7 [类变量和实例变量](https://www.cnblogs.com/crazyrunning/p/6945183.html) </br>
@@ -70,6 +71,8 @@
 ### 1.9 [python的protected](https://blog.csdn.net/c_base_jin/article/details/88778553)   
 ### 2.0 [python的搜索路径](https://blog.csdn.net/Charles5101/article/details/89951747)    
 ### 2.1 [@dataclass](https://toutiao.io/posts/fvnzri/preview)   
+### 2.2 [python的self/cls](https://www.cnblogs.com/kex1n/p/5983200.html)    
+### 2.3 [python的类变量之与C++不一样](https://www.jianshu.com/p/3aca78a84def)   
 
 ## 2. Functions </br>
 1.  [重构](https://blog.csdn.net/liuwei_q/article/details/83032297)

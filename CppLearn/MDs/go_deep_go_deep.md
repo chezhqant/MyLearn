@@ -60,3 +60,5 @@ ___this file is for learning to going depp!___
     2.  [解释2](https://www.cnblogs.com/hazir/p/linux_kernel_pid.html)    
     3.  [解释3](https://vvl.me/2018/09/linux-task-relationship/)    
     4.  [container_of](https://lp007819.wordpress.com/2010/09/19/container_of-%E5%AE%8F%E5%88%86%E6%9E%90/)   
+    5.  [详细版](https://www.shuzhiduo.com/A/E35pnPrEzv/)   
+5.  [TLB](https://blog.csdn.net/hnwyllmm/article/details/77051135)    

@@ -14,7 +14,7 @@ ___this file is for learning c++ language___
 ###  1.  python/C++交互(pybind11)待完成    
 1.  [pybind11中文翻译，翻译的不好的](https://s0pybind110readthedocs0io.icopy.site/en/master/compiling.html#building-manually)   
 
-###  [2.  LeetCode刷题](../LeetcodeLearn)   
+###  [2.  LeetCode刷题](../../LeetcodeLearn)    
 
 ###  [3.  C++内存对齐](https://www.cnblogs.com/zhao-zongsheng/p/9099603.html)   
 1.  [C++对象内存布局](https://blog.twofei.com/496/)   
