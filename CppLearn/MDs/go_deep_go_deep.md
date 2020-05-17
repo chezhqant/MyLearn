@@ -62,3 +62,6 @@ ___this file is for learning to going depp!___
     4.  [container_of](https://lp007819.wordpress.com/2010/09/19/container_of-%E5%AE%8F%E5%88%86%E6%9E%90/)   
     5.  [详细版](https://www.shuzhiduo.com/A/E35pnPrEzv/)   
 5.  [TLB](https://blog.csdn.net/hnwyllmm/article/details/77051135)    
+6.  [__user](https://blog.csdn.net/q345852047/article/details/7710818)    
+7. [Linux的公平调度（CFS）原理](https://www.jianshu.com/p/673c9e4817a8)   
+  1.  [另一个理解](https://blog.csdn.net/XD_hebuters/article/details/79623130)    
