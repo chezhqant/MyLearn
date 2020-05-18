@@ -40,7 +40,7 @@
         #a()
         a.f3()
         #print(a.result)
-   ```
+    ```
 
 2.  [\_\_call\_\_](https://www.cnblogs.com/superxuezhazha/p/5793536.html) </br>
 3.  [\_\_getattr\_\_\/\_\_setattr\_\_\/\_\_getitem\_\_\/\_\_setitem\_\_](https://blog.csdn.net/chituozha5528/article/details/78355216) </br>
