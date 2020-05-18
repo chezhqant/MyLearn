@@ -117,7 +117,7 @@
 ### 3.18. [glob](https://www.jianshu.com/p/32e3364b22ee)   
 ### 3.19. [io.ByteIO](https://www.cnblogs.com/yqpy/p/8556090.html)   
 ### 3.20. [re手册](https://docs.python.org/zh-cn/3/library/re.html)    
-    1.  [博客版本](https://www.cnblogs.com/huxi/archive/2010/07/04/1771073.html)  
+1.  [博客版本](https://www.cnblogs.com/huxi/archive/2010/07/04/1771073.html)  
 ### 3.21. [argparse](http://blog.xiayf.cn/2013/03/30/argparse/)     
 ### 3.22. [configparser](https://www.jianshu.com/p/2f0636e27477)        
 ### 3.23. [ctypes](https://cloud.tencent.com/developer/section/1370537#stage      -100049081)

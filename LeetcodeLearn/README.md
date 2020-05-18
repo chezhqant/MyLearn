@@ -14,10 +14,10 @@ eh, there are some cpps(two or three?) is wrong in the directory of Array, becau
 
 ![google编码风格](./picture/google风格.png)
 
-+ [二分查找](./二分查找.docx) </br>
-+ [哈希表](./哈希表.docx) </br>
-+ [排序算法](./排序算法.docx) </br>
-+ [AVL](https://zhuanlan.zhihu.com/p/34899732)      
++ [二分查找](./二分查找.docx)   
++ [哈希表](./哈希表.docx)   
++ [排序算法](./排序算法.docx)   
++ [AVL](https://zhuanlan.zhihu.com/p/34899732)    
 
 # 1. [DFS](./DFS)</br>
 + [Same Tree](./DFS/SameTree.cpp) 
@@ -56,3 +56,4 @@ eh, there are some cpps(two or three?) is wrong in the directory of Array, becau
 + [Range\_Sum\_Query\_Immutable](./Dynamic\_Programming/Range\_Sum\_Query\_Immutable.cpp)
 
 # 4. [AVL](./AVL)   
+1.  [红黑树简单了解](https://zhuanlan.zhihu.com/p/139907457O)   
