@@ -123,8 +123,34 @@ ___this file is for 奔跑把linux内核总结___
     如图所示，是cache的基本的结构图。   
     [cache结构图](../pictures/11.jpg "cache结构图")   
     +  cache地址编码：处理器访问cache时的地址编码，分成三个部分，分别时偏移域(offset)、索引域(index)、标记域(tag)。   
-    +  cache line: cache中最小的访问单元，包含一小段主存储器中的数据，常见的cache line大小时32字节或者64字节等等。   
+    +  cache line: cache中最小的访问单元，包含一小段主存储器中的数据，常见的cache line大小时32 bytes或者64 bytes等等。   
     +  索引域(index)：cache地址编码的一部分，用于索引和查找是在cache中的哪一行。    
     +  组(set): 相同索引域的cache line组成一个组。  
     +  路(way)：在组相连的cache中，cache被分成大小相同的几个块。  
     +  标记(tag)：cache地址编码的一部分，用于判断cache line存放的数据是否和处理器想要的一致。   
+7.  cache的映射方式有full-associative（全关联）、direct-mapping（直接映射）和set-associative（组项链）3中方式，请简述他们之间的区别。为什么现代的处理器都是用组相连的cache映射方式？  
+    +  直接映射   
+       根据每个组(set)的告诉缓存行数，cache可以分成不同的类。当每个组只有一行cache line时，称为直接映射告诉缓存。   
+       如图所示，下面用衣蛾简单小巧的cache来说明，这个cache只有4行cache line，每行有4个字（word，一个字时4个bate），共64bytes。这个cache控制器可以是用两个比特位（bits[3:2]）来选择cache line中的字，以及是用另外两个比特位（bits[5:4]）作为索引（index），选择4个cache line中的一个字，其余的比特位用于存储标记值（tag）。    
+       在这个cache中查询，当索引域和标记域的值和查询的地址相等，并且有效位显示这个cache line包含有效数据时，则发生cache命中，那么可以是用偏移域来寻址cache line中的数据。如果cache line包含有效数据，但是标记域时其他地址的值，那么这个cache line需要被替换。因此在这个cache中，主存储器中所有bit[5:4]相同值的地址都会映射到同一个cache line中，并且同一时刻再有衣蛾cache line，因为cache line被频繁换入患处，会导致严重的cache颠簸(cache thrashing)。   
+       [直接映射的cache和cache地址](../pictures/12.jpg "直接映射的cache和cache地址")    
+       假设在下面的代码皮那段中，result、data1和data2分别指向0x00,0x40,0x80地址，他们都会是用同一个cache line。   
+       ```
+       void add_array(int* data1, int* data2, int* result, int size) {
+         int i;
+         for (i = 0; i < size; ++i) {
+           result[i] = data1[i] + data2[i];
+         }
+       }
+       ```
+       +  当第一次读data2即0x40地址时，因为不在cache里面，所以读取0x40到0x4f地址的数据填充到cache line中。   
+       +  当读data2即0x80地址的数据时，数据不在cache line中，需要把从0x80到0x8f地址的数据填充到cache line中，因为是指0x80和0x40映射到同一个cahce line，所以cache line发生替换操作。   
+       +  result写入到0x00地址时，同样发生了cache line替换操作。   
+       +  所以这个代码片段发生严重的cache颠簸，性能会很糟糕。  
+    +  组相连 
+       为了解决直接映射告诉缓存中的cache颠簸问题，组相连的cache结构在现代处理器中得到广泛的应用。   
+       如图所示，下面以一个2路组相连的cache为例，每个路（way）包括4个cache line，那么每个组（set）有两个cache line可以提供cache line替换。    
+       [2路组相连的映射关系](../pictures/13.jpg "2路组相连的映射关系")   
+       地址0x00、0x40或者0x80的数据可以映射到同一个组中任意一个cache line。当cache line要发生替换操作时，就有50%的概率可以不被替换，从而减小了cache颠簸。   
+8.  在一个32KB的4路组相连的cache中，其中cache line为32Byte，请画出这个cache的cache line、way和set的示意图。   
+    

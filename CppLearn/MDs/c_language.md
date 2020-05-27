@@ -44,5 +44,5 @@ ___this file is for learning c language___
     3.  [\_\_COUNTER\_\_](https://zhuanlan.zhihu.com/p/64479211)    
 
 ###  奇技淫巧  
-    1.  [do...while(false)](https://blog.csdn.net/this_capslock/article/details/41843371)   
+1.  [do...while(false)](https://blog.csdn.net/this_capslock/article/details/41843371)   
 
