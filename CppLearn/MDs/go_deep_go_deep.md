@@ -51,6 +51,7 @@ ___this file is for learning to going depp!___
 ###  5.  [ComputerSystems_深入理解计算机系统](./MDs/ComputerSystems_深入理解计算机系统.md)   
 ###  6.  [蜗窝科技](http://www.wowotech.net/)   
 ###  7.  detals   
+###  8.  [奔跑吧linux内核](./奔跑吧linux内核.md)    
 1.  namespace   
     据说跟docker有关系，先放一放，回头再看。    
 2.  [process credentials](http://www.wowotech.net/process_management/19.html)   
