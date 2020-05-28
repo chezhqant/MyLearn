@@ -154,9 +154,13 @@ ___this file is for 奔跑把linux内核总结___
        地址0x00、0x40或者0x80的数据可以映射到同一个组中任意一个cache line。当cache line要发生替换操作时，就有50%的概率可以不被替换，从而减小了cache颠簸。   
 8.  在一个32KB的4路组相连的cache中，其中cache line为32Byte，请画出这个cache的cache line、way和set的示意图。   
     在Cortex-A7和Cortex-A9的处理器上可以看到32KB大小的4路组相连的cache。下面来分析这个cache的结构图。   
-    cache的总大小为32KB，并且是4路（way），所以每一路的大小为8KB：  
+    cache的总大小为32KB，并且是4路（way），所以每一路的大小为8KB：    
+
     > way_size = 32 / 4 = 8(KB)   
-    cache Line 的大小为32Byte，所以每路包含的cache line数量为：  
+
+    cache Line 的大小为32Byte，所以每路包含的cache line数量为：   
+
     > num_cache_line = 8KB / 32B = 256    
+
     所以在cache编码地址Address中，bit[4:]用于选择cache line 中的数据，其中bit[4:2]可以用于寻址8个字，bit[1:0]可以用于寻址每个字中的字节。bit[12:5]用于索引选择每一路cache line，其余的bit[31:13]用作标记位（tag），如图所示：  
     ![32KB 4路相连cache结构图](../pictures/14.jpg "32KB 4路相连cache结构图")    
