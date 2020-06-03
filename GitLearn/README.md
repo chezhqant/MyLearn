@@ -12,7 +12,10 @@ ___a web can learn git command liking [playing game](https://learngitbranching.j
 
 # <p align="center"> Contents </p>
 
+[解决github网络慢](https://blog.csdn.net/ITleaks/article/details/80351680)      
+
 ![alt github命令总结图](./pictures/git命令.jpg)</br> 
+
 1.  git命令参考网站</br> 
     +  [菜鸟教程](https://www.runoob.com/git/git-tutorial.html)</br>
     +  [参考网站1](https://www.jianshu.com/p/93318220cdce)</br>
@@ -103,3 +106,4 @@ ___a web can learn git command liking [playing game](https://learngitbranching.j
   5.  [linux环境变量](https://www.jianshu.com/p/ac2bc0ad3d74)   
   6.  [tar](http://linux.51yip.com/search/tar)      
   7.  [linux的一些工具]( https://linuxtools-rst.readthedocs.io/zh_CN/latest/base/index.html)    
+  8.  [Chrome神器Vimium快捷键学习记录](http://www.cppblog.com/deercoder/archive/2011/10/22/158886.html)   

@@ -146,22 +146,22 @@
 
 
 ## 6. 杂项 </br>
-### 6.1 [环境变量](https://blog.csdn.net/v_xchen_v/article/details/80393967) </br>
+### 6.1. [环境变量](https://blog.csdn.net/v_xchen_v/article/details/80393967) </br>
 1.  [python的搜索路径](https://blog.csdn.net/Charles5101/article/details/89951747)    
-### 6.2 [Python字符串前面加u,r,b的含义](https://www.cnblogs.com/liangmingshen/p/9274021.html)
-### 6.3 [python的\*](https://www.cnblogs.com/jony7/p/8035376.html)
-### 6.4 基本类型  
+### 6.2. [Python字符串前面加u,r,b的含义](https://www.cnblogs.com/liangmingshen/p/9274021.html)
+### 6.3. [python的\*](https://www.cnblogs.com/jony7/p/8035376.html)
+### 6.4. 基本类型  
 1.  [list]   
     1. [\[list::\]](https://blog.csdn.net/qq\_41940950/article/details/80765674)   
 2.  [enum](https://www.cnblogs.com/ucos/p/5896861.html)   
-### 6.5 一些包的特殊用法
+### 6.5. 一些包的特殊用法
 1.  [matplotlib.plot画多张图，在一张图上画多个函数](https://blog.csdn.net/haikuotiankong7/article/details/90551841)    
 2.  [matplotlib.plot的颜色和线条、线条的形状](https://www.cnblogs.com/zoe-chang/p/11269780.html)    
-### 6.6 pyton编码
+### 6.6. pyton编码
 1.  [python编码的第一个解释](https://www.cnblogs.com/jessonluo/p/4801580.html)
 2.  [pyhon编码的第二个解释](https://www.cnblogs.com/busui/p/9340339.html)
 3.  [str.encode()](http://c.biancheng.net/view/4305.html) 
-### 6.7 python的理解
+### 6.7. python的理解
 1.  python的对象是引用  
     1.  [解释](https://blog.csdn.net/weihongxu2222/article/details/51320006)  
     2.  [Python中的变量、引用、拷贝和作用域](https://blog.csdn.net/li_101357/article/details/52745661)    
@@ -171,3 +171,4 @@
 5.  [python setup.py](http://blog.konghy.cn/2018/04/29/setup-dot-py/)   
     1.  [python打包分发工具setuptools](http://www.bjhee.com/setuptools.html)    
 6.  [python os.environ](http://www.shuang0420.com/2017/03/10/Python%20os.environ.get()%20return%20None/)
+### 6.8. [Python PEP8 代码规范常见问题及解决方法](https://cloud.tencent.com/developer/article/1611332)    

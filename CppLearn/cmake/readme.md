@@ -34,6 +34,7 @@ ___cmake 总结___
   9.  [include](https://blog.csdn.net/liitdar/article/details/81144461)   
       [再解include](https://blog.csdn.net/qq_38410730/article/details/102677143)    
   10. [string](https://www.sunxidong.com/340.html)    
+  11. [find_libraries，里面有类似命名空间的讲解，比如md::image3d](https://gongzq5.github.io/posts/CMake-%E4%BB%8E0%E5%BC%80%E5%A7%8B-2019-09-06/)    
 2.  cmake实践这本书   
 3.  [cmake下载路径](https://cmake.org/files)  
 4.  cmake 构建选项
