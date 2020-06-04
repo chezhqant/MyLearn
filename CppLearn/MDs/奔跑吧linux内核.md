@@ -230,3 +230,30 @@ ___this file is for 奔跑把linux内核总结___
      cache line中有两个标识dirty和valid。他们很好的描述了cache和内存之间的数据管理，例如数据是否有效、数据是否被修改过，在MESI协议中，每个cache line有4个状态，可用2bit表示。如下图，分别表示MESI协议4个状态的说明和MESI协议各个状态的转换关系。    
      ![MESI协议定义](../pictures/21.jpg MESI协议定义)   
      ![MESI协议定义](../pictures/22.jpg MESI协议定义)   
+     +  修改和独占状态的cache line，数据都是独有的，不同点在于修改状态的数据时脏的，和内存不一致，而独占态的数据时干净的，和内存一致。拥有修改态的cache line 会在某个合适的时候，把该cache line写回内存中，其后的状态变成共享态。    
+     +  共享状态的cache line，数据和其他cache共享，只有干净的数据才能被多个cache共享。    
+     +  I的状态表示这个cache line无效。   
+     +  MOESI协议增加了一个O(Owned)状态，并在MESI协议上重新定义了S状态，而E、M和I状态与MESI协议的对应的状态相同。    
+     +  O位，O位为1，表示在当前cache行中包含的数据时当前处理器系统的数据复制，而且在其他CPU中可能具有该cache行的副本，状态为S。如果主存储器的数据在多个CPU的cache中都有具有副本时，有且仅有一个CPU的cache行状态为O，其他的CPU的cache行状态只能为S。与MESI协议中的S状态不同，状态为O的cache行中的数据与存储器中的数据不一致。    
+     +  S位。在MOESI协议中，S状态的定义发生了细微的变化。当一个cache行状态为S时，其包含的数据并不一定与存储器一致。如果在其他CPU的cache中不存在状态为O的副本时，该cache行中的数据与存储器一致；如果在其他CPU的cache中存在状态为O的副本时，cache行中的数据与存储器不一致。    
+12.  cache 在Linux内核中有哪些应用？    
+     cache line 的空间都很小，一般也就32Byte。CPU的cache时线性排列的，也就是说一个32Byte的cache line 与32 Byte的地址对齐，另外相邻的地址会在不同的cache line中错开，这里时值32*n的相邻地址。   
+     cache在linux内核中有很多巧妙的应用，暂时总结如下：   
+     +  内核中常用的数据结构通常是和L1 cache对其的。例如，mm_struct  fs_cache等数据结构，例如struct zone  struct irqaction  softirq_vec[]   irq_stat[]   struct worker_pool等等。   
+     +  cache和内存交换的最小单位时cache line，若结构体没有和cache line 对齐，那么一个结构体有可能占用多个cache line，在SMP中会对系统性能有不小的影响。举个例子，现在有结构体C1和结构体C2，缓存道L1 Cache时没有按照cache line对齐，因此他们有可能同时占用了一条cache line，即C1的后半部分和C2的前半部分在一条cache line中。根据cache一致性协议，CPU0修改结构体C1的时会导致CPU1的cache line失效，同理CPU1对结构体C2修改也会导致性能下降。这种现象叫做“cache line伪共享”，两个CPU原本没有共享访问，因为要共同访问同一个cache line，产生了事实上的共享。解决上述问题对的一个方法是让结构体按照cache line对齐，典型地以空间换时间。 include/linux/cache.h文件定义了有关cache相关的操作，其中__cacheline_aligned_in_smp的定义也在这个文件中，他和L1_CACHE_BYTES对齐。    
+     +  数据结构中频繁访问的成员可以单独占用一个cache line， 或者相关的成员在cache line 中彼此错开，以提高访问效率。例如，struct zone数据结构中zone->lock和zone->lru_lock这两个频繁被访问的锁，可以让他们各自是用不同的cache line，以提高获取锁的效率。    
+        再比如，struct worker_pool数据结构中的nr_running成员就独占了一个cache line，避免多个CPU同事读写该成员时引发其他临近的成员颠簸现象。    
+     +  slab的着色区域。    
+     +  自旋锁的实现。在CPU系统中，自旋锁的激烈争用过程导致严重的CPUcache line boundcing现象。    
+13.  请简述ARM big.LITTLE架构，包括总线连接和cache管理等等。    
+     ARM提出了大小核的概念，即big.LITTLE架构中包含了一个由大核组成的集群（Cortex-A57）和小核（Cortex-A53）组成的集群，每个集群都属于传统的同步频率架构，工作在相同的频率和电压下。大核为高性能核心，工作在较高的电压和频率下，小号更多的能耗，适用于计算繁重的任务。常见的大核处理器有Cortex-A15  Cortex-A57  Cortex-A72  Cortex-A73。小核性能虽然较低，但是功耗比较低，在一些计算负载不大的任务中，不用开启大核，直接用小核，的常见的小核处理器有Cortex-A7和Cortex-A53。   
+     [4核A15和4核A7的系统总线框图](../pictures/23.jpg 4核A15和4核A7的系统总线框图)    
+     +  CCI-400模块：用于管理大小核架构中缓存一致性的互连模块。CCIC-400只能支持两个CPU簇，而最新狂的CCI-500可以支持6个CPU簇。   
+     +  DMC-400：内存控制器   
+     +  NIC-400：用于AMBA总线协议的连接，可以支持AXIS、AHB和APB总线的连接。   
+     +  MMU-400：系统内存管理单元。   
+     +  Mali-T604：图形加速控制器。   
+     +  GIC-400：中断控制器。   
+     ARM CoreLink CCI-400模块用于维护大小核集群的数据互连一致性。大小核集群作为主设备，通过支持ACE协议的从设备接口连接到CCI-400上，他可以管理大小核集群中的cache一致性和实现处理器间的数据共享。此外，它还支持3个ACE-Lite从设备姐阔，可以支持一些IO主设备，例如GPU Mali-T604。通过ACE-Lite协议，GPU可以监听处理器的cache，CCI-400还支持3个ACE-Lite主设备接口，例如通过DMC-400来连接LP-DDR2/3或者DDR内存设备，以及通过NIC-400总线来连接一些外设，例如DMA设备和LCD等等。   
+     ACE协议，全称为AMBA AXIS Coherency extension协议，是AXIS4协议的扩展协议，增加了很多特性来支持系统级硬件的一致性。模块之间恭喜那个内存不需要软件敢于，硬件直接管理和维护各个cache之间的一致性，还可以大大减少软件的负载，最大效率地使用cache减少对内存的访问，进而降低系统功耗。   
+14.  cache  coherency和memory consistency有什么区别。   
