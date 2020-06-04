@@ -257,3 +257,18 @@ ___this file is for 奔跑把linux内核总结___
      ARM CoreLink CCI-400模块用于维护大小核集群的数据互连一致性。大小核集群作为主设备，通过支持ACE协议的从设备接口连接到CCI-400上，他可以管理大小核集群中的cache一致性和实现处理器间的数据共享。此外，它还支持3个ACE-Lite从设备姐阔，可以支持一些IO主设备，例如GPU Mali-T604。通过ACE-Lite协议，GPU可以监听处理器的cache，CCI-400还支持3个ACE-Lite主设备接口，例如通过DMC-400来连接LP-DDR2/3或者DDR内存设备，以及通过NIC-400总线来连接一些外设，例如DMA设备和LCD等等。   
      ACE协议，全称为AMBA AXIS Coherency extension协议，是AXIS4协议的扩展协议，增加了很多特性来支持系统级硬件的一致性。模块之间恭喜那个内存不需要软件敢于，硬件直接管理和维护各个cache之间的一致性，还可以大大减少软件的负载，最大效率地使用cache减少对内存的访问，进而降低系统功耗。   
 14.  cache  coherency和memory consistency有什么区别。   
+     cache coherency 告诉缓存一致性关注的时同一个数据在多个cache和内存中的一致性问题，解决告诉缓存一致性的方法主要是总线监听协议，例如MESI协议等等。而memory consistency关注的时处理器系统对多个地址进行存储器访问序列的正确性，学术上对内存访问模型提出了很多，例如严格一致性内存模型，处理器一致性内存模型，以及弱一致性内存模型等。弱内存访问模型在现在处理器中得到广泛的应用，因此内存屏障指令也得到了广泛应用。    
+15.  请简述cache的write back有哪些策略。    
+     在处理器内核中，一条存储器读写指令经过取指、译码、发射、执行等一系列操作之后率先到达LSU部件。LSU部件包括Load Queue 和Store Queue，是指令流水线的一个执行部件，是处理器存储子系统的最顶层，连接指令流水线和cache的一个支点。存储器读写指令通过LSU之后，会到达L1 cache控制器。L1 cache控制器首先发起探测操作，对于度操作，发起cache读探测操作并将待会数据，写操作发起cache写探测操作。写探测操作之前需要准备号待写的cache line，探测工作返回时将会带回数据。当存储器写指令获得最终数据并进行提交从安坐之后才会将数据写入，这个写入可以write through 或者 write back。   
+     对于写操作，在上述的探测过程中，如果没有找到相应的cache block，那么就是write miss，否则就是write hit。对于write miss的处理策略是write-allocate，即L1 cache控制器将分配一个新的cache line，之后和获取的数据进行合并，然后写入L1 cache中。    
+     如果探测的过程是write hit，那么真正写入有两种模式：    
+     +  write through(直写模式)：进行写操作时，数据同事写入当前的cache、下一级cache或者主存储器中。write through策略可以降低cache一致性的实现难度，其中最大的缺点时小号比较多的总线带宽。   
+     +  write back(回写模式)：在进行写操作时，数据直接写入当前cache，而不会继续传递，当该cache line被替换出去时，被改写的数据才会更新到下一级cache或者主存储器中。该策略增加了cache一致性的实现难度，但是有效降低了总线带宽的需求。    
+16.  请简述cache line的替换策略。   
+     由于cache的容量远小于主存储器，当cache miss发生时，不仅仅意味着处理器需要从主存储器中获取数据，而且需要将cache的某个cache line替换出去。在cache 的tag阵列中，除了具有地址信息之外还有cache block的状态信息。不同的cache一致性策略是用的cache状态信息并不相同。在MESI协议中，一个cache block通常含有M、E、S和I这4个状态位。    
+     cache 的替换策略有随即法(Random policy)、先进先出法(FIFO)和最近最少是用算法(LRU)。   
+     +  随即法：随机地确定替换的cache block，由一个随机数产生器来生成随机数确定替换快，这种方法简单，抑郁实现，但是命中率较低。    
+     +  先进先出法：选择最先调入的那个cache block进行替换，最先调入的块又肯呢个被多次命中，但是被有限替换，因而不符合局部性规律。    
+     +  最近最少是用算法：LRU算法根据各块是用的情况，总是选择最近最少是用的块来替换，这种算法较好地反映了程序局部型规律。    
+     +  在Cortex-A57处理器中，L1 cache采用LRU算法，而L2 cache采用随机算法。在最新的Cortex-A72处理器中，L2 cache采用伪随机算法或者伪LRU算法。    
+17.  多进程间频繁切换对TLB有什么迎新爱过？先睇啊处理器是如何面对这个问题的？   
