@@ -41,6 +41,7 @@ ___this file is for learning to going depp!___
 ###  2.  [open mp](https://blog.csdn.net/ArrowYL/article/details/81094837)  
 1.  [open mp英文版](https://bisqwit.iki.fi/story/howto/openmp/)   
 2.  [openmp博客版本](http://www.uml.org.cn/c%2B%2B/201810291.asp) 
+3.  [open编程指南csdn版本](https://blog.csdn.net/drzhouweiming/article/details/4093624)   
 
 
 ##  内核      

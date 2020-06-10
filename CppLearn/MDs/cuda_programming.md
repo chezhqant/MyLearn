@@ -12,3 +12,5 @@ ___this file is for learning cuda programming___
 +  [cuda/cudnn/驱动的关系](https://blog.csdn.net/qq_35941018/article/details/96481116)    
 
 +  [GPU的几个基本概念](https://zhuanlan.zhihu.com/p/53763285)   
+
++  [cuda编译选项](https://cmake.org/cmake/help/v3.0/module/FindCUDA.html)   
