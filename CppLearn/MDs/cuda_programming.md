@@ -14,3 +14,6 @@ ___this file is for learning cuda programming___
 +  [GPU的几个基本概念](https://zhuanlan.zhihu.com/p/53763285)   
 
 +  [cuda编译选项](https://cmake.org/cmake/help/v3.0/module/FindCUDA.html)   
+
++  [cuda内存](https://www.jianshu.com/p/3d4c9cc3a777)     
+   +  [cuda shared memory](http://blog.atelier39.org/parallel/869.html)   
