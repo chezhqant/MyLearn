@@ -125,6 +125,12 @@
 ### 3.25. [__future__](https://segmentfault.com/a/1190000010857744)       
 ### 3.26.  [openpyxl](https://geek-docs.com/python/python-tutorial/python-openpyxl.html)      
 ### 3.27.  [importlib](https://www.cnblogs.com/zhbzz2007/p/6715516.html)    
+### 3.28  numpy   
+1.  [np.stack](https://blog.csdn.net/csdn15698845876/article/details/73380803)    
+2.  [numpy广播机制](https://www.cnblogs.com/jiaxin359/p/9021726.html)   
+3.  [np.newaxis](https://www.jb51.net/article/144967.htm)   
+4.  [numpy中的np.max 与 np.maximum区别](https://blog.csdn.net/CSDN5529/article/details/79038544)    
+### 3.29  [tqdm](https://www.cnblogs.com/q735613050/p/10127531.html)    
 
 ## 4. Common Functions
 1.  [time的相关函数](https://blog.csdn.net/brucewong0516/article/details/79044905)</br>

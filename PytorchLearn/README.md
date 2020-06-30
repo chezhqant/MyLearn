@@ -157,6 +157,11 @@ const int& x = 666; // OK
 ###  10.  [dataloader(后期需要详细了解)](https://www.cnblogs.com/marsggbo/p/11308889.html)   
 ###  11.  [反向传播](http://ddrv.cn/a/586348) 
 
+###  layer    
+1.  conv    
+    1.  [多channel卷积](https://blog.csdn.net/qq_44554428/article/details/104415818)    
+    2.  [group的作用](https://blog.csdn.net/rotk2015/article/details/87820036)    
+
 #  损失函数
 ###  1.  [focal loss](https://www.cnblogs.com/king-lps/p/9497836.html)   
 + [验证gamma和alpha对focal loss的影响](./scripts/plot\_focal\_loss.py)    

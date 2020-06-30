@@ -83,13 +83,16 @@ ___cmake 总结___
         C++11标准   
     3.  [CXX_STANDARD_REQUIRED](https://cmake.org/cmake/help/v3.1/prop_tgt/CXX_STANDARD_REQUIRED.html)      
     4.  CMAKE_CXX_FLAGS   
-        + [解释一](https://blog.csdn.net/10km/article/details/51    731959)     
+        + [解释一](https://blog.csdn.net/10km/article/details/51731959)   
         + [解释二](https://www.jianshu.com/p/e9b1e9e833b2)      
     5.  [-D_GLIBCXX_USE_CXX11_ABI](https://my.oschina.net/tigerBin/blog/2049922)    
     6.  [CMAKE_EXPORT_COMPILE_COMMANDS](https://ihuifeng.cc/2019/08/10/C-C-%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0%E7%B2%BE%E5%87%86%E7%9A%84%E8%AF%AD%E4%B9%89%E7%BA%A7%E8%A1%A5%E5%85%A8/)   
     7.  [cmake默认编译、链接选项](https://blog.csdn.net/icbm/article/details/52336497)    
     8.  [ENV](https://blog.csdn.net/10km/article/details/51769633)    
     9.  [CMAKE_CURRENT_LIST_DIR](https://elloop.github.io/tools/2016-04-10/learning-cmake-2-commands)   
+    10. CMAKE_BUILD_WITH_INSTALL_RPATH以及相关    
+        1.  [理解一](https://www.shuzhiduo.com/A/n2d99oQ6dD/)    
+        2.  [理解二](https://blog.csdn.net/guo1988kui/article/details/81037366)   
 
 7.  [另一个比较全面的博客](http://ijinjay.github.io/blog/2017-04/CMake%E4%BD%BF%E7%94%A8.html)     
 

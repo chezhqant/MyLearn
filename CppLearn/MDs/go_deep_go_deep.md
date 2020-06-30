@@ -20,6 +20,7 @@ ___this file is for learning to going depp!___
 2.  [理解二](https://github.com/tinyclub/open-c-book/blob/master/zh/chapters/02-chapter4.markdown)     
 ###  12.  [C++编译器优化](https://www.agner.org/optimize/#manuals)   
 1.  [vs编译器选项](https://www.cnblogs.com/csdreamer/articles/3094029.html)   
+###  13.  [linux命令大全（写在这里是为了readelf/objdump/ldd/ar）](https://man.linuxde.net/)     
 
 ##  gdb    
 ###  1.  [一个程序的整体流程](https://www.nosuchfield.com/2018/11/23/Program-compilation-linking-loading-and-running/)   
