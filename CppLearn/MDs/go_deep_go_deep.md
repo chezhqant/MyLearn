@@ -16,12 +16,17 @@ ___this file is for learning to going depp!___
 ###  9.  [某些section的作用](https://www.cnblogs.com/arnoldlu/p/7136701.html)  
 ###  10.   [动态库](./Linux下的动态连接库及其实现机制修订版.rtf)    
 ###  11.  动态链接   
-###  12.  [rpath以及$ORIGIN](https://www.jianshu.com/p/505a32ccdc91)    
 1.  [理解一](https://www.jianshu.com/p/5deed1bf82b4)   
 2.  [理解二](https://github.com/tinyclub/open-c-book/blob/master/zh/chapters/02-chapter4.markdown)     
 ###  12.  [C++编译器优化](https://www.agner.org/optimize/#manuals)   
 1.  [vs编译器选项](https://www.cnblogs.com/csdreamer/articles/3094029.html)   
 ###  13.  [linux命令大全（写在这里是为了readelf/objdump/ldd/ar）](https://man.linuxde.net/)     
+###  14.  [rpath以及$ORIGIN](https://www.jianshu.com/p/505a32ccdc91)    
+1.  [rpath/runpath](https://blog.csdn.net/dbzhang800/article/details/6918413)   
+    RUNPATH 指定的路径可以被 LD_LIBRARY_PATH 覆盖， 但是 RPATH 指定的路径是优先级最高的。在 RUNPATH 字段存在的情况下， RPATH 字段会被忽略。
+    貌似 RPATH 的 历史 比 RUNPATH 要久远，所以支持 RPATH 的工具比较多。 但是 RUNPATH 比 RPATH 灵活，因为可以被环境变量覆盖。
+    GNU linker 在只指定 --rpath 选项的情况下默认只设置 RPATH 字段，要设置 RUNPATH 字段的话，还需要指定 --enable-new-dtag选项。   
+2.  [再解](http://blog.airobot.org/2017/05/04/linux%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E6%90%9C%E7%B4%A2%E7%9B%AE%E5%BD%95%E8%A7%84%E5%88%99/)    
 
 ##  gdb    
 ###  1.  [一个程序的整体流程](https://www.nosuchfield.com/2018/11/23/Program-compilation-linking-loading-and-running/)   
