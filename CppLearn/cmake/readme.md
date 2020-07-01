@@ -150,8 +150,8 @@ ___cmake 总结___
          +  CMAKE_MAJOR_VERSION，CMAKE 主版本号，比如2.4.6 中的2  
          +  CMAKE_MINOR_VERSION，CMAKE 次版本号，比如2.4.6 中的4  
          +  CMAKE_PATCH_VERSION，CMAKE 补丁等级，比如2.4.6 中的6  
-         +  CMAKE_SYSTEM ，系统名称，比如Linux-2.6.22  
-         +  CMAKE_SYSTEM_NAME ，不包含版本的系统名，比如Linux  
+         +  CMAKE_SYSTEM ，系统名称，比如Linux-2.6.22, 需要在project()之后使用，否则为空。    
+         +  CMAKE_SYSTEM_NAME ，不包含版本的系统名，比如Linux, 需要在project()之后使用，否则为空。    
          +  CMAKE_SYSTEM_VERSION ，系统版本，比如2.6.22  
          +  CMAKE_SYSTEM_PROCESSOR，处理器名称，比如i686   
          +  UNIX ，在所有的类UNIX平台为TRUE，包括OS X 和cygwin  
@@ -166,3 +166,13 @@ ___cmake 总结___
 9.  [cmake将变量传递给代码](https://www.coder.work/article/1206996)   
 10.  [在各级子项目(目录)之间共享变量](https://blog.csdn.net/10km/article/details/50508184)    
 ___待总结___
+11.  小bug?   
+     1.  install路径设置   
+         cmake -DCMAKE_INSTALL_PREFIX=<> 或在CMakeLists.txt中使用SET(CMAKE_INSTALL_PREFIX <>), 需要在project()之前设置，否则无效。或者使用cmake手册中的方法，可以在project()之后设置：    
+         ```
+         if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+           set(CMAKE_INSTALL_PREFIX "/my/default" CACHE PATH "..." FORCE)
+        endif()
+        ```
+     2.  [变量设置失效问题](https://wuruofan.com/2020/05/cmake-learning-note/)   
+     3.  [链接动态库时是用相对路径rpath using relatived path](https://wuruofan.com/2020/05/cmake-learning-note/)    

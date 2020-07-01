@@ -16,6 +16,7 @@ ___this file is for learning to going depp!___
 ###  9.  [某些section的作用](https://www.cnblogs.com/arnoldlu/p/7136701.html)  
 ###  10.   [动态库](./Linux下的动态连接库及其实现机制修订版.rtf)    
 ###  11.  动态链接   
+###  12.  [rpath以及$ORIGIN](https://www.jianshu.com/p/505a32ccdc91)    
 1.  [理解一](https://www.jianshu.com/p/5deed1bf82b4)   
 2.  [理解二](https://github.com/tinyclub/open-c-book/blob/master/zh/chapters/02-chapter4.markdown)     
 ###  12.  [C++编译器优化](https://www.agner.org/optimize/#manuals)   
