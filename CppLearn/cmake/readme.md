@@ -35,6 +35,31 @@ ___cmake 总结___
       [再解include](https://blog.csdn.net/qq_38410730/article/details/102677143)    
   10. [string](https://www.sunxidong.com/340.html)    
   11. [find_libraries，里面有类似命名空间的讲解，比如md::image3d](https://gongzq5.github.io/posts/CMake-%E4%BB%8E0%E5%BC%80%E5%A7%8B-2019-09-06/)    
+  12.  add_libraries   
+       ADD_LIBRARY(libname [SHARED|STATIC|MODULE][EXCLUDE_FROM_ALL]source1 source2 ... sourceN)ADD_LIBRARY(libname [SHARED|STATIC|MODULE][EXCLUDE_FROM_ALL]source1 source2 ... sourceN)   
+       你不需要写全libhello.so，只需要填写hello即可，cmake系统会自动为你生成libhello.X。类型有三种:   
+       +  SHARED, 动态库   
+       +  STATIC, 静态库   
+       +  MODULE, 在使用dyId的系统有效，如果不支持dyId，则被当作SHARED对待    
+       +  EXCLUDE_FROM_ALL，参数的意思是这个库不会被默认构建，除非有其他的组件依赖或者手工构建。    
+  13.  set_target_properties    
+       SET_TARGET_PROPERTIES(target1 target2 ...PROPERTIES prop1 value1prop2 value2 ...)    
+       这条命令可以用来设置输出的名称，对于动态库，还可以用来指定动态库的版本和API版本。    
+       set_target_properties(XXX_static PROPERTIES OUTPUT_NAME "XXX")，这样就可以同时得到XXX.so和XXX.a两个库了。
+       按照规则，动态库是应该包含一个版本号，我们可以看一下系统的动态库，一般是：   
+       +  libXXX.so.1.2   
+       +  libXXX.so -> libXXX.so.1   
+       +  libXXX.so.1 -> libXXX.so.1.2   
+       为了实现动态库版本号，我们仍然需要是用SET_TARGET_PROPERTIES指令。具体使用方式是：    
+       set_target_properties(XXX PROPERTIES VERSIOn 1.2 SOVERSION 1)   
+       VERSION指代动态库版本，SOVERSION指代API版本。这将生成一下：      
+       +  libXXX.so.1.2   
+       +  libXXX.so -> libXXX.so.1   
+       +  libXXX.so.1 -> libXXX.so.1.2   
+  14.  get_target_property(VAR target property)    
+       这里的property和VAR相当于一个map键值对，property是键，VAR是值，这个键值对从属于target，如果这个target没有这个键，那么VAR将返回OUTPUT_VALUE-NOTFOUND.   
+
+
 2.  cmake实践这本书   
 3.  [cmake下载路径](https://cmake.org/files)  
 4.  cmake 构建选项
@@ -90,9 +115,12 @@ ___cmake 总结___
     7.  [cmake默认编译、链接选项](https://blog.csdn.net/icbm/article/details/52336497)    
     8.  [ENV](https://blog.csdn.net/10km/article/details/51769633)    
     9.  [CMAKE_CURRENT_LIST_DIR](https://elloop.github.io/tools/2016-04-10/learning-cmake-2-commands)   
-    10. CMAKE_BUILD_WITH_INSTALL_RPATH以及相关    
+    10.  CMAKE_BUILD_WITH_INSTALL_RPATH以及相关    
         1.  [理解一](https://www.shuzhiduo.com/A/n2d99oQ6dD/)    
         2.  [理解二](https://blog.csdn.net/guo1988kui/article/details/81037366)   
+    11.  BUILD_SHARED_LIBS   
+         option(BUILD_SHARED_LIBS ON) # 默认生成动态库，如果不设置的话默认生成静态库
+    12.  如果cmake构建失败，需要查看细节的话，可以是用`make VERBOSE=1`，来构建。    
 
 7.  [另一个比较全面的博客](http://ijinjay.github.io/blog/2017-04/CMake%E4%BD%BF%E7%94%A8.html)     
 
