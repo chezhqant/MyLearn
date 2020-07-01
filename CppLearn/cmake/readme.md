@@ -58,6 +58,12 @@ ___cmake 总结___
        +  libXXX.so.1 -> libXXX.so.1.2   
   14.  get_target_property(VAR target property)    
        这里的property和VAR相当于一个map键值对，property是键，VAR是值，这个键值对从属于target，如果这个target没有这个键，那么VAR将返回OUTPUT_VALUE-NOTFOUND.   
+  15.  include_directories    
+       INCLUDE_DIRECTORIES([AFTER|BEFORE] [SYSTEM] dir1 dir2 ...)   
+       这条指令可以用来向工程添加多个特定的头文件搜索路径，路径之间用空格分割，如果路径中包括了空格，可以是用双引号将它括起来，默认的行为是追加到当前的头文件搜索路径的后面，你可以通过两种方式来进行控制搜索路径添加的方式：    
+       +  CMAKE_INCLUDE_DIRECTORIES_BEFORE，通过SET这个cmake变量为ON，可以将添加的头文件搜索路径放在已有路径的前面。    
+       +  通过AFTER或者BEFORE参数，也可以控制是追加还是置前。现在我们在src/CMakeLists.txt中添加一个头肩搜索路径，方式很简单，加入：  
+          include_directories(/usr/include/hello)   
 
 
 2.  cmake实践这本书   
@@ -121,6 +127,39 @@ ___cmake 总结___
     11.  BUILD_SHARED_LIBS   
          option(BUILD_SHARED_LIBS ON) # 默认生成动态库，如果不设置的话默认生成静态库
     12.  如果cmake构建失败，需要查看细节的话，可以是用`make VERBOSE=1`，来构建。    
+    13.  ___环境变量___: CMAKE_INCLUDE_PATH和CMAKE_LIBRARY_PATH   
+         需要特别注意，这两个变量不是___cmake变量___，而是___环境变量___，使用方法是要在bash中用export或者使用set命令设置或者使用CMAKE_INCLUDE_PATH=/home/...的方式。    
+         这两个变量主要用来解决以前的autotools工程中--extra-include-dir等参数的支持，也就是，如果头文件没有放在常规路径中（/usr/include, /usr/local/include等等），则可以通过这些变量进行弥补。比如，假设我有个hello.h在/usr/include/hello目录中，直接查找是找不到的，可以是用include_directories(/usr/include/hello)告诉工程这个头文件目录。为了将程序更加智能，我们可以是用CMAKE_INCLUDE_PATH来进行，是用bash的方法如下：    
+         export CMAKE_INCLUDE_PATH=/usr/include/hello，然后在CMakeLists.txt中将include_directories(/usr/include/hello)替换为：    
+         ```
+         find_path(my_header hello.h)
+         if(my_header)
+           include_directories(${my_header})
+         endif(my_header)
+         ```
+         find_path(my_header NAMES hello.h PATHS /usr/include/hello)，一般这样是用，这里我们没有指定路径，但是cmake仍然可以帮我找到hello.h的存放路径，就是因为我们设置了环境变量CMAKE_INCLUDE_PATH，如果不使用find_path, CMAKE_INCLUDE_PATH变量的设置是没有作用的，你不能指望他会直接为编译器命令添加参数-I<CMAKE_INCLUDE_PATH>。同样，CMAKE_LIBRARY_PATH可以用在find_library中。   
+    14.  CMAKE_BINARY_DIR, PROJECT_BINARY_DIR,_BINARY_DIR: 这三个变量内容一致，如果时内部编译，就是指的工程的顶级目录，如果时外部编译，指的就是工程编译发生的目录。    
+    15.  CMAKE_SOURCE_DIR,PROJECT_SOURCE_DIR,_SOURCE_DIR: 这三个变量内容一致，都指的是工程的顶级目录。  
+    16.  CMAKE_CURRENT_BINARY_DIR：外部编译时，指的是target目录，内部编译时，指的是顶级目录.    
+    17.  CMAKE_CURRENT_SOURCE_DIR：CMakeList.txt所在的目录.  
+    18.  CMAKE_CURRENT_SOURCE_DIR：CMakeList.txt所在的目录.  
+    19.  CMAKE_CURRENT_SOURCE_DIR：CMakeList.txt所在的目录.  
+    20.  CMAKE_MODULE_PATH：如果工程复杂，可能需要编写一些cmake模块-，这里通过SET指定这个变量.   
+    21.  LIBRARY_OUTPUT_DIR,BINARY_OUTPUT_DIR：库和可执行的最终存放目录.   
+    22.  系统信息   
+         +  CMAKE_MAJOR_VERSION，CMAKE 主版本号，比如2.4.6 中的2  
+         +  CMAKE_MINOR_VERSION，CMAKE 次版本号，比如2.4.6 中的4  
+         +  CMAKE_PATCH_VERSION，CMAKE 补丁等级，比如2.4.6 中的6  
+         +  CMAKE_SYSTEM ，系统名称，比如Linux-2.6.22  
+         +  CMAKE_SYSTEM_NAME ，不包含版本的系统名，比如Linux  
+         +  CMAKE_SYSTEM_VERSION ，系统版本，比如2.6.22  
+         +  CMAKE_SYSTEM_PROCESSOR，处理器名称，比如i686   
+         +  UNIX ，在所有的类UNIX平台为TRUE，包括OS X 和cygwin  
+         +  WIN32 ，在所有的win32 平台为TRUE，包括cygwin  
+    23.  主要的开关选项    
+         +  BUILD_SHARED_LIBS, 这个开关用来控制默认的库编译方式，如果不进行设置，使用add_library 并没有指定库类型的情况下，默认编译生成的库都是静态库。如果set(BUILD_SHARED_LIBS ON) 后，默认生成的为动态库   
+         +  CMAKE_C_FLAGS 设置C编译选项，也可以通过指令add_definitions() 添加   
+         +  CMAKE_CXX_FLAGS 设置C++ 编译选项，也可以通过指令add_definitions() 添加   
 
 7.  [另一个比较全面的博客](http://ijinjay.github.io/blog/2017-04/CMake%E4%BD%BF%E7%94%A8.html)     
 
