@@ -1,5 +1,8 @@
 ___cmake 总结___
 
+[cmake 官方教程，英文版](https://cmake.org/cmake/help/latest/index.html)    
+[cmake API中文](https://gearyyoung.gitbooks.io/cmake-api/content/cmake/CMake%E8%AF%AD%E6%B3%95.html?q=)   
+
 [cmake概览](./pictures/1.jpg "cmake概览")   
 
 0.  两个过程    
@@ -160,6 +163,7 @@ ___cmake 总结___
          +  BUILD_SHARED_LIBS, 这个开关用来控制默认的库编译方式，如果不进行设置，使用add_library 并没有指定库类型的情况下，默认编译生成的库都是静态库。如果set(BUILD_SHARED_LIBS ON) 后，默认生成的为动态库   
          +  CMAKE_C_FLAGS 设置C编译选项，也可以通过指令add_definitions() 添加   
          +  CMAKE_CXX_FLAGS 设置C++ 编译选项，也可以通过指令add_definitions() 添加   
+    24.  [将build产生的exe文件和lib文件放到指定的目录中](https://blog.csdn.net/u012487272/article/details/12882283)   
 
 7.  [另一个比较全面的博客](http://ijinjay.github.io/blog/2017-04/CMake%E4%BD%BF%E7%94%A8.html)     
 
