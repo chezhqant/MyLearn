@@ -16,6 +16,7 @@ ___this file is for learning to going depp!___
 ###  9.  [某些section的作用](https://www.cnblogs.com/arnoldlu/p/7136701.html)  
 ###  10.   [动态库](./Linux下的动态连接库及其实现机制修订版.rtf)    
 ###  11.  动态链接   
+###  12.  [静态链接、动态链接重定位表](https://www.cnblogs.com/gradyblog/p/8964073.html)      
 1.  [理解一](https://www.jianshu.com/p/5deed1bf82b4)   
 2.  [理解二](https://github.com/tinyclub/open-c-book/blob/master/zh/chapters/02-chapter4.markdown)     
 ###  12.  [C++编译器优化](https://www.agner.org/optimize/#manuals)   
@@ -32,6 +33,9 @@ ___this file is for learning to going depp!___
     eg: libhello.so是一个动态库，它本身在./Release中，它所依赖的其他文件是在../Dependency中。直接写进去就是$ORIGIN:   
     set_target_properties(hello PROPERTIES INSTALL_RPATH "$ORIGIN/Dependency")   
     对于上面一个命令，在CMake中将RPATH设置为“$ORIGIN/Dependency”，但是在elf文件中，会解析它的绝对路径，我是这么猜的。   
+###  15.  C++中头文件、源文件之间的区别与联系        
+1.  [理解一](:https://my.oschina.net/fergus/blog/123484)    
+2.  [理解二](https://cloud.tencent.com/developer/article/1177251)     
 
 ##  gdb    
 ###  1.  [一个程序的整体流程](https://www.nosuchfield.com/2018/11/23/Program-compilation-linking-loading-and-running/)   

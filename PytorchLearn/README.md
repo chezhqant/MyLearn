@@ -3,21 +3,21 @@
 # <p align="center"> Catalogs </p>
 
 
-#  pytorch
+#  pytorch   
 1.  C10   
     C10，来自于Caffe Tensor Library的缩写。这里存放的都是最基础的Tensor库的代码，可以运行在服务端和移动端。PyTorch目前正在将代码从ATen/core目录下迁移到C10中。C10的代码有一些特殊性，体现在这里的代码除了服务端外还要运行在移动端，因此编译后的二进制文件大小也很关键，因此C10目前存放的都是最核心、精简的、基础的Tensor函数和接口。      
 2.  ATen  
     ATen，来自于 A TENsor library for C++11的缩写；PyTorch的C++ tensor library。ATen部分有大量的代码是来声明和定义Tensor运算相关的逻辑的，除此之外，PyTorch还使用了aten/src/ATen/gen.py来动态生成一些ATen相关的代码。ATen基于C10.   
 
-#  pytorch工程
-###  1.  [自动求导机制](https://blog.csdn.net/chezhai/article/details/90317222)
-###  2.  [锁页内存](https://blog.csdn.net/chezhai/article/details/90317699)
+#  pytorch工程     
+###  1.  [自动求导机制](https://blog.csdn.net/chezhai/article/details/90317222)    
+###  2.  [锁页内存](https://blog.csdn.net/chezhai/article/details/90317699)    
 
-###  3.  `zero_grad()`
+###  3.  zero_grad()    
 
-> 这个函数好像很重要，当网络参量进行反馈时，梯度是被积累的而不是被替换掉；但是在每一个batch时毫无疑问并不需要将两个batch的梯度混合起来累积，因此这里就需要每个batch设置一遍`zero_grad`了
+> 这个函数好像很重要，当网络参量进行反馈时，梯度是被积累的而不是被替换掉；但是在每一个batch时毫无疑问并不需要将两个batch的梯度混合起来累积，因此这里就需要每个batch设置一遍`zero_grad`了  
 
-> 但是我的理解:
+> 但是我的理解:   
 
 $$
 \begin{cases}
@@ -26,9 +26,9 @@ b\_{1}&= b\_1 - \eta*\frac{\partial e\_{o1}}{\partial b\_1}
 \end{cases}
 $$
 
-> 根据前面公式的理解,当参数更新完之后，是要将学习到的梯度清零的
+> 根据前面公式的理解,当参数更新完之后，是要将学习到的梯度清零的  
 
-###  4.  广播机制
+###  4.  广播机制  
 1.  广播语义  
 
 > 许许多多的PyTorch操作都支持[`NumPy Broadcasting Semantics`](https://docs.scipy.org/doc/numpy/user/basics.broadcasting.html#module-numpy.doc.broadcasting "(in NumPy v1.15)")。  
@@ -39,9 +39,9 @@ $$
 
 如果遵守以下规则，则两个张量是“可广播的”(必须满足两种情况)：  
 
-* 每个张量至少有一个维度；
-* 遍历张量维度大小时，从末尾随开始遍历(两种情况满足其一即可):
-    + 两个张量的维度大小必须相等
+* 每个张量至少有一个维度；  
+* 遍历张量维度大小时，从末尾随开始遍历(两种情况满足其一即可):  
+    + 两个张量的维度大小必须相等   
     + 它们其中一个为1，或者一个不存在。  
 
 > 例如：  
@@ -68,7 +68,6 @@ $$
 >>> x=torch.empty(5,2,4,1)
 >>> y=torch.empty(  3,1,1)
 # x和y不能被广播  （   ）  
-
 ```  
 
 > 如果x,y两个张量是可以广播的，则通过计算得到的张量大小遵循以下原则：   
@@ -128,21 +127,21 @@ RuntimeError: The expanded size of the tensor (1) must match the existing size (
 >>> torch.add(torch.ones(4,1), torch.randn(4))
 
 ```  
-
 > 以前可能会产生一个torch.Size（[4,1]）的Tensor，但现在会产生一个torch.Size（[4,4]）这样的Tensor。 为了帮助识别代码中可能存在广播引起的向后不兼容性的情况，您可以设置`torch.utils.backcompat.broadcast_warning.enabled` 为 `True`，在这种情况下会产生python警告。  
 
 ```py
+
 >>> torch.utils.backcompat.broadcast_warning.enabled=True
 >>> torch.add(torch.ones(4,1), torch.ones(4))
 __main__:1: UserWarning: self and other do not have the same shape, but are broadcastable, and have the same number of elements.
 Changing behavior in a backwards incompatible manner to broadcasting rather than viewing as 1-dimensional.
 
 ```
-###  5.  [nn.ModuleList](https://blog.csdn.net/byron123456sfsfsfa/article/details/89930990) 
+###  5.  [nn.ModuleList](https://blog.csdn.net/byron123456sfsfsfa/article/details/89930990)   
 
-###  6.  [pytorch源代码理解一](https://www.52coding.com.cn/2019/05/05/PyTorch1/)</br>
+###  6.  [pytorch源代码理解一](https://www.52coding.com.cn/2019/05/05/PyTorch1/)    
 
-###  7.  model.train() model.eval()
+###  7.  model.train() model.eval()   
 ```
 int& x = 666;       // Error
 const int& x = 666; // OK
@@ -156,11 +155,16 @@ const int& x = 666; // OK
     像上面的那个图形，从内层往外看，维度分别是3,4,2; 分别对应着的维度为从右至左。     
 ###  10.  [dataloader(后期需要详细了解)](https://www.cnblogs.com/marsggbo/p/11308889.html)   
 ###  11.  [反向传播](http://ddrv.cn/a/586348) 
+###  12.  一些函数
+1.  [pytorch.detach() pytorch.detach_() 和 pytorch.data()用于切断反向传播](https://www.cnblogs.com/wanghui-garcia/p/10677071.html)      
+2.  [torch.cat](https://blog.csdn.net/qq_39709535/article/details/80803003)   
 
 ###  layer    
 1.  conv    
     1.  [多channel卷积](https://blog.csdn.net/qq_44554428/article/details/104415818)    
     2.  [group的作用](https://blog.csdn.net/rotk2015/article/details/87820036)    
+2.  [avgpool2d/AdaptiveAvgPool2](https://www.pythonf.cn/read/53448)     
+
 
 #  损失函数
 ###  1.  [focal loss](https://www.cnblogs.com/king-lps/p/9497836.html)   

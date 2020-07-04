@@ -98,7 +98,7 @@ ___a web can learn git command liking [playing game](https://learngitbranching.j
         2.  [git 理解 Head指针&Branch指针](https://blog.csdn.net/claroja/article/details/78858533)    
     8.  [重命名远程分支](https://blog.csdn.net/u013276277/article/details/81975713)   
 
-3.  shell的一些命令   
+3.  ubuntu   
   1.  [tmux](http://www.ruanyifeng.com/blog/2019/10/tmux.html)    
   2.  [shell正则表达式](https://man.linuxde.net/docs/shell\_regex.html)
   3.  [find](https://blog.csdn.net/stepbystepto/article/details/80851466)  
@@ -107,3 +107,6 @@ ___a web can learn git command liking [playing game](https://learngitbranching.j
   6.  [tar](http://linux.51yip.com/search/tar)      
   7.  [linux的一些工具]( https://linuxtools-rst.readthedocs.io/zh_CN/latest/base/index.html)    
   8.  [Chrome神器Vimium快捷键学习记录](http://www.cppblog.com/deercoder/archive/2011/10/22/158886.html)   
+  9.  [shell的一些命令](https://blog.csdn.net/smcdef/article/details/72579432)    
+  10.  [终端输入快捷键](https://www.cnblogs.com/nucdy/p/5251659.html)   
+  11.  [Linux操作系统下运行命令时Ctrl+C和Ctrl+Z的作用及恢复](https://blog.csdn.net/onlyou930/article/details/6543167)    

@@ -93,8 +93,9 @@
   1.  [sys.module](https://www.cnblogs.com/zhaojingyu/p/9069076.html)
   2.  [sys.argv](https://www.cnblogs.com/aland-1415/p/6613449.html)     
   3.  [sys.exit()/os.exit()](https://blog.csdn.net/index20001/article/details/74294945)     
-### 3.3. [xml sax](https://blog.csdn.net/guangmingsky/article/details/77601225)</br>
-1.  [xml dom](https://www.cnblogs.com/xieshengsen/p/6738777.html)   
+### 3.3.  [xml结构树](https://www.runoob.com/xml/xml-tree.html)   
+1.  [是用ElementTree解析xml]( https://www.runoob.com/xml/xml-tree.html)   
+2.  [再解](https://blog.csdn.net/wolinghuanyun/article/details/52474515)   
 ### 3.4. [pika](https://pypi.org/project/pika/)</br>
 ### 3.5. [python导入包](https://blog.csdn.net/chinesepython/article/details/82113575) </br>
 ### 3.6. [logging](https://www.cnblogs.com/Nicholas0707/p/9021672.html) </br>
@@ -130,6 +131,11 @@
 2.  [numpy广播机制](https://www.cnblogs.com/jiaxin359/p/9021726.html)   
 3.  [np.newaxis](https://www.jb51.net/article/144967.htm)   
 4.  [numpy中的np.max 与 np.maximum区别](https://blog.csdn.net/CSDN5529/article/details/79038544)    
+5.  [numpy.concatenate](https://www.cnblogs.com/shueixue/p/10953699.html)      
+6.  [numpy的prod()函数和pad()函数](https://www.cnblogs.com/nxf-rabbit75/p/10044403.html)    
+7.  [all（）和any（）比较矩阵](https://blog.csdn.net/qq_28618765/article/details/78086478)     
+8.  [numpy.argmax](https://www.cnblogs.com/zhouyang209117/p/6512302.html)   
+9.  [np.random.choice的用法](https://blog.csdn.net/qfpkzheng/article/details/79061601)     
 ### 3.29  [tqdm](https://www.cnblogs.com/q735613050/p/10127531.html)    
 
 ## 4. Common Functions
@@ -154,9 +160,9 @@
 ## 6. 杂项 </br>
 ### 6.1. [环境变量](https://blog.csdn.net/v_xchen_v/article/details/80393967) </br>
 1.  [python的搜索路径](https://blog.csdn.net/Charles5101/article/details/89951747)    
-### 6.2. [Python字符串前面加u,r,b的含义](https://www.cnblogs.com/liangmingshen/p/9274021.html)
-### 6.3. [python的\*](https://www.cnblogs.com/jony7/p/8035376.html)
-### 6.4. 基本类型  
+### 6.2. [Python字符串前面加u,r,b的含义](https://www.cnblogs.com/liangmingshen/p/9274021.html)     
+### 6.3. [python的\*](https://www.cnblogs.com/jony7/p/8035376.html)    
+### 6.4. 基本类型      
 1.  [list]   
     1. [\[list::\]](https://blog.csdn.net/qq\_41940950/article/details/80765674)   
 2.  [enum](https://www.cnblogs.com/ucos/p/5896861.html)   
@@ -177,4 +183,5 @@
 5.  [python setup.py](http://blog.konghy.cn/2018/04/29/setup-dot-py/)   
     1.  [python打包分发工具setuptools](http://www.bjhee.com/setuptools.html)    
 6.  [python os.environ](http://www.shuang0420.com/2017/03/10/Python%20os.environ.get()%20return%20None/)
+7.  [可变对象和不可变对象]( https://blog.csdn.net/liuweiyuxiang/article/details/89349862)     
 ### 6.8. [Python PEP8 代码规范常见问题及解决方法](https://cloud.tencent.com/developer/article/1611332)    
