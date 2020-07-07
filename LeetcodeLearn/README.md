@@ -36,6 +36,7 @@ eh, there are some cpps(two or three?) is wrong in the directory of Array, becau
 + [SearchRange](./Array/SearchRange.cpp) </br>
 + [SortArrayByParity](./Array/SortArrayByParity.cpp) </br>
 + [SortArrayByParityII](./Array/SortArrayByParityII.cpp) </br>
++ [is_one_bit_character](./Array/is_on_bit_character.cpp)   
 
 + [SortedSquares](./Array/SortedSquares.cpp) </br>
 + [String to Integer](./Array/String\_to\_Integer.cpp) </br>
