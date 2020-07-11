@@ -136,7 +136,10 @@
 7.  [all（）和any（）比较矩阵](https://blog.csdn.net/qq_28618765/article/details/78086478)     
 8.  [numpy.argmax](https://www.cnblogs.com/zhouyang209117/p/6512302.html)   
 9.  [np.random.choice的用法](https://blog.csdn.net/qfpkzheng/article/details/79061601)     
+10. [numpy.loadtxts](https://blog.csdn.net/yu_1628060739/article/details/102746114)   
+11. [numpy数组的取整以及类型转换：ceil, floor, trunc, rint, around]( https://blog.csdn.net/sinat_34072381/article/details/84567523)   
 ### 3.29  [tqdm](https://www.cnblogs.com/q735613050/p/10127531.html)    
+### 3.30  easydict(公司拿来当作pytorch的训练配置文件用)     
 
 ## 4. Common Functions
 1.  [time的相关函数](https://blog.csdn.net/brucewong0516/article/details/79044905)</br>
@@ -185,3 +188,4 @@
 6.  [python os.environ](http://www.shuang0420.com/2017/03/10/Python%20os.environ.get()%20return%20None/)
 7.  [可变对象和不可变对象]( https://blog.csdn.net/liuweiyuxiang/article/details/89349862)     
 ### 6.8. [Python PEP8 代码规范常见问题及解决方法](https://cloud.tencent.com/developer/article/1611332)    
+8.  [50个Ipython的使用技巧](https://www.zhihu.com/question/405701348/answer/1326466804?utm_source=wechat_session&utm_medium=social&utm_oi=1139653771880796160)    

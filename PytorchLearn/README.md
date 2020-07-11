@@ -3,11 +3,12 @@
 # <p align="center"> Catalogs </p>
 
 
-#  pytorch   
+#  pytorch源代码       
 1.  C10   
     C10，来自于Caffe Tensor Library的缩写。这里存放的都是最基础的Tensor库的代码，可以运行在服务端和移动端。PyTorch目前正在将代码从ATen/core目录下迁移到C10中。C10的代码有一些特殊性，体现在这里的代码除了服务端外还要运行在移动端，因此编译后的二进制文件大小也很关键，因此C10目前存放的都是最核心、精简的、基础的Tensor函数和接口。      
 2.  ATen  
     ATen，来自于 A TENsor library for C++11的缩写；PyTorch的C++ tensor library。ATen部分有大量的代码是来声明和定义Tensor运算相关的逻辑的，除此之外，PyTorch还使用了aten/src/ATen/gen.py来动态生成一些ATen相关的代码。ATen基于C10.   
+3.  [pytorch源代码理解一](https://www.52coding.com.cn/2019/05/05/PyTorch1/)    
 
 #  pytorch工程     
 ###  1.  [自动求导机制](https://blog.csdn.net/chezhai/article/details/90317222)    
@@ -139,25 +140,25 @@ Changing behavior in a backwards incompatible manner to broadcasting rather than
 ```
 ###  5.  [nn.ModuleList](https://blog.csdn.net/byron123456sfsfsfa/article/details/89930990)   
 
-###  6.  [pytorch源代码理解一](https://www.52coding.com.cn/2019/05/05/PyTorch1/)    
-
-###  7.  model.train() model.eval()   
+###  6.  model.train() model.eval()   
 ```
 int& x = 666;       // Error
 const int& x = 666; // OK
 第一个操作是错误的，它是一个使用int类型的右值来初始化non-const的int&类型的非法操作。第二个操作正确，当然，x是一个常量，你不能改变他。（译者按：注意，常量引用只是规定无法通过该引用改变引用的对象，如果该对象有其他非常量引用或者指针，通过这些改变该对象仍然是合法的）
 ```
 
-###  8.  [详解PyTorch中的ModuleList和Sequential](https://zhuanlan.zhihu.com/p/75206669)
+###  7.  [详解PyTorch中的ModuleList和Sequential](https://zhuanlan.zhihu.com/p/75206669)
 
-###  9.  多维度的shape怎么看  
+###  8.  多维度的shape怎么看  
     ![shape](./pictures/1.jpg "shape")
     像上面的那个图形，从内层往外看，维度分别是3,4,2; 分别对应着的维度为从右至左。     
-###  10.  [dataloader(后期需要详细了解)](https://www.cnblogs.com/marsggbo/p/11308889.html)   
-###  11.  [反向传播](http://ddrv.cn/a/586348) 
-###  12.  一些函数
+###  9.  [dataloader(后期需要详细了解)](https://www.cnblogs.com/marsggbo/p/11308889.html)   
+###  10.  [反向传播](http://ddrv.cn/a/586348) 
+###  11.  一些函数
 1.  [pytorch.detach() pytorch.detach_() 和 pytorch.data()用于切断反向传播](https://www.cnblogs.com/wanghui-garcia/p/10677071.html)      
 2.  [torch.cat](https://blog.csdn.net/qq_39709535/article/details/80803003)   
+3.  [torch.nn.functional实现插值和上采样](https://www.cnblogs.com/wanghui-garcia/p/11399034.html)   
+4.  [tensor.squeeze/tensor.unsqueeze](https://www.cnblogs.com/sbj123456789/p/9231571.html)    
 
 ###  layer    
 1.  conv    
@@ -178,5 +179,4 @@ const int& x = 666; // OK
 +  [torch手册](https://pytorch-cn.readthedocs.io/zh/latest/package\_references/Tensor/#contiguous-tensor)    
 
 #  有关训练的一切
-###  0.  [nvidia-smi](https://blog.csdn.net/C\_chuxin/article/details/82993350)  
-###  1.  [.ini](https://www.jianshu.com/p/2f0636e27477)  
+###  0.  [C++配置文件，torh是用的时easydict, .ini](https://www.jianshu.com/p/2f0636e27477)  
