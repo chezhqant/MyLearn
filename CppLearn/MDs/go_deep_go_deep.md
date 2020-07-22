@@ -58,6 +58,7 @@ ___this file is for learning to going depp!___
 1.  [open mp英文版](https://bisqwit.iki.fi/story/howto/openmp/)   
 2.  [openmp博客版本](http://www.uml.org.cn/c%2B%2B/201810291.asp) 
 3.  [open编程指南csdn版本](https://blog.csdn.net/drzhouweiming/article/details/4093624)   
+4.  [每个程序员都应该了解的内存知识](https://www.cnblogs.com/blockcipher/p/3251117.html)    
 
 
 ##  内核      
@@ -67,7 +68,7 @@ ___this file is for learning to going depp!___
 ###  4.  [PCB的解释](https://zhuanlan.zhihu.com/p/32341542)  
 ###  5.  [ComputerSystems_深入理解计算机系统](./MDs/ComputerSystems_深入理解计算机系统.md)   
 ###  6.  [蜗窝科技](http://www.wowotech.net/)   
-###  7.  detals   
+###  7.  details   
 ###  8.  [奔跑吧linux内核](./奔跑吧linux内核.md)    
 1.  namespace   
     据说跟docker有关系，先放一放，回头再看。    

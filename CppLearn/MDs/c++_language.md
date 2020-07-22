@@ -55,6 +55,7 @@ const int& x = 666; // OK
 8.  [嵌套类和外围类](https://blog.csdn.net/u013476464/article/details/42738789)   
 9.  [不要显式调用析构函数](http://www.cppblog.com/lf426/archive/2008/04/12/46909.html)    
     1.  [私有析构函数](https://www.cnblogs.com/wkfvawl/p/10620639.html)   
+10. [c++ 什么时候会生成默认构造函数](https://www.jianshu.com/p/c6e6baec5c4f)      
 ###  8. 关键字   
 1.  [decltype](https://www.cnblogs.com/QG-whz/p/4952980.html)    
 2.  [override](https://blog.csdn.net/jolin678/article/details/63695023)    

@@ -14,3 +14,8 @@ ___this file is for learning shell___
 16.  [终端输入快捷键](https://www.cnblogs.com/nucdy/p/5251659.html)   
 17.  [Linux操作系统下运行命令时Ctrl+C和Ctrl+Z的作用及恢复](https://blog.csdn.net/onlyou930/article/details/6543167)    
 18.  [linux命令大全]( https://man.linuxde.net/)   
+19.  登陆式/非登陆式、交互式/非交互式      
+     1.  [shell的四种运行方式](http://c.biancheng.net/view/3045.html)   
+     2.  [登陆式shell和非登陆式shell](https://www.shuzhiduo.com/A/A2dmBl8qze/)    
+     3.  [交互式和非交互式](https://blog.csdn.net/gui951753/article/details/79154496)   
+20.  [linux重定向]( https://blog.csdn.net/liucy007/article/details/90207830)    
