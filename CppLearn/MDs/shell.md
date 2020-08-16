@@ -19,3 +19,4 @@ ___this file is for learning shell___
      2.  [登陆式shell和非登陆式shell](https://www.shuzhiduo.com/A/A2dmBl8qze/)    
      3.  [交互式和非交互式](https://blog.csdn.net/gui951753/article/details/79154496)   
 20.  [linux重定向]( https://blog.csdn.net/liucy007/article/details/90207830)    
+21.  [dstat](https://www.cnblogs.com/vincent-hv/p/3358194.html)       

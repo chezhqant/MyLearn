@@ -84,4 +84,5 @@ ___this file is for learning to going depp!___
 6.  [__user](https://blog.csdn.net/q345852047/article/details/7710818)    
 7. [Linux的公平调度（CFS）原理](https://www.jianshu.com/p/673c9e4817a8)   
   1.  [另一个理解](https://blog.csdn.net/XD_hebuters/article/details/79623130)    
+  2.  [再一个理解](https://chasinglulu.github.io/categories/task-management-and-process-scheduling/)    
 8.  [这个人的关于进程的可以看](https://www.cnblogs.com/linhaostudy/category/1073650.html)   

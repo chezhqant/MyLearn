@@ -186,3 +186,4 @@ const int& x = 666; // OK
 
 #  有关训练的一切
 ###  0.  [C++配置文件，torh是用的时easydict, .ini](https://www.jianshu.com/p/2f0636e27477)  
+###  1.  [英伟达驱动安装](https://www.cnblogs.com/pprp/p/9430836.html)    
