@@ -180,3 +180,4 @@ ___待总结___
         ```
      2.  [变量设置失效问题](https://wuruofan.com/2020/05/cmake-learning-note/)   
      3.  [链接动态库时是用相对路径rpath using relatived path](https://wuruofan.com/2020/05/cmake-learning-note/)    
+     4.  [cmake_skip_rpath系列](https://blog.csdn.net/zhawk/article/details/77104114)   
