@@ -86,6 +86,7 @@
 8.  [python 生成器、列表/字典/集合解析式区别](https://blog.csdn.net/luckytanggu/article/details/53154063)   
 9.  [装饰器简述](https://www.runoob.com/w3cnote/python-func-decorators.html)    
 10.  [python函数传递参数是传引用还是传值？](https://blog.csdn.net/duan20140614/article/details/85382955)    
+11.  [函数参数中的冒号, 箭头](https://blog.csdn.net/qq_31347869/article/details/102401971)    
 
 ## 3. Packages
 ### 3.1. [csv](https://www.cnblogs.com/wuxunyan/p/10442444.html)</br>
