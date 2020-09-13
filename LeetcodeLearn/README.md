@@ -46,6 +46,7 @@ eh, there are some cpps(two or three?) is wrong in the directory of Array, becau
 + [Transpose](./Array/Transpose.cpp) </br>
 + [Two Sum](./Array/Two\_Sum.cpp) </br>
 + [ZigZag Conversion](./Array/ZigZag\_Conversion.cpp) </br>
++ [RunningSum](../Array/running_sum.cpp)      
 
 # 3. [Dynamic Programming](./Dynamic_Programming)</br>
 + [Best Time to Buy and Sell Stock](./Dynamic\_Programming/Best\_Time\_to\_Buy\_and\_Sell\_Stock.cpp)
