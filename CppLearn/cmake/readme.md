@@ -28,6 +28,7 @@ ___cmake 总结___
   2.  [cmake find\_package](https://www.jianshu.com/p/39fc5e548310)   
       [第二次理解](https://blog.csdn.net/dbzhang800/article/details/6329314)    
       [第三次理解](https://dawnarc.com/2018/04/buildcmake%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE%E9%A1%B9/)    
+      [版本控制](https://murphypei.github.io/blog/2018/11/cmake-install-find-package)   
   3.  [excute_process](https://blog.csdn.net/qq_28584889/article/details/97758450)    
   4.  [option()](https://zhjwpku.com/2019/11/15/cmake-basic-commands-intro.html)    
   5.  [cmake_dependent_option](http://www.up4dev.com/2019/12/12/cmake_dependent_option/)    

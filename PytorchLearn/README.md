@@ -159,6 +159,9 @@ const int& x = 666; // OK
 2.  [torch.cat](https://blog.csdn.net/qq_39709535/article/details/80803003)   
 3.  [torch.nn.functional实现插值和上采样](https://www.cnblogs.com/wanghui-garcia/p/11399034.html)   
 4.  [tensor.squeeze/tensor.unsqueeze](https://www.cnblogs.com/sbj123456789/p/9231571.html)    
+5.  [torch.gather() 和torch.sactter_()](https://cloud.tencent.com/developer/article/1433787)      
+###  9.  [计算图](https://blog.csdn.net/qq_37388085/article/details/102559532)      
+1.  [再解](https://blog.csdn.net/xinming_365/article/details/107690498)   
 
 ###  layer    
 1.  conv    

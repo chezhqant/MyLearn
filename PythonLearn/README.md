@@ -186,6 +186,7 @@
 4.  [module和包的区别](https://www.cnblogs.com/JetpropelledSnake/p/8905727.html)    
 5.  [python setup.py](http://blog.konghy.cn/2018/04/29/setup-dot-py/)   
     1.  [python打包分发工具setuptools](http://www.bjhee.com/setuptools.html)    
+    2.  [另一个版本的setuptools](https://segmentfault.com/a/1190000017037354)     
 6.  [python os.environ](http://www.shuang0420.com/2017/03/10/Python%20os.environ.get()%20return%20None/)
 7.  [可变对象和不可变对象]( https://blog.csdn.net/liuweiyuxiang/article/details/89349862)     
 ### 6.8. [Python PEP8 代码规范常见问题及解决方法](https://cloud.tencent.com/developer/article/1611332)    

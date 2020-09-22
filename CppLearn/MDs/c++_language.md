@@ -10,6 +10,8 @@ ___this file is for learning c++ language___
    +  [C++ 只在堆上或者只在栈上创建对象](https://segmentfault.com/a/1190000009023942)    
    +  [详解C++中如何将构造函数或析构函数的访问权限定为private](https://www.ctolib.com/topics-55958.html)   
 +  [:/::的用法](http://www.360doc.com/content/13/0605/11/3373961_290615318.shtml)   
++  [cv-qualified and cv-unqualified](https://blog.csdn.net/asongnic/article/details/4571418)      
++  [聚合类和POD类型](../books/聚合类和POD类型.xmind)    
 
 ###  1.  python/C++交互(pybind11)待完成    
 1.  [pybind11中文翻译，翻译的不好的](https://s0pybind110readthedocs0io.icopy.site/en/master/compiling.html#building-manually)   
@@ -55,7 +57,9 @@ const int& x = 666; // OK
 8.  [嵌套类和外围类](https://blog.csdn.net/u013476464/article/details/42738789)   
 9.  [不要显式调用析构函数](http://www.cppblog.com/lf426/archive/2008/04/12/46909.html)    
     1.  [私有析构函数](https://www.cnblogs.com/wkfvawl/p/10620639.html)   
-10. [c++ 什么时候会生成默认构造函数](https://www.jianshu.com/p/c6e6baec5c4f)      
+10.  [c++ 什么时候会生成默认构造函数](https://www.jianshu.com/p/c6e6baec5c4f)      
+11.  [Why does default initialization of static data member not occur?](https://stackoverflow.com/questions/24682349/initialization-of-static-data-member)      
+    [补充解释](https://en.cppreference.com/w/cpp/language/static)    
 ###  8. 关键字   
 1.  [decltype](https://www.cnblogs.com/QG-whz/p/4952980.html)    
 2.  [override](https://blog.csdn.net/jolin678/article/details/63695023)    
