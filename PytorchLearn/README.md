@@ -177,10 +177,7 @@ const int& x = 666; // OK
 +  [第二种解释](https://zhuanlan.zhihu.com/p/32702350)  
 ###  3.  [senet](https://blog.csdn.net/u014380165/article/details/78006626)   
 ###  4.  [机器学习中的目标函数、损失函数、代价函数有什么区别？](https://www.zhihu.com/question/52398145)   
-###  5.  [一文搞懂最大似然估计](https://zhuanlan.zhihu.com/p/26614750?utm_source=wechat_session&utm_medium=social&utm_oi=1139653771880796160)   
-###  6.  [先验/条件/后验概率Prior/Conditional/Posterior probability](https://zhuanlan.zhihu.com/p/89531065?utm_source=wechat_session&utm_medium=social&utm_oi=1139653771880796160)    
-1.  [再解](https://zhuanlan.zhihu.com/p/25768606?utm_source=wechat_session&utm_medium=social&utm_oi=1139653771880796160)    
-###  7. [回归问题的五种损失函数](https://zhuanlan.zhihu.com/p/39239829?utm_source=wechat_session&utm_medium=social&utm_oi=1139653771880796160)    
+###  5. [回归问题的五种损失函数](https://zhuanlan.zhihu.com/p/39239829?utm_source=wechat_session&utm_medium=social&utm_oi=1139653771880796160)    
 
 #  9.  torch教程    
 +  [torch中文网](https://www.pytorchtutorial.com/)   

@@ -14,6 +14,8 @@
 
 > > ## 5. [CppLearn](./CppLearn)
 
+> > ## 8. [Mathematics](./Mathematics/README.md)
+
 > > ## 6. [html](https://www.runoob.com/html/html-tutorial.html)
 
 > > ## 7. [Bugs](./BUGs)
