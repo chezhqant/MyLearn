@@ -139,6 +139,7 @@
 9.  [np.random.choice的用法](https://blog.csdn.net/qfpkzheng/article/details/79061601)     
 10. [numpy.loadtxts](https://blog.csdn.net/yu_1628060739/article/details/102746114)   
 11. [numpy数组的取整以及类型转换：ceil, floor, trunc, rint, around]( https://blog.csdn.net/sinat_34072381/article/details/84567523)   
+12. [numpy增加行和列](https://www.cnblogs.com/MrLJC/p/4823499.html)     
 ### 3.29  [tqdm](https://www.cnblogs.com/q735613050/p/10127531.html)    
 ### 3.30  easydict(公司拿来当作pytorch的训练配置文件用)     
 

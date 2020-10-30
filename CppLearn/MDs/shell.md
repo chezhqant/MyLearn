@@ -20,3 +20,7 @@ ___this file is for learning shell___
      3.  [交互式和非交互式](https://blog.csdn.net/gui951753/article/details/79154496)   
 20.  [linux重定向]( https://blog.csdn.net/liucy007/article/details/90207830)    
 21.  [dstat](https://www.cnblogs.com/vincent-hv/p/3358194.html)       
+22.  显卡驱动安装   
+    1.  [截图](../pictures/显卡驱动安装.jpg)    
+    2.  [nvidia驱动安装选项选择](https://www.cnblogs.com/pprp/p/9430836.html)   
+    3.  安装显卡驱动的时候，不要使用-no-opengl-files选项，否则3D渲染没法是用opengl
