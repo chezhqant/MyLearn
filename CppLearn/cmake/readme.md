@@ -174,7 +174,7 @@ ___cmake 总结___
 
 7.  [另一个比较全面的博客](http://ijinjay.github.io/blog/2017-04/CMake%E4%BD%BF%E7%94%A8.html)     
 8.  [一个人的博客，有些东西很好，我就摘抄下来](https://www.jianshu.com/p/1ec2b5602b03)    
-  1.  [cmake语法概览](./others_blog/cmake语法速览.md)     
+    1.  [cmake语法概览](./others_blog/cmake语法速览.md)     
 
 9.  [cmake将变量传递给代码](https://www.coder.work/article/1206996)   
 10.  [在各级子项目(目录)之间共享变量](https://blog.csdn.net/10km/article/details/50508184)    
