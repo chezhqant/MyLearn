@@ -47,7 +47,7 @@
 
 5.  流控制命令    
 
-    在cmake于洋中，不管是条件语句，循环语句，函数或者宏都是命令。   
+    在cmake语法中，不管是条件语句，循环语句，函数或者宏都是命令。   
     
     +  操作符   
        用于条件或者循环的表达式的操作符，这些操作符是大小敏感的，操作符的优先级：   
@@ -55,3 +55,80 @@
        [操作符表格](./pictures/操作符.jpg)      
 
     +  布尔常量值   
+       cmake中的布尔常量值也是大小写敏感的。    
+       [布尔常量值表格](./pictures/布尔常量值表格.jpg)    
+
+    +  条件命令   
+       ```
+       if(表达式)
+         #要执行的命令块
+         command1(ARGS ...)
+         command2(ARGS ...)
+       elseif(表达式2)
+         #要执行的命令块
+         command1(ARGS ...)
+         command2(ARGS ...)
+       else(表达式)
+         #要执行的命令块
+         command1(ARGS ...)
+         command2(ARGS ...)
+       endif(表达式)
+       ```
+       缩进和空格对语句解析没有影响。     
+
+    +  循环命令   
+       ```
+       while(表达式)
+         #要执行的命令块
+         command1(ARGS ...)
+         command2(ARGS ...)
+       ```
+       循环也可以是用break()退出，continue()命令可以跳出下来的语句块，立即基尼如下一次循环迭代。     
+
+    +  循环遍历   
+       ```
+       foreach(循环变量 arg1 arg2 ...)
+         #要执行的命令块
+         command1(ARGS ...)
+         command2(ARGS ...)
+       endforeach(循环变量)
+       ```
+       每次迭代设置${循环变量} = argN   
+       例子：   
+       ```
+       foreach(item "A" "B" "C")
+         message(" ${item}")
+       endforeach(item)
+       ```
+       ```
+       foreach(循环变量 RANGE total)
+         #要执行的命令块
+         command1(ARGS ...)
+         command2(ARGS ...)
+       endforeach(循环变量)
+       ```
+       循环的范围是0~total      
+       ```
+       foreach(循环变量 RANGE start stop [step])
+         #要执行的命令块
+         command1(ARGS ...)
+         command2(ARGS ...)
+       endforeach(循环变量)
+       ```
+       循环的范围是start~stop，循环增量是step     
+       ```
+       foreach(loop_var IN [LISTS [lists1 [...]]]
+                           [ITEMS [item1 [...]]])
+       ```
+       foreach支持对列表遍历      
+       ```
+       set(list_var "1;2;3;4")
+       foreach(x IN LISTS list_var)
+         message(" ${x}")
+       endforeach(x)
+       ```
+       foreach也支持break()，continue()命令操作      
+
+5.  命令    
+
+    cmake支持很多内置的命令，像我们之前是用的set，message，if，while，foreach等待都是内置的命令。也可以是自定义命令。命令可以带字符串参数，但是没有返回值。命令名是大小写不敏感的，所以set和SET是一样的。但是命令带的参数名是大小写敏感的，ARG和arg是两个不同的参数。     
