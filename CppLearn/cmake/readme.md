@@ -176,7 +176,7 @@ ___cmake 总结___
 8.  [一个人的博客，有些东西很好，我就摘抄下来](https://www.jianshu.com/p/1ec2b5602b03)    
     1.  [cmake语法概览](./others_blog/cmake语法速览.md)     
     2.  [cmake的优势](./others_blog/cmake优势以及为什么是用cmake.md)      
-    3.  [cmake实战](./others_blog/Cmake实战指南.html)     
+    3.  [cmake实战](./others_blog/pictures/Cmake实战指南.html)      
 
 9.  [cmake将变量传递给代码](https://www.coder.work/article/1206996)   
 10.  [在各级子项目(目录)之间共享变量](https://blog.csdn.net/10km/article/details/50508184)    
