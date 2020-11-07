@@ -112,6 +112,10 @@ ___cmake 总结___
         [理解](https://www.cnblogs.com/rickyk/p/3872568.html)   
     10. set   
         [理解](https://www.cnblogs.com/narjaja/p/8351500.html)    
+    25.  pck_check_modules      
+        1.  [理解一](http://www.supermew.top/archives/1591)   
+        2.  [理解二](https://cmake.org/cmake/help/v3.0/module/FindPkgConfig.html)   
+
 6.  变量    
     1. [CMAKE_INSTALL_MESSAGE](https://cmake.org/cmake/help/v3.1/variable/CMAKE_INSTALL_MESSAGE.html)   
     2.  [CMAKE_CXX_STANDARD](https://kheresy.wordpress.com/2017/08/28/abi-incompatible-of-g/)    
@@ -166,7 +170,11 @@ ___cmake 总结___
          +  CMAKE_CXX_FLAGS 设置C++ 编译选项，也可以通过指令add_definitions() 添加   
     24.  [将build产生的exe文件和lib文件放到指定的目录中](https://blog.csdn.net/u012487272/article/details/12882283)   
 
+    25.  [CXX_EXTENSIONS](https://stackoverflow.com/questions/38132793/how-to-control-compiler-flag-invoked-when-specifing-cmake-cxx-standard)    
+
 7.  [另一个比较全面的博客](http://ijinjay.github.io/blog/2017-04/CMake%E4%BD%BF%E7%94%A8.html)     
+8.  [一个人的博客，有些东西很好，我就摘抄下来](https://www.jianshu.com/p/1ec2b5602b03)    
+  1.  [cmake语法概览](./others_blog/cmake语法速览.md)     
 
 9.  [cmake将变量传递给代码](https://www.coder.work/article/1206996)   
 10.  [在各级子项目(目录)之间共享变量](https://blog.csdn.net/10km/article/details/50508184)    
