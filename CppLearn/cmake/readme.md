@@ -176,7 +176,8 @@ ___cmake 总结___
 8.  [一个人的博客，有些东西很好，我就摘抄下来](https://www.jianshu.com/p/1ec2b5602b03)    
     1.  [cmake语法概览](./others_blog/cmake语法速览.md)     
     2.  [cmake的优势](./others_blog/cmake优势以及为什么是用cmake.md)      
-    3.  [cmake实战](./others_blog/pictures/Cmake实战指南.html)      
+    3.  [cmake实战](https://www.jianshu.com/p/aaa19816f7ad)   
+        [下载下来的网页，以备万一](./others_blog/pictures/Cmake实战指南.html)      
 
 9.  [cmake将变量传递给代码](https://www.coder.work/article/1206996)   
 10.  [在各级子项目(目录)之间共享变量](https://blog.csdn.net/10km/article/details/50508184)    
@@ -184,11 +185,13 @@ ___待总结___
 11.  小bug?   
      1.  install路径设置   
          cmake -DCMAKE_INSTALL_PREFIX=<> 或在CMakeLists.txt中使用SET(CMAKE_INSTALL_PREFIX <>), 需要在project()之前设置，否则无效。或者使用cmake手册中的方法，可以在project()之后设置：    
+
          ```
          if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
            set(CMAKE_INSTALL_PREFIX "/my/default" CACHE PATH "..." FORCE)
         endif()
-        ```
+         ```
+
      2.  [变量设置失效问题](https://wuruofan.com/2020/05/cmake-learning-note/)   
      3.  [链接动态库时是用相对路径rpath using relatived path](https://wuruofan.com/2020/05/cmake-learning-note/)    
      4.  [cmake_skip_rpath系列](https://blog.csdn.net/zhawk/article/details/77104114)   
