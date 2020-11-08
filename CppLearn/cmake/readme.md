@@ -189,7 +189,7 @@ ___待总结___
          ```
          if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
            set(CMAKE_INSTALL_PREFIX "/my/default" CACHE PATH "..." FORCE)
-        endif()
+         endif()
          ```
 
      2.  [变量设置失效问题](https://wuruofan.com/2020/05/cmake-learning-note/)   
