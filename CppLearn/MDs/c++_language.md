@@ -22,6 +22,7 @@ ___this file is for learning c++ language___
 ###  [3.  C++内存对齐](https://www.cnblogs.com/zhao-zongsheng/p/9099603.html)   
 1.  [C++对象内存布局](https://blog.twofei.com/496/)   
 2.  [再谈C++对象内存布局](https://www.cnblogs.com/findumars/p/5353535.html)   
+3.  [虚拟继承的内存布局，针对这个链接，其中内容可能有错误，可能需要添加：菱形继承的D的内存布局中的B和C的内存布局，可能要加上D::foo()函数]https://zhougy0717.github.io/2018/03/06/C++%E8%8F%B1%E5%BD%A2%E7%BB%A7%E6%89%BF/      
 ###  [4.  RVO和NRVO](https://www.cnblogs.com/xkfz007/articles/2506022.html)   
 
 ###  5.  引用(待规整)   
@@ -52,6 +53,9 @@ const int& x = 666; // OK
 3.  [const成员函数](https://blog.csdn.net/u011197534/article/details/78385550)    
 4.  [类成员变量初始化顺序](https://blog.csdn.net/shimadear/article/details/82527442)   
 5.  [public/private/protected继承](https://www.cnblogs.com/likebeta/archive/2011/10/12/2209044.html)      
+    1.  [再解](http://c.bianceng.net/cpp/biancheng/view/2984.html)     
+    2.  [基类与派生类的纠缠](http://c.biancheng.net/view/2284.html)     
+    3.  [基类与派生类的纠缠补充](https://blog.twofei.com/496/#comment-577)      
 6.  [转换构造函数](http://blog.guorongfei.com/2016/03/09/cppx-list-initilization/)       
 7.  [类型转换函数](http://c.biancheng.net/cpp/biancheng/view/222.html)   
 8.  [嵌套类和外围类](https://blog.csdn.net/u013476464/article/details/42738789)   
@@ -59,7 +63,10 @@ const int& x = 666; // OK
     1.  [私有析构函数](https://www.cnblogs.com/wkfvawl/p/10620639.html)   
 10.  [c++ 什么时候会生成默认构造函数](https://www.jianshu.com/p/c6e6baec5c4f)      
 11.  [Why does default initialization of static data member not occur?](https://stackoverflow.com/questions/24682349/initialization-of-static-data-member)      
+12.  [拷贝构造函数,为什么必须是当前类的引用？为什么是const引用？](./c++_files/拷贝构造函数.md)       
     [补充解释](https://en.cppreference.com/w/cpp/language/static)    
+13.  [继承构造函数](https://blog.csdn.net/SwordArcher/article/details/88717442)     
+
 ###  8. 关键字   
 1.  [decltype](https://www.cnblogs.com/QG-whz/p/4952980.html)    
 2.  [override](https://blog.csdn.net/jolin678/article/details/63695023)    
@@ -94,6 +101,7 @@ const int& x = 666; // OK
     3. [std::bind](https://www.jianshu.com/p/621fc81a1dc1)   
     4. [可变模板参数](https://www.cnblogs.com/5iedu/p/7787302.html)   
 4.  [std::array初步理解](https://blog.csdn.net/thinkerleo1997/article/details/80415059)       
+5.  [常用算法总结](https://www.cnblogs.com/linuxAndMcu/p/10264339.html)   
 
 ###  11.  C++11
 1.  [深入理解C++11](./深入理解C++11/README.md)            
@@ -102,3 +110,4 @@ const int& x = 666; // OK
 4.  [Effective Modern C++(英文书)](./)
 
 ### [带你玩转VS2010](https://wiki.jikexueyuan.com/project/visual-studio/)   
+1.  [VS2010对c++的支持程度](https://blog.csdn.net/shenwanjiang111/article/details/54949276)     
