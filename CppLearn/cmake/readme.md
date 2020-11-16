@@ -68,6 +68,7 @@ ___cmake 总结___
        +  CMAKE_INCLUDE_DIRECTORIES_BEFORE，通过SET这个cmake变量为ON，可以将添加的头文件搜索路径放在已有路径的前面。    
        +  通过AFTER或者BEFORE参数，也可以控制是追加还是置前。现在我们在src/CMakeLists.txt中添加一个头肩搜索路径，方式很简单，加入：  
           include_directories(/usr/include/hello)   
+  16.  [add_custom_command](https://blog.csdn.net/qq_38410730/article/details/102797448)      
 
 
 2.  cmake实践这本书   
@@ -112,9 +113,10 @@ ___cmake 总结___
         [理解](https://www.cnblogs.com/rickyk/p/3872568.html)   
     10. set   
         [理解](https://www.cnblogs.com/narjaja/p/8351500.html)    
-    25.  pck_check_modules      
+    11.  pck_check_modules      
         1.  [理解一](http://www.supermew.top/archives/1591)   
         2.  [理解二](https://cmake.org/cmake/help/v3.0/module/FindPkgConfig.html)   
+    12.  target_compile_features更多的时判断编译器有没有这个特征，没有就会报错，target_compile_options是给编译器加上编译选项, target_compile_definitions是添加变量,供预处理器是用。       
 
 6.  变量    
     1. [CMAKE_INSTALL_MESSAGE](https://cmake.org/cmake/help/v3.1/variable/CMAKE_INSTALL_MESSAGE.html)   
@@ -171,6 +173,7 @@ ___cmake 总结___
     24.  [将build产生的exe文件和lib文件放到指定的目录中](https://blog.csdn.net/u012487272/article/details/12882283)   
 
     25.  [CXX_EXTENSIONS](https://stackoverflow.com/questions/38132793/how-to-control-compiler-flag-invoked-when-specifing-cmake-cxx-standard)    
+    26.  [EXCLUDE_FROM_ALL](https://blog.csdn.net/10km/article/details/51759194)      
 
 7.  [另一个比较全面的博客](http://ijinjay.github.io/blog/2017-04/CMake%E4%BD%BF%E7%94%A8.html)     
 8.  [一个人的博客，有些东西很好，我就摘抄下来](https://www.jianshu.com/p/1ec2b5602b03)    
