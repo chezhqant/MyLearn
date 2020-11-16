@@ -68,7 +68,6 @@ ___cmake 总结___
        +  CMAKE_INCLUDE_DIRECTORIES_BEFORE，通过SET这个cmake变量为ON，可以将添加的头文件搜索路径放在已有路径的前面。    
        +  通过AFTER或者BEFORE参数，也可以控制是追加还是置前。现在我们在src/CMakeLists.txt中添加一个头肩搜索路径，方式很简单，加入：  
           include_directories(/usr/include/hello)   
-  16.  [add_custom_command](https://blog.csdn.net/qq_38410730/article/details/102797448)      
 
 
 2.  cmake实践这本书   
@@ -100,6 +99,7 @@ ___cmake 总结___
         +  add_definitions（-DENABLED），当在CMake里面添加该定义的时候，如果代码里面定义了#ifdef ENABLED #endif相关的片段，此时代码里面这一块代码就会生效   
         +  add_definitions( “-Wall -ansi –pedantic –g”)：该命令现已经被取代，使用： add_compile_definitions(WITH_OPENCV2)    
     2.  [add_custom_command()/add_custom_target()](https://zhuanlan.zhihu.com/p/95771200)
+        1.  [add_custom_command](https://blog.csdn.net/qq_38410730/article/details/102797448)      
     3.  source_group命令    
         使用该命令可以将文件在VS中进行分组显示；source_group("Header Files" FILES {HEADER_FILES})；以上命令是将变量HEADER_FILES里面的文件，在VS显示的时候都显示在“Header Files”选项下面    
     4.  [add_subdirectory](https://zhuanlan.zhihu.com/p/85980099)   
