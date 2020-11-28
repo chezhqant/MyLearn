@@ -35,6 +35,7 @@ below, all depend on this:
           const char* const ptr = "Fun with Pointer";
           f(ptr); // the right const asterrisk will be ignore, so the type is const char*
           ```
+
     4.  others      
         1.  array arguments     
             a primary constributeor to this illusion is that, in many contexts, an array decays into a pointer to its first element. This decay is what permits code like this to compile:    
