@@ -108,6 +108,7 @@ const int& x = 666; // OK
 2.  [Effective Modern C++(部分翻译)](https://github.com/kelthuzadx/EffectiveModernCppChinese)     
 3.  [另一个完整版本的Effective Modern C++的翻译](https://blog.csdn.net/zhangyifei216/article/details/72868345)    
 4.  [Effective Modern C++(英文书)](./)
+    1.  [my summary](./effetive_modern_c++.md)      
 
 ### [带你玩转VS2010](https://wiki.jikexueyuan.com/project/visual-studio/)   
 1.  [VS2010对c++的支持程度](https://blog.csdn.net/shenwanjiang111/article/details/54949276)     

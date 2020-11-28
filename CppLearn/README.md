@@ -25,7 +25,6 @@
 #  [cuda编程](./MDs/cuda_programming.md)    
 
 #  [模板](./MDs/template_c++.md)      
-1.  [模板第二版的部分记录](../template2nd.md)     
 
 #  [服务器](./MDs/server_programming.md)       
 
