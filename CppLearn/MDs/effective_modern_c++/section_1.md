@@ -36,38 +36,38 @@ below, all depend on this:
           f(ptr); // the right const asterrisk will be ignore, so the type is const char*
           ```
 
-    4.  others      
-        1.  array arguments     
-            a primary constributeor to this illusion is that, in many contexts, an array decays into a pointer to its first element. This decay is what permits code like this to compile:    
-            ```
-            const char name[] = "da lao"; name's type is const char[6]
-            const char* ptr_to_name = name; // array decays to pointer
+  4.  others      
+      1.  array arguments     
+          a primary constributeor to this illusion is that, in many contexts, an array decays into a pointer to its first element. This decay is what permits code like this to compile:    
+          ```
+          const char name[] = "da lao"; name's type is const char[6]
+          const char* ptr_to_name = name; // array decays to pointer
 
-            template <typename T>
-            void func(int param[]); 
+          template <typename T>
+          void func(int param[]);
 
-            // will become this
-            void func(int* param);
+          // will become this
+          void func(int* param);
 
 
-            // if Param is reference:
-            template <typename T>
-            void func(T& param);
+          // if Param is reference:
+          template <typename T>
+          void func(T& param);
 
-            func(name); // T is const char[6], Param is const char (&) [6]
+          func(name); // T is const char[6], Param is const char (&) [6]
 
-            ```
-        2.  function arguments.     
-            function types can decay into function pointers, and everything we have discussed regardding type deduction for arrays applies to type deduction for functions and their decay into function pointers.    
-            ```
-            void some_func(int, double);
+          ```
+      2.  function arguments.
+          function types can decay into function pointers, and everything we have discussed regardding type deduction for arrays applies to type deduction for functions and their decay into function pointers.
+          ```
+          void some_func(int, double);
 
-            template <typename T>
-            void f1(T param);
+          template <typename T>
+          void f1(T param);
 
-            template <typename T>
-            void f2(T& param);
+          template <typename T>
+          void f2(T& param);
 
-            f1(some_func); // void (*) (int, double);
-            f2(some_func); // void (&) (int, double);
-            ```
+          f1(some_func); // void (*) (int, double);
+          f2(some_func); // void (&) (int, double);
+          ```
