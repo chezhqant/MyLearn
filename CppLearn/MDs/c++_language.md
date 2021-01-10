@@ -114,4 +114,4 @@ const int& x = 666; // OK
 ###  12.  [带你玩转VS2010](https://wiki.jikexueyuan.com/project/visual-studio/)   
 1.  [VS2010对c++的支持程度](https://blog.csdn.net/shenwanjiang111/article/details/54949276)     
 
-###  13. [C++/C宏观](../c++_files/c_cpp_macro.md)           
+###  13. [C++/C宏观](./c++_files/c_cpp_macro.md)      
