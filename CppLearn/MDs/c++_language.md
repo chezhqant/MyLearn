@@ -85,6 +85,7 @@ const int& x = 666; // OK
 12.  [=default和=deleted](https://www.ibm.com/developerworks/cn/aix/library/1212_lufang_c11new/index.html)    
 13.  [typename](http://feihu.me/blog/2014/the-origin-and-usage-of-typename/)    
 14.  [使用using代替typedef]( https://blog.csdn.net/big_yellow_duck/article/details/52224068)   
+1.  [using在继承构造函数中的用法](https://blog.csdn.net/SwordArcher/article/details/88717442)    
 15.  [mutable](https://blog.csdn.net/aaa123524457/article/details/80967330)    
      1. [另一个mutable](https://liam.page/2017/05/25/the-mutable-keyword-in-Cxx/)    
 ###  9.  boost
@@ -110,5 +111,7 @@ const int& x = 666; // OK
 4.  [Effective Modern C++(英文书)](./)
     1.  [my summary](./effective_modern_c++_summary.md)      
 
-### [带你玩转VS2010](https://wiki.jikexueyuan.com/project/visual-studio/)   
+###  12.  [带你玩转VS2010](https://wiki.jikexueyuan.com/project/visual-studio/)   
 1.  [VS2010对c++的支持程度](https://blog.csdn.net/shenwanjiang111/article/details/54949276)     
+
+###  13. [C++/C宏观](../c++_files/c_cpp_macro.md)           

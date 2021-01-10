@@ -8,3 +8,4 @@ ___this file is for learning template___
 ###  4.  details    
 1.  [特化和偏特化](https://harttle.land/2015/10/03/cpp-template.html)   
 2.  [c++ template 2nd部分笔记](./template2nd.md)      
+3.  [CRTP](https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern)    

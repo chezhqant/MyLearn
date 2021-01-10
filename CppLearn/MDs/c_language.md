@@ -11,7 +11,9 @@ ___this file is for learning c language___
 6.  函数名即是函数首地址，可以是用&   
 
 > 常量指针(const int\*): 该指针指向的那个变量是不可被修改的；但它本身的指向可以被修改。  
-> 指针常量(int \*const 或者 int const\*): 该指针指向的变量是可以被修改的；但它本身的指向是不能被修改的。  
+> 指针常量(int \*const 或者 int const\*): 该指针指向的变量是可以被修改的；但它本身的指向是不能被修改的。     
+
+7.  [const, volatile同时修饰同一个变量](https://blog.csdn.net/ShenJu_DL_ShengHuo/article/details/48241217)      
 
 ###   2.  浮点数表示方式   
 1.  [float存储方式](http://blog.sina.com.cn/s/blog_973657a00102x2do.html) 
@@ -48,6 +50,15 @@ ___this file is for learning c language___
 1.  [结构体初始化](https://www.cnblogs.com/clover-toeic/p/3737189.html)   
     1.  [结构体变量定义](https://www.runoob.com/cprogramming/c-structures.html)       
     2.  [特定初始化，就是成员变量加了个"."](https://blog.csdn.net/comwise/article/details/9087279)   
+2.  [结构体对齐规则]    
+    1.  首个数据成员的地址（首地址）是0     
+    2.  其他数据成员的首地址必须是该数据成员大小的整数倍    
+    3.  结构体的总大小，为其成员中所含最大类型的正数倍      
+    如果使用#pragma pack(N):    
+    第二条中就要改为：其他数据成员的首地址必须是min(N, 该数据成员的大小)的整数倍    
+3.  [union大小]   
+    1.  所有成员中，最大长度的值是union的大小。比如说是N    
+    2.  如过N不能够被其他数据成员的大小整除，比如说数据成员m不能被N整除。则取sizeof(m) * x = M，其中M>N。当然x不能是任意值，必须是第一次让M大于N的值   
 
 ###  #/##   
 1.  #   

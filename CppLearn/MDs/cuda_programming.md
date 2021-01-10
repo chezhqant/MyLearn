@@ -10,6 +10,7 @@ ___this file is for learning cuda programming___
 
 
 +  [cuda/cudnn/驱动的关系](https://yq.aliyun.com/articles/761648)   
+   1. [显卡，显卡驱动,nvcc, cuda driver,cudatoolkit,cudnn到底是什么？](https://www.bbsmax.com/A/QV5Z8jK4zy/)      
 
 +  [GPU的几个基本概念](https://zhuanlan.zhihu.com/p/53763285)   
 
@@ -17,3 +18,4 @@ ___this file is for learning cuda programming___
 
 +  [cuda内存](https://www.jianshu.com/p/3d4c9cc3a777)     
    +  [cuda shared memory](http://blog.atelier39.org/parallel/869.html)   
++  [一个不错的博客](https://www.cnblogs.com/1024incn/p/4541313.html)      

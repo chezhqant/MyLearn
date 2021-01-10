@@ -23,4 +23,5 @@ ___this file is for learning shell___
 22.  显卡驱动安装   
     1.  [截图](../pictures/显卡驱动安装.jpg)    
     2.  [nvidia驱动安装选项选择](https://www.cnblogs.com/pprp/p/9430836.html)   
-    3.  安装显卡驱动的时候，不要使用-no-opengl-files选项，否则3D渲染没法是用opengl
+    3.  安装显卡驱动的时候，不要使用-no-opengl-files选项，否则3D渲染没法是用opengl   
+23.  [linux mount](https://www.cnblogs.com/sparkdev/p/9015312.html)     
