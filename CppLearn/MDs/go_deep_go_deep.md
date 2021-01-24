@@ -88,3 +88,5 @@ ___this file is for learning to going depp!___
   2.  [再一个理解](https://chasinglulu.github.io/categories/task-management-and-process-scheduling/)    
 8.  [这个人的关于进程的可以看](https://www.cnblogs.com/linhaostudy/category/1073650.html)   
 9.  [进程控制块的存放和当前进程的确定](https://www.cnblogs.com/ancient/p/3210658.html)    
+10.  [虚拟地址空间分布图](https://blog.csdn.net/qq_21842557/article/details/50777199)     
+11.  [cache基本原理](https://zhuanlan.zhihu.com/p/102293437?utm_source=wechat_session&utm_medium=social&utm_oi=1139653771880796160)     
