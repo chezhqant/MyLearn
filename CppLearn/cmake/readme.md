@@ -22,6 +22,7 @@ ___cmake 总结___
           //无论Cache里面是否存在，都始终使用该值
           SET(var..CACHE..FORCE)
           ```
+    +  [构建、生成](https://zhuanlan.zhihu.com/p/76975231?utm_source=wechat_session&utm_medium=social&utm_oi=1139653771880796160&utm_campaign=shareopn)   
 
 1.  [cmake手册](https://www.cnblogs.com/coderfenghc/tag/cmake/)
   1.  [cmake policy](https://www.cnblogs.com/hustdc/p/6644002.html)   
@@ -117,6 +118,17 @@ ___cmake 总结___
         1.  [理解一](http://www.supermew.top/archives/1591)   
         2.  [理解二](https://cmake.org/cmake/help/v3.0/module/FindPkgConfig.html)   
     12.  target_compile_features更多的时判断编译器有没有这个特征，没有就会报错，target_compile_options是给编译器加上编译选项, target_compile_definitions是添加变量,供预处理器是用。       
+    13.  [target_**](https://zhuanlan.zhihu.com/p/76975231?utm_source=wechat_session&utm_medium=social&utm_oi=1139653771880796160&utm_campaign=shareopn)      
+    14.  [cmake public, private, interface](https://ukabuer.me/blog/more-modern-cmake)    
+         +  [再解](http://www.itgo.me/a/9137626021851985852/what-interface-public-private-mean-in-cmake-target-compilation-setting)   
+
+         + 一段话     
+           Build-Requirements 表示仅在编译时需要满足，通过 PRIVATE 关键字声明。
+          Usage-Requirements 表示在外部使用时需要满足的，即在其他项目，使用了本项目编译好的 target 时需要满足的约束，通过 INTERFACE 关键字申明。
+          在实际中，有些配置在编译以及被使用时都需要满足，因此通过 PUBLIC 关键字申明。
+    15.  [module的作用](https://zhuanlan.zhihu.com/p/93895403)    
+    16.  [打印每一行的cmake](https://wangpengcheng.github.io/2019/08/13/learn_cmake/)   
+    17. [cmake属性打印](https://wangpengcheng.github.io/2019/08/13/learn_cmake/)    
 
 6.  变量    
     1. [CMAKE_INSTALL_MESSAGE](https://cmake.org/cmake/help/v3.1/variable/CMAKE_INSTALL_MESSAGE.html)   
