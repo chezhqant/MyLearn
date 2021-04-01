@@ -98,3 +98,4 @@ ___a web can learn git command liking [playing game](https://learngitbranching.j
         2.  [git 理解 Head指针&Branch指针](https://blog.csdn.net/claroja/article/details/78858533)    
     8.  [重命名远程分支](https://blog.csdn.net/u013276277/article/details/81975713)   
     9.  [git tag](https://blog.csdn.net/b735098742/article/details/78935748)    
+    10.  [重新配置ssh-key，也解决fatal: Could not read from remote repository问题](https://blog.csdn.net/weixin_40922744/article/details/107576748)     
