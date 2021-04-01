@@ -37,6 +37,9 @@ ___this file is for learning to going depp!___
 1.  [理解一](:https://my.oschina.net/fergus/blog/123484)    
 2.  [理解二](https://cloud.tencent.com/developer/article/1177251)     
 
+###  16. ...    
+1.  [.bss段不占磁盘空间](https://www.maixj.net/ict/bss-23766)     
+
 ##  gdb    
 ###  1.  [一个程序的整体流程](https://www.nosuchfield.com/2018/11/23/Program-compilation-linking-loading-and-running/)   
 ###  2.  [gdb调试基础](https://wiki.ubuntu.org.cn/%E7%94%A8GDB%E8%B0%83%E8%AF%95%E7%A8%8B%E5%BA%8F)   
@@ -90,3 +93,4 @@ ___this file is for learning to going depp!___
 9.  [进程控制块的存放和当前进程的确定](https://www.cnblogs.com/ancient/p/3210658.html)    
 10.  [虚拟地址空间分布图](https://blog.csdn.net/qq_21842557/article/details/50777199)     
 11.  [cache基本原理](https://zhuanlan.zhihu.com/p/102293437?utm_source=wechat_session&utm_medium=social&utm_oi=1139653771880796160)     
+12. [VMA](http://abcdxyzk.github.io/blog/2015/09/09/kernel-mm-vm_area/)     
