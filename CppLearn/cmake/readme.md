@@ -40,13 +40,14 @@ ___cmake 总结___
       [再解include](https://blog.csdn.net/qq_38410730/article/details/102677143)    
   10. [string](https://www.sunxidong.com/340.html)    
   11. [find_libraries，里面有类似命名空间的讲解，比如md::image3d](https://gongzq5.github.io/posts/CMake-%E4%BB%8E0%E5%BC%80%E5%A7%8B-2019-09-06/)    
-  12.  add_libraries   
+  12.  [add_libraries](https://www.bookstack.cn/read/CMake-Cookbook/content-chapter1-1.3-chinese.md)    
        ADD_LIBRARY(libname [SHARED|STATIC|MODULE][EXCLUDE_FROM_ALL]source1 source2 ... sourceN)ADD_LIBRARY(libname [SHARED|STATIC|MODULE][EXCLUDE_FROM_ALL]source1 source2 ... sourceN)   
        你不需要写全libhello.so，只需要填写hello即可，cmake系统会自动为你生成libhello.X。类型有三种:   
        +  SHARED, 动态库   
        +  STATIC, 静态库   
-       +  MODULE, 在使用dyId的系统有效，如果不支持dyId，则被当作SHARED对待    
+       +  MODULE, 在使用dyId的系统有效，如果不支持dyId，则被当作SHARED对待
        +  EXCLUDE_FROM_ALL，参数的意思是这个库不会被默认构建，除非有其他的组件依赖或者手工构建。    
+       +  OBJECTS, 链接中解释了     
   13.  set_target_properties    
        SET_TARGET_PROPERTIES(target1 target2 ...PROPERTIES prop1 value1prop2 value2 ...)    
        这条命令可以用来设置输出的名称，对于动态库，还可以用来指定动态库的版本和API版本。    
@@ -119,6 +120,7 @@ ___cmake 总结___
         2.  [理解二](https://cmake.org/cmake/help/v3.0/module/FindPkgConfig.html)   
     12.  target_compile_features更多的时判断编译器有没有这个特征，没有就会报错，target_compile_options是给编译器加上编译选项, target_compile_definitions是添加变量,供预处理器是用。       
     13.  [target_**](https://zhuanlan.zhihu.com/p/76975231?utm_source=wechat_session&utm_medium=social&utm_oi=1139653771880796160&utm_campaign=shareopn)      
+        1.  [IMPORTED的用法](https://blog.csdn.net/shulianghan/article/details/104337399)    
     14.  [cmake public, private, interface](https://ukabuer.me/blog/more-modern-cmake)    
          +  [再解](http://www.itgo.me/a/9137626021851985852/what-interface-public-private-mean-in-cmake-target-compilation-setting)   
 
