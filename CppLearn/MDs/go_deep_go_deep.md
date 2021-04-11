@@ -94,3 +94,9 @@ ___this file is for learning to going depp!___
 10.  [虚拟地址空间分布图](https://blog.csdn.net/qq_21842557/article/details/50777199)     
 11.  [cache基本原理](https://zhuanlan.zhihu.com/p/102293437?utm_source=wechat_session&utm_medium=social&utm_oi=1139653771880796160)     
 12. [VMA](http://abcdxyzk.github.io/blog/2015/09/09/kernel-mm-vm_area/)     
+###  9.  内存管理       
+1.  [高端内存映射](https://blog.csdn.net/gatieme/article/details/52705142)      
+2.  [可持久映射区](https://biscuitos.github.io/blog/MMU-Linux4x-PKMAP/)   
+3.  [CPU三级缓存、冷热页及自旋锁](https://blog.csdn.net/XD_hebuters/article/details/79521350)   
+4.  [伙伴系统](https://glemontree.github.io/2017/10/23/%5BLinux%5D%20Linux%E4%B8%AD%E7%9A%84%E4%BC%99%E4%BC%B4%E7%B3%BB%E7%BB%9F%E5%92%8Cslab%E6%9C%BA%E5%88%B6/)   
+5.  [伙伴系统&内存分类](https://blog.csdn.net/farmwang/article/details/66975199)      
