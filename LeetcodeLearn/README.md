@@ -56,6 +56,7 @@ eh, there are some cpps(two or three?) is wrong in the directory of Array, becau
 + [Maximum Subarray](./Dynamic\_Programing/Maximum\_Subarray.cpp)
 + [Min Cost Climbing Stairs](./Dynamic\_Programming/Min\_Cost\_Climbing\_Stairs.cpp)
 + [Range\_Sum\_Query\_Immutable](./Dynamic\_Programming/Range\_Sum\_Query\_Immutable.cpp)
++ [coin change](./Dynamic_Programming/coin_change.cpp)    
 
 # 4. [AVL](./AVL)   
 1.  [红黑树简单了解](https://zhuanlan.zhihu.com/p/139907457O)   
