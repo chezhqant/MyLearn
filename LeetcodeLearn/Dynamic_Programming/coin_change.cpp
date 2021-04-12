@@ -1,10 +1,12 @@
 // reference: https://leetcode-cn.com/problems/coin-change/
 
 /*! \brief 按照readme中的讲解，写代码
- *  状态：amount
- *  dp(): 输入一个目前的金额，dp函数返回需要的最少金币数量
- *  最优子结构：对于dp，每次输入一个金额就是一种状态，该状态若是最优的，可以让最终的结果是最优的（自下而上哦）
- *  选择+择优：你选择的金币，不同的金币会导致状态发生改变, 当前选择的金币民面值，使得当前的状态是最优的
+ *  1. 首先考虑最终要求的结果，最少的硬币能够达到钱数(amount)，所以假设N步是最少个数的硬币能够达到钱数，每次递归就递归一个硬币
+ *  2. 状态呢，也就是amount，会驱动硬币数量的累加
+ *  3. dp(): 每递归一次，就求出当前状态的最少硬币个数
+ *  4. 递归结束的条件
+ *  5. 每次递归得到的最少硬币的个数记录下来
+ *  6. base case: 初始条件
  */
 
 #include <iostream>
@@ -70,6 +72,9 @@ int Solution::dp_memo(const vector<int>& coins, int n)
     return m_memo[n - 1];
 
   int fewest_coins = std::numeric_limits<int>::max() - 1;
+  for (int i = 0; i < n; ++i) {
+    dp_memo(coins, i);
+  }
   for (int i = 0; i < coins.size(); ++i) {
 
     const int coin_numbers = dp_memo(coins, n - coins[i]);
