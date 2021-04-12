@@ -9,7 +9,7 @@ ___just for dynamic_Programming___
   2.  关键：确定状态 -> 确定dp函数的意义 -> 选择（选择修改状态），并且择优 -> base case。   
   3.  具体步骤：先是用暴力递归求解，然后分析重叠子问题，若有则是用备忘录方式修改递归。然后自下而上写出动态规划。    
   4.  使用数学归纳法得到状态转移方程。      
-  5.  <span id="jump1">一段代码<span>    
+  5.  <span id="jump1">__一段代码__<span>    
       ```
       dp[0][0]... = base case;
       for state_1 in state0:
@@ -17,50 +17,6 @@ ___just for dynamic_Programming___
           ...
           dp[state0][state1]... = 最优解，一般是min(), max()
       ```
-  
-  
-lsdf  
-  
-  
-jasdklf  
-jlsd  
-jas;df  
-j  
-asdfjlasdf  
-asdfjlasdfaf  
-ajsdfljasf  
-asdfjlaksdf  
-asdfjasdkfa  
-sdfjasldfkasd  
-fajsdfkasdf  
-asjdfkasdf  
-sdjflkasdf  
-asdfjaklsdf  
-asdfjalksdfa  
-sdfkjasldfjasd  
-fasdjfklasdf  
-asdjflkasdf  
-asdfjkasdf  
-asdfjaklsdfa  
-sdfjaksldfasd  
-fajsdkfasdf  
-'asdjfklasdfasdkjlfajfd  
-dfjalsdf  
-sdfjalksdf  
-sdfajsdkfasdf  
-asdjfklasdf  
-asdfjkalsdfa  
-'sdfjklasdf  
-asdfjlkasdfasdflkjasfd  
-fjalksdf  
-dsfjkasdfuqwe  
-jwdkfqwenmsdf  
-jaskdfasd  
-qwejrkqwjer  
-dsjfkajsdf  
-asdfjakdsfw  
-erjkewqr  
-
   6.  写完动态规划，可以考虑一下状态压缩    
   7.  我根据几道题总结的：    
       1.  先暴力递归，以最终结果为起点考虑。    
