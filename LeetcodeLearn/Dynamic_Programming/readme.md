@@ -17,3 +17,5 @@ ___just for dynamic_Programming___
           ...
           dp[state0][state1]... = 最优解，一般是min(), max()
       ```
+
+  6.  目前发现有些能够是用暴力递归先解问题，然后是用备忘录方式再写，然后再写动态规划。比如[凑零钱问题](./coin_cnage.cpp)。但是有些问题不能用暴力递归的方式去解，最起码我没有找到（也没时间找），所以只需要判断: 1. 是否有最优子结构。2. 找到状态。  3. 确定dp函数的意义。4. 选择&择优。5. base case。比如[找到最长的递增子序列](./longest_increasing_subsequence.cpp)。     
