@@ -14,6 +14,15 @@ eh, there are some cpps(two or three?) is wrong in the directory of Array, becau
 
 ![google编码风格](./picture/google风格.png)
 
++ 算法思想  
+  + 双指针
+  + 排序
+  + 贪心思想
+  + 二分查找
+  + 分治
+  + 搜索
+  + 动态规划
+  + 数学
 + [二分查找](./二分查找.docx)   
 + [哈希表](./哈希表.docx)   
 + [排序算法](./排序算法.docx)   
