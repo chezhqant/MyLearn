@@ -147,3 +147,5 @@ ___this file is for learning c language___
     ```
 6.  [C语言一些常见的错误](http://www.gowrikumar.com/c/index.php)    
 7.  [bit位构成的一些trick](http://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetParallel)    
+8.  [双感叹号的意义](https://www.cnblogs.com/ezhar/p/14462935.html)     
+    1.  [再解](https://www.cnblogs.com/ezhar/p/14462935.html)     

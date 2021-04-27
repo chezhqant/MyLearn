@@ -2,7 +2,7 @@
 
 /*! \brief get longest increasing subsequence
  *  从最终的结果考虑：需要求的时最长的子序列的长度
- *  状态: 以当前的值作为子序列的结尾值，求最长递增子序列的长度
+ *  状态: 以当前的值作为递增序列的最大值，求最长递增子序列的长度
  *  dp函数：每增加一个元素，它可以得到当前最长子序列的长度
  *  递归的终止条件
  *  备忘录模式，记录递归的结果
@@ -24,7 +24,7 @@ public:
   int dp_memo(const vector<int>& nums, vector<vector<int>>& length, int prev, int cur);
 
   // dp function mode
-  int dp_func(const vector<int>& nums);
+  int gp_func(const vector<int>& nums);
 
   int lengthOfLIS(vector<int>& nums);
 };
@@ -33,7 +33,7 @@ int Solution::dp_func(const vector<int>& nums)
 {
   vector<int> max_length(nums.size(), 0);
 
-  max_length[0] = nums[0];
+  max_length[0] = 1;
   for (int i = 1; i < nums.size(); ++i) {
     for(int j = 0; j < i; ++j) {
       if (nums[j] < nums[i])

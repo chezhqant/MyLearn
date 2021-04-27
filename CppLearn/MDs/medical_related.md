@@ -9,6 +9,8 @@ ___this file is for learning vtk___
 ##  detatils   
 1.  [3d绕任意轴旋转](https://krasjet.github.io/quaternion/quaternion.pdf)   
 2.  [三维重建：点绕特定轴旋转公式](https://blog.csdn.net/wishchin/article/details/80926037)     
+3.  [投影矩阵推导](https://www.cnblogs.com/graphics/archive/2012/07/25/2582119.html)      
 
 ## 图像
 1.  [图像减去均值的意义](https://www.cnblogs.com/cmt/p/14580194.html?from=https%3A%2F%2Fwww.cnblogs.com%2FJerry-home%2Fp%2F10109460.html)       
+
