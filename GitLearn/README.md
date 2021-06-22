@@ -99,4 +99,4 @@ ___a web can learn git command liking [playing game](https://learngitbranching.j
     8.  [重命名远程分支](https://blog.csdn.net/u013276277/article/details/81975713)   
     9.  [git tag](https://blog.csdn.net/b735098742/article/details/78935748)    
     10.  [重新配置ssh-key，也解决fatal: Could not read from remote repository问题](https://blog.csdn.net/weixin_40922744/article/details/107576748)     
-    11.  [git 速度](https://www.jianshu.com/p/3f6477049ece)     
+    11.  [git速度](https://www.codeprj.com/blog/aacfe41.html)     
