@@ -101,4 +101,5 @@ ___a web can learn git command liking [playing game](https://learngitbranching.j
     10.  [重新配置ssh-key，也解决fatal: Could not read from remote repository问题](https://blog.csdn.net/weixin_40922744/article/details/107576748)     
     11.  [git速度](https://www.codeprj.com/blog/aacfe41.html)     
       1.  git速度     
-        将http  /  https 换成git
+        将http  /  https 换成git      
+      2.  再不行只能找国内的替代网站了，比如gitee     
