@@ -13,3 +13,4 @@ ___just for vim___
     7. [编译vim](https://blog.csdn.net/a464057216/article/details/52821171)      
        + [查看支持的python版本, 不一定会成功](https://www.jianshu.com/p/655b3e94c699)     
     8. [关闭、打开图形界面](https://www.cnblogs.com/schips/p/10577464.html)         
+    9. [配置git](https://www.jb51.net/os/Ubuntu/303124.html)      
