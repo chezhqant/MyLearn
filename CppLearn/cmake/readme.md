@@ -189,6 +189,7 @@ ___cmake 总结___
 
     25.  [CXX_EXTENSIONS](https://stackoverflow.com/questions/38132793/how-to-control-compiler-flag-invoked-when-specifing-cmake-cxx-standard)    
     26.  [EXCLUDE_FROM_ALL](https://blog.csdn.net/10km/article/details/51759194)      
+    27.  [cmake_prefix_path, compile YCM using it](https://www.cnblogs.com/zjutzz/p/6815342.html)     
 
 7.  [另一个比较全面的博客](http://ijinjay.github.io/blog/2017-04/CMake%E4%BD%BF%E7%94%A8.html)     
 8.  [一个人的博客，有些东西很好，我就摘抄下来](https://www.jianshu.com/p/1ec2b5602b03)    
