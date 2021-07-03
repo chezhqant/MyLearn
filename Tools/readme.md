@@ -15,3 +15,5 @@ ___just for vim___
     8. [关闭、打开图形界面](https://www.cnblogs.com/schips/p/10577464.html)         
     9. [配置git](https://www.jb51.net/os/Ubuntu/303124.html)      
     10. [安装openssh-server](https://blog.csdn.net/weixin_41632560/article/details/89547638)      
+    11. 安装fzf插件，终端使用，githb官网教程即可，这个跟vim是用fzf不冲突，也不共用.     
+    12. 不在是用Vundle，而是使用vim-plug，这个替换很简单，查一下就好      

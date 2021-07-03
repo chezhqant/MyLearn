@@ -26,3 +26,4 @@ ___this file is for learning shell___
     3.  安装显卡驱动的时候，不要使用-no-opengl-files选项，否则3D渲染没法是用opengl   
 23.  [linux mount](https://www.cnblogs.com/sparkdev/p/9015312.html)       
 24.  [上不了github的办法](https://blog.csdn.net/qq_30460905/article/details/80205636)     
+25.  [安装fzf](https://github.com/junegunn/fzf)   
