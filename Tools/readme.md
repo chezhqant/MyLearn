@@ -14,3 +14,4 @@ ___just for vim___
        + [查看支持的python版本, 不一定会成功](https://www.jianshu.com/p/655b3e94c699)     
     8. [关闭、打开图形界面](https://www.cnblogs.com/schips/p/10577464.html)         
     9. [配置git](https://www.jb51.net/os/Ubuntu/303124.html)      
+    10. [安装openssh-server](https://blog.csdn.net/weixin_41632560/article/details/89547638)      
