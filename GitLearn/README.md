@@ -27,8 +27,9 @@ ___a web can learn git command liking [playing game](https://learngitbranching.j
     3.  [git删除本地仓库](https://www.cnblogs.com/zgcr654321/p/9655543.html)   
     4.  [git commit](https://www.cnblogs.com/qianqiannian/p/6005628.html)   
     5.  [git fetch](https://www.cnblogs.com/chenlogin/p/6592228.html)   
-    6.  [markdown](https://www.runoob.com/markdown/md-tutorial.html)([先看这个](https://www.runoob.com/markdown/md-tutorial.html))   
+    6.  [markdown](https://www.runoob.com/markdown/md-tutorial.html)          
         1.  [markdown画各种图](https://blog.csdn.net/lis_12/article/details/80693975)   
+        2.  [markdown待办事项](https://blog.csdn.net/qq_21808961/article/details/83239631)      
     7.  What i found   
         1.  center/right/left  
 
