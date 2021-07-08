@@ -18,11 +18,13 @@
 
 > > ## 6. [FrontEnd](./FrontEndLearn/README.md)    
 
-> > ## 7. [Bugs](./BUGs)    
+> > ## 7. [LinuxKernal](./LinuxKernal/README.md)        
 
-> > ## 8. [非语言总结](./非语言总结/非语言总结.md)      
+> > ## 8. [Bugs](./BUGs)    
 
-> > ## 9. [工具类](./Tools)     
+> > ## 9. [非语言总结](./非语言总结/非语言总结.md)      
+
+> > ## 10. [工具类](./Tools)     
 
 ### 待办事项      
 - [x] 将公司的vim配置备份到github一份   
