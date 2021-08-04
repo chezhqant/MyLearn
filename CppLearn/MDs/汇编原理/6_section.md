@@ -48,3 +48,27 @@
     code ends
     end start
     ```     
+9.  我们可以通过敌营数据来取得一段空间，然后将这段空间当作栈空间来用。      
+    ```
+    assume cs:code
+    code segment
+    dw 0123H, 0456H, 0789H, 0abcH, 0defH, 0fedH, 0cbaH, 0987H
+    dw 0, 0, 0, 0, 0, 0, 0, 0         ;该空间当作栈来用
+    start: move ax, cs
+           mov ss, ax
+           mov sp, 32         ;将设置栈顶ss:sp指向cs:32
+           mov bx, 0
+           mov cx, 8
+        s: push cs:[bx]
+           add bx, 2
+           loop s             ;以上代码段0~16单元中的8个字型数据依次入栈
+           mov bx, 0
+           mov cx, 8
+       s0: pop cs:[bx]
+           add bx, 2
+           loop s0            ;以上依次出栈8个字型数据到代码段0~16单元中
+           mov ax, 4c00H
+           int 21H
+    codesg ends
+    end start                 ;指明程序的入口在start处
+    ```   
