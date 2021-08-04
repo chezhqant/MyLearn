@@ -13,7 +13,7 @@
     ```
     上述代码中，定义的8个数据在哪里呢？因为 `dw` 定义的数据处于代码段的最开始，所以他们的地址就是: CS:0, CS:2, CS:6, CS:8, CS:A, CS:C, CS:E。      
 
-<span id="锚点1">5.  一个程序</span>    
+<span id="锚点1">5.  一个程序</span>
     ```
     assume cs:code
     code segment
@@ -47,7 +47,7 @@
     ...
     code ends
     end start
-    ```     
+    ```
 9.  我们可以通过敌营数据来取得一段空间，然后将这段空间当作栈空间来用。      
     ```
     assume cs:code
@@ -71,4 +71,14 @@
            int 21H
     codesg ends
     end start                 ;指明程序的入口在start处
-    ```   
+    ```
+10.  一个程序：   
+     ```
+     assume cs:code, ds:data, ss:stack
+     data: segment
+       dw 0123H, 0456H, 0789H, 0abcH, 0defH, 0fedH, 0cbaH, 0987H
+     data ends
+     stack segment
+       dw 0, 0, 0, 0, 0, 0, 0, 0
+     stack ends
+     ```
