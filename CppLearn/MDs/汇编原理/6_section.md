@@ -12,7 +12,6 @@
     mov cx, 8
     ```
     上述代码中，定义的8个数据在哪里呢？因为 `dw` 定义的数据处于代码段的最开始，所以他们的地址就是: CS:0, CS:2, CS:6, CS:8, CS:A, CS:C, CS:E。      
-
 <span id="锚点1">5.  一个程序</span>
     ```
     assume cs:code
