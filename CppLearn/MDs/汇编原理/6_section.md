@@ -80,4 +80,32 @@
      stack segment
        dw 0, 0, 0, 0, 0, 0, 0, 0
      stack ends
+     code segment
+     start: mov ax, stack
+            mov ss, ax
+            mov sp, 16      ;设置栈顶ss:sp指向stack:16
+            mov ax, data
+            mov ds, ax      ;ds指向data段
+            mov bx, 0       ;ds:bx指向data段中的第一个单元
+            mov cx, 8
+         s: push [bx]
+            add bx, 2
+            loop s          ;以上将data段中的0-16单元中的8个字型数据依次入栈
+            mov bx, 0
+            mov cx, 8
+        s0: pop [bx]
+            add bx, 2
+            loop s0         ;以上使8个字型数据一次出栈并送到data段的0-16单元中
+            mov ax, 4c00H
+            int 21H
+     code ends
+     end start
      ```
+     以上，表示，定义一个段的方法和我们以前所述的定义代码段的方法没有区别，只是对于不同的段，要有不同的段名。      
+     __对段地址的引用__ 可以是用 `mov ax, data`，一个段中的数据的段地址可由段名代表，偏移地址就要看它在段中的位置了。程序中 "data" 段中的数据 "0abcH" 的地址就是"data:6"。可以这么使用：      
+     ```
+     mov ax, data
+     mov ds, ax
+     mov ax, ds:[6]
+     ```
+     以上可以看出，CPU到底如何处理我们定义的段中的内容，是当作指令执行，还是当作数据访问，还是当作栈空间，完全是靠程序中具体的汇编指令，和汇编指令对CS:IP, SS:SP, DS等寄存器的设置来决定的。      
