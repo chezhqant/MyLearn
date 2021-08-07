@@ -197,3 +197,61 @@
      mul word ptr [bx+si+8]
      ```
      含义为：(ax)=(ax)*((ds)*16+(bx)+(si)+8)结果的低16位；(dx)=(ax)*((ds)*16+(bx)+(si)+8)结果的高16位。    
+15.  参数和返回值的存储：寄存器、内存。用寄存器来存储参数和结果是最常是用的方法。对于存放参数的寄存器和存放结果的寄存器，调用者和子程序的读写操作恰恰相反；调用者将参数送入参数寄存器，从结果寄存器中渠道返回值；子程序从参数寄存器中取到参数，将返回值送入结果寄存器。             
+     ```
+     assume cs:code
+     data segment
+       dw 1, 2, 3, 4, 5, 6, 7, 8
+       dw 0, 0, 0, 0, 0, 0, 0, 0
+     data ends
+
+     code segment
+     start: mov ax, data
+            mov ds, ax
+            mov si, 0               ;ds:si指向第一组word单元
+            mov di, 16              ;ds:di指向第二组dword单元
+            mov cx, 8
+         s: mov bx, [si]
+            call cube
+            mov [di], ax
+            mov [di].2, ax
+            add si, 2               ;ds:si指向下一个word单元
+            add di, 4               ;ds:si指向下一个dword单元
+            loop s
+            mov ax, 4C00H
+            int 21H
+      cube: mov ax, bx
+            mul bx
+            mul bx
+            ret
+     code ends
+     end start
+     ```
+     以上代码中，子程序只有一个参数，放在bx中。如果有两个参数，那么可以是用两个寄存器来放，但是再多些，就不能放到寄存器中了。这时候需要将批量数据放到内存中，然后将它们所在内存空间的首地址放在寄存器汇总，传递给需要的子程序。对于具有批量数据的返回结果，也可用同样的方法。    
+16.  将参数和返回值放到内存中的demo:      
+     ```
+     capital: and byte ptr [si], 11011111b  ;将ds:si所指单元的字母转化为大写
+              inc si
+              loop capital
+              ret
+     ```
+     ```
+     assume cs:code
+     data segment
+       db 'conversation'
+     data ends
+     code segment
+       start: mov ax, data
+              mov ds, ax
+              mov si, 0     ;ds:si指向字符串（批量数据所在空间的首地址）
+              mov cx, 12    ;cx存放字符串的长度
+              call capital
+              mov ax, 4C00H
+              int 21H
+       capital: and byte ptr [si], 11011111b
+                inc si
+                loop capital
+                ret
+     code ends
+     end start
+     ```
