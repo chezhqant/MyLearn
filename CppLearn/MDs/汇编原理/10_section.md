@@ -11,14 +11,18 @@
     + (sp)=(sp)+2     
 5.  用汇编语法解释 ret 和 ref 指令    
     + CPU执行ret指令时，相当于 `pop IP`   
-    + CPU执行retf指令时，相当于进行 `pop CS`      
+    + CPU执行retf指令时，相当于进行     
+      ```
+      pop IP
+      pop CS
+      ```      
 6.  CPU执行call指令时，进行两步操作：     
     + 将当前的IP或者CP和IP压入栈中      
     + 转移      
     call指令不能实现短转移，初次之外，call指令实现转移的方法和jmp指令的原理相同。       
 7.  一句位移进行转移。`call 标号（将当前的IP压栈后，转到标号处执行指令）`   
     CPU执行此种格式的call指令时，进行如下操作：   
-    + (sp)=(sp)=2     
+    + (sp)=(sp)-2     
     + ((ss)*16+(sp))=(IP)     
     + (IP)=(IP)+16位位移      
     16位位移=“标号”处的地址-call指令后的第一个字节的地址   
@@ -83,3 +87,25 @@
       call dword ptr ds:[0]
       ```
       执行后，(CS)=0，(IP)=0123H，(sp)=0CH。      
+11.  例子(__很重要__)：   
+     下面的程序执行后，ax中的数值时多少？   
+     ```
+     assume cs:code
+     code segment
+       start：mov ax, 1
+       mov cx, 3
+       call s
+       mov bx, ax         ; (bx)=?
+       mov ax, 4C00H
+       int 21H
+     s: add ax, ax
+        loop s
+        ret
+     code ends
+     end start
+     ```
+     分析：     
+     + CPU 将 `call s` 指令的机器码读入，IP指向了 `call s`       的指令 `mov bx, ax`，然后CPU执行 `call s` 指令，将当前的IP值（指令 `mov bx, ax` 的偏移地址）压栈，并将IP的值改变为标号为标号 `s` 处的偏移地址。     
+     + CPU 从标号 `s` 处开始执行指令，loop 循环完毕后，(ax)=8。     
+     + CPU将 `ret` 指令的机器码读入，IP指向了 `ret` 指令后的内存单元，然后CPU执行 `ret` 指令，从栈中弹出一个值（即 `call s` 先前压入的 `mov bx, ax` 指令的偏移地址）送入IP中，则CS:IP指向指令 `mov bx, ax`。      
+     + CPU 从 `mov bx, ax` 开始执行指令，直至完成。     
