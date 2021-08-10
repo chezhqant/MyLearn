@@ -192,3 +192,4 @@
 7.  [可变对象和不可变对象]( https://blog.csdn.net/liuweiyuxiang/article/details/89349862)     
 ### 6.8. [Python PEP8 代码规范常见问题及解决方法](https://cloud.tencent.com/developer/article/1611332)    
 8.  [50个Ipython的使用技巧](https://www.zhihu.com/question/405701348/answer/1326466804?utm_source=wechat_session&utm_medium=social&utm_oi=1139653771880796160)    
+9.  [GIL](https://blog.nowcoder.net/n/f6999765005349b3b47ab8e8921dc898)     
