@@ -36,10 +36,10 @@ ___this file is for learning c++ language___
 int& x = 666;       // Error
 const int& x = 666; // OK
 第一个操作是错误的，它是一个使用int类型的右值来初始化non-const的int&类型的非法操作。第二个操作正确，当然，x是一个常量，你不能改变他。（译者按：注意，常量引用只是规定无法通过该引用改变引用的对象，如果该对象有其他非常量引用或者指针，通过这些改变该对象仍然是合法的）
-```
+```   
 5.  指针 PK 引用      
-    ![alt 源代码](../pictures/指针PK引用.PNG "指针PK引用")        
-    ![alt 汇编解释](../pictures/指针PK引用代码.PNG "指针PK引用代码")      
+    ![alt 源代码](../pictures/指针PK引用代码.PNG "指针PK引用代码")        
+    ![alt 汇编解释](../pictures/指针PK引用.PNG "指针PK引用")      
 
 ###  6.  [内联函数(不一定非得跟类有关系)](https://www.cnblogs.com/zsq1993/p/5978743.html)    
 1.  [内联函数追根究底](https://zhuanlan.zhihu.com/p/50812510)        
