@@ -48,3 +48,75 @@
     + 我们如何让一个内存单元称为栈顶？将它的地址放入SS、SP中    
     + 我们如何让一个内存单元的信息被CPU当作执行来执行？将它的地址放入CS、IP中      
     那么，我们如何让一段程序成为N号中断处理程序？将它的入口地址放入中断向量表的N号表项中。     
+4.  使用 `movsb` 指令，将 `do0` 的代码送入 `0:200` 处：     
+    ```
+    assume cs:code
+    code segment
+    start: 设置 es:di 指向目的地址
+           设置 ds:si 指向源地址
+           设置 cx 为传输长度
+           设置传输方向为正
+           rep movsb
+           设置中断向量表
+           mov ax, 4c00H
+           int 21H
+      do0: 显示字符串“overflow!”
+           mov ax, 4c00H
+           int 21H
+    code ends
+    end start
+    ```
+    用 `rep movsb` 指令的时候要确定的信息：     
+    + 传送的原始位置，段地址：code，偏移地址：offset do0    
+    + 传送的目的位置：0:200     
+    + 传送的长度：do0 部分代码的长度      
+    + 传送的方向：正向      
+    更明确的程序：      
+    ```
+    assume cs:code
+    code segment
+    start: mov ax, cs
+           mov ds, ax
+           mov si, offset do0         ; 设置ds:si指向源地址
+           mov ax, 0
+           mov es, ax
+           mov di, 200H               ; 设置es:di指向目的地址
+           mov cx, do0部分代码的长度  ; 设置cx为传入长度
+           cld                        ; 设置传入方向为正
+           rep movsb
+           设置中断向量表
+           mov ax, 4c00H
+           int 21H
+       do0: 显示字符串“overflow!”
+            movAX， 4c00H
+            int 21H
+      code ends
+      end start
+    ```
+5.  如何知道 `do0` 代码的长度？计算一下 `do0` 中所有指令码的字节数。但是这样太麻烦了，而且只要 `do0` 的内容发生了改变，我们都要重新计算它的长度。我们可以利用编译器来计算 `do0` 的长度：     
+    ```
+    assume cs:code
+    code segment
+    start: mov ax, cs
+           mov ds, ax
+           mov si, offset do0                  ; 设置ds:si指向源地址
+           mov ax, 0
+           mov es, ax
+           mov di, 200H                        ; 设置es:di指向目的地址
+           mov cx, offset do0end - offset do0  ; 设置cx为传入长度
+           cld                                 ; 设置传入方向为正
+           rep movsb
+           设置中断向量表
+           mov ax, 4c00H
+           int 21H
+      do0: 显示字符串“overflow!”
+           movAX， 4c00H
+           int 21H
+   do0end: nop
+
+      code ends
+      end start
+    ```
+    `-` 是编译器识别的运算符号，编译器可以用它来进行两个常数的减法。比如： `mov ax, 8-4`，被编译器处理为指令 `mov ax, 4`。      
+    汇编编译器可以处理表达式：      
+    指令：`mov ax, (5+3)*5/10`，被编译器处理为指令：`mov ax, 4`   
