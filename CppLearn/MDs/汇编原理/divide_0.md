@@ -120,3 +120,26 @@
     `-` 是编译器识别的运算符号，编译器可以用它来进行两个常数的减法。比如： `mov ax, 8-4`，被编译器处理为指令 `mov ax, 4`。      
     汇编编译器可以处理表达式：      
     指令：`mov ax, (5+3)*5/10`，被编译器处理为指令：`mov ax, 4`   
+6.  `do0` 程序的主要任务是显示字符串：      
+    ```
+    do0: 设置ds:si指向字符串
+         mov ax, 0b800H
+         mov es, ax
+         mov di, 12*160+36*2          ; 设置es:di指向显存空间的中间位置
+         mov cx, 9                    ; 设置cx为字符串长度
+      s: mov al, [si]
+      mov es:[di], al
+      inc si
+      add di, 2
+      loop s
+
+      mov ax, 4c00H
+      int 21H
+
+    do0end: nop
+    ```
+    程序写好了，但是要显示的字符串放在哪里呢？      
+    ```
+    assume cs:code
+
+    ```
