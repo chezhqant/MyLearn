@@ -141,5 +141,87 @@
     程序写好了，但是要显示的字符串放在哪里呢？      
     ```
     assume cs:code
+    data segment
+    db "overflow!"
+    data ends
 
+    code segment
+    start: mov ax, cs
+           mov ds, ax
+           mov si, offset do0       ; 设置ds:si指向源地址
+           mov ax, 0
+           mov es, ax
+           mov di, 200H             ; 设置es:di指向目的地址
+           mov cx, offset do0end - offset do0 ; 设置 cx 为传输长度
+           cld                      ; 设置传输方向为正
+           rep movsb
+           设置中断向量表
+           mov ax, 4c00H
+           int 21H
+      do0: mov ax, data
+           mov ds, ax
+           mov si, 0                     ; 设置ds:si指向字符串
+
+           mov ax, 0b800H
+           mov es, ax
+           mov di, 12*160+36*2           ; 设置es:di指向显存空间的中间位置
+           mov cx, 9                     ; 设置cx为字符串长度
+        s: mov al, [si]
+           mov es:[di], al
+           inc si
+           add di, 2
+           loop s
+
+           mov ax, 4c00H
+           int 21H
+   do0end: nop
+    code ends
+    end start
     ```
+    上面的程序，看似合理，实际上却是大错特错，“overflow”在程序段 `data` 中。上述程序执行完成后返回，它所占用的内存空间被系统释放，而在其中存放的“overflow!“，也将很可能被别的信息覆盖。而 `do0` 程序被放到了 `0:200` 处，随时都会因发生了除法溢出而被CPU执行，很难保证 `do0` 程序从原来程序所处的空间中取得的是要显示的字符串 ”overflow!“。      
+    因为 `do0` 程序随时可能被执行，而它要用到字符串”overflow!“，所以该字符串也该存放在一段不会被覆盖的空间中，正确程序：      
+    ```
+    assume cs:code
+    code segment
+    start: mov ax, cs
+           mov ds, ax
+           mov si, offset do0            ; 设置ds:si指向源地址
+           mov ax, 0
+           mov es, ax
+           mov di, 200H                  ; 设置es:di指向目的地址
+           mov cx, offset do0end - offset do0 ; 设置cx为传输长度
+           cld                           ; 设置传输方向为正
+           rep movsb
+           设置中断向量表
+
+           mov ax, 4c00H
+           int 21H
+
+      do0: jmp short do0start
+           db "overflow!"
+
+      do0start: mov ax, cs
+                mov ds, ax
+                mov si, 202H            ; 设置ds:si指向字符串
+
+                mov ax, 0b800H
+                mov es, ax
+                mov di, 12*160+36*2     ; 设置es:di指向显存空间的中间位置
+                mov cx, 9
+
+             s: mov al, [si]
+                mov es:[di], al
+                inc si
+                add di, 2
+                loop s
+
+                mov ax, 4c00H
+                int 21H
+
+        do0end: nop
+        code ends
+        end start
+    ```
+    在上述程序中，我们将”overflow!“放到 `do0` 程序中，程序执行时，将标号 `do0` 到标号 `do0end` 之间的内容送到 `0000:0200` 处。     
+    注意，因为在 `do0` 程序开始处的 ”overflow!" 不是可以执行的代码，所以在“overflow!”之前加上一条 `jmp` 指令，转移到正式的 `do0` 程序。当除法溢出发生时，CPU执行 `0:200` 处的 `jmp` 指令，跳过后面的字符串，转到正式的 `do0` 程序执行。      
+    `do0` 程序执行过程中必须要找到“overflow!”，那么它在哪里呢？首先来看段地址，“overflow!”和 `do0` 的代码处于同一段中，而除法溢出发生时，CS中必然存放 `do0` 的段地址，也就是 “overflow!” 的段地址；再来看偏移地址， `0:200` 处的指令为 `jmp short do0start` 这条指令占用两个字节，所以“overflow!”的便宜地址为：202h。      
