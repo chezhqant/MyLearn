@@ -13,3 +13,4 @@ ___王爽汇编原理笔记___
 ## [第十章 call 和 ret 指令](./10_section.md)      
 ## [第十一章 标志寄存器](./11_section.md)       
 ## [第十二章 内中断](./12_section.md)       
+## [第十三章 int 指令](./13_section.md)     
