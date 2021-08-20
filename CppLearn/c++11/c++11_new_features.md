@@ -29,3 +29,16 @@
 |局部类型用作模板参数|local classes as template arguments|      
 |long long 整型|long long integers|       
 |内存模型|memory model|     
+|移动语义|move semantics(see rvalue reference)|     
+|内联名字空间|inline namespace|       
+|防止类型收窄|preventing narrowing|     
+|指针空值|nullptr|        
+|POD|POD(plain old data)|       
+|给予范围的for语句|range-based for statement|     
+|原生字符串字面量|raw string literals|      
+|右值引用|rvalue reference|     
+|静态断言|static assertions|      
+|追踪返回类型语法|trailing return type syntax|      
+|模板别名|template alias|     
+|线程本地的存储|thread-local storage|     
+|unicode|unicode|       
