@@ -9,10 +9,10 @@
 |C99特性|C99|     
 |强类型枚举|enum class|       
 |复制及再抛出异常|copy and rethrow exception|     
-|常亮表达式|constexptr|     
+|常量表达式|constexptr|     
 |decltype|decltype|     
 |函数的默认模板参数|default template parameters for function|     
-|显示默认和删除函数（默认的控制|defaulted and deleted functions(control of default)|      
+|显示默认和删除函数（默认的控制）|defaulted and deleted functions(control of default)|      
 |委托构造函数|delegating constructors|      
 |并行动态初始化和析构|dynamic initialization and destruction with concurrency|      
 |显示转换操作符|explicit conversion operators|      
@@ -24,7 +24,8 @@
 |非受限联合体|unrestricted union|       
 |用户定义的字面量|user-defined literals|      
 |变长模板|variadic templates|       
-|类成员初始化|inherited constructors|     
+|类成员初始化|in-class member initializers constructors|     
+|继承构造函数|inherited constructor|
 |初始化列表|initializer lists|      
 |局部类型用作模板参数|local classes as template arguments|      
 |long long 整型|long long integers|       
