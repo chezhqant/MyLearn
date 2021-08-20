@@ -35,7 +35,7 @@
 |防止类型收窄|preventing narrowing|     
 |指针空值|nullptr|        
 |POD|POD(plain old data)|       
-|给予范围的for语句|range-based for statement|     
+|基于范围的for语句|range-based for statement|     
 |原生字符串字面量|raw string literals|      
 |右值引用|rvalue reference|     
 |静态断言|static assertions|      
