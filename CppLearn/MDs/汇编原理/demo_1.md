@@ -5,7 +5,7 @@
     start: mov ax, 3456         ; (ax)=3456
            int 7cH              ; 调用中断7cH的中断例程，计算ax中的数据的平方
            add ax, ax
-           add dx, dx           ; dx:ax存放结果，将结果乘以2
+           adc dx, dx           ; dx:ax存放结果，将结果乘以2
            mov ax, 4c00H
            int 21H
     code ends
