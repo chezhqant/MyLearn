@@ -69,7 +69,8 @@ const int& x = 666; // OK
 11.  [Why does default initialization of static data member not occur?](https://stackoverflow.com/questions/24682349/initialization-of-static-data-member)      
 12.  [拷贝构造函数,为什么必须是当前类的引用？为什么是const引用？](./c++_files/拷贝构造函数.md)       
      [补充解释](https://en.cppreference.com/w/cpp/language/static)    
-     拷贝构造函数可以访问本类的私有成员，因为 `public, private, protected` 是针对类而言的，虽然说传入的参数是某个类对象，但是其所属的作用域还在类作用域中，可以访问传入类对象的私有成员。不同的类、不是类作用域都不可访问传入类对象的虽有成员。      
+     + 拷贝构造函数可以访问本类的私有成员，因为 `public, private, protected` 是针对类而言的，虽然说传入的参数是某个类对象，但是其所属的作用域还在类作用域中，可以访问传入类对象的私有成员。不同的类、不是类作用域都不可访问传入类对象的虽有成员。      
+     + 虽然在<modern c++>中看到，自定义析构函数能够阻止移动构造函数的默认创建。但实际上我验证的是，只有拷贝操作才会阻止移动操作的默认生成，同时猜测，自定义移动操作会阻止拷贝操作的默认生成。同时表明，有些书上时不准确的。      
 13.  [继承构造函数](https://blog.csdn.net/SwordArcher/article/details/88717442)     
 14.  [C++重载operator=](https://www.cnblogs.com/zpcdbky/p/5027481.html)     
 15.  [一文说尽c++赋值运算符重载函数](operator=)     
