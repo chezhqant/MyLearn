@@ -31,7 +31,8 @@ ___this file is for learning c++ language___
 2. [ 弱引用的理解](https://www.cnblogs.com/fengc5/p/5316670.html)    
 2. [ 强引用与弱引用的比较](https://blog.csdn.net/Sun960705/article/details/79099533)   
 3. [ 左值引用和右值引用](https://www.cnblogs.com/KaiMing-Prince/p/9741393.html)   
-4.  [移动语义和完美转发](https://codinfox.github.io/dev/2014/06/03/move-semantic-perfect-forward/)      
+4. [移动语义和完美转发](https://codinfox.github.io/dev/2014/06/03/move-semantic-perfect-forward/)      
+   + [移动语义的一个很奇怪的问题](./c++_files/move语义的一个很奇怪的问题.md)      
 ```
 int& x = 666;       // Error
 const int& x = 666; // OK
