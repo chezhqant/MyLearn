@@ -116,3 +116,7 @@ ___this file is for learning to going depp!___
 10.  [如何理解OOM](https://www.zhihu.com/question/21972130/answer/167361759)      
 11.  [cond_resched()之后，后面的代码什么时候才被再次调度回来执行](https://www.zhihu.com/question/35004859/answer/228661641)     
 12.  [线性地址，逻辑地址，虚拟地址](https://www.zhihu.com/question/29918252/answer/163114415)      
+13.  分段、分页     
+     + [解析1](https://blog.csdn.net/weixin_39763293/article/details/111291725)     
+     + [解析2](https://www.cnblogs.com/kelamoyujuzhen/p/10555924.html)      
+     + [解析3](https://segmentfault.com/a/1190000019974225)       
