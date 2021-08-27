@@ -120,3 +120,4 @@ ___this file is for learning to going depp!___
      + [解析1](https://blog.csdn.net/weixin_39763293/article/details/111291725)     
      + [解析2](https://www.cnblogs.com/kelamoyujuzhen/p/10555924.html)      
      + [解析3](https://segmentfault.com/a/1190000019974225)       
+     + [影子寄存器](https://onestraw.github.io/linux/shadow-registers/)       
