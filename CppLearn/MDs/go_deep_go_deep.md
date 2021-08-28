@@ -122,3 +122,4 @@ ___this file is for learning to going depp!___
      + [解析3](https://segmentfault.com/a/1190000019974225)       
      + [影子寄存器](https://onestraw.github.io/linux/shadow-registers/)       
      + [解析4](https://book.51cto.com/art/202103/653938.htm)      
+14.  [中断门与陷阱门](http://blog.chinaunix.net/uid-12307167-id-2946996.html)     
