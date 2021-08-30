@@ -12,3 +12,4 @@ ___操作系统实战45讲___
     + [手撕LRU](https://segmentfault.com/a/1190000038714624)        
 5.  [每个程序员都应该了解的内存知识](https://www.cnblogs.com/mikewolf2002/archive/2013/04/13/3017714.html)       
     + [每个C程序员都应该了解的内存知识](https://segmentfault.com/a/1190000022531638)      
+    + [inclusive cache, exclusive cache](https://developer.arm.com/documentation/den0024/a/Caches/Cache-terminology/Inclusive-and-exclusive-caches)         
