@@ -9,3 +9,5 @@ ___操作系统实战45讲___
      + [解析4](https://book.51cto.com/art/202103/653938.htm)      
 3.  [中断门与陷阱门](http://blog.chinaunix.net/uid-12307167-id-2946996.html)     
 4.  [cache](https://blog.csdn.net/starter_____/article/details/97389110)        
+    + [手撕LRU](https://segmentfault.com/a/1190000038714624)        
+5.  [每个程序员都应该了解的内存知识](https://www.oschina.net/translate/what-every-programmer-should-know-about-cpu-cache-part2)       
