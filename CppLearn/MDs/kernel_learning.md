@@ -16,3 +16,4 @@ ___深入浅出计算机组成原理___
     + [inclusive cache, exclusive cache](https://developer.arm.com/documentation/den0024/a/Caches/Cache-terminology/Inclusive-and-exclusive-caches)         
     + [直接映射、组关联、全关联](https://developer.arm.com/documentation/den0024/a/Caches/Cache-terminology/Inclusive-and-exclusive-caches)       
     + [直接映射、组关联、全关联](https://www.cxyzjd.com/article/weixin_42649617/105092395)      
+    + [MESI](https://www.cnblogs.com/yanlong300/p/8986041.html)     
