@@ -22,8 +22,8 @@
 #  [异常](./MDs/except_learned.md)       
 
 #  [go deep](./MDs/go_deep_go_deep.md)     
-##  [深入理解计算机系统]      
-##  [计算机组成与设计-硬件软件接口](计算机组成与设计-硬件软件接口/readme.md)      
+##  [深入理解计算机系统]()      
+##  [计算机组成与设计-硬件软件接口](./MDs/计算机组成与设计-硬件软件接口/readme.md)      
 
 #  [cuda编程](./MDs/cuda_programming.md)    
 
