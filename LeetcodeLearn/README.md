@@ -72,3 +72,5 @@ eh, there are some cpps(two or three?) is wrong in the directory of Array, becau
 
 # 4. [AVL](./AVL)   
 1.  [红黑树简单了解](https://zhuanlan.zhihu.com/p/139907457O)   
+
+## [新的总结，与以上无关](./数据结构与算法/readme.md)       
