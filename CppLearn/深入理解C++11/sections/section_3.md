@@ -906,6 +906,7 @@ POD通常用于说明一个类型的属性，尤其是用户自定义类型的�
     struct std::is_trivial;
     ```     
     类模板is_trivial的成员value可以用于判断T的类型是否是一个平凡的类型。除了类和结构体外，is_trivial还可以对内置的标量类型数据，比如int、float。以及数组类型进行判断。   
+
     ```
     #include <iostream>
     #include <type_traits>
@@ -967,7 +968,8 @@ POD通常用于说明一个类型的属性，尤其是用户自定义类型的�
 
        return 0;
     }
-    ```
+    ```     
+
     POD包含的另外一个概念是标注布局，标准布局的类和结构体应该符合以下定义：   
     +  所有非静态成员有相同的访问权限：public、private、protected   
     +  在类或者结构体继承时满足以下两种情况之一：   
