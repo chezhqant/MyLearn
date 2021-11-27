@@ -907,68 +907,68 @@ POD通常用于说明一个类型的属性，尤其是用户自定义类型的�
     ```     
     类模板is_trivial的成员value可以用于判断T的类型是否是一个平凡的类型。除了类和结构体外，is_trivial还可以对内置的标量类型数据，比如int、float。以及数组类型进行判断。   
 
-    ```
-    #include <iostream>
-    #include <type_traits>
+      ```
+      #include <iostream>
+      #include <type_traits>
 
-    template<typename T>
-    struct std::is_trivial;
+      template<typename T>
+      struct std::is_trivial;
 
-    struct Trivial1 {};
-    struct Trivial2 {
-    public:
-      int a;
-    private:
-      int b;
-    };
-    struct Trivial3 {
-      Trivial1 a;
-      Trivial2 b;
-    };
+      struct Trivial1 {};
+      struct Trivial2 {
+      public:
+        int a;
+      private:
+        int b;
+      };
+      struct Trivial3 {
+        Trivial1 a;
+        Trivial2 b;
+      };
 
-    struct Trivial4 {
-      Trivial2 a[23];
-    };
+      struct Trivial4 {
+        Trivial2 a[23];
+      };
 
-    struct Trivial5 {
-      int x;
-      static int y;
-    };
+      struct Trivial5 {
+        int x;
+        static int y;
+      };
 
-    struct NonTrivial1 {
-      NonTrivial1: z(42) {}
-      int z;
-    };
+      struct NonTrivial1 {
+        NonTrivial1: z(42) {}
+        int z;
+      };
 
-    struct NonTrivial2 {
-      NonTrivial2();
+      struct NonTrivial2 {
+        NonTrivial2();
 
-     int w;
-    };
+       int w;
+      };
 
-    NonTrivial2::NonTrivial2() =default;
+      NonTrivial2::NonTrivial2() =default;
 
-    struct NonTrivial3 {
-      Trivial5 c;
+      struct NonTrivial3 {
+        Trivial5 c;
 
-      virtual void f();
-    };
+        virtual void f();
+      };
 
-    int main()
-    {
-       std::cout << is_trivial<Trivial1>::value << std::endl; //1
-       std::cout << is_trivial<Trivial2>::value << std::endl; //1
-       std::cout << is_trivial<Trivial3>::value << std::endl; //1
-       std::cout << is_trivial<Trivial4>::value << std::endl; //1
-       std::cout << is_trivial<Trivial5>::value << std::endl; //1
+      int main()
+      {
+         std::cout << is_trivial<Trivial1>::value << std::endl; //1
+         std::cout << is_trivial<Trivial2>::value << std::endl; //1
+         std::cout << is_trivial<Trivial3>::value << std::endl; //1
+         std::cout << is_trivial<Trivial4>::value << std::endl; //1
+         std::cout << is_trivial<Trivial5>::value << std::endl; //1
 
-       std::cout << is_trivial<NonTrivial1>::value << std::endl; //0
-       std::cout << is_trivial<NonTrivial2>::value << std::endl; //0, 这个是不是书上错了，应该是1?
-       std::cout << is_trivial<NonTrivial3>::value << std::endl; //0
+         std::cout << is_trivial<NonTrivial1>::value << std::endl; //0
+         std::cout << is_trivial<NonTrivial2>::value << std::endl; //0, 这个是不是书上错了，应该是1?
+         std::cout << is_trivial<NonTrivial3>::value << std::endl; //0
 
-       return 0;
-    }
-    ```     
+         return 0;
+      }
+      ```     
 
     POD包含的另外一个概念是标注布局，标准布局的类和结构体应该符合以下定义：   
     +  所有非静态成员有相同的访问权限：public、private、protected   
