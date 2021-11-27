@@ -24,6 +24,7 @@ ___this file is for learning c++ language___
 2.  [再谈C++对象内存布局](https://www.cnblogs.com/findumars/p/5353535.html)   
 3.  [虚拟继承的内存布局，针对这个链接，其中内容可能有错误，可能需要添加：菱形继承的D的内存布局中的B和C的内存布局，可能要加上D::foo()函数](https://zhougy0717.github.io/2018/03/06/C++%E8%8F%B1%E5%BD%A2%E7%BB%A7%E6%89%BF/)      
 ###  [4.  RVO和NRVO](https://www.cnblogs.com/xkfz007/articles/2506022.html)   
+1. [再解](https://xyfu.me/posts/3ad196a7/)      
 
 ###  5.  引用(待规整)   
 
