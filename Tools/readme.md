@@ -18,3 +18,4 @@ ___just for vim___
     11. 安装fzf插件，终端使用，githb官网教程即可，这个跟vim是用fzf不冲突，也不共用.     
     12. 不在是用Vundle，而是使用vim-plug，这个替换很简单，查一下就好      
 4. [IDM 下载网盘](https://www.cnblogs.com/sw-code/p/15010298.html)      
+5. [ubuntu 自带 vim 配色方案](https://blog.csdn.net/yuhuqiao/article/details/83148953)			
