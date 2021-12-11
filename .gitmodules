@@ -1,6 +1,6 @@
 [submodule "LearnFromOthers"]
 	path = LearnFromOthers
-	url = https://github.com/chezhqant/LearnFromOthers.git
+	url = git@github.com:chezhqant/LearnFromOthers.git
 [submodule "CASPP"]
 	path = CASPP
-	url = https://github.com/chezhqant/CASPP.git
+	url = git@github.com:chezhqant/CASPP.git
