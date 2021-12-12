@@ -4,3 +4,4 @@
 [submodule "CASPP"]
 	path = CASPP
 	url = git@github.com:chezhqant/CASPP.git
+  branch = main
