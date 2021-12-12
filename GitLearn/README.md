@@ -106,3 +106,5 @@ ___a web can learn git command liking [playing game](https://learngitbranching.j
          3.  再不行只能找国内的替代网站了，比如gitee     
     12.  [git 记录账号密码](https://blog.csdn.net/zhengqijun_/article/details/63298202)     
 
+    13.  commit 对应的时一棵树，这棵树对应的是当时整个功能的快照      
+    14.  `git commit --amend` 能够修复最近一次的提交注释，修复非最近一次的提交注释使用的是 `git rebase`   
