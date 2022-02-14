@@ -27,3 +27,4 @@ ___深入浅出计算机组成原理___
 8.  [理解hello world程序的汇编](https://stackoverflow.com/questions/15284947/understanding-gcc-s-output/15285058#15285058)      
     1.  [这个也是解释](https://www.jianshu.com/p/e385ff61dd7c)      
 9.  [内核汇编](https://blog.csdn.net/armlinuxww/article/details/13168075)     
+    + [再次描述一](https://blog.csdn.net/gaotangtiankai/article/details/19410509)     
