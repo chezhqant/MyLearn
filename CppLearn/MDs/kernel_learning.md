@@ -30,6 +30,7 @@ ___深入浅出计算机组成原理___
     1.  [这个也是解释](https://www.jianshu.com/p/e385ff61dd7c)      
 9.  [内核汇编](https://blog.csdn.net/armlinuxww/article/details/13168075)     
     + [再次描述一](https://blog.csdn.net/gaotangtiankai/article/details/19410509)     
+    +  [GNU汇编器](http://www.4k8k.xyz/article/B10030607/119815458)       
 10. [list_entry(ptr, type, member)](https://ilinuxkernel.com/?p=1062)     
 11. [8259A](https://www.daimajiaoliu.com/daima/60b3c904cce6c06)     
     [再解](https://blog.csdn.net/longintchar/article/details/79439466)      
