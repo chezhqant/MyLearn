@@ -34,3 +34,4 @@ ___深入浅出计算机组成原理___
 10. [list_entry(ptr, type, member)](https://ilinuxkernel.com/?p=1062)     
 11. [8259A](https://www.daimajiaoliu.com/daima/60b3c904cce6c06)     
     [再解](https://blog.csdn.net/longintchar/article/details/79439466)      
+12. [C 语言保持变量的原子性](https://www.geek-share.com/detail/2373187041.html)     
