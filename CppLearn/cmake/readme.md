@@ -200,6 +200,7 @@ ___cmake 总结___
 
 9.  [cmake将变量传递给代码](https://www.coder.work/article/1206996)   
 10.  [在各级子项目(目录)之间共享变量](https://blog.csdn.net/10km/article/details/50508184)    
+11.  [简单介绍CPack](https://www.hahack.com/codes/cmake/)       
 ___待总结___
 11.  小bug?   
      1.  install路径设置   
