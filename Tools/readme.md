@@ -19,3 +19,5 @@ ___just for vim___
     12. 不在是用Vundle，而是使用vim-plug，这个替换很简单，查一下就好      
 4. [IDM 下载网盘](https://www.cnblogs.com/sw-code/p/15010298.html)      
 5. [ubuntu 自带 vim 配色方案](https://blog.csdn.net/yuhuqiao/article/details/83148953)			
+6. [adduser/deluser/usermod](增加用户权限)      
+   + [增加用户权限，使用命令行的形式](https://blog.csdn.net/geol200709/article/details/82116267)      
