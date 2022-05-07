@@ -134,7 +134,8 @@ ___cmake 总结___
     17. [cmake属性打印](https://wangpengcheng.github.io/2019/08/13/learn_cmake/)    
     18.  [target_link_libraries指定链接Debug or Release](https://stackoverflow.com/questions/2209929/linking-different-libraries-for-debug-and-release-builds-in-cmake-on-windows)    
     19.  [cmake string](https://zhuanlan.zhihu.com/p/442889385)       
-    20.  [make_parse_arguments](https://www.cnblogs.com/gaox97329498/p/10991449.html)       
+    20.  [cmake_parse_arguments](https://www.cnblogs.com/gaox97329498/p/10991449.html)       
+         + [再解](https://www.cnblogs.com/Braveliu/p/15592711.html)         
 
 6.  变量    
     1. [CMAKE_INSTALL_MESSAGE](https://cmake.org/cmake/help/v3.1/variable/CMAKE_INSTALL_MESSAGE.html)   
