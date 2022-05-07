@@ -70,6 +70,7 @@ ___cmake 总结___
        +  CMAKE_INCLUDE_DIRECTORIES_BEFORE，通过SET这个cmake变量为ON，可以将添加的头文件搜索路径放在已有路径的前面。    
        +  通过AFTER或者BEFORE参数，也可以控制是追加还是置前。现在我们在src/CMakeLists.txt中添加一个头肩搜索路径，方式很简单，加入：  
           include_directories(/usr/include/hello)   
+  16.  [project](https://www.jianshu.com/p/cdd6e56c2422)      
 
 
 2.  cmake实践这本书   
@@ -133,6 +134,7 @@ ___cmake 总结___
     17. [cmake属性打印](https://wangpengcheng.github.io/2019/08/13/learn_cmake/)    
     18.  [target_link_libraries指定链接Debug or Release](https://stackoverflow.com/questions/2209929/linking-different-libraries-for-debug-and-release-builds-in-cmake-on-windows)    
     19.  [cmake string](https://zhuanlan.zhihu.com/p/442889385)       
+    20.  [make_parse_arguments](https://www.cnblogs.com/gaox97329498/p/10991449.html)       
 
 6.  变量    
     1. [CMAKE_INSTALL_MESSAGE](https://cmake.org/cmake/help/v3.1/variable/CMAKE_INSTALL_MESSAGE.html)   
@@ -202,8 +204,8 @@ ___cmake 总结___
 9.  [cmake将变量传递给代码](https://www.coder.work/article/1206996)   
 10.  [在各级子项目(目录)之间共享变量](https://blog.csdn.net/10km/article/details/50508184)    
 11.  [简单介绍CPack](https://www.hahack.com/codes/cmake/)       
-___待总结___
-11.  小bug?   
+12.  [函数与宏](https://elloop.github.io/tools/2016-04-11/learning-cmake-3-function-macro)      
+13.  小bug?   
      1.  install路径设置   
          cmake -DCMAKE_INSTALL_PREFIX=<> 或在CMakeLists.txt中使用SET(CMAKE_INSTALL_PREFIX <>), 需要在project()之前设置，否则无效。或者使用cmake手册中的方法，可以在project()之后设置：    
 
