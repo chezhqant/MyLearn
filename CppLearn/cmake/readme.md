@@ -71,6 +71,8 @@ ___cmake 总结___
        +  通过AFTER或者BEFORE参数，也可以控制是追加还是置前。现在我们在src/CMakeLists.txt中添加一个头肩搜索路径，方式很简单，加入：  
           include_directories(/usr/include/hello)   
   16.  [project](https://www.jianshu.com/p/cdd6e56c2422)      
+  17.  [list](https://www.jianshu.com/p/89fb01752d6f)       
+  18.  [config_file](https://blog.csdn.net/qq_38410730/article/details/103741579)       
 
 
 2.  cmake实践这本书   
