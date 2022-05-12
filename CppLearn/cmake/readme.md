@@ -73,6 +73,7 @@ ___cmake 总结___
   16.  [project](https://www.jianshu.com/p/cdd6e56c2422)      
   17.  [list](https://www.jianshu.com/p/89fb01752d6f)       
   18.  [config_file](https://blog.csdn.net/qq_38410730/article/details/103741579)       
+  19.  [install&&pack](https://zhuanlan.zhihu.com/p/377131996)      
 
 
 2.  cmake实践这本书   
