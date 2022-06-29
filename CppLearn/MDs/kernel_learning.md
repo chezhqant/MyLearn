@@ -3,6 +3,8 @@ ___深入浅出计算机组成原理___
 
 ##  指导性文章
 1.  [GNU as](https://sourceware.org/binutils/docs/as/Manual.html)     
+3.  [常用汇编器](https://blog.csdn.net/huang987246510/article/details/90311189)     
+2.  [ATT vs NASM](https://sdasgup3.github.io/Intel_Vs_Att_format/)      
 
 ##  
 1.  [线性地址，逻辑地址，虚拟地址](https://www.zhihu.com/question/29918252/answer/163114415)      
@@ -35,3 +37,6 @@ ___深入浅出计算机组成原理___
 11. [8259A](https://www.daimajiaoliu.com/daima/60b3c904cce6c06)     
     [再解](https://blog.csdn.net/longintchar/article/details/79439466)      
 12. [C 语言保持变量的原子性](https://www.geek-share.com/detail/2373187041.html)     
+13. 汇编指令     
+    + [伪操作](https://www.cnblogs.com/snail-micheal/p/4189632.html)       
+    + [section](https://blog.csdn.net/qq_16097611/article/details/73460115)      
