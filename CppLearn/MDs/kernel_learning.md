@@ -40,3 +40,4 @@ ___深入浅出计算机组成原理___
 13. 汇编指令     
     + [伪操作](https://www.cnblogs.com/snail-micheal/p/4189632.html)       
     + [section](https://blog.csdn.net/qq_16097611/article/details/73460115)      
+    +  [bt](https://www.cnblogs.com/ioio/p/7418261.html)      
