@@ -23,3 +23,5 @@ ___just for vim___
    + [增加用户权限，使用命令行的形式](https://blog.csdn.net/geol200709/article/details/82116267)      
 7. [latex](http://mohu.org/info/symbols/symbols.htm)      
 8. [机械硬盘](https://www.bilibili.com/read/cv9729607/)     
+9. [安装cuda](https://blog.csdn.net/h3c4lenovo/article/details/119003405)        
+   [安装显卡驱动](https://blog.csdn.net/Perfect886/article/details/119109380)     
