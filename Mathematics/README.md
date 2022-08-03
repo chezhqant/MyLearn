@@ -8,3 +8,4 @@ ___this directory is just for math___
     1.  [再解](https://zhuanlan.zhihu.com/p/25768606?utm_source=wechat_session&utm_medium=social&utm_oi=1139653771880796160)    
 6.  [S折交叉验证(S-fold cross validation)](https://www.cnblogs.com/cloud-ken/p/10516714.html)     
 7.  [直方图均衡化公式推导](https://blog.csdn.net/qq_38109282/article/details/109206782)       
+    + [另一个理解](https://zhuanlan.zhihu.com/p/49998777)     
