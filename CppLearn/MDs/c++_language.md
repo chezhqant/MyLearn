@@ -126,3 +126,5 @@ const int& x = 666; // OK
 1.  [VS2010对c++的支持程度](https://blog.csdn.net/shenwanjiang111/article/details/54949276)     
 
 ###  13. [C++/C宏观](./c++_files/c_cpp_macro.md)      
+###  C++11      
+  1. [concept & requires](https://zhuanlan.zhihu.com/p/266086040)     

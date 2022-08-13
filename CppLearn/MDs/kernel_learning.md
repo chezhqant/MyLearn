@@ -43,6 +43,7 @@ ___深入浅出计算机组成原理___
     [BIOS](https://blog.csdn.net/u010783226/article/details/106071987)    
     [linux内核的加载过程](https://blog.csdn.net/u010783226/article/details/106069820)     
     [Linux 开机引导和启动过程详解](https://linux.cn/article-8807-1.html)      
+     [鸟哥私房菜](http://cn.linux.vbird.org/)     
 13. 汇编指令     
     + [伪操作](https://www.cnblogs.com/snail-micheal/p/4189632.html)       
     + [section](https://blog.csdn.net/qq_16097611/article/details/73460115)      
