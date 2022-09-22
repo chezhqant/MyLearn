@@ -9,3 +9,6 @@ ___this directory is just for math___
 6.  [S折交叉验证(S-fold cross validation)](https://www.cnblogs.com/cloud-ken/p/10516714.html)     
 7.  [直方图均衡化公式推导](https://blog.csdn.net/qq_38109282/article/details/109206782)       
     + [另一个理解](https://zhuanlan.zhihu.com/p/49998777)     
+8.  [击中击不中变换](https://www.zhihu.com/question/23669012)       
+9.  [链码](https://blog.csdn.net/coming_is_winter/article/details/78940914)       
+    + [再解](https://blog.csdn.net/App_12062011/article/details/53376371)     

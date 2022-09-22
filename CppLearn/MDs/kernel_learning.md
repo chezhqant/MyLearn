@@ -48,3 +48,5 @@ ___深入浅出计算机组成原理___
     + [伪操作](https://www.cnblogs.com/snail-micheal/p/4189632.html)       
     + [section](https://blog.csdn.net/qq_16097611/article/details/73460115)      
     +  [bt](https://www.cnblogs.com/ioio/p/7418261.html)      
+    +  [.previous](http://www.groad.net/bbs/forum.php?mod=viewthread&tid=3150)      
+        [再解](https://jamessongwei.wordpress.com/2007/12/26/spinlock%E7%9A%84%E8%AE%BE%E8%AE%A1%E5%92%8C%E5%AE%9E%E7%8E%B0/)     
