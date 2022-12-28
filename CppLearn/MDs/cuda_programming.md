@@ -19,3 +19,10 @@ ___this file is for learning cuda programming___
 +  [cuda内存](https://www.jianshu.com/p/3d4c9cc3a777)     
    +  [cuda shared memory](http://blog.atelier39.org/parallel/869.html)   
 +  [一个不错的博客](https://www.cnblogs.com/1024incn/p/4541313.html)      
+
+## 新的理解       
+1. [这个文章推荐了一些](https://zhuanlan.zhihu.com/p/346910129)     
+2. [官方文档一](https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/)      
+3. [官方文档二](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html)     
+   + [中文翻译](https://github.com/chezhqant/CUDA-Programming-Guide-in-Chinese)     
+4. [学习推荐](https://www.zhihu.com/question/21059179/answer/86189210)      
