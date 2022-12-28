@@ -23,6 +23,7 @@ ___this file is for learning cuda programming___
 ## 新的理解       
 1. [这个文章推荐了一些](https://zhuanlan.zhihu.com/p/346910129)     
 2. [官方文档一](https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/)      
+   + [抽象理解](https://blog.csdn.net/fishseeker/article/details/76904262)      
 3. [官方文档二](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html)     
    + [中文翻译](https://github.com/chezhqant/CUDA-Programming-Guide-in-Chinese)     
 4. [学习推荐](https://www.zhihu.com/question/21059179/answer/86189210)      
