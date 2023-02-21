@@ -12,6 +12,7 @@ ___this file is for learning c++ language___
 +  [:/::的用法](http://www.360doc.com/content/13/0605/11/3373961_290615318.shtml)   
 +  [cv-qualified and cv-unqualified](https://blog.csdn.net/asongnic/article/details/4571418)      
 +  [聚合类和POD类型](../books/聚合类和POD类型.xmind)    
+   [再次理解](https://learn.microsoft.com/zh-cn/cpp/cpp/trivial-standard-layout-and-pod-types?view=msvc-170)      
 
 ###  1.  python/C++交互(pybind11)待完成    
 1.  [pybind11中文翻译，翻译的不好的](https://s0pybind110readthedocs0io.icopy.site/en/master/compiling.html#building-manually)   
