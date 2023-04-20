@@ -15,6 +15,7 @@ ___this file is for learning c++ language___
    [再次理解](https://learn.microsoft.com/zh-cn/cpp/cpp/trivial-standard-layout-and-pod-types?view=msvc-170)      
    [再解](https://blog.csdn.net/zhizhengguan/article/details/115269884)     
    [再解](https://cloud.tencent.com/developer/article/1187777)      
+   [再解](https://www.jianshu.com/p/7fed41242a79)     
 
 ###  1.  python/C++交互(pybind11)待完成    
 1.  [pybind11中文翻译，翻译的不好的](https://s0pybind110readthedocs0io.icopy.site/en/master/compiling.html#building-manually)   

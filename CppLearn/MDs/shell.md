@@ -27,3 +27,4 @@ ___this file is for learning shell___
 23.  [linux mount](https://www.cnblogs.com/sparkdev/p/9015312.html)       
 24.  [上不了github的办法](https://blog.csdn.net/qq_30460905/article/details/80205636)     
 25.  [安装fzf](https://github.com/junegunn/fzf)   
+26.  [xargs](https://www.jianshu.com/p/676353506f0b)      
