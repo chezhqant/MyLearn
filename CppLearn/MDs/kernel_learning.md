@@ -51,3 +51,4 @@ ___深入浅出计算机组成原理___
     +  [bt](https://www.cnblogs.com/ioio/p/7418261.html)      
     +  [.previous](http://www.groad.net/bbs/forum.php?mod=viewthread&tid=3150)      
         [再解](https://jamessongwei.wordpress.com/2007/12/26/spinlock%E7%9A%84%E8%AE%BE%E8%AE%A1%E5%92%8C%E5%AE%9E%E7%8E%B0/)     
+14. [中断、异常、抢占](https://blog.csdn.net/vividonly/article/details/6609053)     
