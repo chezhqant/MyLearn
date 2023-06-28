@@ -15,6 +15,7 @@ ___深入浅出计算机组成原理___
      + [影子寄存器](https://onestraw.github.io/linux/shadow-registers/)       
      + [解析4](https://book.51cto.com/art/202103/653938.htm)      
 3.  [中断门与陷阱门](http://blog.chinaunix.net/uid-12307167-id-2946996.html)     
+  1. [中断](https://blog.csdn.net/orangeboyye/article/details/125747908?spm=1001.2014.3001.5502)    
 4.  [cache](https://blog.csdn.net/starter_____/article/details/97389110)        
     + [手撕LRU](https://segmentfault.com/a/1190000038714624)        
 5.  [每个程序员都应该了解的内存知识](https://www.cnblogs.com/mikewolf2002/archive/2013/04/13/3017714.html)       
@@ -53,3 +54,4 @@ ___深入浅出计算机组成原理___
         [再解](https://jamessongwei.wordpress.com/2007/12/26/spinlock%E7%9A%84%E8%AE%BE%E8%AE%A1%E5%92%8C%E5%AE%9E%E7%8E%B0/)     
 14. [中断、异常、抢占](https://blog.csdn.net/vividonly/article/details/6609053)     
 15. [上下文](https://zhuanlan.zhihu.com/p/406497025)      
+16. [调度](https://blog.csdn.net/orangeboyye/article/details/125793172?spm=1001.2014.3001.5502)     
