@@ -55,3 +55,5 @@ ___深入浅出计算机组成原理___
 14. [中断、异常、抢占](https://blog.csdn.net/vividonly/article/details/6609053)     
 15. [上下文](https://zhuanlan.zhihu.com/p/406497025)      
 16. [调度](https://blog.csdn.net/orangeboyye/article/details/125793172?spm=1001.2014.3001.5502)     
+17. 锁      
+    1. [自旋锁](https://cslqm.github.io/2020/01/06/spin-lock/)      
