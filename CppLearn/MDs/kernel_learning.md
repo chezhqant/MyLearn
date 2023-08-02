@@ -14,6 +14,7 @@ ___深入浅出计算机组成原理___
      + [解析3](https://segmentfault.com/a/1190000019974225)       
      + [影子寄存器](https://onestraw.github.io/linux/shadow-registers/)       
      + [解析4](https://book.51cto.com/art/202103/653938.htm)      
+     + [CR0,1,2,3,4](https://www.cnblogs.com/iamfy/archive/2012/05/10/2495044.html)     
 3.  [中断门与陷阱门](http://blog.chinaunix.net/uid-12307167-id-2946996.html)     
   1. [中断](https://blog.csdn.net/orangeboyye/article/details/125747908?spm=1001.2014.3001.5502)    
 4.  [cache](https://blog.csdn.net/starter_____/article/details/97389110)        
@@ -57,3 +58,6 @@ ___深入浅出计算机组成原理___
 16. [调度](https://blog.csdn.net/orangeboyye/article/details/125793172?spm=1001.2014.3001.5502)     
 17. 锁      
     1. [自旋锁](https://cslqm.github.io/2020/01/06/spin-lock/)      
+18. [用户栈和内核栈](https://blog.csdn.net/jinyidong/article/details/83215995)        
+    + [再解](https://blog.csdn.net/helaisun/article/details/121709440)      
+19. [swap 和 zram](https://www.cnblogs.com/sky-heaven/p/13746055.html)      

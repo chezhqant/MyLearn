@@ -2,6 +2,7 @@ ___just for vim___
 
 1.  [csdn的总结](https://blog.csdn.net/chezhai/article/details/84143611)   
 2.  [vim编码设置方法](https://blog.csdn.net/JQ_AK47/article/details/51769841)     
+    + [vim 高亮 cpp](https://blog.csdn.net/caoxiong_tju/article/details/88542524)       
 3.  linux编译流程      
     1. [samba](http://uusama.com/814.html)      
     2. [mount](https://www.cnblogs.com/sparkdev/p/9015312.html)     

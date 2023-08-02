@@ -16,6 +16,8 @@ ___this file is for learning c++ language___
    [再解](https://blog.csdn.net/zhizhengguan/article/details/115269884)     
    [再解](https://cloud.tencent.com/developer/article/1187777)      
    [再解](https://www.jianshu.com/p/7fed41242a79)     
+   [再解](https://blog.csdn.net/sanoseiichirou/article/details/51307827)     
+   [再解](https://qastack.cn/programming/6496545/trivial-vs-standard-layout-vs-pod)     
 
 ###  1.  python/C++交互(pybind11)待完成    
 1.  [pybind11中文翻译，翻译的不好的](https://s0pybind110readthedocs0io.icopy.site/en/master/compiling.html#building-manually)   
@@ -27,6 +29,7 @@ ___this file is for learning c++ language___
 1.  [C++对象内存布局](https://blog.twofei.com/496/)   
 2.  [再谈C++对象内存布局](https://www.cnblogs.com/findumars/p/5353535.html)   
 3.  [虚拟继承的内存布局，针对这个链接，其中内容可能有错误，可能需要添加：菱形继承的D的内存布局中的B和C的内存布局，可能要加上D::foo()函数](https://zhougy0717.github.io/2018/03/06/C++%E8%8F%B1%E5%BD%A2%E7%BB%A7%E6%89%BF/)      
+4.  [虚表写入的时机](https://blog.csdn.net/weixin_43919932/article/details/104356460)     
 ###  [4.  RVO和NRVO](https://www.cnblogs.com/xkfz007/articles/2506022.html)   
 1. [再解](https://xyfu.me/posts/3ad196a7/)      
 
@@ -126,6 +129,7 @@ const int& x = 666; // OK
 3.  [另一个完整版本的Effective Modern C++的翻译](https://blog.csdn.net/zhangyifei216/article/details/72868345)    
 4.  [Effective Modern C++(英文书)](./)
     1.  [my summary](./effective_modern_c++_summary.md)      
+5.  [深入理解C++对象模型](https://blog.csdn.net/zzxiaozhao/article/details/102527023)      
 
 ###  12.  [带你玩转VS2010](https://wiki.jikexueyuan.com/project/visual-studio/)   
 1.  [VS2010对c++的支持程度](https://blog.csdn.net/shenwanjiang111/article/details/54949276)     
@@ -134,3 +138,16 @@ const int& x = 666; // OK
 ###  C++11      
   1. [concept & requires](https://zhuanlan.zhihu.com/p/266086040)     
      + [再解](https://zhuanlan.zhihu.com/p/452566841)     
+
+     > 根据我的理解：
+     > concept 类似于一种类型，concept a = 常量bool表达式。
+     > requires类似于引导一个函数，只是没有函数名，形式类似于:
+     > requires {}
+     > requires () {}
+     > 与普通函数不一样的是:
+     > 没有返回值
+     > 花括号中也是需要常量表达式的
+     > 如果花括号编译期执行OK，requires 表达式的值为true，否则为false，参考官方对于 requires 的解释
+     > 基于以上，concept 与 requires 的关系就有了
+
+  2. [forward存在的意义](https://www.cnblogs.com/ishen/p/13771991.html)          
