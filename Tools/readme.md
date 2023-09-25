@@ -3,6 +3,10 @@ ___just for vim___
 1.  [csdn的总结](https://blog.csdn.net/chezhai/article/details/84143611)   
 2.  [vim编码设置方法](https://blog.csdn.net/JQ_AK47/article/details/51769841)     
     + [vim 高亮 cpp](https://blog.csdn.net/caoxiong_tju/article/details/88542524)       
+    + [vim递增数字](https://poemdear.com/2020/06/17/vim-%e9%80%92%e5%a2%9e%e5%90%8c%e5%88%97%e4%b8%ad%e7%9a%84%e6%95%b0%e5%ad%97-%e4%bb%a5%e5%8f%8a-%e7%94%9f%e6%88%90%e6%95%b0%e5%ad%97%e9%80%92%e5%a2%9e%e7%9a%84%e5%88%97/)      
+    + [Vim生成一列连续按规则递增递减的数字](https://blog.csdn.net/Ace_Shiyuan/article/details/109772157)    
+    + [Vim 使用-正则替换篇](https://zhuanlan.zhihu.com/p/346058975?utm_id=0)      
+    + [正则表达式，分组与捕获](https://www.cnblogs.com/ljhdo/p/10678281.html)     
 3.  linux编译流程      
     1. [samba](http://uusama.com/814.html)      
     2. [mount](https://www.cnblogs.com/sparkdev/p/9015312.html)     
