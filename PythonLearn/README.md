@@ -143,6 +143,8 @@
 ### 3.29  [tqdm](https://www.cnblogs.com/q735613050/p/10127531.html)    
 ### 3.30  easydict(公司拿来当作pytorch的训练配置文件用)     
 ### 3.31  [async/await](https://blog.csdn.net/qq_41022329/article/details/96871475)				
+    + async 返回协程对象，并不执行			
+    + await + 协程对象，协程对象是可中断的，可以去执行其他的协程，当这个协程对象已满足条件时，就返回回来			
 
 ## 4. Common Functions
 1.  [time的相关函数](https://blog.csdn.net/brucewong0516/article/details/79044905)</br>
