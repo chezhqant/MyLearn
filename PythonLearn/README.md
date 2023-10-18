@@ -142,6 +142,7 @@
 12. [numpy增加行和列](https://www.cnblogs.com/MrLJC/p/4823499.html)     
 ### 3.29  [tqdm](https://www.cnblogs.com/q735613050/p/10127531.html)    
 ### 3.30  easydict(公司拿来当作pytorch的训练配置文件用)     
+### 3.31  [async/await](https://blog.csdn.net/qq_41022329/article/details/96871475)				
 
 ## 4. Common Functions
 1.  [time的相关函数](https://blog.csdn.net/brucewong0516/article/details/79044905)</br>
